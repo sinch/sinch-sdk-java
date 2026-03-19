@@ -45,7 +45,7 @@ class SMSServiceTest {
 
   @Test
   void checkCredentialsWebhooks() {
-    assertDoesNotThrow(() -> new SMSService(null, null, null, null).webhooks(), "Init passed");
+    assertDoesNotThrow(() -> new SMSService(null, null, null, null).sinchEvents(), "Init passed");
   }
 
   @Test

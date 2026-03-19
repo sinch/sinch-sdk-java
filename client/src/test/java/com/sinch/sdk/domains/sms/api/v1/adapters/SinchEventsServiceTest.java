@@ -9,11 +9,11 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.auth.HmacAuthenticationValidation;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.exceptions.ApiException;
-import com.sinch.sdk.domains.sms.api.v1.WebHooksService;
+import com.sinch.sdk.domains.sms.api.v1.SinchEventsService;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.BatchDeliveryReportDtoTest;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.RecipientDeliveryReportDtoTest;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.InboundMessageDtoTest;
-import com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent;
+import com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent;
 import com.sinch.sdk.models.Configuration;
 import java.util.AbstractMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-public class WebHooksServiceTest extends BaseTest {
+public class SinchEventsServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/sms/v1/inbounds/InboundBinaryDto.json")
   String loadedInboundBinaryEvent;
@@ -46,7 +46,7 @@ public class WebHooksServiceTest extends BaseTest {
   @GivenTextResource("/domains/sms/v1/deliveryreports/RecipientDeliveryReportMMSDto.json")
   String loadedRecipientDeliveryReportMMSEvent;
 
-  WebHooksService service;
+  SinchEventsService service;
 
   @BeforeEach
   public void setUp() {
@@ -57,7 +57,7 @@ public class WebHooksServiceTest extends BaseTest {
             .setKeyId("unused")
             .setKeySecret("unused")
             .build();
-    service = new SinchClient(configuration).sms().v1().webhooks();
+    service = new SinchClient(configuration).sms().v1().sinchEvents();
   }
 
   @Test
@@ -90,7 +90,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void incomingSMSBinary() throws ApiException {
 
-    SmsEvent response = service.parseEvent(loadedInboundBinaryEvent);
+    SmsSinchEvent response = service.parseEvent(loadedInboundBinaryEvent);
 
     TestHelpers.recursiveEquals(InboundMessageDtoTest.binaryDTO, response);
   }
@@ -98,7 +98,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void incomingSMSText() throws ApiException {
 
-    SmsEvent response = service.parseEvent(loadedInboundTextEvent);
+    SmsSinchEvent response = service.parseEvent(loadedInboundTextEvent);
 
     TestHelpers.recursiveEquals(InboundMessageDtoTest.textDTO, response);
   }
@@ -106,7 +106,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void incomingSMSMedia() throws ApiException {
 
-    SmsEvent response = service.parseEvent(loadedInboundMediaEvent);
+    SmsSinchEvent response = service.parseEvent(loadedInboundMediaEvent);
 
     TestHelpers.recursiveEquals(InboundMessageDtoTest.mediaDTO, response);
   }
@@ -114,7 +114,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void deliveryReportRecipientDeliveryReportSms() throws ApiException {
 
-    SmsEvent response = service.parseEvent(loadedRecipientDeliveryReportSMSEvent);
+    SmsSinchEvent response = service.parseEvent(loadedRecipientDeliveryReportSMSEvent);
 
     TestHelpers.recursiveEquals(
         RecipientDeliveryReportDtoTest.deliveryReportRecipientSMS, response);
@@ -123,7 +123,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void deliveryReportRecipientDeliveryReportMms() throws ApiException {
 
-    SmsEvent response = service.parseEvent(loadedRecipientDeliveryReportMMSEvent);
+    SmsSinchEvent response = service.parseEvent(loadedRecipientDeliveryReportMMSEvent);
 
     TestHelpers.recursiveEquals(
         RecipientDeliveryReportDtoTest.deliveryReportRecipientMMS, response);
@@ -132,7 +132,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void deliveryReportBatchDeliveryReportSms() throws ApiException {
 
-    SmsEvent response = service.parseEvent(loadedBatchDeliveryReportSMSEvent);
+    SmsSinchEvent response = service.parseEvent(loadedBatchDeliveryReportSMSEvent);
 
     TestHelpers.recursiveEquals(BatchDeliveryReportDtoTest.deliveryReportBatchSMS, response);
   }
@@ -140,7 +140,7 @@ public class WebHooksServiceTest extends BaseTest {
   @Test
   void deliveryReportBatchDeliveryReportMms() throws ApiException {
 
-    SmsEvent response = service.parseEvent(loadedBatchDeliveryReportMMSEvent);
+    SmsSinchEvent response = service.parseEvent(loadedBatchDeliveryReportMMSEvent);
 
     TestHelpers.recursiveEquals(BatchDeliveryReportDtoTest.deliveryReportBatchMMS, response);
   }

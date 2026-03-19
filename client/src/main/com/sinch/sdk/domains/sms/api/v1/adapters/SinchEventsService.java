@@ -4,21 +4,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.auth.HmacAuthenticationValidation;
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.core.utils.databind.Mapper;
-import com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent;
+import com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent;
 import java.util.Map;
 
-public class WebHooksService implements com.sinch.sdk.domains.sms.api.v1.WebHooksService {
+public class SinchEventsService implements com.sinch.sdk.domains.sms.api.v1.SinchEventsService {
 
   private final HmacAuthenticationValidation authenticationChecker;
 
-  public WebHooksService(HmacAuthenticationValidation authenticationChecker) {
+  public SinchEventsService(HmacAuthenticationValidation authenticationChecker) {
     this.authenticationChecker = authenticationChecker;
   }
 
-  public SmsEvent parseEvent(String jsonPayload) throws ApiMappingException {
+  public SmsSinchEvent parseEvent(String jsonPayload) throws ApiMappingException {
 
     try {
-      return Mapper.getInstance().readValue(jsonPayload, SmsEvent.class);
+      return Mapper.getInstance().readValue(jsonPayload, SmsSinchEvent.class);
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }

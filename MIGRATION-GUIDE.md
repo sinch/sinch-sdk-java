@@ -190,6 +190,15 @@ Use the new versioned API under `numbers().v1()` to get access to [NumbersServic
 
 #### Deprecated fields
 - Deprecated `MediaMessageBodyDetails.status` field of type `String` is replaced by `MediaMessageBodyDetails.status` of [StatusEnum](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/inbounds/MediaMessageBodyDetails.StatusEnum.html) type
+- [BinaryRequest.callbackUrl](https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.7.1/com/sinch/sdk/domains/sms/models/v1/batches/request/BinaryRequest.html#getCallbackUrl()) is replaced by [BinaryRequest.eventDestinationTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/batches/request/BinaryRequest.html#getEventDestinationTarget())
+- [UpdateBinaryRequest.callbackUrl](https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.7.1/com/sinch/sdk/domains/sms/models/v1/batches/request/UpdateBinaryRequest.html#getCallbackUrl()) is replaced by [BinaryRequest.eventDestinationTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/batches/request/UpdateBinaryRequest.html#getEventDestinationTarget())
+- [BinaryResponse.callbackUrl](https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.7.1/com/sinch/sdk/domains/sms/models/v1/batches/response/BinaryResponse.html#getCallbackUrl()) is replaced by [BinaryResponse.eventDestinationTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/batches/response/BinaryResponse.html#getEventDestinationTarget())
+- [MediaRequest.callbackUrl](https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.7.1/com/sinch/sdk/domains/sms/models/v1/batches/request/MediaRequest.html#getCallbackUrl()) is replaced by [MediaRequest.eventDestinationTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/batches/request/MediaRequest.html#getEventDestinationTarget())
+- [UpdateMediaRequest.callbackUrl](https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.7.1/com/sinch/sdk/domains/sms/models/v1/batches/request/UpdateMediaRequest.html#getCallbackUrl()) is replaced by [UpdateMediaRequest.eventDestinationTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/batches/request/UpdateMediaRequest.html#getEventDestinationTarget())
+- [MediaResponse.callbackUrl](https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.7.1/com/sinch/sdk/domains/sms/models/v1/batches/response/MediaResponse.html#getCallbackUrl()) is replaced by [MediaResponse.eventDestinationTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/batches/response/MediaResponse.html#getEventDestinationTarget())
+- [TextRequest.callbackUrl](https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.7.1/com/sinch/sdk/domains/sms/models/v1/batches/request/TextRequest.html#getCallbackUrl()) is replaced by [MediaRequest.eventDestinationTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/batches/request/TextRequest.html#getEventDestinationTarget())
+- [UpdateTextRequest.callbackUrl](https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.7.1/com/sinch/sdk/domains/sms/models/v1/batches/request/UpdateTextRequest.html#getCallbackUrl()) is replaced by [UpdateTextRequest.eventDestinationTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/batches/request/UpdateTextRequest.html#getEventDestinationTarget())
+- [TextResponse.callbackUrl](https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.7.1/com/sinch/sdk/domains/sms/models/v1/batches/response/TextResponse.html#getCallbackUrl()) is replaced by [TextResponse.eventDestinationTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/batches/response/TextResponse.html#getEventDestinationTarget())
 
 #### Replacement models
 
@@ -261,9 +270,10 @@ Use the new versioned API under `numbers().v1()` to get access to [NumbersServic
 | models/responses/InboundsListResponse         | [com.sinch.sdk.domains.sms.models.v1.inbounds.response.ListInboundsResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/inbounds/response/ListInboundsResponse.html)                           |
 
 ##### Webhooks
-| Old class                     | New class                                                                                                                                                                          |
-|-------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| models/webhooks/WebhooksEvent | [com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/webhooks/SmsEvent.html)  |
+| Old class              | New class                                                                                                                                                     |
+|------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| webhooks/WebhooksEvent | [sinchevents.SmsSinchEvent](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/sinchevents/SmsSinchEvent.html) |
+| WebHooksService        | [SinchEventsService](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/api/v1/v1/SinchEventsService.html)               |
 
 #### Replacement APIs
 
@@ -275,7 +285,7 @@ Use the new versioned API under `sms().v1()` to get access to [SMSService](https
 | deliveryReports() | [v1().deliveryReports()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/api/v1/DeliveryReportsService.html) |
 | groups()          | [v1().groups()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/api/v1/GroupsService.html)                   |
 | inbounds()        | [v1().inbounds()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/api/v1/InboundsService.html)               |
-| webHooks()        | [v1().webhooks()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/api/v1/WebHooksService.html)               |
+| webHooks()        | [v1().sinchEvent()](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/api/v1/SinchEventsService.html)          |
 
 ### [`Voice`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/package-summary.html)
 

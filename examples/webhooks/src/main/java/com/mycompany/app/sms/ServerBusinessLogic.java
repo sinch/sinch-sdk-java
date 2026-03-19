@@ -2,7 +2,7 @@ package com.mycompany.app.sms;
 
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReport;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.InboundMessage;
-import com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent;
+import com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class ServerBusinessLogic {
     trace(event);
   }
 
-  private void trace(SmsEvent event) {
+  private void trace(SmsSinchEvent event) {
     LOGGER.info("Handle event: " + event);
   }
 }

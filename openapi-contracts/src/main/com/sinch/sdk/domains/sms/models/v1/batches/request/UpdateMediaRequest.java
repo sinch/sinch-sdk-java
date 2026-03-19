@@ -98,9 +98,9 @@ public interface UpdateMediaRequest extends UpdateBatchRequest {
   /**
    * Override the default callback URL for this batch. Constraints: Must be valid URL.
    *
-   * @return callbackUrl
+   * @return eventDestinationTarget
    */
-  String getCallbackUrl();
+  String getEventDestinationTarget();
 
   /**
    * The client identifier of a batch message. If set, the identifier will be added in the delivery
@@ -214,11 +214,11 @@ public interface UpdateMediaRequest extends UpdateBatchRequest {
     /**
      * see getter
      *
-     * @param callbackUrl see getter
+     * @param eventDestinationTarget see getter
      * @return Current builder
-     * @see #getCallbackUrl
+     * @see #getEventDestinationTarget
      */
-    Builder setCallbackUrl(String callbackUrl);
+    Builder setEventDestinationTarget(String eventDestinationTarget);
 
     /**
      * see getter

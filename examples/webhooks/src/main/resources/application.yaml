@@ -43,7 +43,7 @@ sms:
   # valid values are "us" and "eu"
   # See https://github.com/sinch/sinch-sdk-java/blob/main/client/src/main/com/sinch/sdk/models/SMSRegion.java for full list of supported values but with servicePlanID
   region:
-  webhooks:
-    # Secret value set for Sms webhooks calls validation
+  sinchevents:
+    # Secret value set for Sms Sinch Events calls validation
     # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/sms/Controller.java) is set to true
     secret:
