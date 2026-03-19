@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
   private final SinchClient sinchClient;
-  private final ServerBusinessLogic webhooksBusinessLogic;
+  private final ServerBusinessLogic serverBusinessLogic;
 
   @Autowired
-  public Controller(SinchClient sinchClient, ServerBusinessLogic webhooksBusinessLogic) {
+  public Controller(SinchClient sinchClient, ServerBusinessLogic serverBusinessLogic) {
     this.sinchClient = sinchClient;
-    this.webhooksBusinessLogic = webhooksBusinessLogic;
+    this.serverBusinessLogic = serverBusinessLogic;
   }
 
   @PostMapping(
@@ -32,14 +32,14 @@ public class Controller {
   public ResponseEntity<Void> conversationEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    SinchEventsService webhooks = sinchClient.conversation().v1().sinchEvents();
+    SinchEventsService sinchEvents = sinchClient.conversation().v1().sinchEvents();
 
     // decode the request payload
-    ConversationSinchEvent event = webhooks.parseEvent(body);
+    ConversationSinchEvent event = sinchEvents.parseEvent(body);
 
     // let business layer process the request
     if (event instanceof MessageInboundEvent e) {
-      webhooksBusinessLogic.handleMessageInboundEvent(e);
+      serverBusinessLogic.handleMessageInboundEvent(e);
     }
 
     return ResponseEntity.ok().build();

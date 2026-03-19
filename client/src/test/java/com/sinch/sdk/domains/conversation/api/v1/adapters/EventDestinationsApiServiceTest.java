@@ -42,22 +42,22 @@ public class EventDestinationsApiServiceTest extends ConversationBaseTest {
   @Mock Map<String, AuthManager> authManagers;
   EventDestinationsService service;
   String uriPartID = "foovalue";
-  String fooWebhookId = "barWebhookId";
+  String fooEventDestinationId = "barEventDestinationId";
   String fooAppId = "barAppId";
 
   static final Collection<String> AUTH_NAMES = Arrays.asList("Basic", "oAuth2");
 
   @GivenTextResource(
       "domains/conversation/v1/eventdestinations/request/EventDestinationRequestDto.json")
-  String jsonWebhookRequestDto;
+  String eventDestinationRequestDto;
 
   @GivenTextResource(
       "/domains/conversation/v1/eventdestinations/response/EventDestinationResponseDto.json")
-  String jsonWebhookResponseDto;
+  String eventDestinationResponseDto;
 
   @GivenTextResource(
       "domains/conversation/v1/eventdestinations/response/EventDestinationsListResponseDto.json")
-  String jsonListWebhooksResponseDto;
+  String eventDestinationsListResponseDto;
 
   @BeforeEach
   public void initMocks() {
@@ -83,7 +83,8 @@ public class EventDestinationsApiServiceTest extends ConversationBaseTest {
             Collections.emptyList(),
             AUTH_NAMES);
     HttpResponse httpResponse =
-        new HttpResponse(200, null, Collections.emptyMap(), jsonListWebhooksResponseDto.getBytes());
+        new HttpResponse(
+            200, null, Collections.emptyMap(), eventDestinationsListResponseDto.getBytes());
 
     when(httpClient.invokeAPI(
             eq(serverConfiguration),
@@ -114,7 +115,7 @@ public class EventDestinationsApiServiceTest extends ConversationBaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            String.format("/v1/projects/%s/webhooks/%s", uriPartID, fooWebhookId),
+            String.format("/v1/projects/%s/webhooks/%s", uriPartID, fooEventDestinationId),
             HttpMethod.GET,
             Collections.emptyList(),
             (String) null,
@@ -123,7 +124,7 @@ public class EventDestinationsApiServiceTest extends ConversationBaseTest {
             Collections.emptyList(),
             AUTH_NAMES);
     HttpResponse httpResponse =
-        new HttpResponse(200, null, Collections.emptyMap(), jsonWebhookResponseDto.getBytes());
+        new HttpResponse(200, null, Collections.emptyMap(), eventDestinationResponseDto.getBytes());
 
     when(httpClient.invokeAPI(
             eq(serverConfiguration),
@@ -131,7 +132,7 @@ public class EventDestinationsApiServiceTest extends ConversationBaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    EventDestination response = service.get(fooWebhookId);
+    EventDestination response = service.get(fooEventDestinationId);
 
     TestHelpers.recursiveEquals(response, EventDestinationDtoTest.expectedResponseDto);
   }
@@ -144,13 +145,13 @@ public class EventDestinationsApiServiceTest extends ConversationBaseTest {
             String.format("/v1/projects/%s/webhooks", uriPartID),
             HttpMethod.POST,
             Collections.emptyList(),
-            jsonWebhookRequestDto,
+            eventDestinationRequestDto,
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             AUTH_NAMES);
     HttpResponse httpResponse =
-        new HttpResponse(200, null, Collections.emptyMap(), jsonWebhookResponseDto.getBytes());
+        new HttpResponse(200, null, Collections.emptyMap(), eventDestinationResponseDto.getBytes());
 
     when(httpClient.invokeAPI(
             eq(serverConfiguration),
@@ -168,16 +169,16 @@ public class EventDestinationsApiServiceTest extends ConversationBaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            String.format("/v1/projects/%s/webhooks/%s", uriPartID, fooWebhookId),
+            String.format("/v1/projects/%s/webhooks/%s", uriPartID, fooEventDestinationId),
             HttpMethod.PATCH,
             Collections.emptyList(),
-            jsonWebhookRequestDto,
+            eventDestinationRequestDto,
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             AUTH_NAMES);
     HttpResponse httpResponse =
-        new HttpResponse(200, null, Collections.emptyMap(), jsonWebhookResponseDto.getBytes());
+        new HttpResponse(200, null, Collections.emptyMap(), eventDestinationResponseDto.getBytes());
 
     when(httpClient.invokeAPI(
             eq(serverConfiguration),
@@ -186,7 +187,7 @@ public class EventDestinationsApiServiceTest extends ConversationBaseTest {
         .thenReturn(httpResponse);
 
     EventDestination response =
-        service.update(fooWebhookId, EventDestinationDtoTest.expectedResponseDto);
+        service.update(fooEventDestinationId, EventDestinationDtoTest.expectedResponseDto);
 
     TestHelpers.recursiveEquals(response, EventDestinationDtoTest.expectedResponseDto);
   }
@@ -196,7 +197,7 @@ public class EventDestinationsApiServiceTest extends ConversationBaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            String.format("/v1/projects/%s/webhooks/%s", uriPartID, fooWebhookId),
+            String.format("/v1/projects/%s/webhooks/%s", uriPartID, fooEventDestinationId),
             HttpMethod.DELETE,
             Collections.emptyList(),
             (String) null,
@@ -212,6 +213,6 @@ public class EventDestinationsApiServiceTest extends ConversationBaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    service.delete(fooWebhookId);
+    service.delete(fooEventDestinationId);
   }
 }

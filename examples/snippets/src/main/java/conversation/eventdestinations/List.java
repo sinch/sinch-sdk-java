@@ -26,8 +26,8 @@ public class List {
     String keySecret = Settings.getKeySecret().orElse("MY_KEY_SECRET");
     String conversationRegion = Settings.getConversationRegion().orElse("MY_CONVERSATION_REGION");
 
-    String conversationApplicationId = "APPLICATION_ID";
     // The ID of the conversation application to list event destinations for
+    String conversationApplicationId = "APPLICATION_ID";
 
     Configuration configuration =
         Configuration.builder()

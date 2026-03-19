@@ -14,7 +14,7 @@ import java.util.Map;
  * href="https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Numbers-Callbacks/#tag/Numbers-Callbacks/operation/ImportedNumberService_EventsCallback">online
  * documentation</a>
  *
- * @since 1.2
+ * @since 2.0
  */
 public interface SinchEventsService {
 
@@ -30,11 +30,11 @@ public interface SinchEventsService {
    *     "https://dashboard.sinch.com/convapi/apps">App's webhook configuration onto dashboard</a>
    * @param headers Received headers
    * @param jsonPayload Received payload
-   * @return Is authentication is validated (true) or not (false)
+   * @return Is authentication validated (true) or not (false)
    *     <p>see <a
    *     href="https://developers.sinch.com/docs/conversation/callbacks/#validating-callbacks">online
    *     documentation</a>
-   * @since 1.3
+   * @since 2.0
    */
   boolean validateAuthenticationHeader(
       String secret, Map<String, String> headers, String jsonPayload);
@@ -48,7 +48,7 @@ public interface SinchEventsService {
    *     <p>see <a
    *     href="https://developers.sinch.com/docs/conversation/callbacks/#webhook-triggers">triggered
    *     events</a>
-   * @since 1.3
+   * @since 2.0
    */
   ConversationSinchEvent parseEvent(String jsonPayload) throws ApiMappingException;
 }

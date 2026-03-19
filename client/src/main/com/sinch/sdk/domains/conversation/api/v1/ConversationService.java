@@ -84,7 +84,7 @@ public interface ConversationService {
   EventDestinationsService eventDestinations();
 
   /**
-   * SinchEventsService Service instance
+   * Sinch Events helpers instance
    *
    * @return service instance for project
    * @since 2.0
