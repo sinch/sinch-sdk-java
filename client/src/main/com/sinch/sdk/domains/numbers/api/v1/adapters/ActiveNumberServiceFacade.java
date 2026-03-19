@@ -80,6 +80,11 @@ public class ActiveNumberServiceFacade implements ActiveNumberService {
   }
 
   @Override
+  public ActiveNumbersListResponse list() throws ApiException {
+    return activeNumberService.list();
+  }
+
+  @Override
   public ActiveNumbersListResponse list(ActiveNumbersListQueryParameters queryParameter)
       throws ApiException {
     return activeNumberService.list(queryParameter);
