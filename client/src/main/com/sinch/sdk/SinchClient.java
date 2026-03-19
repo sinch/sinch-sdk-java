@@ -2,7 +2,6 @@ package com.sinch.sdk;
 
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.ConversationService;
-import com.sinch.sdk.domains.mailgun.MailgunService;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
@@ -11,8 +10,6 @@ import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
-import com.sinch.sdk.models.MailgunContext;
-import com.sinch.sdk.models.MailgunRegion;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
@@ -22,7 +19,6 @@ import com.sinch.sdk.models.VoiceRegion;
 import com.sinch.sdk.models.adapters.DualToneMultiFrequencyMapper;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
@@ -53,11 +49,6 @@ public class SinchClient {
   private static final String CONVERSATION_TEMPLATE_SERVER_KEY =
       "template-management-conversation-server";
 
-  private static final String MAILGUN_REGION_KEY = "mailgun-region";
-  private static final String MAILGUN_DEFAULT_SERVER_KEY = "mailgun-default-server";
-  private static final String MAILGUN_REGION_SERVER_KEY = "mailgun-region-server";
-  private static final String MAILGUN_STORAGE_BY_REGION_SERVER_KEY = "mailgun-%s-storage";
-
   // sinch-sdk/{sdk_version} ({language}/{language_version}; {implementation_type};
   // {auxiliary_flag})
   private static final String SDK_USER_AGENT_HEADER = "User-Agent";
@@ -71,7 +62,6 @@ public class SinchClient {
   private VerificationService verification;
   private VoiceService voice;
   private ConversationService conversation;
-  private MailgunService mailgun;
   private HttpClientApache httpClient;
 
   /**
@@ -97,7 +87,6 @@ public class SinchClient {
     handleDefaultVerificationSettings(configurationGuard, props, builder);
     handleDefaultVoiceSettings(configurationGuard, props, builder);
     handleDefaultConversationSettings(configurationGuard, props, builder);
-    handleDefaultMailgunSettings(configurationGuard, props, builder);
 
     Configuration newConfiguration = builder.build();
     checkConfiguration(newConfiguration);
@@ -253,63 +242,6 @@ public class SinchClient {
     builder.setConversationContext(contextBuilder.build());
   }
 
-  private void handleDefaultMailgunSettings(
-      Configuration configuration, Properties props, Configuration.Builder builder) {
-
-    MailgunContext.Builder contextBuilder =
-        MailgunContext.builder(configuration.getMailgunContext().orElse(null));
-
-    if (null == contextBuilder.getRegion()) {
-      MailgunRegion region = null;
-      if (!StringUtil.isEmpty(props.getProperty(MAILGUN_REGION_KEY))) {
-        region = MailgunRegion.from(props.getProperty(MAILGUN_REGION_KEY).trim());
-      }
-      Boolean regionAsDefault = null == region;
-      // To be deprecated with 2.0: no more defaulting to US region
-      if (null == region) {
-        region = MailgunRegion.US;
-      }
-      contextBuilder.setRegion(region).setRegionAsDefault(regionAsDefault);
-    }
-
-    // url is not defined: use the region to set to an existing one and use "global" as a default
-    // fallback
-    // String url = previousContext.map(MailgunContext::getUrl).orElse(null);
-    if (StringUtil.isEmpty(contextBuilder.getUrl())) {
-      String url;
-      boolean useDefaultRegion =
-          null == contextBuilder.getRegion()
-              || MailgunRegion.US.value().equalsIgnoreCase(contextBuilder.getRegion().value());
-      if (useDefaultRegion) {
-        url = props.getProperty(MAILGUN_DEFAULT_SERVER_KEY);
-      } else {
-        url =
-            String.format(
-                props.getProperty(MAILGUN_REGION_SERVER_KEY), contextBuilder.getRegion().value());
-      }
-      contextBuilder.setUrl(url);
-    }
-
-    // storage URls are not defined: set a default set related to region in use
-    Collection<String> storageUrls = contextBuilder.getStorageUrls();
-    if (null == storageUrls || storageUrls.isEmpty()) {
-      String storageKeyRegionAsString =
-          null == contextBuilder.getRegion()
-              ? ""
-              : contextBuilder.getRegion().value().toLowerCase();
-      String storageKey =
-          String.format(MAILGUN_STORAGE_BY_REGION_SERVER_KEY, storageKeyRegionAsString);
-      String value = props.getProperty(storageKey);
-      if (!StringUtil.isEmpty(value)) {
-        storageUrls =
-            Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
-        contextBuilder.setStorageUrls(storageUrls);
-      }
-    }
-
-    builder.setMailgunContext(contextBuilder.build());
-  }
-
   /**
    * Get current configuration
    *
@@ -395,20 +327,6 @@ public class SinchClient {
     return conversation;
   }
 
-  /**
-   * Get Mailgun domain service
-   *
-   * @return Return instance onto Mailgun API service
-   * @see <a href="https://documentation.mailgun.com/">https://documentation.mailgun.com/</a>
-   * @since 1.6
-   */
-  public MailgunService mailgun() {
-    if (null == mailgun) {
-      mailgun = mailgunInit();
-    }
-    return mailgun;
-  }
-
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
   }
@@ -458,13 +376,6 @@ public class SinchClient {
         getConfiguration().getConversationContext().orElse(null),
         getConfiguration().getOAuthServer(),
         this::getHttpClient);
-  }
-
-  private MailgunService mailgunInit() {
-    return new com.sinch.sdk.domains.mailgun.adapters.MailgunService(
-        getConfiguration().getMailgunCredentials().orElse(null),
-        getConfiguration().getMailgunContext().orElse(null),
-        getHttpClient());
   }
 
   private Properties handlePropertiesFile(String fileName) {

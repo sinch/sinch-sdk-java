@@ -38,7 +38,6 @@ launcher regions/List
 ## Available Snippets
 
 - Conversation: [README.md](src/main/java/conversation/README.md)
-- Mailgun: [README.md](src/main/java/mailgun/README.md)
 - Numbers: [README.md](src/main/java/numbers/README.md)
 - SMS: [README.md](src/main/java/sms/README.md)
 - Verification: [README.md](src/main/java/verification/README.md)

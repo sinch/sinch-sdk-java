@@ -70,7 +70,6 @@ Here is the list of the Sinch products and their level of support by the Java SD
 
 | API Category           | API Name                                                                                                                                               | Status |
 |------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|:------:|
-| Email                  | `(preview)` Mailgun API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/mailgun/package-summary.html) |   ✅    |
 | Messaging              | Conversation API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/conversation/package-summary.html)   |   ✅    |
 |                        | SMS API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/sms/package-summary.html)                     |   ✅    |
 | Numbers & Connectivity | Numbers API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/numbers/package-summary.html)             |   ✅    |
