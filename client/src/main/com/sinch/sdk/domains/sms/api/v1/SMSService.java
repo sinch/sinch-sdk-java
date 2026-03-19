@@ -42,9 +42,9 @@ public interface SMSService {
   GroupsService groups();
 
   /**
-   * Sinch Events Service instance
+   * Sinch Events helpers instance
    *
-   * @return service instance for project
+   * @return instance service related to Sinch Events helpers
    * @since 2.0
    */
   SinchEventsService sinchEvents();
