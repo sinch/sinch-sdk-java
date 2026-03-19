@@ -27,7 +27,7 @@ public class SendEventRequestDtoTest extends ConversationBaseTest {
                       .setChannel(ConversationChannel.RCS)
                       .setIdentity("+123456789")
                       .build()))
-          .setCallbackUrl("foo URL")
+          .setEventDestinationTarget("foo URL")
           .setChannelPriorityOrder(Arrays.asList(ConversationChannel.RCS))
           .setEventMetadata("event metadata value")
           .setQueue(MessageQueue.NORMAL_PRIORITY)

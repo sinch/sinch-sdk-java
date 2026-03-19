@@ -12,10 +12,10 @@ package com.sinch.sdk.domains.conversation.models.v1.apps.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.apps.CallbackSettings;
 import com.sinch.sdk.domains.conversation.models.v1.apps.ConversationMetadataReportView;
 import com.sinch.sdk.domains.conversation.models.v1.apps.DeliveryReportBasedFallback;
 import com.sinch.sdk.domains.conversation.models.v1.apps.DispatchRetentionPolicy;
+import com.sinch.sdk.domains.conversation.models.v1.apps.EventDestinationSettings;
 import com.sinch.sdk.domains.conversation.models.v1.apps.MessageRetrySettings;
 import com.sinch.sdk.domains.conversation.models.v1.apps.RetentionPolicy;
 import com.sinch.sdk.domains.conversation.models.v1.apps.SmartConversation;
@@ -98,11 +98,11 @@ public interface AppResponse {
   QueueStats getQueueStats();
 
   /**
-   * Get callbackSettings
+   * Get eventDestinationSettings
    *
-   * @return callbackSettings
+   * @return eventDestinationSettings
    */
-  CallbackSettings getCallbackSettings();
+  EventDestinationSettings getEventDestinationSettings();
 
   /**
    * Get deliveryReportBasedFallback
@@ -224,11 +224,11 @@ public interface AppResponse {
     /**
      * see getter
      *
-     * @param callbackSettings see getter
+     * @param eventDestinationSettings see getter
      * @return Current builder
-     * @see #getCallbackSettings
+     * @see #getEventDestinationSettings
      */
-    Builder setCallbackSettings(CallbackSettings callbackSettings);
+    Builder setEventDestinationSettings(EventDestinationSettings eventDestinationSettings);
 
     /**
      * see getter

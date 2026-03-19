@@ -43,9 +43,9 @@ public interface SendMessageRequest<T extends AppMessageBody> {
    * used to sign the contents of delivery receipts when the default callback URL is overridden by
    * this property. The REST URL should be of the form: <code>http://host[:port]/path</code>
    *
-   * @return callbackUrl
+   * @return eventDestinationTarget
    */
-  String getCallbackUrl();
+  String getEventDestinationTarget();
 
   /**
    * Explicitly define the channels and order in which they are tried when sending the message. All
@@ -203,11 +203,11 @@ public interface SendMessageRequest<T extends AppMessageBody> {
     /**
      * see getter
      *
-     * @param callbackUrl see getter
+     * @param eventDestinationTarget see getter
      * @return Current builder
-     * @see #getCallbackUrl
+     * @see #getEventDestinationTarget
      */
-    Builder<T> setCallbackUrl(String callbackUrl);
+    Builder<T> setEventDestinationTarget(String eventDestinationTarget);
 
     /**
      * see getter
