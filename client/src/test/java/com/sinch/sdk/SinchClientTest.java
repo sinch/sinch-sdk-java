@@ -49,10 +49,10 @@ class SinchClientTest {
   }
 
   @Test
-  void defaultSmsRegionIsUS() {
+  void smsRegionIsNullWhenNotSet() {
     Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
-    assertEquals(SMSRegion.US, client.getConfiguration().getSmsContext().get().getSmsRegion());
+    assertNull(client.getConfiguration().getSmsContext().get().getSmsRegion());
   }
 
   @Test
@@ -61,6 +61,25 @@ class SinchClientTest {
         Configuration.builder().setSmsRegion(SMSRegion.from("eu")).build();
     SinchClient client = new SinchClient(configuration);
     assertEquals(SMSRegion.EU, client.getConfiguration().getSmsContext().get().getSmsRegion());
+  }
+
+  @Test
+  void smsUrlFromRegion() {
+    Configuration configuration = Configuration.builder().setSmsRegion(SMSRegion.AU).build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        "https://zt.au.sms.api.sinch.com",
+        client.getConfiguration().getSmsContext().get().getSmsServer().getUrl());
+  }
+
+  @Test
+  void smsUrlFromRegionWithServicePlanId() {
+    Configuration configuration =
+        Configuration.builder().setSmsServicePlanId("foo").setSmsRegion(SMSRegion.AU).build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        "https://au.sms.api.sinch.com",
+        client.getConfiguration().getSmsContext().get().getSmsServer().getUrl());
   }
 
   @Test

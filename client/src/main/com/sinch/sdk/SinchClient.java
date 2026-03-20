@@ -134,18 +134,9 @@ public class SinchClient {
     }
 
     SMSRegion smsRegion = contextBuilder.getSmsRegion();
-    if (null == smsRegion) {
-
-      if (!StringUtil.isEmpty(props.getProperty(SMS_REGION_KEY))) {
-        smsRegion = SMSRegion.from(props.getProperty(SMS_REGION_KEY).trim());
-      }
-      Boolean regionAsDefault = null == smsRegion;
-
-      // To be deprecated with 2.0: no more defaulting to US region
-      if (null == smsRegion) {
-        smsRegion = SMSRegion.US;
-      }
-      contextBuilder.setSmsRegion(smsRegion).setRegionAsDefault(regionAsDefault);
+    if (null == smsRegion && !StringUtil.isEmpty(props.getProperty(SMS_REGION_KEY))) {
+      smsRegion = SMSRegion.from(props.getProperty(SMS_REGION_KEY).trim());
+      contextBuilder.setSmsRegion(smsRegion);
     }
 
     builder.setSmsContext(contextBuilder.build());

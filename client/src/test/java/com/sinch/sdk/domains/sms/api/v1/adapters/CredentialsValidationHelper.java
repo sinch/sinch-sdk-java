@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
 import com.sinch.sdk.models.SmsServicePlanCredentials;
 import com.sinch.sdk.models.UnifiedCredentials;
@@ -24,12 +25,14 @@ class CredentialsValidationHelper {
     projectIdDoNotAcceptNullCredentials(httpClientSupplier, service);
     projectIdDoNotAcceptNullContext(httpClientSupplier, service);
     projectIdDoNotAcceptNullSmsUrl(httpClientSupplier, service);
+    projectIdDoNotAcceptNullSmsRegion(httpClientSupplier, service);
     projectIdUsagePassed(httpClientSupplier, service);
     servicePlanIdDoNotAcceptNullApiToken(httpClientSupplier, service);
     servicePlanIdDoNotAcceptNullServicePlanId(httpClientSupplier, service);
     servicePlanIdDoNotAcceptNullCredentials(httpClientSupplier, service);
     servicePlanIdDoNotAcceptNullContext(httpClientSupplier, service);
     servicePlanIdDoNotAcceptNullSmsUrl(httpClientSupplier, service);
+    servicePlanIdDoNotAcceptNullSmsRegion(httpClientSupplier, service);
     servicePlanIdUsagePassed(httpClientSupplier, service);
   }
 
@@ -37,7 +40,8 @@ class CredentialsValidationHelper {
       Supplier<HttpClient> httpClientSupplier, Consumer<SMSService> service) {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId(null).setKeySecret("foo").setProjectId("foo").build();
-    SmsContext context = SmsContext.builder().setSmsUrl("https://sms.foo.url").build();
+    SmsContext context =
+        SmsContext.builder().setSmsUrl("https://sms.foo.url").setSmsRegion(SMSRegion.US).build();
     ServerConfiguration server = new ServerConfiguration("https://oauth.foo.url");
     Exception exception =
         assertThrows(
@@ -50,7 +54,8 @@ class CredentialsValidationHelper {
       Supplier<HttpClient> httpClientSupplier, Consumer<SMSService> service) {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId("foo").setKeySecret(null).setProjectId("foo").build();
-    SmsContext context = SmsContext.builder().setSmsUrl("https://sms.foo.url").build();
+    SmsContext context =
+        SmsContext.builder().setSmsUrl("https://sms.foo.url").setSmsRegion(SMSRegion.US).build();
     ServerConfiguration server = new ServerConfiguration("https://oauth.foo.url");
     Exception exception =
         assertThrows(
@@ -63,7 +68,8 @@ class CredentialsValidationHelper {
       Supplier<HttpClient> httpClientSupplier, Consumer<SMSService> service) {
     UnifiedCredentials credentials =
         UnifiedCredentials.builder().setKeyId("foo").setKeySecret("foo").setProjectId(null).build();
-    SmsContext context = SmsContext.builder().setSmsUrl("https://sms.foo.url").build();
+    SmsContext context =
+        SmsContext.builder().setSmsUrl("https://sms.foo.url").setSmsRegion(SMSRegion.US).build();
     ServerConfiguration server = new ServerConfiguration("https://oauth.foo.url");
 
     Exception exception =
@@ -76,7 +82,8 @@ class CredentialsValidationHelper {
   static void projectIdDoNotAcceptNullCredentials(
       Supplier<HttpClient> httpClientSupplier, Consumer<SMSService> service) {
 
-    SmsContext context = SmsContext.builder().setSmsUrl("https://sms.foo.url").build();
+    SmsContext context =
+        SmsContext.builder().setSmsUrl("https://sms.foo.url").setSmsRegion(SMSRegion.US).build();
     ServerConfiguration server = new ServerConfiguration("https://oauth.foo.url");
     Exception exception =
         assertThrows(
@@ -109,13 +116,30 @@ class CredentialsValidationHelper {
             .setKeySecret("foo")
             .setProjectId("foo")
             .build();
-    SmsContext context = SmsContext.builder().setSmsUrl(null).build();
+    SmsContext context = SmsContext.builder().setSmsUrl(null).setSmsRegion(SMSRegion.US).build();
     ServerConfiguration server = new ServerConfiguration("https://oauth.foo.url");
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
             () -> service.accept(new SMSService(credentials, context, server, httpClientSupplier)));
-    assertTrue(exception.getMessage().contains("smsUrl"));
+    assertTrue(exception.getMessage().contains("SMS Url"));
+  }
+
+  static void projectIdDoNotAcceptNullSmsRegion(
+      Supplier<HttpClient> httpClientSupplier, Consumer<SMSService> service) {
+    UnifiedCredentials credentials =
+        UnifiedCredentials.builder()
+            .setKeyId("foo")
+            .setKeySecret("foo")
+            .setProjectId("foo")
+            .build();
+    SmsContext context = SmsContext.builder().setSmsUrl("https://sms.foo.url").build();
+    ServerConfiguration server = new ServerConfiguration("https://oauth.foo.url");
+    Exception exception =
+        assertThrows(
+            NullPointerException.class,
+            () -> service.accept(new SMSService(credentials, context, server, httpClientSupplier)));
+    assertTrue(exception.getMessage().contains("SMS Region"));
   }
 
   static void projectIdUsagePassed(
@@ -127,7 +151,8 @@ class CredentialsValidationHelper {
             .setKeySecret("foo secret")
             .setProjectId("foo project")
             .build();
-    SmsContext context = SmsContext.builder().setSmsUrl("https://sms.foo.url").build();
+    SmsContext context =
+        SmsContext.builder().setSmsUrl("https://sms.foo.url").setSmsRegion(SMSRegion.US).build();
     ServerConfiguration server = new ServerConfiguration("https://oauth.foo.url");
 
     assertDoesNotThrow(
@@ -139,7 +164,8 @@ class CredentialsValidationHelper {
       Supplier<HttpClient> httpClientSupplier, Consumer<SMSService> service) {
     SmsServicePlanCredentials credentials =
         SmsServicePlanCredentials.builder().setApiToken(null).setServicePlanId("foo plan").build();
-    SmsContext context = SmsContext.builder().setSmsUrl("https://sms.foo.url").build();
+    SmsContext context =
+        SmsContext.builder().setSmsUrl("https://sms.foo.url").setSmsRegion(SMSRegion.US).build();
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
@@ -151,7 +177,8 @@ class CredentialsValidationHelper {
       Supplier<HttpClient> httpClientSupplier, Consumer<SMSService> service) {
     SmsServicePlanCredentials credentials =
         SmsServicePlanCredentials.builder().setApiToken("foo token").setServicePlanId(null).build();
-    SmsContext context = SmsContext.builder().setSmsUrl("https://sms.foo.url").build();
+    SmsContext context =
+        SmsContext.builder().setSmsUrl("https://sms.foo.url").setSmsRegion(SMSRegion.US).build();
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
@@ -162,7 +189,8 @@ class CredentialsValidationHelper {
   static void servicePlanIdDoNotAcceptNullCredentials(
       Supplier<HttpClient> httpClientSupplier, Consumer<SMSService> service) {
 
-    SmsContext context = SmsContext.builder().setSmsUrl("https://sms.foo.url").build();
+    SmsContext context =
+        SmsContext.builder().setSmsUrl("https://sms.foo.url").setSmsRegion(SMSRegion.US).build();
     Exception exception =
         assertThrows(
             NullPointerException.class,
@@ -191,12 +219,27 @@ class CredentialsValidationHelper {
             .setApiToken("foo token")
             .setServicePlanId("foo plan")
             .build();
-    SmsContext context = SmsContext.builder().setSmsUrl(null).build();
+    SmsContext context = SmsContext.builder().setSmsUrl(null).setSmsRegion(SMSRegion.US).build();
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
             () -> service.accept(new SMSService(credentials, context, httpClientSupplier)));
-    assertTrue(exception.getMessage().contains("smsUrl"));
+    assertTrue(exception.getMessage().contains("SMS Url"));
+  }
+
+  static void servicePlanIdDoNotAcceptNullSmsRegion(
+      Supplier<HttpClient> httpClientSupplier, Consumer<SMSService> service) {
+    SmsServicePlanCredentials credentials =
+        SmsServicePlanCredentials.builder()
+            .setApiToken("foo token")
+            .setServicePlanId("foo plan")
+            .build();
+    SmsContext context = SmsContext.builder().setSmsUrl("https://sms.foo.url").build();
+    Exception exception =
+        assertThrows(
+            NullPointerException.class,
+            () -> service.accept(new SMSService(credentials, context, httpClientSupplier)));
+    assertTrue(exception.getMessage().contains("SMS Region"));
   }
 
   static void servicePlanIdUsagePassed(
@@ -207,7 +250,8 @@ class CredentialsValidationHelper {
             .setApiToken("foo token")
             .setServicePlanId("foo plan")
             .build();
-    SmsContext context = SmsContext.builder().setSmsUrl("https://sms.foo.url").build();
+    SmsContext context =
+        SmsContext.builder().setSmsUrl("https://sms.foo.url").setSmsRegion(SMSRegion.US).build();
 
     assertDoesNotThrow(
         () -> service.accept(new SMSService(credentials, context, httpClientSupplier)),

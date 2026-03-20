@@ -47,6 +47,7 @@ public class Config {
     if (!StringUtil.isEmpty(keyId)) {
       builder.setKeyId(keyId);
     }
+
     if (!StringUtil.isEmpty(keySecret)) {
       builder.setKeySecret(keySecret);
     }

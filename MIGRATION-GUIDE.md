@@ -188,6 +188,8 @@ Use the new versioned API under `numbers().v1()` to get access to [NumbersServic
 
 ### [`SMS`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/package-summary.html)
 
+- `region` is no longer defaulting to `US` and is now a required field to use SMS related APIs (see [Configuration](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/models/Configuration.Builder.html#setSmsRegion(com.sinch.sdk.models.SMSRegion))
+ 
 #### Deprecated fields
 - Deprecated `MediaMessageBodyDetails.status` field of type `String` is replaced by `MediaMessageBodyDetails.status` of [StatusEnum](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/inbounds/MediaMessageBodyDetails.StatusEnum.html) type
 - [BinaryRequest.callbackUrl](https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.7.1/com/sinch/sdk/domains/sms/models/v1/batches/request/BinaryRequest.html#getCallbackUrl()) is replaced by [BinaryRequest.eventDestinationTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/batches/request/BinaryRequest.html#getEventDestinationTarget())
