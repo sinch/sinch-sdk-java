@@ -80,7 +80,7 @@ public class ContactCreateEventImpl
   }
 
   @JsonProperty(JSON_PROPERTY_APP_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> appId() {
     return appId;
   }
@@ -113,7 +113,7 @@ public class ContactCreateEventImpl
   }
 
   @JsonProperty(JSON_PROPERTY_PROJECT_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> projectId() {
     return projectId;
   }
@@ -211,7 +211,7 @@ public class ContactCreateEventImpl
     OptionalValue<String> correlationId = OptionalValue.empty();
     OptionalValue<ContactNotification> notification = OptionalValue.empty();
 
-    @JsonProperty(JSON_PROPERTY_APP_ID)
+    @JsonProperty(value = JSON_PROPERTY_APP_ID, required = true)
     public Builder setAppId(String appId) {
       this.appId = OptionalValue.of(appId);
       return this;
@@ -229,7 +229,7 @@ public class ContactCreateEventImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_PROJECT_ID)
+    @JsonProperty(value = JSON_PROPERTY_PROJECT_ID, required = true)
     public Builder setProjectId(String projectId) {
       this.projectId = OptionalValue.of(projectId);
       return this;
