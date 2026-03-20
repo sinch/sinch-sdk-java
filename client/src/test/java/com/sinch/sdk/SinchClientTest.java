@@ -83,11 +83,11 @@ class SinchClientTest {
   }
 
   @Test
-  void defaultConversationUrlAvailable() {
+  void conversationUrlIsNullWhenRegionNotSet() {
     Configuration configuration =
         Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
     SinchClient client = new SinchClient(configuration);
-    assertNotNull(client.getConfiguration().getConversationContext().get().getUrl());
+    assertNull(client.getConfiguration().getConversationContext().get().getUrl());
   }
 
   @Test
@@ -101,12 +101,10 @@ class SinchClientTest {
   }
 
   @Test
-  void defaultConversationTemplateUrlAvailable() {
-    Configuration configuration =
-        Configuration.builder().setConversationRegion(ConversationRegion.EU).build();
+  void conversationTemplateUrlIsNullWhenRegionNotSet() {
+    Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
-    assertNotNull(
-        client.getConfiguration().getConversationContext().get().getTemplateManagementUrl());
+    assertNull(client.getConfiguration().getConversationContext().get().getTemplateManagementUrl());
   }
 
   @Test
@@ -120,12 +118,10 @@ class SinchClientTest {
   }
 
   @Test
-  void defaultConversationRegionIsUS() {
+  void conversationRegionIsNullWhenNotSet() {
     Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
-    assertEquals(
-        ConversationRegion.US,
-        client.getConfiguration().getConversationContext().get().getRegion());
+    assertNull(client.getConfiguration().getConversationContext().get().getRegion());
   }
 
   @Test

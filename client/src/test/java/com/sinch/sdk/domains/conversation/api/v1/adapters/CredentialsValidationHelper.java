@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.models.ConversationContext;
+import com.sinch.sdk.models.ConversationRegion;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -22,6 +23,7 @@ class CredentialsValidationHelper {
     doNotAcceptNullContext(httpClientSupplier, service);
     doNotAcceptEmptyURL(httpClientSupplier, service);
     doNotAcceptNullURL(httpClientSupplier, service);
+    doNotAcceptNullRegion(httpClientSupplier, service);
     passInit(httpClientSupplier, service);
   }
 
@@ -111,7 +113,8 @@ class CredentialsValidationHelper {
             .setKeySecret("foo")
             .setProjectId("foo")
             .build();
-    ConversationContext context = ConversationContext.builder().setUrl("").build();
+    ConversationContext context =
+        ConversationContext.builder().setUrl("").setRegion(ConversationRegion.BR).build();
     ServerConfiguration server = new ServerConfiguration("");
     Exception exception =
         assertThrows(
@@ -131,7 +134,8 @@ class CredentialsValidationHelper {
             .setKeySecret("foo")
             .setProjectId("foo")
             .build();
-    ConversationContext context = ConversationContext.builder().build();
+    ConversationContext context =
+        ConversationContext.builder().setRegion(ConversationRegion.BR).build();
     ServerConfiguration server = new ServerConfiguration("");
     Exception exception =
         assertThrows(
@@ -143,6 +147,26 @@ class CredentialsValidationHelper {
         exception.getMessage().contains("Conversation service requires 'url' to be defined"));
   }
 
+  private static void doNotAcceptNullRegion(
+      Supplier<HttpClient> httpClientSupplier, Consumer<ConversationService> service) {
+    UnifiedCredentials credentials =
+        UnifiedCredentials.builder()
+            .setKeyId("foo")
+            .setKeySecret("foo")
+            .setProjectId("foo")
+            .build();
+    ConversationContext context = ConversationContext.builder().setUrl("https://foo.url").build();
+    ServerConfiguration server = new ServerConfiguration("");
+    Exception exception =
+        assertThrows(
+            NullPointerException.class,
+            () ->
+                service.accept(
+                    new ConversationService(credentials, context, server, httpClientSupplier)));
+    assertTrue(
+        exception.getMessage().contains("Conversation service requires 'region' to be defined"));
+  }
+
   private static void passInit(
       Supplier<HttpClient> httpClientSupplier, Consumer<ConversationService> service) {
     UnifiedCredentials credentials =
@@ -151,7 +175,11 @@ class CredentialsValidationHelper {
             .setKeySecret("foo")
             .setProjectId("foo")
             .build();
-    ConversationContext context = ConversationContext.builder().setUrl("foo").build();
+    ConversationContext context =
+        ConversationContext.builder()
+            .setUrl("foo")
+            .setRegion(ConversationRegion.from("foo"))
+            .build();
     ServerConfiguration server = new ServerConfiguration("foo");
     assertDoesNotThrow(
         () ->

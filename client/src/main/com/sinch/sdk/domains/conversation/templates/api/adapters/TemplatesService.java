@@ -82,21 +82,11 @@ public class TemplatesService
             credentials.getKeySecret(), "Templates service requires 'keySecret' to be defined");
         StringUtil.requireNonEmpty(
             credentials.getProjectId(), "Templates service requires 'projectId' to be defined");
-
+        Objects.requireNonNull(
+            context.getRegion(), "Templates service requires 'region' to be defined");
         StringUtil.requireNonEmpty(
             context.getTemplateManagementUrl(),
             "Templates service requires 'templateManagementUrl' to be defined");
-
-        // To be deprecated with 2.0: no more defaulting to US region
-        if (Boolean.TRUE == context.regionAsDefault()) {
-          LOGGER.warning(
-              String.format(
-                  "Using default region for Conversation Template '%s'. This default fallback will"
-                      + " be removed in next major release and will cause a runtime error. Please"
-                      + " configure the region you want to be used (see"
-                      + " https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.6.0/com/sinch/sdk/models/Configuration.Builder.html#setConversationRegion(com.sinch.sdk.models.ConversationRegion))",
-                  context.getRegion()));
-        }
 
         OAuthManager authManager =
             new OAuthManager(

@@ -207,25 +207,19 @@ public class SinchClient {
     ConversationContext.Builder contextBuilder =
         ConversationContext.builder(configuration.getConversationContext().orElse(null));
 
-    if (null == contextBuilder.getRegion()) {
-      ConversationRegion region = null;
-      if (!StringUtil.isEmpty(props.getProperty(CONVERSATION_REGION_KEY))) {
-        region = ConversationRegion.from(props.getProperty(CONVERSATION_REGION_KEY).trim());
-      }
-      Boolean regionAsDefault = null == region;
-      // To be deprecated with 2.0: no more defaulting to US region
-      if (null == region) {
-        region = ConversationRegion.US;
-      }
-      contextBuilder.setRegion(region).setRegionAsDefault(regionAsDefault);
+    if (null == contextBuilder.getRegion()
+        && !StringUtil.isEmpty(props.getProperty(CONVERSATION_REGION_KEY))) {
+      contextBuilder.setRegion(
+          ConversationRegion.from(props.getProperty(CONVERSATION_REGION_KEY).trim()));
     }
 
-    if (StringUtil.isEmpty(contextBuilder.getUrl())) {
+    if (StringUtil.isEmpty(contextBuilder.getUrl()) && null != contextBuilder.getRegion()) {
       contextBuilder.setUrl(
           String.format(props.getProperty(CONVERSATION_SERVER_KEY), contextBuilder.getRegion()));
     }
 
-    if (StringUtil.isEmpty(contextBuilder.getTemplateManagementUrl())) {
+    if (StringUtil.isEmpty(contextBuilder.getTemplateManagementUrl())
+        && null != contextBuilder.getRegion()) {
       contextBuilder.setTemplateManagementUrl(
           String.format(
               props.getProperty(CONVERSATION_TEMPLATE_SERVER_KEY), contextBuilder.getRegion()));
