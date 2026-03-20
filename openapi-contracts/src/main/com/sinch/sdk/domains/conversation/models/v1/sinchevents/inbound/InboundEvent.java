@@ -21,6 +21,8 @@ public interface InboundEvent
   /**
    * Id of the subscribed app.
    *
+   * <p>Field is required
+   *
    * @return appId
    */
   String getAppId();
@@ -41,6 +43,8 @@ public interface InboundEvent
 
   /**
    * The project ID of the app which has subscribed for the callback.
+   *
+   * <p>Field is required
    *
    * @return projectId
    */

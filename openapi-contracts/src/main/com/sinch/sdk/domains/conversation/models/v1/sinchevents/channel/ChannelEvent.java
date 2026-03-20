@@ -25,6 +25,8 @@ public interface ChannelEvent
   /**
    * Id of the subscribed app.
    *
+   * <p>Field is required
+   *
    * @return appId
    */
   String getAppId();
@@ -45,6 +47,8 @@ public interface ChannelEvent
 
   /**
    * The project ID of the app which has subscribed for the callback.
+   *
+   * <p>Field is required
    *
    * @return projectId
    */
