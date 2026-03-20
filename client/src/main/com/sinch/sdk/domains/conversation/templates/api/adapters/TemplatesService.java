@@ -85,6 +85,8 @@ public class TemplatesService
         Objects.requireNonNull(
             context.getRegion(), "Templates service requires 'region' to be defined");
         StringUtil.requireNonEmpty(
+            context.getRegion().value(), "Templates service requires 'region' to be defined");
+        StringUtil.requireNonEmpty(
             context.getTemplateManagementUrl(),
             "Templates service requires 'templateManagementUrl' to be defined");
 

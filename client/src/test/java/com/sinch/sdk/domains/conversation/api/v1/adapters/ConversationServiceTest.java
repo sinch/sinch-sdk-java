@@ -3,7 +3,6 @@ package com.sinch.sdk.domains.conversation.api.v1.adapters;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import com.sinch.sdk.core.http.HttpClient;
-import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
@@ -62,6 +61,6 @@ class ConversationServiceTest {
 
   @Test
   void passInitWithoutSettings() {
-    assertDoesNotThrow(() -> new TemplatesService(null, null, null, null), "Init passed");
+    assertDoesNotThrow(() -> new ConversationService(null, null, null, null), "Init passed");
   }
 }

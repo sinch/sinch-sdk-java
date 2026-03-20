@@ -24,6 +24,7 @@ class CredentialsValidationHelper {
     doNotAcceptEmptyURL(httpClientSupplier, service);
     doNotAcceptNullURL(httpClientSupplier, service);
     doNotAcceptNullRegion(httpClientSupplier, service);
+    doNotAcceptEmptyRegion(httpClientSupplier, service);
     passInit(httpClientSupplier, service);
   }
 
@@ -160,6 +161,30 @@ class CredentialsValidationHelper {
     Exception exception =
         assertThrows(
             NullPointerException.class,
+            () ->
+                service.accept(
+                    new ConversationService(credentials, context, server, httpClientSupplier)));
+    assertTrue(
+        exception.getMessage().contains("Conversation service requires 'region' to be defined"));
+  }
+
+  private static void doNotAcceptEmptyRegion(
+      Supplier<HttpClient> httpClientSupplier, Consumer<ConversationService> service) {
+    UnifiedCredentials credentials =
+        UnifiedCredentials.builder()
+            .setKeyId("foo")
+            .setKeySecret("foo")
+            .setProjectId("foo")
+            .build();
+    ConversationContext context =
+        ConversationContext.builder()
+            .setUrl("https://foo.url")
+            .setRegion(ConversationRegion.from(""))
+            .build();
+    ServerConfiguration server = new ServerConfiguration("");
+    Exception exception =
+        assertThrows(
+            IllegalArgumentException.class,
             () ->
                 service.accept(
                     new ConversationService(credentials, context, server, httpClientSupplier)));

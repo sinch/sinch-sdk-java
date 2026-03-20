@@ -26,6 +26,7 @@ class CredentialsValidationHelper {
     doNotAcceptEmptyURLTemplates(httpClientSupplier, service);
     doNotAcceptNullURLTemplates(httpClientSupplier, service);
     doNotAcceptNullRegionTemplates(httpClientSupplier, service);
+    doNotAcceptEmptyRegionTemplates(httpClientSupplier, service);
     passInitTemplates(httpClientSupplier, service);
   }
 
@@ -164,6 +165,27 @@ class CredentialsValidationHelper {
     Exception exception =
         assertThrows(
             NullPointerException.class,
+            () ->
+                service.accept(
+                    new TemplatesService(credentials, context, server, httpClientSupplier)));
+    assertTrue(
+        exception.getMessage().contains("Templates service requires 'region' to be defined"));
+  }
+
+  private static void doNotAcceptEmptyRegionTemplates(
+      Supplier<HttpClient> httpClientSupplier, Consumer<TemplatesService> service) {
+    UnifiedCredentials credentials =
+        UnifiedCredentials.builder()
+            .setKeyId("foo")
+            .setKeySecret("foo")
+            .setProjectId("foo")
+            .build();
+    ConversationContext context =
+        ConversationContext.builder().setRegion(ConversationRegion.from("")).build();
+    ServerConfiguration server = new ServerConfiguration("");
+    Exception exception =
+        assertThrows(
+            IllegalArgumentException.class,
             () ->
                 service.accept(
                     new TemplatesService(credentials, context, server, httpClientSupplier)));
