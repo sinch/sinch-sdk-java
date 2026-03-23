@@ -40,15 +40,15 @@ import org.springframework.web.server.ResponseStatusException;
 public class Controller {
 
   private final SinchClient sinchClient;
-  private final ServerBusinessLogic webhooksBusinessLogic;
+  private final ServerBusinessLogic serverBusinessLogic;
 
   @Value("${conversation.sinchevents.secret: }")
   private String sinchEventsSecret;
 
   @Autowired
-  public Controller(SinchClient sinchClient, ServerBusinessLogic webhooksBusinessLogic) {
+  public Controller(SinchClient sinchClient, ServerBusinessLogic serverBusinessLogic) {
     this.sinchClient = sinchClient;
-    this.webhooksBusinessLogic = webhooksBusinessLogic;
+    this.serverBusinessLogic = serverBusinessLogic;
   }
 
   @PostMapping(
@@ -58,7 +58,7 @@ public class Controller {
   public ResponseEntity<Void> ConversationEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    SinchEventsService webhooks = sinchClient.conversation().v1().sinchEvents();
+    SinchEventsService sinchEvents = sinchClient.conversation().v1().sinchEvents();
 
     // set this value to true to validate request from Sinch servers
     // see https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Numbers-Callbacks for
@@ -66,7 +66,7 @@ public class Controller {
     boolean ensureValidAuthentication = false;
     if (ensureValidAuthentication) {
       // ensure valid authentication to handle request
-      var validAuth = webhooks.validateAuthenticationHeader(sinchEventsSecret, headers, body);
+      var validAuth = sinchEvents.validateAuthenticationHeader(sinchEventsSecret, headers, body);
 
       // token validation failed
       if (!validAuth) {
@@ -75,34 +75,34 @@ public class Controller {
     }
 
     // decode the request payload
-    ConversationSinchEvent event = webhooks.parseEvent(body);
+    ConversationSinchEvent event = sinchEvents.parseEvent(body);
 
     // let business layer process the request
     switch (event) {
-      case CapabilityEvent e -> webhooksBusinessLogic.handleCapabilityEvent(e);
-      case ChannelEvent e -> webhooksBusinessLogic.handleChannelEvent(e);
-      case ContactCreateEvent e -> webhooksBusinessLogic.handleContactCreateEvent(e);
-      case ContactDeleteEvent e -> webhooksBusinessLogic.handleContactDeleteEvent(e);
+      case CapabilityEvent e -> serverBusinessLogic.handleCapabilityEvent(e);
+      case ChannelEvent e -> serverBusinessLogic.handleChannelEvent(e);
+      case ContactCreateEvent e -> serverBusinessLogic.handleContactCreateEvent(e);
+      case ContactDeleteEvent e -> serverBusinessLogic.handleContactDeleteEvent(e);
       case ContactIdentitiesDuplicationEvent e ->
-          webhooksBusinessLogic.handleContactIdentitiesDuplicationEvent(e);
-      case ContactMergeEvent e -> webhooksBusinessLogic.handleContactMergeEvent(e);
-      case ContactUpdateEvent e -> webhooksBusinessLogic.handleContactUpdateEvent(e);
-      case ConversationDeleteEvent e -> webhooksBusinessLogic.handleConversationDeleteEvent(e);
-      case ConversationStartEvent e -> webhooksBusinessLogic.handleConversationStartEvent(e);
-      case ConversationStopEvent e -> webhooksBusinessLogic.handleConversationStopEvent(e);
-      case EventDeliveryReceiptEvent e -> webhooksBusinessLogic.handleEventDeliveryReceiptEvent(e);
-      case InboundEvent e -> webhooksBusinessLogic.handleInboundEvent(e);
+          serverBusinessLogic.handleContactIdentitiesDuplicationEvent(e);
+      case ContactMergeEvent e -> serverBusinessLogic.handleContactMergeEvent(e);
+      case ContactUpdateEvent e -> serverBusinessLogic.handleContactUpdateEvent(e);
+      case ConversationDeleteEvent e -> serverBusinessLogic.handleConversationDeleteEvent(e);
+      case ConversationStartEvent e -> serverBusinessLogic.handleConversationStartEvent(e);
+      case ConversationStopEvent e -> serverBusinessLogic.handleConversationStopEvent(e);
+      case EventDeliveryReceiptEvent e -> serverBusinessLogic.handleEventDeliveryReceiptEvent(e);
+      case InboundEvent e -> serverBusinessLogic.handleInboundEvent(e);
       case MessageDeliveryReceiptEvent e ->
-          webhooksBusinessLogic.handleMessageDeliveryReceiptEvent(e);
-      case MessageInboundEvent e -> webhooksBusinessLogic.handleMessageInboundEvent(e);
+          serverBusinessLogic.handleMessageDeliveryReceiptEvent(e);
+      case MessageInboundEvent e -> serverBusinessLogic.handleMessageInboundEvent(e);
       case MessageInboundSmartConversationRedactionEvent e ->
-          webhooksBusinessLogic.handleMessageInboundSmartConversationRedactionEvent(e);
-      case MessageSubmitEvent e -> webhooksBusinessLogic.handleMessageSubmitEvent(e);
-      case OptInEvent e -> webhooksBusinessLogic.handleOptInEvent(e);
-      case OptOutEvent e -> webhooksBusinessLogic.handleOptOutEvent(e);
-      case RecordNotificationEvent e -> webhooksBusinessLogic.handleRecordNotificationEvent(e);
-      case SmartConversationsEvent e -> webhooksBusinessLogic.handleSmartConversationsEvent(e);
-      case UnsupportedCallbackEvent e -> webhooksBusinessLogic.handleUnsupportedCallbackEvent(e);
+          serverBusinessLogic.handleMessageInboundSmartConversationRedactionEvent(e);
+      case MessageSubmitEvent e -> serverBusinessLogic.handleMessageSubmitEvent(e);
+      case OptInEvent e -> serverBusinessLogic.handleOptInEvent(e);
+      case OptOutEvent e -> serverBusinessLogic.handleOptOutEvent(e);
+      case RecordNotificationEvent e -> serverBusinessLogic.handleRecordNotificationEvent(e);
+      case SmartConversationsEvent e -> serverBusinessLogic.handleSmartConversationsEvent(e);
+      case UnsupportedCallbackEvent e -> serverBusinessLogic.handleUnsupportedCallbackEvent(e);
       default -> throw new IllegalStateException("Unexpected value: " + event);
     }
 

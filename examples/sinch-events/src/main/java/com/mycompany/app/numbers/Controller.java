@@ -1,10 +1,8 @@
-package com.mycompany.app.sms;
+package com.mycompany.app.numbers;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.sms.api.v1.SinchEventsService;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReport;
-import com.sinch.sdk.domains.sms.models.v1.inbounds.InboundMessage;
-import com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent;
+import com.sinch.sdk.domains.numbers.api.v1.SinchEventsService;
+import com.sinch.sdk.domains.numbers.models.v1.sinchevents.NumberSinchEvent;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,42 +15,46 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-@RestController("SMS")
+@RestController("Numbers")
 public class Controller {
 
   private final SinchClient sinchClient;
-  private final ServerBusinessLogic serverBusinessLogic;
+  private final ServerBusinessLogic sinchEventsBusinessLogic;
 
-  @Value("${sms.sinchevents.secret: }")
+  /**
+   * The secret value used for Sinch Events calls validation have to equals to the one configured at
+   * number property (HmacSecret).
+   *
+   * @see <a
+   *     href="https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/numbers/api/v1/CallbackConfigurationService.html#update(com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigurationUpdateRequest)">update
+   *     function Javadoc</a>
+   */
+  @Value("${numbers.sinchevents.secret: }")
   private String sinchEventsSecret;
 
   @Autowired
-  public Controller(SinchClient sinchClient, ServerBusinessLogic serverBusinessLogic) {
+  public Controller(SinchClient sinchClient, ServerBusinessLogic sinchEventsBusinessLogic) {
     this.sinchClient = sinchClient;
-    this.serverBusinessLogic = serverBusinessLogic;
+    this.sinchEventsBusinessLogic = sinchEventsBusinessLogic;
   }
 
   @PostMapping(
-      value = "/SmsSinchEvent",
+      value = "/NumbersEvent",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Void> smsEvent(
+  public ResponseEntity<Void> NumbersEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    SinchEventsService sinchEvents = sinchClient.sms().v1().sinchEvents();
+    SinchEventsService sinchEventsService = sinchClient.numbers().v1().sinchEvents();
 
-    // ensure valid authentication to handle request
-    // See
-    // https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/section/Callbacks
-    // Contact your account manager to configure your callback sending headers validation or comment
-    // following line
-    // set this value to true to validate request from Sinch servers
     // see https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Numbers-Callbacks for
     // more information
+    // set this value to true to validate request from Sinch servers
     boolean ensureValidAuthentication = false;
     if (ensureValidAuthentication) {
+      // ensure valid authentication to handle request
       var validAuth =
-          sinchEvents.validateAuthenticationHeader(
+          sinchEventsService.validateAuthenticationHeader(
               sinchEventsSecret,
               // request headers
               headers,
@@ -66,14 +68,10 @@ public class Controller {
     }
 
     // decode the request payload
-    SmsSinchEvent event = sinchEvents.parseEvent(body);
+    NumberSinchEvent event = sinchEventsService.parseEvent(body);
 
     // let business layer process the request
-    switch (event) {
-      case InboundMessage e -> serverBusinessLogic.processInboundEvent(e);
-      case DeliveryReport e -> serverBusinessLogic.processDeliveryReportEvent(e);
-      default -> throw new IllegalStateException("Unexpected value: " + event);
-    }
+    sinchEventsBusinessLogic.numbersEvent(event);
 
     return ResponseEntity.ok().build();
   }

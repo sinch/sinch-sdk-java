@@ -1,8 +1,10 @@
-package com.mycompany.app.numbers;
+package com.mycompany.app.sms;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.numbers.api.v1.SinchEventsService;
-import com.sinch.sdk.domains.numbers.models.v1.sinchevents.NumberSinchEvent;
+import com.sinch.sdk.domains.sms.api.v1.SinchEventsService;
+import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReport;
+import com.sinch.sdk.domains.sms.models.v1.inbounds.InboundMessage;
+import com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,47 +17,43 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-@RestController("Numbers")
+@RestController("SMS")
 public class Controller {
 
   private final SinchClient sinchClient;
-  private final ServerBusinessLogic sinchEventsBusinessLogic;
+  private final ServerBusinessLogic serverBusinessLogic;
 
-  /**
-   * The secret value used for webhook calls validation have to equals to the one configured at
-   * number property (HmacSecret).
-   *
-   * @see <a
-   *     href="https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/numbers/api/v1/CallbackConfigurationService.html#update(com.sinch.sdk.domains.numbers.models.v1.callbacks.request.CallbackConfigurationUpdateRequest)">update
-   *     function Javadoc</a>
-   */
-  @Value("${numbers.webhooks.secret: }")
-  private String webhooksSecret;
+  @Value("${sms.sinchevents.secret: }")
+  private String sinchEventsSecret;
 
   @Autowired
-  public Controller(SinchClient sinchClient, ServerBusinessLogic sinchEventsBusinessLogic) {
+  public Controller(SinchClient sinchClient, ServerBusinessLogic serverBusinessLogic) {
     this.sinchClient = sinchClient;
-    this.sinchEventsBusinessLogic = sinchEventsBusinessLogic;
+    this.serverBusinessLogic = serverBusinessLogic;
   }
 
   @PostMapping(
-      value = "/NumbersEvent",
+      value = "/SmsEvent",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Void> NumbersEvent(
+  public ResponseEntity<Void> smsEvent(
       @RequestHeader Map<String, String> headers, @RequestBody String body) {
 
-    SinchEventsService sinchEventsService = sinchClient.numbers().v1().sinchEvents();
+    SinchEventsService sinchEvents = sinchClient.sms().v1().sinchEvents();
 
+    // ensure valid authentication to handle request
+    // See
+    // https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/section/Callbacks
+    // Contact your account manager to configure your callback sending headers validation or comment
+    // following line
+    // set this value to true to validate request from Sinch servers
     // see https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Numbers-Callbacks for
     // more information
-    // set this value to true to validate request from Sinch servers
     boolean ensureValidAuthentication = false;
     if (ensureValidAuthentication) {
-      // ensure valid authentication to handle request
       var validAuth =
-          sinchEventsService.validateAuthenticationHeader(
-              webhooksSecret,
+          sinchEvents.validateAuthenticationHeader(
+              sinchEventsSecret,
               // request headers
               headers,
               // request payload body
@@ -68,10 +66,14 @@ public class Controller {
     }
 
     // decode the request payload
-    NumberSinchEvent event = sinchEventsService.parseEvent(body);
+    SmsSinchEvent event = sinchEvents.parseEvent(body);
 
     // let business layer process the request
-    sinchEventsBusinessLogic.numbersEvent(event);
+    switch (event) {
+      case InboundMessage e -> serverBusinessLogic.processInboundEvent(e);
+      case DeliveryReport e -> serverBusinessLogic.processDeliveryReportEvent(e);
+      default -> throw new IllegalStateException("Unexpected value: " + event);
+    }
 
     return ResponseEntity.ok().build();
   }
