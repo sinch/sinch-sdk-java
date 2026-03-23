@@ -7,33 +7,34 @@ logging:
 server:
   port: 8090
 
-# only required if you need to call any Sinch services when processing webhooks
-credentials:
+# only required if you need to call any Sinch services when processing Sinch Events
+#credentials:
   # Java SDK domains supporting unified credentials
   # - Numbers
   # - SMS: US/EU are the only supported regions with unified credentials
   # - Conversation
-  project-id:
-  key-id:
-  key-secret:
+  #project-id:
+  #key-id:
+  #key-secret:
 
   # Application related credentials, used by:
   # - Verification
   # - Voice
-  application-api-key:
-  application-api-secret:
+  #application-api-key:
+  #application-api-secret:
 
 numbers:
-  webhooks:
-    # Secret value set for Numbers webhooks calls validation
+  sinchevents:
+    # Secret value set for Numbers Sinch Events calls validation
     # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/numbers/Controller.java) is set to true
     secret:
 
 conversation:
   # Sets the region for Conversation
   # See https://github.com/sinch/sinch-sdk-java/blob/main/client/src/main/com/sinch/sdk/models/ConversationRegion.java for list of supported values
-  # only required if you need to call any Sinch services when processing webhooks
-  region:
+  # only required if you need to call any Sinch services when processing Sinch Events
+  #region:
+
   sinchevents:
     # Secret value set for Conversation Sinch Events calls validation
     # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/conversation/Controller.java) is set to true
@@ -42,8 +43,9 @@ conversation:
 sms:
   # Sets the region for SMS
   # See https://github.com/sinch/sinch-sdk-java/blob/main/client/src/main/com/sinch/sdk/models/SMSRegion.java for full list of supported values but with servicePlanID
-  # only required if you need to call any Sinch services when processing webhooks
-  region:
+  # only required if you need to call any Sinch services when processing Sinch Events
+  #region:
+
   sinchevents:
     # Secret value set for Sms Sinch Events calls validation
     # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/sms/Controller.java) is set to true
