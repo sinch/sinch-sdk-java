@@ -32,16 +32,17 @@ numbers:
 conversation:
   # Sets the region for Conversation
   # See https://github.com/sinch/sinch-sdk-java/blob/main/client/src/main/com/sinch/sdk/models/ConversationRegion.java for list of supported values
+  # only required if you need to call any Sinch services when processing webhooks
   region:
-  webhooks:
-    # Secret value set for Conversation webhooks calls validation
+  sinchevents:
+    # Secret value set for Conversation Sinch Events calls validation
     # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/conversation/Controller.java) is set to true
     secret:
 
 sms:
   # Sets the region for SMS
-  # valid values are "us" and "eu"
   # See https://github.com/sinch/sinch-sdk-java/blob/main/client/src/main/com/sinch/sdk/models/SMSRegion.java for full list of supported values but with servicePlanID
+  # only required if you need to call any Sinch services when processing webhooks
   region:
   sinchevents:
     # Secret value set for Sms Sinch Events calls validation

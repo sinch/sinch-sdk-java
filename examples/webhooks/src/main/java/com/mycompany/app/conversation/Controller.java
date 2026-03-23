@@ -42,8 +42,8 @@ public class Controller {
   private final SinchClient sinchClient;
   private final ServerBusinessLogic webhooksBusinessLogic;
 
-  @Value("${conversation.webhooks.secret: }")
-  private String webhooksSecret;
+  @Value("${conversation.sinchevents.secret: }")
+  private String sinchEventsSecret;
 
   @Autowired
   public Controller(SinchClient sinchClient, ServerBusinessLogic webhooksBusinessLogic) {
@@ -66,7 +66,7 @@ public class Controller {
     boolean ensureValidAuthentication = false;
     if (ensureValidAuthentication) {
       // ensure valid authentication to handle request
-      var validAuth = webhooks.validateAuthenticationHeader(webhooksSecret, headers, body);
+      var validAuth = webhooks.validateAuthenticationHeader(sinchEventsSecret, headers, body);
 
       // token validation failed
       if (!validAuth) {

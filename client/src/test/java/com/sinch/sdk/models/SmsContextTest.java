@@ -3,7 +3,6 @@ package com.sinch.sdk.models;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.core.models.ServerConfiguration;
@@ -24,7 +23,7 @@ class SmsContextTest {
   }
 
   @Test
-  void defaultRegion() {
+  void noDefaultRegion() {
     SmsContext context = SmsContext.builder().build();
     assertNull(context.getSmsRegion());
   }
@@ -36,7 +35,7 @@ class SmsContextTest {
   }
 
   @Test
-  void defaultUrl() {
+  void noDefaultUrl() {
     SmsContext context = SmsContext.builder().build();
     assertNull(context.getSmsUrl());
   }
@@ -64,11 +63,5 @@ class SmsContextTest {
     ServerConfiguration expected = new ServerConfiguration(null);
     SmsContext context = SmsContext.builder().build();
     TestHelpers.recursiveEquals(context.getSmsServer(), expected);
-  }
-
-  @Test
-  void regionAsDefault() {
-    SmsContext context = SmsContext.builder().setRegionAsDefault(true).build();
-    assertTrue(context.regionAsDefault());
   }
 }

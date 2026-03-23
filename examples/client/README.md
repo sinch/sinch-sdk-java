@@ -12,13 +12,13 @@ This directory contains a client application based onto [Sinch SDK java](https:/
 
 Edit [config.properties](src/main/resources/config.properties) file to set credentials to be used to configure the SinchClient.
 
-- To use Numbers or SMS, you need to fill the following settings with your Sinch account information:
+- To use Numbers, SMS or Conversation, you need to fill the following settings with your Sinch account information:
   - `SINCH_PROJECT_ID`=Your Sinch Project ID
   - `SINCH_KEY_ID`=Your Sinch Key ID
   - `SINCH_KEY_SECRET`=Your Sinch Key Secret
 - To use [Verification](https://developers.sinch.com/docs/verification) or [Voice](https://developers.sinch.com/docs/voice) you will need application credentials and fill [config.properties](src/main/resources/config.properties) dedicated section.
-- To use [SMS](https://developers.sinch.com/docs/sms) for regions other than US/EU, you will need service plan ID credentials and fill [config.properties](src/main/resources/config.properties) dedicated section.
-
+- To use [SMS](https://developers.sinch.com/docs/sms) with `servicePlanId`, you will need service plan ID credentials and fill [config.properties](src/main/resources/config.properties) dedicated section.
+- `SMS` and `Conversation` are requiring to define the region to be used to send requests. You can set it in [config.properties](src/main/resources/config.properties) file with the dedicated `REGION` property.
 
 ## Usage
 

@@ -140,18 +140,9 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
         AuthManager oAuthManager = null;
         Objects.requireNonNull(credentials, "Credentials must be defined");
         Objects.requireNonNull(context, "Context must be defined");
-        StringUtil.requireNonEmpty(context.getSmsUrl(), "'smsUrl' must be defined");
-
-        // To be deprecated with 2.0: no more defaulting to US region
-        if (Boolean.TRUE == context.regionAsDefault()) {
-          LOGGER.warning(
-              String.format(
-                  "Using default region for SMS '%s'. This default fallback will be removed in next"
-                      + " major release and will cause a runtime error. Please configure the region"
-                      + " you want to be used (see"
-                      + " https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.6.0/com/sinch/sdk/models/Configuration.Builder.html#setSmsRegion(com.sinch.sdk.models.SMSRegion))",
-                  context.getSmsRegion()));
-        }
+        StringUtil.requireNonEmpty(context.getSmsUrl(), "'SMS Url' must be defined");
+        Objects.requireNonNull(context.getSmsRegion(), "'SMS Region' must be defined");
+        StringUtil.requireNonEmpty(context.getSmsRegion().value(), "'SMS Region' must be defined");
 
         if (credentials instanceof UnifiedCredentials) {
           UnifiedCredentials unifiedCredentials = (UnifiedCredentials) credentials;

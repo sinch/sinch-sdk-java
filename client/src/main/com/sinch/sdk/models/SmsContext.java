@@ -2,17 +2,15 @@ package com.sinch.sdk.models;
 
 import com.sinch.sdk.core.models.ServerConfiguration;
 
-/** Execution context related to Voice domains */
+/** Execution context related to SMS domains */
 public class SmsContext {
 
   private final SMSRegion smsRegion;
   private final String smsUrl;
-  private final Boolean regionAsDefault;
 
-  private SmsContext(SMSRegion smsRegion, String smsUrl, Boolean regionAsDefault) {
+  private SmsContext(SMSRegion smsRegion, String smsUrl) {
     this.smsRegion = smsRegion;
     this.smsUrl = smsUrl;
-    this.regionAsDefault = regionAsDefault;
   }
 
   /**
@@ -50,14 +48,6 @@ public class SmsContext {
   }
 
   /**
-   * @deprecated Helper for transition period until 2.0 release
-   */
-  @Deprecated
-  public Boolean regionAsDefault() {
-    return regionAsDefault;
-  }
-
-  /**
    * Getting Builder
    *
    * @return New Builder instance
@@ -87,7 +77,6 @@ public class SmsContext {
 
     SMSRegion smsRegion;
     String smsUrl;
-    Boolean regionAsDefault;
 
     protected Builder() {}
 
@@ -100,7 +89,6 @@ public class SmsContext {
     protected Builder(SmsContext context) {
       this.smsRegion = null != context ? context.getSmsRegion() : null;
       this.smsUrl = null != context ? context.getSmsUrl() : null;
-      this.regionAsDefault = null != context ? context.regionAsDefault() : null;
     }
 
     public SMSRegion getSmsRegion() {
@@ -109,10 +97,6 @@ public class SmsContext {
 
     public String getSmsUrl() {
       return smsUrl;
-    }
-
-    public Boolean getRegionAsDefault() {
-      return regionAsDefault;
     }
 
     /**
@@ -140,14 +124,6 @@ public class SmsContext {
     }
 
     /**
-     * @deprecated Helper for transition period until 2.0 release
-     */
-    public Builder setRegionAsDefault(Boolean regionAsDefault) {
-      this.regionAsDefault = regionAsDefault;
-      return this;
-    }
-
-    /**
      * Create instance
      *
      * @return The instance build with current builder values
@@ -155,7 +131,7 @@ public class SmsContext {
      */
     public SmsContext build() {
 
-      return new SmsContext(smsRegion, smsUrl, regionAsDefault);
+      return new SmsContext(smsRegion, smsUrl);
     }
   }
 }

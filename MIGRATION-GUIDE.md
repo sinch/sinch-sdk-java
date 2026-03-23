@@ -13,6 +13,7 @@ This guide lists all removed classes and interfaces from SDK V1 and how to migra
 
 ### [`Conversation`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/package-summary.html)
 
+- `region` is no longer defaulting to `US` and is now a required field to use Conversation related APIs (see [Configuration](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/models/Configuration.Builder.html#setConversationRegion(com.sinch.sdk.models.ConversationRegion))
 - Removed support of `SINCH_CHAT` channel.
 - [channelspecific.whatsapp.payment.OrderDetailsPayment](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/conversation/models/v1/messages/types/channelspecific/whatsapp/payment/OrderDetailsPayment.html) removed support of deprecated `payment_settings` in favor of new `payment_buttons` for payment methods.
 - The `metadata` field has been **removed** from the [Conversation](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/conversation/models/v1/conversations/Conversation.html) and [CreateConversationRequest](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/conversations/request/CreateConversationRequest.html) classes. This field is no longer supported in the API and has been replaced with `metadataJson`.
@@ -188,6 +189,8 @@ Use the new versioned API under `numbers().v1()` to get access to [NumbersServic
 
 ### [`SMS`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/package-summary.html)
 
+- `region` is no longer defaulting to `US` and is now a required field to use SMS related APIs (see [Configuration](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/models/Configuration.Builder.html#setSmsRegion(com.sinch.sdk.models.SMSRegion))
+ 
 #### Deprecated fields
 - Deprecated `MediaMessageBodyDetails.status` field of type `String` is replaced by `MediaMessageBodyDetails.status` of [StatusEnum](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/inbounds/MediaMessageBodyDetails.StatusEnum.html) type
 - [BinaryRequest.callbackUrl](https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.7.1/com/sinch/sdk/domains/sms/models/v1/batches/request/BinaryRequest.html#getCallbackUrl()) is replaced by [BinaryRequest.eventDestinationTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/sms/models/v1/batches/request/BinaryRequest.html#getEventDestinationTarget())

@@ -24,7 +24,7 @@ public class Controller {
   private final ServerBusinessLogic serverBusinessLogic;
 
   @Value("${sms.sinchevents.secret: }")
-  private String sincheventsSecret;
+  private String sinchEventsSecret;
 
   @Autowired
   public Controller(SinchClient sinchClient, ServerBusinessLogic serverBusinessLogic) {
@@ -53,7 +53,7 @@ public class Controller {
     if (ensureValidAuthentication) {
       var validAuth =
           sinchEvents.validateAuthenticationHeader(
-              sincheventsSecret,
+              sinchEventsSecret,
               // request headers
               headers,
               // request payload body
