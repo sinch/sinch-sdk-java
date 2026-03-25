@@ -1,5 +1,18 @@
 # Sinch Java SDK Migration Guide
 
+## Table of Contents
+
+- [2.0.0](#200)
+  - [General design change](#general-design-change)
+  - [Conversation](#conversation)
+  - [Numbers](#numbers)
+  - [SMS](#sms)
+  - [Voice](#voice)
+  - [Verification](#verification)
+  - [Mailgun](#mailgun)
+- [1.5.0](#150)
+
+---
 ## 2.0.0
 
 This release removes legacy SDK support. 
@@ -46,23 +59,23 @@ secretForOverriddenTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-ja
 | `OptOutEventNotification`                   | constant values prefixed with `OPT_OUT_`                                                                                                                                                                     |
 | `Templates V1`                              | Removed support for `Templates` V1                                                                                                                                                                           |
 
-| Old class                                             | New class                                                                                                                                                                                                                                    |
-|-------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| api.v1.MessagesService.MessageSource                  | [messages.request.MessageSource](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/messages/request/MessageSource.html)                                                             |
-| messages.types.card.CardMessageMedia                  | [messages.types.media.MediaMessage](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/messages/types/media/MediaMessage.html)                                                       |
-| contact.request.IdentityConflictsListRequest          | [contacts.request.ContactListIdentityConflictsQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/contacts/request/ContactListIdentityConflictsQueryParameters.html) |
-| contact.request.ContactListRequest                    | [contacts.request.ContactsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/contacts/request/ContactsListQueryParameters.html)                                 |
-| contact.response.ContactsListResponse                 | [contacts.response.ContactsListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/contacts/response/ContactsListResponse.html)                                             |
-| conversation.request.ConversationsListRequest         | [conversations.request.ConversationsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/conversations/request/ConversationsListQueryParameters.html)             |
-| conversation.request.ConversationsListRecentRequest   | [conversations.request.ConversationsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/conversations/request/RecentConversationsListQueryParameters.html)       |
-| conversation.response.ConversationsListRecentResponse | [conversations.response.RecentConversationsListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/conversations/response/RecentConversationsListResponse.html)             |
-| events.request.EventsListRequest                      | [events.request.EventsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/events/request/EventsListQueryParameters.html)                                         |
-| messages.request.MessagesListRequest                  | [messages.request.MessagesListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/messages/request/MessagesListQueryParameters.html)                                 |
-| webhooks.Webhook                                      | [eventdestinations.EventDestination](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/eventdestinations/EventDestination.html)                                                     |
-| webhooks.events.ConversationWebhookEvent              | [sinchevents.ConversationSinchEvent](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/sinchevents/ConversationSinchEvent.html)                                                     |
-| webhooks.WebhookTrigger                               | [sinchevents.EventDestinationTrigger](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/eventdestination/EventDestinationTrigger.html)                                              |
-| webhooks.WebhookTargetType                            | [sinchevents.EventDestinationTargetType](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/eventdestination/EventDestinationTargetType.html)                                           |
-| apps.CallbackSettings                                 | [EventDestinationSettings](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/apps/EventDestinationSettings.html)                                                                    |
+| Old class                                             | New class                                                                                                                                                                                                                                      |
+|-------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| api.v1.MessagesService.MessageSource                  | [messages.request.MessageSource](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/messages/request/MessageSource.html)                                                               |
+| messages.types.card.CardMessageMedia                  | [messages.types.media.MediaMessage](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/messages/types/media/MediaMessage.html)                                                         |
+| contact.request.IdentityConflictsListRequest          | [contacts.request.ContactListIdentityConflictsQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/contacts/request/ContactListIdentityConflictsQueryParameters.html)   |
+| contact.request.ContactListRequest                    | [contacts.request.ContactsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/contacts/request/ContactsListQueryParameters.html)                                   |
+| contact.response.ContactsListResponse                 | [contacts.response.ContactsListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/contacts/response/ContactsListResponse.html)                                               |
+| conversation.request.ConversationsListRequest         | [conversations.request.ConversationsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/conversations/request/ConversationsListQueryParameters.html)               |
+| conversation.request.ConversationsListRecentRequest   | [conversations.request.ConversationsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/conversations/request/RecentConversationsListQueryParameters.html)         |
+| conversation.response.ConversationsListRecentResponse | [conversations.response.RecentConversationsListResponse](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/conversations/response/RecentConversationsListResponse.html)               |
+| events.request.EventsListRequest                      | [events.request.EventsListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/events/request/EventsListQueryParameters.html)                                           |
+| messages.request.MessagesListRequest                  | [messages.request.MessagesListQueryParameters](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/messages/request/MessagesListQueryParameters.html)                                   |
+| webhooks.Webhook                                      | [eventdestinations.EventDestination](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/eventdestinations/EventDestination.html)                                                       |
+| webhooks.events.ConversationWebhookEvent              | [sinchevents.ConversationSinchEvent](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/sinchevents/ConversationSinchEvent.html)                                                       |
+| webhooks.WebhookTrigger                               | [sinchevents.EventDestinationTrigger](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/eventdestination/EventDestinationTrigger.html)                                                |
+| webhooks.WebhookTargetType                            | [sinchevents.EventDestinationTargetType](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/eventdestination/EventDestinationTargetType.html)                                          |
+| apps.CallbackSettings                                 | [EventDestinationSettings](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/conversation/models/v1/apps/EventDestinationSettings.html)                                                                      |
 
 #### Replacement Services
 | Old package            | New package                                                                                                                                                              |
@@ -122,10 +135,10 @@ secretForOverriddenTarget](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-ja
 | SmsErrorCode               | [com.sinch.sdk.domains.numbers.models.v1.SmsErrorCode](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/models/v1/SmsErrorCode.html)                                                     |
 | VoiceConfiguration         | [com.sinch.sdk.domains.numbers.models.v1.VoiceConfiguration](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/models/v1/VoiceConfiguration.html)                                         |
 
-| Old enum                          | New enum                                                                                                                                                                                                                                            |
-|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| SmsErrorCode.EXCEEDED_10DLC_LIMIT | [SmsErrorCode.EXCEEDED_10_DLC_LIMIT](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/models/v1/SmsErrorCode.htmll#EXCEEDED_10_DLC_LIMIT)                                                                |
-| NumberEvent.EXCEEDED_10DLC_LIMIT  | [NumberSinchEvent.FailureCodeEnum.EXCEEDED_10_DLC_LIMIT](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/models/v1/sinchevents/NumberSinchEvent.FailureCodeEnum.html#EXCEEDED_10_DLC_LIMIT) |
+| Old enum                           | New enum                                                                                                                                                                                                                                             |
+|------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| SmsErrorCode.EXCEEDED_10DLC_LIMIT  | [SmsErrorCode.EXCEEDED_10_DLC_LIMIT](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/models/v1/SmsErrorCode.htmll#EXCEEDED_10_DLC_LIMIT)                                                                 |
+| NumberEvent.EXCEEDED_10DLC_LIMIT   | [NumberSinchEvent.FailureCodeEnum.EXCEEDED_10_DLC_LIMIT](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/numbers/models/v1/sinchevents/NumberSinchEvent.FailureCodeEnum.html#EXCEEDED_10_DLC_LIMIT)              |
 
 ##### Active Numbers
 | Old class                                                      | New class                                                                                                                                                                                       |
@@ -413,8 +426,8 @@ Use the new versioned API under `voice().v1()` to get access to [VoiceService](h
 | models/v1/webhooks/NotifyEvent                                | [com.sinch.sdk.domains.voice.models.v1.sinchevents.NotificationEvent](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/sinchevents/NotificationEvent.html)    ;                        |
 | models/v1/webhooks/PromptInputEvent                           | [com.sinch.sdk.domains.voice.models.v1.sinchevents.PromptInputEvent](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/sinchevents/PromptInputEvent.html)                               |
 | models/v1/webhooks/CallEvent                                  | [com.sinch.sdk.domains.voice.models.v1.sinchevents.VoiceCallSinchEvent](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/sinchevents/VoiceCallSinchEvent.html)                         |
-| models/v1/webhooks/VoiceWebhookEvent                          | [com.sinch.sdk.domains.voice.models.v1.sinchevents.VoiceSinchEvent](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/sinchevents/VoiceSinchEvent.html)                               |
-| models/v1/webhooks/WebhooksEventRequestType                   | [com.sinch.sdk.domains.voice.models.v1.sinchevents.SinchEventType](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/sinchevents/SinchEventType.html)                        |
+| models/v1/webhooks/VoiceWebhookEvent                          | [com.sinch.sdk.domains.voice.models.v1.sinchevents.VoiceSinchEvent](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/sinchevents/VoiceSinchEvent.html)                                 |
+| models/v1/webhooks/WebhooksEventRequestType                   | [com.sinch.sdk.domains.voice.models.v1.sinchevents.SinchEventType](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/voice/models/v1/sinchevents/SinchEventType.html)                                   |
 
 ### [`Verification`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/2.0.0/com/sinch/sdk/domains/verification/package-summary.html)
 
@@ -534,3 +547,13 @@ Full Mailgun support (introduced in SDK 1.6 as preview) has been **removed** in 
 #### Removed email request/response models
 - `com.sinch.sdk.domains.mailgun.models.v1.emails`
 - `com.sinch.sdk.domains.mailgun.models.v1.templates`
+
+---
+
+## 1.5.0
+Find migration guides in the developer documentation portal:
+- [Messaging](https://developers.sinch.com/docs/sms/sdks/java/migration-guides)
+- [Numbers](https://developers.sinch.com/docs/numbers/sdk/java/migration-guides/migration-to-versioned)
+- [Verification](https://developers.sinch.com/docs/verification/sdk/java/migration-guides/migration-to-versioned)
+- [Voice](https://developers.sinch.com/docs/voice/sdk/java/migration-guides/migration-to-versioned)
+ 
