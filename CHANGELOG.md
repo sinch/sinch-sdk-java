@@ -3,7 +3,7 @@
 All notable changes to the **Sinch Java SDK** are documented in this file.
 
 > **Tag legend**
-> - `[Feature]` — new capability
+> - `[feature]` — new capability
 > - `[fix]` — bug fix
 > - `[deprecation notice]` — will be removed in a future release
 > - `[dependency]` — third-party library update
@@ -22,31 +22,31 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - see [MIGRATION-GUIDE](MIGRATION-GUIDE.md#200)
 
 ### Conversation
-- **[Feature]** Support `Project Settings` API
-- **[Feature]** Support `Contacts Identity Conflicts` API
-- **[Feature]** [Messages] Support new `direction` query parameter for `MessagesListQueryParameterslist`
-- **[Feature]** [Messages] Support `listLastMessagesByChannelIdentity` API
-- **[Feature]** [KakaoTalk] Support `COMMERCE` and `CAROUSEL_COMMERCE` channel specific message
-- **[Feature]** [LINE] Support `NOTIFICATION_MESSAGE_TEMPLATE` channel specific message
+- **[feature]** Support `Project Settings` API
+- **[feature]** Support `Contacts Identity Conflicts` API
+- **[feature]** [Messages] Support new `direction` query parameter for `MessagesListQueryParameters`
+- **[feature]** [Messages] Support `listLastMessagesByChannelIdentity` API
+- **[feature]** [KakaoTalk] Support `COMMERCE` and `CAROUSEL_COMMERCE` channel specific message
+- **[feature]** [LINE] Support `NOTIFICATION_MESSAGE_TEMPLATE` channel specific message
 - **[deprecation notice]** [OrderDetailsSettings] [`PaymentSettings`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/1.7.1/com/sinch/sdk/domains/conversation/models/v1/messages/types/channelspecific/whatsapp/payment/OrderDetailsPayment.html#getPaymentSettings()) deprecated in favor of [`PaymentButtons`](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/1.7.1/com/sinch/sdk/domains/conversation/models/v1/messages/types/channelspecific/whatsapp/payment/OrderDetailsPayment.html#getPaymentButtons())
 
 ### Verification
-- **[Feature]** Support `VerificationSmsDeliveredEvent` webhook events
+- **[feature]** Support `VerificationSmsDeliveredEvent` webhook events
 - FlashCall
-    - **[Feature]** `VerificationStartRequestFlashCall` support `interceptionTimeout` and additionalProperties
-    - **[Feature]** `VerificationStartResponseFlashCall` support additionalProperties
-    - **[Feature]** `VerificationRequestEventResponseFlashCall` support `interceptionTimeout` and additionalProperties
+    - **[feature]** `VerificationStartRequestFlashCall` support `interceptionTimeout` and additionalProperties
+    - **[feature]** `VerificationStartResponseFlashCall` support additionalProperties
+    - **[feature]** `VerificationRequestEventResponseFlashCall` support `interceptionTimeout` and additionalProperties
 - PhoneCall
-    - **[Feature]** `VerificationStartRequestPhoneCall` support additionalProperties
-    - **[Feature]** `VerificationRequestEventResponsePhoneCall` support additionalProperties
+    - **[feature]** `VerificationStartRequestPhoneCall` support additionalProperties
+    - **[feature]** `VerificationRequestEventResponsePhoneCall` support additionalProperties
 - SMS
-    - **[Feature]** `VerificationStartResponseSms` support `codeType` and additionalProperties
-    - **[Feature]** `VerificationRequestEventResponseSms` support `codeType`, `expiry` and additionalProperties
+    - **[feature]** `VerificationStartResponseSms` support `codeType` and additionalProperties
+    - **[feature]** `VerificationRequestEventResponseSms` support `codeType`, `expiry` and additionalProperties
 - WhatsApp
-    - **[Feature]** [BETA] Support `WhatsApp` verification method
+    - **[feature]** [BETA] Support `WhatsApp` verification method
 
 ### Voice
-- **[Feature]** Support new DICE reason values
+- **[feature]** Support new DICE reason values
 
 
 ---
@@ -61,27 +61,27 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[dependency]** Bump Jackson dependency to '2.19.0'
 - **[dependency]** Bump generated sources based onto generator '7.13'
 - **[dependency]** Bump maven-gpg-plugin used to sign released artifacts to '1.6'
-- **[releasing]** migration to replace deprecated OSSRH in favor of SonaType Central
+- **[releasing]** Migration to replace deprecated OSSRH in favor of SonaType Central
 - **[test]** Activate parallel mode for unit tests
 
 ### Conversation
 - **[fix]** Specifications fixed:
   - `TemplateMessage.OmniTemplate` field is now requiring a `TemplateReference` with `version` field filled.
   - `TemplateMessage.ChannelTemplate` still use a `TemplateReference` with `version` field not required.
-              To avoid breaking change and namespace pollution, SDK is accepting a common `TemplateReference` instance and validation about the required `version` field won't be performed at client level by client, but will validate at backend level after having sent the request.
-- **[Feature]** `Reason.channel_code` field added (only for supported by WhatsApp)
+  To avoid breaking changes and namespace pollution, SDK is accepting a common `TemplateReference` instance and validation about the required `version` field won't be performed at client level by client, but will validate at backend level after having sent the request.
+- **[feature]** `Reason.channel_code` field added (only for supported by WhatsApp)
 - **[deprecation notice]** Emit a warning log onto using default region for Conversation (US). To avoid regulation issue, defaulting to US will no longer be supported in future version and defining the region will be required.
 - **[test]** Clean Jackson cache during unit tests
 
 ### Mailgun
-- **[Feature]** `copyVersion` API based now return `version` field in place of deprecated `template` one
+- **[feature]** `copyVersion` API based now return `version` field in place of deprecated `template` one
 - **[doc]** Improve Javadoc rendering by separating summary and notes
 - **[deprecation notice]** Emit a warning log onto using default region for Mailgun (US). To avoid regulation issue, defaulting to US will no longer be supported in future version and defining the region will be required.
 
 ### Numbers
-- **[Feature]** Support Emergency Address
-- **[Feature]** Add new API `rent(phoneNumber)` without configuration
-- **[Feature]** Switch from 'Basic' to 'OAuth' auth
+- **[feature]** Support Emergency Address
+- **[feature]** Add new API `rent(phoneNumber)` without configuration
+- **[feature]** Switch from 'Basic' to 'OAuth' auth
 - **[deprecation notice]**
   - [list(ActiveNumberListRequest)](https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.7.0/com/sinch/sdk/domains/numbers/api/v1/NumbersService.html#list(com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest)) replaced by [list(ActiveNumbersListQueryParameters)](https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.7.0/com/sinch/sdk/domains/numbers/api/v1/ActiveNumberService.html#list(com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters))
   - [searchForAvailableNumbers(AvailableNumberListRequest)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/numbers/api/v1/NumbersService.html#searchForAvailableNumbers(com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest)) replaced by [searchForAvailableNumbers(AvailableNumbersListQueryParameters)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/numbers/api/v1/AvailableNumberService.html#searchForAvailableNumbers(com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters))
@@ -95,66 +95,67 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ### Voice
 - **[test]** Extend end-to-end tests against `notify`
-- **[Feature]** Support SVAML `connectStream` action
-- **[Feature]** Support `asynch` field for `amdRequest`
-- **[Feature]** Define two new values for `AnsweringMachineDetection.Reason` enum
+- **[feature]** Support SVAML `connectStream` action
+- **[feature]** Support `asynch` field for `amdRequest`
+- **[feature]** Define two new values for `AnsweringMachineDetection.Reason` enum
 
 ---
 
 ## v1.6.0 – 2025-04-23
 
 ### SDK
-- **[Feature]** Lazy HTTP client initialization until really required
+- **[feature]** Lazy HTTP client initialization until really required
 
 ### Cross domains
-- **[Feature]** Relax domains init for Webhooks when credentials are not required
-- **[Feature]** Validation against missing required property at protocol level
+- **[feature]** Relax domains init for Webhooks when credentials are not required
+- **[feature]** Validation against missing required property at protocol level
 
 ### Conversation
 - **[fix]** `CardMessage.media_message` is now of `MediaMessage` type
-- **[Feature]** New `ListMessage.media` field is supported
-- **[Feature]** New SG (Singapore) country defined for WhatsApp order payment details
-- **[Feature]** New `ConversationChannelCredentials.credential_ordinal_number` field is supported
-- **[Feature]** New `LineEnterpriseCredentials` is supported
-- **[Feature]** New `LineCredentialsField.isDefault` field is supported
-- **[Feature]** New `SendMessageRequest.message_content_type` is supported (enum of `MessageContentType`)
-- **[Feature]** New `ChannelSpecificMessage` classes for WhatsApp:
+- **[feature]** New `ListMessage.media` field is supported
+- **[feature]** New SG (Singapore) country defined for WhatsApp order payment details
+- **[feature]** New `ConversationChannelCredentials.credential_ordinal_number` field is supported
+- **[feature]** New `LineEnterpriseCredentials` is supported
+- **[feature]** New `LineCredentialsField.isDefault` field is supported
+- **[feature]** New `SendMessageRequest.message_content_type` is supported (enum of `MessageContentType`)
+- **[feature]** New `ChannelSpecificMessage` classes for WhatsApp:
     - `OrderDetails`
     - `OrderStatus`
 - **[deprecation notice]** `CardMessageMedia` class is deprecated in favor of shared `MediaMessage`
 
 ### Mailgun as PREVIEW features
 
-- **[Feature]** Support "Emails"
-- **[Feature]** Support "Templates"
+- **[feature]** Support "Emails"
+- **[feature]** Support "Templates"
 
 ### SMS
 
 - **[fix]** `contentType` VS `content_type` JSON field name for `MediaMessageBodyDetails` at protocol level
-- **[fix]** body requests defined as required at protocol level
+- **[fix]** Body requests defined as required at protocol level
 - **[fix]** `UpdateBinaryRequest.udh` field is required at protocol level
-- **[Feature]** `DryRunPerRecipientDetails.encodingEnum` defined as an enum
-- **[Feature]** List batches query parameters is accepting a list from values of code
+- **[feature]** `DryRunPerRecipientDetails.encodingEnum` defined as an enum
+- **[feature]** List batches query parameters is accepting a list from values of code
 - **[deprecation notice]** List batches query parameters accepting a single from value (replaced by function above)
 - **[deprecation notice]** `DryRunPerRecipientDetails.encoding` is deprecated in favor of `DryRunPerRecipientDetails.encodingEnum`
 
 ### Voice
 
-- **[Feature]** Define `AnsweringMachineDetection` used by `AnsweredCallEvent` and `NotificationEvent`
-- **[Feature]** `conferenceId` field is supported by
+- **[feature]** Define `AnsweringMachineDetection` used by `AnsweredCallEvent` and `NotificationEvent`
+- **[feature]** `conferenceId` field is supported by
     - `AnsweredCallEvent`
     - `DisconnectCallEvent`
     - `IncomingCallEvent`
     - `NotificationEvent`
     - `PromptInputEvent`
-- **[Feature]** `NotificationEvent` support `destination` and `amd` fields
+- **[feature]** `NotificationEvent` support `destination` and `amd` fields
 - **[deprecation notice]** `AnsweredCallEventAnsweringMachineDetection` is replaced by `AnsweringMachineDetection`
 - **[deprecation notice]** Following backend endpoint deprecation `applications.queryNumber` is deprecated
 
 ---
 
 ## v1.5.1 – 2025-03-04
-- **[fix]** conversation fix card message
+### Conversation
+- **[fix]** `CardMessage`
   - `CardMessage.media` field is of `MediaMessage` type (see Javadoc)
   - `CardMessageMedia` class is deprecated (see Javadoc)
 
@@ -162,11 +163,11 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ## v1.5.0 – 2025-02-12
 
-### chore
+### Chore
 - **[dependency]** Updated Jackson dependency to jackson-jakarta-rs-providers v2.18.2
 
 ### SMS
-- **[Feature]** Versioned access to SMS services
+- **[feature]** Versioned access to SMS services
 - **[deprecation notice]** Un-versioned access to SMS services (see SMS migration guide)
 
 ### Conversation
@@ -188,14 +189,14 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ### Voice
 
-- **[Feature]** support V1 design
-- **[Feature]** Follow specification update for SVAML `PlayFiles.locale`, field is no longer required
+- **[feature]** Support V1 design
+- **[feature]** Follow specification update for SVAML `PlayFiles.locale`, field is no longer required
 - **[fix]** Webhooks callbacks validation use case-insensitive headers (`validateAuthenticationHeader`)
 - **[test]** Extend tests coverage (introduced end-to-end tests)
  
 ### Numbers
-- **[Feature]** Specification update for `VoiceConfiguration.scheduledProvisioning` defined as readOnly
-- **[Feature]** Specification update for `SmSConfiguration.scheduledProvisioning` defined as readOnly
+- **[feature]** Specification update for `VoiceConfiguration.scheduledProvisioning` defined as readOnly
+- **[feature]** Specification update for `SmSConfiguration.scheduledProvisioning` defined as readOnly
 
 ---
 
@@ -210,21 +211,21 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 #### Generated sources
 - **[fix]** Generated sources with OptionalValue getter: guard against uninitialized value
-- **[Feature]** contains serializer/deserializer to be used for delegation pattern
-- **[Feature]** enhanced javadoc content
+- **[feature]** Contains serializer/deserializer to be used for delegation pattern
+- **[feature]** Enhanced javadoc content
 
 #### Versioning
-- **[Feature]** Store SDK related information within sources
+- **[feature]** Store SDK related information within sources
 
 ### Conversation
-- **[Feature]** Support Conversation API
+- **[feature]** Support Conversation API
 
 ### Numbers
-- **[Feature]** Helper function for webhook authentication header
-- **[Feature]** readOnly fields are no longer sent over network
+- **[feature]** Helper function for webhook authentication header
+- **[feature]** `readOnly` fields are no longer sent over network
 
 ### SMS
-- **[Feature]** Align with updated specs for DryRun
+- **[feature]** Align with updated specs for DryRun
 
 ### Verification
 - **[fix]** Enforce webhooks validation logic for empty or missing `authorization` header
@@ -239,7 +240,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ## v1.2.3 – 2024-09-04
 ### Verification (SMS)
-- **[Feature]** Support additional properties onto Start verification by SMS
+- **[feature]** Support additional properties onto Start verification by SMS
 
 ---
 
@@ -261,7 +262,7 @@ The existing non-versioned services will no longer be updated with new features/
 
 ### Numbers
 - **[design]** New versioned service simplified access to available or active: APIs are accessible directly under `v1()`
-- **[Feature]** FAX & EST number's configuration. The `VoiceConfiguration` and `ScheduledVoiceProvisioning` models have been updated to reflect the "Unified Numbers" API updates: they now hold values for Fax and Elastic SIP Trunking configuration (respectively with the properties `serviceId` and `trunkId`).
+- **[feature]** FAX & EST number's configuration. The `VoiceConfiguration` and `ScheduledVoiceProvisioning` models have been updated to reflect the "Unified Numbers" API updates: they now hold values for Fax and Elastic SIP Trunking configuration (respectively with the properties `serviceId` and `trunkId`).
 
 ### Verification
 - **[doc]** Error message related to invalid configuration (credentials) fixed
@@ -275,12 +276,12 @@ Starting with the `Verification` domain, you can access services by using the `v
 The existing non-versioned services will no longer be updated with new features/fields.
 
 ### Verification
-- **[Feature]** [Design] Non-versioned `Verification` domain is split into dedicated Start and Report new versioned services
+- **[feature]** [Design] Non-versioned `Verification` domain is split into dedicated Start and Report new versioned services
 
-- **[Feature]** Synchronization with documentation terms
+- **[feature]** Synchronization with documentation terms
   - `Callout` related fields and APIs are now named Phone Call
   - `Seamless` related fields and APIs are now named Data
-- **[Feature]** Start Verification
+- **[feature]** Start Verification
   - `VerificationStartRequestSms`
     - Support `Accept-Language` option
     - Support `code type` option
@@ -289,10 +290,10 @@ The existing non-versioned services will no longer be updated with new features/
     - Support `speech` option
   - `VerificationStartResponseData`
     - **[fix]** `targetUri` field added
-- **[Feature]** Verification Report
+- **[feature]** Verification Report
     - **[fix]** `VerificationReportResponse`: Report service no longer returns a common status response shared with status service, but a dedicated verification report response.
 
-- **[Feature]** Webhooks
+- **[feature]** Webhooks
     - **[deprecation notice]** `VerificationRequestEvent.acceptLanguage` field is deprecated
 
 - **[tech]** Logs
@@ -301,8 +302,8 @@ The existing non-versioned services will no longer be updated with new features/
 ---
 
 ## v1.0.0 – 2024-04-18
-- **[Feature]** Support Numbers API (SDK doc)
-- **[Feature]** Support SMS API (SDK doc). Support both unified credentials (projectId) and service planId
-- **[Feature]** Support Verification API (SDK doc)
-- **[Feature]** Support Voice API (REST API)
+- **[feature]** Support Numbers API (SDK doc)
+- **[feature]** Support SMS API (SDK doc). Support both unified credentials (projectId) and service planId
+- **[feature]** Support Verification API (SDK doc)
+- **[feature]** Support Voice API (REST API)
 - **[doc]** Online javadoc
