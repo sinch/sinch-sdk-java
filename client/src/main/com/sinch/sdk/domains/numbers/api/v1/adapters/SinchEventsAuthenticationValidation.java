@@ -38,8 +38,8 @@ public class SinchEventsAuthenticationValidation {
           new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), HMAC_SHA1_ALGORITHM);
       Mac mac = Mac.getInstance(HMAC_SHA1_ALGORITHM);
       mac.init(secretKeySpec);
-      byte[] hmacSha256 = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));
-      return SinchEventsAuthenticationValidation.bytesToHex(hmacSha256);
+      byte[] hmacSHA1 = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));
+      return SinchEventsAuthenticationValidation.bytesToHex(hmacSHA1);
     } catch (NoSuchAlgorithmException | InvalidKeyException e) {
       throw new ApiAuthException(e);
     }
