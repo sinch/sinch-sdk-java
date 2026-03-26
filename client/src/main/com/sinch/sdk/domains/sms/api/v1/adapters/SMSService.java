@@ -66,14 +66,18 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public BatchesService batches() {
     if (null == this.batches) {
-      instanceLazyInit();
-      this.batches =
-          new BatchesServiceImpl(
-              httpClientSupplier.get(),
-              context.getSmsServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.batches) {
+          instanceLazyInit();
+          this.batches =
+              new BatchesServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getSmsServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.batches;
   }
@@ -81,14 +85,18 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public InboundsService inbounds() {
     if (null == this.inbounds) {
-      instanceLazyInit();
-      this.inbounds =
-          new InboundsServiceImpl(
-              httpClientSupplier.get(),
-              context.getSmsServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.inbounds) {
+          instanceLazyInit();
+          this.inbounds =
+              new InboundsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getSmsServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.inbounds;
   }
@@ -96,14 +104,18 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public DeliveryReportsService deliveryReports() {
     if (null == this.deliveryReports) {
-      instanceLazyInit();
-      this.deliveryReports =
-          new DeliveryReportsServiceImpl(
-              httpClientSupplier.get(),
-              context.getSmsServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.deliveryReports) {
+          instanceLazyInit();
+          this.deliveryReports =
+              new DeliveryReportsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getSmsServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.deliveryReports;
   }
@@ -111,14 +123,18 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public GroupsService groups() {
     if (null == this.groups) {
-      instanceLazyInit();
-      this.groups =
-          new GroupsServiceImpl(
-              httpClientSupplier.get(),
-              context.getSmsServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.groups) {
+          instanceLazyInit();
+          this.groups =
+              new GroupsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getSmsServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.groups;
   }
@@ -126,7 +142,11 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public SinchEventsService sinchEvents() {
     if (null == this.sinchEvents) {
-      this.sinchEvents = new SinchEventsService(new HmacAuthenticationValidation());
+      synchronized (this) {
+        if (null == this.sinchEvents) {
+          this.sinchEvents = new SinchEventsService(new HmacAuthenticationValidation());
+        }
+      }
     }
     return this.sinchEvents;
   }

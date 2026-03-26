@@ -71,63 +71,81 @@ public class VerificationService
     // hidden behind the "Basic" keyword
     // We need both auth manager to handle Sinch Events because of customer will choose from his
     // dashboard which scheme to be used
-    clientAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    clientAuthManagers.put(
+    Map<String, AuthManager> localClientAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    localClientAuthManagers.put(
         BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION,
         useApplicationAuth ? applicationAuthManager : basicAuthManager);
+    clientAuthManagers = localClientAuthManagers;
 
     // here we need both auth managers to handle Sinch Events because we are receiving an
-    // Authorization
-    // header with "Application" keyword
-    sinchEventsAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    sinchEventsAuthManagers.put(BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION, basicAuthManager);
-    sinchEventsAuthManagers.put(
+    // Authorization header with "Application" keyword
+    Map<String, AuthManager> localSinchEventsAuthManagers =
+        new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    localSinchEventsAuthManagers.put(BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION, basicAuthManager);
+    localSinchEventsAuthManagers.put(
         APPLICATION_SECURITY_SCHEME_KEYWORD_VERIFICATION, applicationAuthManager);
+    sinchEventsAuthManagers = localSinchEventsAuthManagers;
   }
 
   public VerificationsStartService verificationStart() {
     if (null == this.startService) {
-      instanceLazyInit();
-      this.startService =
-          new VerificationsStartServiceImpl(
-              httpClientSupplier.get(),
-              context.getVerificationServer(),
-              clientAuthManagers,
-              HttpMapper.getInstance());
+      synchronized (this) {
+        if (null == this.startService) {
+          instanceLazyInit();
+          this.startService =
+              new VerificationsStartServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getVerificationServer(),
+                  clientAuthManagers,
+                  HttpMapper.getInstance());
+        }
+      }
     }
     return this.startService;
   }
 
   public VerificationsReportService verificationReport() {
     if (null == this.reportService) {
-      instanceLazyInit();
-      this.reportService =
-          new VerificationsReportServiceImpl(
-              httpClientSupplier.get(),
-              context.getVerificationServer(),
-              clientAuthManagers,
-              HttpMapper.getInstance());
+      synchronized (this) {
+        if (null == this.reportService) {
+          instanceLazyInit();
+          this.reportService =
+              new VerificationsReportServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getVerificationServer(),
+                  clientAuthManagers,
+                  HttpMapper.getInstance());
+        }
+      }
     }
     return this.reportService;
   }
 
   public VerificationsStatusService verificationStatus() {
     if (null == this.statusService) {
-      instanceLazyInit();
-      this.statusService =
-          new VerificationsStatusServiceImpl(
-              httpClientSupplier.get(),
-              context.getVerificationServer(),
-              clientAuthManagers,
-              HttpMapper.getInstance());
+      synchronized (this) {
+        if (null == this.statusService) {
+          instanceLazyInit();
+          this.statusService =
+              new VerificationsStatusServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getVerificationServer(),
+                  clientAuthManagers,
+                  HttpMapper.getInstance());
+        }
+      }
     }
     return this.statusService;
   }
 
   public SinchEventsService sinchEvents() {
     if (null == this.sinchEvents) {
-      instanceLazyInit();
-      this.sinchEvents = new SinchEventsService(sinchEventsAuthManagers);
+      synchronized (this) {
+        if (null == this.sinchEvents) {
+          instanceLazyInit();
+          this.sinchEvents = new SinchEventsService(sinchEventsAuthManagers);
+        }
+      }
     }
     return this.sinchEvents;
   }

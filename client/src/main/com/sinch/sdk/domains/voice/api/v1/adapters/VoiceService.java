@@ -40,7 +40,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
   private volatile SinchEventsService sinchEvents;
 
   private volatile Map<String, AuthManager> clientAuthManagers;
-  private volatile Map<String, AuthManager> webhooksAuthManagers;
+  private volatile Map<String, AuthManager> sinchEventsAuthManagers;
 
   static {
     LocalLazyInit.init();
@@ -64,82 +64,104 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v1.VoiceSer
         new ApplicationAuthManager(
             credentials.getApplicationKey(), credentials.getApplicationSecret());
 
-    clientAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    clientAuthManagers.put(SECURITY_SCHEME_KEYWORD, applicationAuthManager);
+    Map<String, AuthManager> localClientAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    localClientAuthManagers.put(SECURITY_SCHEME_KEYWORD, applicationAuthManager);
+    clientAuthManagers = localClientAuthManagers;
 
-    // here we need both auth managers to handle webhooks because we are receiving an Authorization
-    // header with "Application" keyword
-    webhooksAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    webhooksAuthManagers.put(BASIC_SECURITY_SCHEME_KEYWORD, basicAuthManager);
-    webhooksAuthManagers.put(APPLICATION_SECURITY_SCHEME_KEYWORD, applicationAuthManager);
+    // here we need both auth managers to handle Sinch Events because we are receiving an
+    // Authorization header with "Application" keyword
+    Map<String, AuthManager> sinchEventsAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    sinchEventsAuthManagers.put(BASIC_SECURITY_SCHEME_KEYWORD, basicAuthManager);
+    sinchEventsAuthManagers.put(APPLICATION_SECURITY_SCHEME_KEYWORD, applicationAuthManager);
+    this.sinchEventsAuthManagers = sinchEventsAuthManagers;
   }
 
   public CalloutsService callouts() {
     if (null == this.callouts) {
-      instanceLazyInit();
-      this.callouts =
-          new CalloutsServiceImpl(
-              httpClientSupplier.get(),
-              context.getVoiceServer(),
-              clientAuthManagers,
-              HttpMapper.getInstance());
+      synchronized (this) {
+        if (null == this.callouts) {
+          instanceLazyInit();
+          this.callouts =
+              new CalloutsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getVoiceServer(),
+                  clientAuthManagers,
+                  HttpMapper.getInstance());
+        }
+      }
     }
     return this.callouts;
   }
 
   public ConferencesService conferences() {
     if (null == this.conferences) {
-      instanceLazyInit();
-      this.conferences =
-          new ConferencesServiceImpl(
-              httpClientSupplier.get(),
-              context.getVoiceServer(),
-              clientAuthManagers,
-              HttpMapper.getInstance());
+      synchronized (this) {
+        if (null == this.conferences) {
+          instanceLazyInit();
+          this.conferences =
+              new ConferencesServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getVoiceServer(),
+                  clientAuthManagers,
+                  HttpMapper.getInstance());
+        }
+      }
     }
     return this.conferences;
   }
 
   public CallsService calls() {
     if (null == this.calls) {
-      instanceLazyInit();
-      this.calls =
-          new CallsServiceImpl(
-              httpClientSupplier.get(),
-              context.getVoiceServer(),
-              clientAuthManagers,
-              HttpMapper.getInstance());
+      synchronized (this) {
+        if (null == this.calls) {
+          instanceLazyInit();
+          this.calls =
+              new CallsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getVoiceServer(),
+                  clientAuthManagers,
+                  HttpMapper.getInstance());
+        }
+      }
     }
     return this.calls;
   }
 
   public ApplicationsService applications() {
     if (null == this.applications) {
-      instanceLazyInit();
-      this.applications =
-          new ApplicationsServiceImpl(
-              httpClientSupplier.get(),
-              context.getVoiceApplicationManagementServer(),
-              clientAuthManagers,
-              HttpMapper.getInstance());
+      synchronized (this) {
+        if (null == this.applications) {
+          instanceLazyInit();
+          this.applications =
+              new ApplicationsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getVoiceApplicationManagementServer(),
+                  clientAuthManagers,
+                  HttpMapper.getInstance());
+        }
+      }
     }
     return this.applications;
   }
 
   public SinchEventsService sinchEvents() {
     if (null == this.sinchEvents) {
-      instanceLazyInit();
-      this.sinchEvents = new SinchEventsService(webhooksAuthManagers);
+      synchronized (this) {
+        if (null == this.sinchEvents) {
+          instanceLazyInit();
+          this.sinchEvents = new SinchEventsService(sinchEventsAuthManagers);
+        }
+      }
     }
     return this.sinchEvents;
   }
 
   private void instanceLazyInit() {
-    if (null != this.clientAuthManagers && null != this.webhooksAuthManagers) {
+    if (null != this.clientAuthManagers && null != this.sinchEventsAuthManagers) {
       return;
     }
     synchronized (this) {
-      if (null == this.clientAuthManagers || null == this.webhooksAuthManagers) {
+      if (null == this.clientAuthManagers || null == this.sinchEventsAuthManagers) {
 
         // Currently, we are not supporting unified credentials: ensure application credentials are
         // defined

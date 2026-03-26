@@ -15,15 +15,17 @@ public class SinchEventsService implements com.sinch.sdk.domains.sms.api.v1.Sinc
     this.authenticationChecker = authenticationChecker;
   }
 
+  @Override
   public SmsSinchEvent parseEvent(String jsonPayload) throws ApiMappingException {
 
     try {
       return Mapper.getInstance().readValue(jsonPayload, SmsSinchEvent.class);
     } catch (JsonProcessingException e) {
-      throw new RuntimeException(e);
+      throw new ApiMappingException(jsonPayload, e);
     }
   }
 
+  @Override
   public boolean validateAuthenticationHeader(
       String secret, Map<String, String> headers, String jsonPayload) {
 

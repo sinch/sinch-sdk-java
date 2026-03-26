@@ -154,7 +154,7 @@ Note: Replace <code>VERSION-YOU-WANT-TO-BE-USED</code> by a Jackson version of a
 ...
 ```
 
-## Changelog & Migration 
+## Changelog & Migration
 For information about the latest changes in the SDK, please refer to the [CHANGELOG](CHANGELOG.md) file
 and the [MIGRATION-GUIDE](MIGRATION-GUIDE.md) for instructions on how to update your code when upgrading to a new major version of the SDK.
 

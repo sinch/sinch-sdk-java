@@ -11,7 +11,7 @@ import java.util.Map;
  * callback URL
  *
  * <p>see <a
- * href="https://developers.sinch.com/docs/numbers/api-reference/numbers/tag/Numbers-Callbacks/#tag/Numbers-Callbacks/operation/ImportedNumberService_EventsCallback">online
+ * href="https://developers.sinch.com/docs/conversation/callbacks#conversation-api-callbacks">online
  * documentation</a>
  *
  * @since 2.0

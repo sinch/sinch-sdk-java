@@ -56,14 +56,18 @@ public class TemplatesService
 
   public TemplatesV2Service v2() {
     if (null == this.v2) {
-      instanceLazyInit();
-      this.v2 =
-          new TemplatesV2ServiceImpl(
-              httpClientSupplier.get(),
-              context.getTemplateManagementServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              this.uriUUID);
+      synchronized (this) {
+        if (null == this.v2) {
+          instanceLazyInit();
+          this.v2 =
+              new TemplatesV2ServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getTemplateManagementServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  this.uriUUID);
+        }
+      }
     }
     return this.v2;
   }

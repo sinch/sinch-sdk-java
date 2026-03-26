@@ -57,12 +57,12 @@ public class SinchClient {
 
   private final Configuration configuration;
 
-  private NumbersService numbers;
-  private SMSService sms;
-  private VerificationService verification;
-  private VoiceService voice;
-  private ConversationService conversation;
-  private HttpClientApache httpClient;
+  private volatile NumbersService numbers;
+  private volatile SMSService sms;
+  private volatile VerificationService verification;
+  private volatile VoiceService voice;
+  private volatile ConversationService conversation;
+  private volatile HttpClientApache httpClient;
 
   /**
    * Create a Sinch Client instance based onto configuration
@@ -247,7 +247,11 @@ public class SinchClient {
    */
   public NumbersService numbers() {
     if (null == numbers) {
-      numbers = numbersInit();
+      synchronized (this) {
+        if (null == numbers) {
+          numbers = numbersInit();
+        }
+      }
     }
     return numbers;
   }
@@ -262,7 +266,11 @@ public class SinchClient {
    */
   public SMSService sms() {
     if (null == sms) {
-      sms = smsInit();
+      synchronized (this) {
+        if (null == sms) {
+          sms = smsInit();
+        }
+      }
     }
     return sms;
   }
@@ -277,7 +285,11 @@ public class SinchClient {
    */
   public VerificationService verification() {
     if (null == verification) {
-      verification = verificationInit();
+      synchronized (this) {
+        if (null == verification) {
+          verification = verificationInit();
+        }
+      }
     }
     return verification;
   }
@@ -292,7 +304,11 @@ public class SinchClient {
    */
   public VoiceService voice() {
     if (null == voice) {
-      voice = voiceInit();
+      synchronized (this) {
+        if (null == voice) {
+          voice = voiceInit();
+        }
+      }
     }
     return voice;
   }
@@ -307,7 +323,11 @@ public class SinchClient {
    */
   public ConversationService conversation() {
     if (null == conversation) {
-      conversation = conversationInit();
+      synchronized (this) {
+        if (null == conversation) {
+          conversation = conversationInit();
+        }
+      }
     }
     return conversation;
   }
@@ -375,21 +395,28 @@ public class SinchClient {
   }
 
   private HttpClientApache getHttpClient() {
-    if (null == httpClient || httpClient.isClosed()) {
-      // TODO: by adding a setter, we could imagine having another HTTP client provided
-      // programmatically or use
-      //  configuration file referencing another class by name
-      this.httpClient = new HttpClientApache();
+    HttpClientApache local = httpClient;
+    if (null == local || local.isClosed()) {
+      synchronized (this) {
+        local = httpClient;
+        if (null == local || local.isClosed()) {
+          // TODO: by adding a setter, we could imagine having another HTTP client provided
+          // programmatically or use configuration file referencing another class by name
+          local = new HttpClientApache();
 
-      // set SDK User-Agent
-      String userAgent = formatSdkUserAgentHeader();
-      this.httpClient.setRequestHeaders(
-          Stream.of(new String[][] {{SDK_USER_AGENT_HEADER, userAgent}})
-              .collect(Collectors.toMap(data -> data[0], data -> data[1])));
+          // set SDK User-Agent
+          String userAgent = formatSdkUserAgentHeader();
+          local.setRequestHeaders(
+              Stream.of(new String[][] {{SDK_USER_AGENT_HEADER, userAgent}})
+                  .collect(Collectors.toMap(data -> data[0], data -> data[1])));
 
-      LOGGER.finest(String.format("HTTP client loaded (%s='%s'", SDK_USER_AGENT_HEADER, userAgent));
+          LOGGER.finest(
+              String.format("HTTP client loaded (%s='%s'", SDK_USER_AGENT_HEADER, userAgent));
+          this.httpClient = local;
+        }
+      }
     }
-    return this.httpClient;
+    return local;
   }
 
   private String formatSdkUserAgentHeader() {

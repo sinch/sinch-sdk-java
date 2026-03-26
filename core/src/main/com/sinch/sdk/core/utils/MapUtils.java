@@ -12,11 +12,14 @@ public class MapUtils {
    */
   public static <T> Map<String, T> getCaseInsensitiveMap(Map<String, T> headers) {
 
-    // convert header keys to use case-insensitive map keys
+    // convert header keys to use case-insensitive map keys, skipping null keys
     Map<String, T> caseInsensitiveHeaders = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    // ensure no null key value
-    headers.entrySet().removeIf(entry -> Objects.isNull(entry.getKey()));
-    caseInsensitiveHeaders.putAll(headers);
+    headers.forEach(
+        (key, value) -> {
+          if (!Objects.isNull(key)) {
+            caseInsensitiveHeaders.put(key, value);
+          }
+        });
     return caseInsensitiveHeaders;
   }
 }
