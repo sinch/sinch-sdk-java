@@ -20,7 +20,7 @@ public class SinchEventsService implements com.sinch.sdk.domains.sms.api.v1.Sinc
     try {
       return Mapper.getInstance().readValue(jsonPayload, SmsSinchEvent.class);
     } catch (JsonProcessingException e) {
-      throw new RuntimeException(e);
+      throw new ApiMappingException(jsonPayload, e);
     }
   }
 
