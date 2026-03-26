@@ -49,7 +49,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
   private Map<String, String> headersToBeAdded;
 
-  private CloseableHttpClient client;
+  private volatile CloseableHttpClient client;
 
   public HttpClientApache() {
     this.client = HttpClients.createDefault();

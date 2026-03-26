@@ -66,54 +66,74 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
 
   AvailableNumberServiceFacade available() {
     if (null == this.available) {
-      instanceLazyInit();
-      this.available =
-          new AvailableNumberServiceFacade(uriUUID, context, httpClientSupplier, authManagers);
+      synchronized (this) {
+        if (null == this.available) {
+          instanceLazyInit();
+          this.available =
+              new AvailableNumberServiceFacade(uriUUID, context, httpClientSupplier, authManagers);
+        }
+      }
     }
     return this.available;
   }
 
   public AvailableRegionsService regions() {
     if (null == this.regions) {
-      instanceLazyInit();
-      this.regions =
-          new AvailableRegionsServiceImpl(
-              httpClientSupplier.get(),
-              context.getNumbersServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.regions) {
+          instanceLazyInit();
+          this.regions =
+              new AvailableRegionsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getNumbersServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.regions;
   }
 
   ActiveNumberServiceFacade active() {
     if (null == this.active) {
-      instanceLazyInit();
-      this.active =
-          new ActiveNumberServiceFacade(uriUUID, this, context, httpClientSupplier, authManagers);
+      synchronized (this) {
+        if (null == this.active) {
+          instanceLazyInit();
+          this.active =
+              new ActiveNumberServiceFacade(
+                  uriUUID, this, context, httpClientSupplier, authManagers);
+        }
+      }
     }
     return this.active;
   }
 
   public EventDestinationsService eventDestinations() {
     if (null == this.eventDestinations) {
-      instanceLazyInit();
-      this.eventDestinations =
-          new EventDestinationsServiceImpl(
-              httpClientSupplier.get(),
-              context.getNumbersServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.eventDestinations) {
+          instanceLazyInit();
+          this.eventDestinations =
+              new EventDestinationsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getNumbersServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.eventDestinations;
   }
 
   public SinchEventsService sinchEvents() {
-
     if (null == this.sinchEvents) {
-      this.sinchEvents = new SinchEventsService(new SinchEventsAuthenticationValidation());
+      synchronized (this) {
+        if (null == this.sinchEvents) {
+          this.sinchEvents = new SinchEventsService(new SinchEventsAuthenticationValidation());
+        }
+      }
     }
     return this.sinchEvents;
   }

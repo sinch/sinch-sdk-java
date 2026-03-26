@@ -96,140 +96,185 @@ public class ConversationService
 
   public AppsService apps() {
     if (null == this.apps) {
-      instanceLazyInit();
-      this.apps =
-          new AppsServiceImpl(
-              httpClientSupplier.get(),
-              context.getServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.apps) {
+          instanceLazyInit();
+          this.apps =
+              new AppsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.apps;
   }
 
   public ContactsService contacts() {
     if (null == this.contacts) {
-      instanceLazyInit();
-      this.contacts =
-          new ContactsServiceImpl(
-              httpClientSupplier.get(),
-              context.getServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.contacts) {
+          instanceLazyInit();
+          this.contacts =
+              new ContactsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.contacts;
   }
 
   public MessagesService messages() {
     if (null == this.messages) {
-      instanceLazyInit();
-      this.messages =
-          new MessagesServiceImpl(
-              httpClientSupplier.get(),
-              context.getServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.messages) {
+          instanceLazyInit();
+          this.messages =
+              new MessagesServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.messages;
   }
 
   public ConversationsService conversations() {
     if (null == this.conversations) {
-      instanceLazyInit();
-      this.conversations =
-          new ConversationsServiceImpl(
-              httpClientSupplier.get(),
-              context.getServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.conversations) {
+          instanceLazyInit();
+          this.conversations =
+              new ConversationsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.conversations;
   }
 
   public EventsService events() {
     if (null == this.events) {
-      instanceLazyInit();
-      this.events =
-          new EventsServiceImpl(
-              httpClientSupplier.get(),
-              context.getServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.events) {
+          instanceLazyInit();
+          this.events =
+              new EventsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.events;
   }
 
   public TranscodingService transcoding() {
     if (null == this.transcoding) {
-      instanceLazyInit();
-      this.transcoding =
-          new TranscodingServiceImpl(
-              httpClientSupplier.get(),
-              context.getServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.transcoding) {
+          instanceLazyInit();
+          this.transcoding =
+              new TranscodingServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.transcoding;
   }
 
   public CapabilityService capability() {
     if (null == this.capability) {
-      instanceLazyInit();
-      this.capability =
-          new CapabilityServiceImpl(
-              httpClientSupplier.get(),
-              context.getServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.capability) {
+          instanceLazyInit();
+          this.capability =
+              new CapabilityServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.capability;
   }
 
   public TemplatesService templates() {
     if (null == this.templates) {
-      this.templates = new TemplatesService(credentials, context, oAuthServer, httpClientSupplier);
+      synchronized (this) {
+        if (null == this.templates) {
+          this.templates =
+              new TemplatesService(credentials, context, oAuthServer, httpClientSupplier);
+        }
+      }
     }
     return this.templates;
   }
 
   public EventDestinationsService eventDestinations() {
     if (null == this.eventDestinations) {
-      instanceLazyInit();
-      this.eventDestinations =
-          new EventDestinationsServiceImpl(
-              httpClientSupplier.get(),
-              context.getServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.eventDestinations) {
+          instanceLazyInit();
+          this.eventDestinations =
+              new EventDestinationsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.eventDestinations;
   }
 
   public SinchEventsService sinchEvents() {
     if (null == this.sinchEvents) {
-      this.sinchEvents = new SinchEventsService(new HmacAuthenticationValidation());
+      synchronized (this) {
+        if (null == this.sinchEvents) {
+          this.sinchEvents = new SinchEventsService(new HmacAuthenticationValidation());
+        }
+      }
     }
     return this.sinchEvents;
   }
 
   public ProjectSettingsService projectSettings() {
     if (null == this.projectSettings) {
-      instanceLazyInit();
-      this.projectSettings =
-          new ProjectSettingsServiceImpl(
-              httpClientSupplier.get(),
-              context.getServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.projectSettings) {
+          instanceLazyInit();
+          this.projectSettings =
+              new ProjectSettingsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.projectSettings;
   }
