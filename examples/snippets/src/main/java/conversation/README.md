@@ -19,6 +19,7 @@ See main [README.md](../../../../README.md) for how to execute snippets
   - [conversation/contacts/Update](./contacts/Update.java)
   - [conversation/contacts/Merge](./contacts/Merge.java)
   - [conversation/contacts/GetChannelProfile](./contacts/GetChannelProfile.java)
+  - [conversation/contacts/ListIdentityConflicts](./contacts/ListIdentityConflicts.java)
 - Conversations
   - [conversation/conversations/List](./conversations/List.java)
   - [conversation/conversations/Create](./conversations/Create.java)
