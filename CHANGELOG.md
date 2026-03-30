@@ -21,6 +21,9 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 ### Major breaking changes with major release
 - see [MIGRATION-GUIDE](MIGRATION-GUIDE.md#200)
 
+### Chore
+- **[dependency]** Updated `maven-model` dependency to `3.9.14` or more recent version to fix security vulnerabilities [#8](https://github.com/sinch/sinch-sdk-java/security/dependabot/8)
+
 ### Conversation
 - **[feature]** Support `Project Settings` API
 - **[feature]** Support `Contacts Identity Conflicts` API
