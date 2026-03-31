@@ -54,7 +54,7 @@ public class CallsSteps {
                         .setText("Sorry, the conference has been cancelled. The call will end now.")
                         .setLocale("en-US")
                         .build()))
-            .setAction(SvamlActionHangup.DEFAULT)
+            .setAction(SvamlActionHangup.SVAML_ACTION_HANGUP)
             .build();
     service.update("1ce0ffee-ca11-ca11-ca11-abcdef000022", request);
     updatePassed = true;
@@ -71,7 +71,7 @@ public class CallsSteps {
                         .setText("Sorry, the conference has been cancelled. The call will end now.")
                         .setLocale("en-US")
                         .build()))
-            .setAction(SvamlActionHangup.DEFAULT)
+            .setAction(SvamlActionHangup.SVAML_ACTION_HANGUP)
             .build();
     try {
       service.update("not-existing-callId", request);
@@ -92,7 +92,7 @@ public class CallsSteps {
                             Arrays.asList(
                                 "https://samples-files.com/samples/Audio/mp3/sample-file-4.mp3"))
                         .build()))
-            .setAction(SvamlActionContinue.DEFAULT)
+            .setAction(SvamlActionContinue.SVAML_ACTION_CONTINUE)
             .build();
     service.manageWithCallLeg("1ce0ffee-ca11-ca11-ca11-abcdef000022", CallLeg.CALLEE, request);
     manageWithCallLegPassed = true;

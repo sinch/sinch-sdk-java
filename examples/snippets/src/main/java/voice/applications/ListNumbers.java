@@ -9,7 +9,7 @@ package voice.applications;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.voice.api.v1.ApplicationsService;
-import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumbersResponse;
+import com.sinch.sdk.domains.voice.models.v1.applications.response.OwnedNumbersListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.util.logging.Logger;
 import utils.Settings;
@@ -35,10 +35,10 @@ public class ListNumbers {
 
     LOGGER.info("Get assigned numbers");
 
-    OwnedNumbersResponse response = applicationsService.listNumbers();
+    OwnedNumbersListResponse response = applicationsService.listNumbers();
 
     LOGGER.info("Response: ");
 
-    response.getNumbers().forEach(f -> LOGGER.info(f.toString()));
+    response.iterator().forEachRemaining(f -> LOGGER.info(f.toString()));
   }
 }

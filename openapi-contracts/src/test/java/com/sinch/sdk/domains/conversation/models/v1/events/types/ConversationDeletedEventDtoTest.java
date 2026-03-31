@@ -19,7 +19,8 @@ public class ConversationDeletedEventDtoTest extends ConversationBaseTest {
   @GivenTextResource("domains/conversation/v1/events/types/ConversationDeletedEventDto.json")
   String json;
 
-  public static ConversationDeletedEvent expectedDto = ConversationDeletedEvent.EMPTY;
+  public static ConversationDeletedEvent expectedDto =
+      ConversationDeletedEvent.CONVERSATION_DELETED_EVENT;
 
   @Test
   void serialize() throws JsonProcessingException, JSONException {

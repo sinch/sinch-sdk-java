@@ -103,6 +103,15 @@ public class SvamlInstructionStartRecordingImpl
     OptionalValue<NameEnum> name = OptionalValue.of(NameEnum.START_RECORDING);
     OptionalValue<StartRecordingOptions> options = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.START_RECORDING)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.START_RECORDING, name));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_OPTIONS)
     public Builder setOptions(StartRecordingOptions options) {
       this.options = OptionalValue.of(options);

@@ -1,40 +1,49 @@
 package com.sinch.sdk.e2e.domains.conversation;
 
-import com.sinch.sdk.domains.conversation.api.v1.ContactService;
+import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.domains.conversation.api.v1.ContactsService;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.contact.Contact;
-import com.sinch.sdk.domains.conversation.models.v1.contact.ContactLanguage;
-import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactCreateRequest;
-import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactGetChannelProfileByContactIdRequest;
-import com.sinch.sdk.domains.conversation.models.v1.contact.request.ContactListRequest;
-import com.sinch.sdk.domains.conversation.models.v1.contact.request.GetChannelProfileConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.contact.response.ContactListResponse;
+import com.sinch.sdk.domains.conversation.models.v1.contacts.Contact;
+import com.sinch.sdk.domains.conversation.models.v1.contacts.ContactLanguage;
+import com.sinch.sdk.domains.conversation.models.v1.contacts.request.ContactCreateRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contacts.request.ContactGetChannelProfileByContactIdRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contacts.request.ContactsListQueryParameters;
+import com.sinch.sdk.domains.conversation.models.v1.contacts.request.GetChannelProfileConversationChannel;
+import com.sinch.sdk.domains.conversation.models.v1.contacts.request.IdentityConflictsListQueryParameters;
+import com.sinch.sdk.domains.conversation.models.v1.contacts.request.MergeContactRequest;
+import com.sinch.sdk.domains.conversation.models.v1.contacts.response.ContactsListResponse;
+import com.sinch.sdk.domains.conversation.models.v1.contacts.response.GetChannelProfileResponse;
+import com.sinch.sdk.domains.conversation.models.v1.contacts.response.IdentityConflictsListResponse;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.util.Arrays;
+import java.util.Iterator;
 import org.junit.jupiter.api.Assertions;
 
 public class ContactsSteps {
 
   static final String CONTACT_ID = "01W4FFL35P4NC4K35CONTACT001";
 
-  ContactService service;
+  ContactsService service;
   Contact createResponse;
-  ContactListResponse listPageResponse;
-  ContactListResponse listAllResponse;
-  ContactListResponse listPageIterateResponse;
+  ContactsListResponse listPageResponse;
+  ContactsListResponse listAllResponse;
+  ContactsListResponse listPageIterateResponse;
   Contact getResponse;
   Contact updateResponse;
   Contact mergeResponse;
   boolean deletePassed;
-  String channelProfileByContactIdResponse;
+  GetChannelProfileResponse channelProfileByContactIdResponse;
+  IdentityConflictsListResponse listIdentityConflictsResponse;
+  IdentityConflictsListResponse listAllIdentityConflictsResponse;
+  IdentityConflictsListResponse listPageIterateIdentityConflictsResponse;
 
   @Given("^the Conversation service \"Contacts\" is available$")
   public void serviceAvailable() {
-    service = Config.getSinchClient().conversation().v1().contact();
+    service = Config.getSinchClient().conversation().v1().contacts();
   }
 
   @When("^I send a request to create a contact$")
@@ -59,21 +68,24 @@ public class ContactsSteps {
   @When("^I send a request to list the existing contacts$")
   public void listPage() {
 
-    ContactListRequest request = ContactListRequest.builder().setPageSize(2).build();
+    ContactsListQueryParameters request =
+        ContactsListQueryParameters.builder().setPageSize(2).build();
     listPageResponse = service.list(request);
   }
 
   @When("^I send a request to list all the contacts$")
   public void listAll() {
 
-    ContactListRequest request = ContactListRequest.builder().setPageSize(2).build();
+    ContactsListQueryParameters request =
+        ContactsListQueryParameters.builder().setPageSize(2).build();
     listAllResponse = service.list(request);
   }
 
   @When("^I iterate manually over the contacts pages$")
   public void listPageIterate() {
 
-    ContactListRequest request = ContactListRequest.builder().setPageSize(2).build();
+    ContactsListQueryParameters request =
+        ContactsListQueryParameters.builder().setPageSize(2).build();
     listPageIterateResponse = service.list(request);
   }
 
@@ -114,7 +126,9 @@ public class ContactsSteps {
   @When("^I send a request to merge a source contact to a destination contact$")
   public void merge() {
 
-    mergeResponse = service.mergeContact("destinationId", CONTACT_ID);
+    mergeResponse =
+        service.mergeContact(
+            "destinationId", MergeContactRequest.builder().setSourceId(CONTACT_ID).build());
   }
 
   @When("^I send a request to get the channel profile of a contact ID$")
@@ -127,6 +141,30 @@ public class ContactsSteps {
                 .setAppId(AppsSteps.APP_ID)
                 .setContactId(CONTACT_ID)
                 .build());
+  }
+
+  @When("^I send a request to list the existing identity conflicts$")
+  public void listIdentityConflictsPage() {
+
+    IdentityConflictsListQueryParameters request =
+        IdentityConflictsListQueryParameters.builder().setPageSize(2).build();
+    listIdentityConflictsResponse = service.listIdentityConflicts(request);
+  }
+
+  @When("^I send a request to list all the identity conflicts$")
+  public void listIdentityConflictsAll() {
+
+    IdentityConflictsListQueryParameters request =
+        IdentityConflictsListQueryParameters.builder().setPageSize(2).build();
+    listAllIdentityConflictsResponse = service.listIdentityConflicts(request);
+  }
+
+  @When("^I iterate manually over the identity conflicts pages$")
+  public void listIdentityConflictsPageIterate() {
+
+    IdentityConflictsListQueryParameters request =
+        IdentityConflictsListQueryParameters.builder().setPageSize(2).build();
+    listPageIterateIdentityConflictsResponse = service.listIdentityConflicts(request);
   }
 
   @Then("the contact is created")
@@ -144,9 +182,15 @@ public class ContactsSteps {
   public void listAllResult(int size) {
 
     // FIXME: to be thread-safe compliant we need to check which variables are set
-    if (null != listAllResponse) Assertions.assertEquals(listAllResponse.stream().count(), size);
-    if (null != listPageIterateResponse)
-      Assertions.assertEquals(listPageIterateResponse.stream().count(), size);
+    Iterator<?> iterator = null;
+    if (null != listAllResponse) {
+      iterator = listAllResponse.iterator();
+    }
+
+    if (null != listPageIterateResponse) {
+      iterator = listPageIterateResponse.iterator();
+    }
+    TestHelpers.checkIteratorItems(iterator, size);
   }
 
   @Then("the contacts iteration result contains the data from \"{int}\" pages")
@@ -154,7 +198,7 @@ public class ContactsSteps {
 
     int pageCount = 0;
 
-    ContactListResponse listPageIterateResponseThreadSafety = listPageIterateResponse;
+    ContactsListResponse listPageIterateResponseThreadSafety = listPageIterateResponse;
     do {
       pageCount++;
       if (!listPageIterateResponseThreadSafety.hasNextPage()) {
@@ -223,7 +267,48 @@ public class ContactsSteps {
 
   @Then("the response contains the profile of the contact on the requested channel")
   public void channelProfileByContactIdResult() {
-    Assertions.assertEquals(channelProfileByContactIdResponse, "Marty McFly FB");
+
+    GetChannelProfileResponse expected =
+        GetChannelProfileResponse.builder().setProfileName("Marty McFly FB").build();
+    TestHelpers.recursiveEquals(channelProfileByContactIdResponse, expected);
+  }
+
+  @Then("the response contains \"{int}\" identity conflicts")
+  public void listIdentityConflictsResults(int count) {
+
+    Assertions.assertEquals(listIdentityConflictsResponse.getContent().size(), count);
+  }
+
+  @Then("the identity conflicts list contains \"{int}\" identity conflicts")
+  public void listIdentityConflictsAllResults(int count) {
+    // FIXME: to be thread-safe compliant we need to check which variables are set
+    Iterator<?> iterator = null;
+    if (null != listAllIdentityConflictsResponse) {
+      iterator = listAllIdentityConflictsResponse.iterator();
+    }
+
+    if (null != listPageIterateIdentityConflictsResponse) {
+      iterator = listPageIterateIdentityConflictsResponse.iterator();
+    }
+    TestHelpers.checkIteratorItems(iterator, count);
+  }
+
+  @Then("the identity conflicts iteration result contains the data from \"{int}\" pages")
+  public void listAllIdentityConflictsPageIterateResults(int count) {
+
+    int pageCount = 0;
+    IdentityConflictsListResponse listPageIterateResponseThreadSafety =
+        listPageIterateIdentityConflictsResponse;
+    do {
+      pageCount++;
+      if (!listPageIterateResponseThreadSafety.hasNextPage()) {
+        break;
+      }
+      listPageIterateResponseThreadSafety = listPageIterateResponseThreadSafety.nextPage();
+
+    } while (true);
+
+    Assertions.assertEquals(pageCount, count);
   }
 
   void checkExpectedContactResponseCommonFields(Contact contactResponse) {

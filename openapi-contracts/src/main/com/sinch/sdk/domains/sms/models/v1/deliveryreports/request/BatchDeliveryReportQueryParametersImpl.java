@@ -1,7 +1,7 @@
 package com.sinch.sdk.domains.sms.models.v1.deliveryreports.request;
 
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptErrorCode;
+import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptStatusCode;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryStatus;
 import java.util.List;
 import java.util.Objects;
@@ -10,12 +10,12 @@ public class BatchDeliveryReportQueryParametersImpl implements BatchDeliveryRepo
 
   private final OptionalValue<QueryReportType> type;
   private final OptionalValue<List<DeliveryStatus>> status;
-  private final OptionalValue<List<DeliveryReceiptErrorCode>> code;
+  private final OptionalValue<List<DeliveryReceiptStatusCode>> code;
 
   private BatchDeliveryReportQueryParametersImpl(
       OptionalValue<QueryReportType> type,
       OptionalValue<List<DeliveryStatus>> status,
-      OptionalValue<List<DeliveryReceiptErrorCode>> code) {
+      OptionalValue<List<DeliveryReceiptStatusCode>> code) {
     this.type = type;
     this.status = status;
     this.code = code;
@@ -29,7 +29,7 @@ public class BatchDeliveryReportQueryParametersImpl implements BatchDeliveryRepo
     return status;
   }
 
-  public OptionalValue<List<DeliveryReceiptErrorCode>> getCode() {
+  public OptionalValue<List<DeliveryReceiptStatusCode>> getCode() {
     return code;
   }
 
@@ -78,7 +78,7 @@ public class BatchDeliveryReportQueryParametersImpl implements BatchDeliveryRepo
   static class Builder implements BatchDeliveryReportQueryParameters.Builder {
     OptionalValue<QueryReportType> type = OptionalValue.empty();
     OptionalValue<List<DeliveryStatus>> status = OptionalValue.empty();
-    OptionalValue<List<DeliveryReceiptErrorCode>> code = OptionalValue.empty();
+    OptionalValue<List<DeliveryReceiptStatusCode>> code = OptionalValue.empty();
 
     protected Builder() {}
 
@@ -103,7 +103,7 @@ public class BatchDeliveryReportQueryParametersImpl implements BatchDeliveryRepo
       return this;
     }
 
-    public Builder setCode(List<DeliveryReceiptErrorCode> code) {
+    public Builder setCode(List<DeliveryReceiptStatusCode> code) {
       this.code = OptionalValue.of(code);
       return this;
     }

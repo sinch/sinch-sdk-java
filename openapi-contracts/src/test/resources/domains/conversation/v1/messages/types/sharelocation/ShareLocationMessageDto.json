@@ -1,0 +1,6 @@
+{
+  "share_location_message": {
+    "title": "Share Location Example",
+    "fallback_url": "https://maps.example.com/?q=37.7749,-122.4194"
+  }
+}

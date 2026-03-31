@@ -81,7 +81,7 @@ public class ActiveNumberImpl implements ActiveNumber {
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callbackUrl";
 
-  private OptionalValue<String> callbackUrl;
+  private OptionalValue<String> eventDestinationTarget;
 
   public ActiveNumberImpl() {}
 
@@ -98,7 +98,7 @@ public class ActiveNumberImpl implements ActiveNumber {
       OptionalValue<Instant> expireAt,
       OptionalValue<SmsConfiguration> smsConfiguration,
       OptionalValue<VoiceConfiguration> voiceConfiguration,
-      OptionalValue<String> callbackUrl) {
+      OptionalValue<String> eventDestinationTarget) {
     this.phoneNumber = phoneNumber;
     this.projectId = projectId;
     this.displayName = displayName;
@@ -111,7 +111,7 @@ public class ActiveNumberImpl implements ActiveNumber {
     this.expireAt = expireAt;
     this.smsConfiguration = smsConfiguration;
     this.voiceConfiguration = voiceConfiguration;
-    this.callbackUrl = callbackUrl;
+    this.eventDestinationTarget = eventDestinationTarget;
   }
 
   @JsonIgnore
@@ -152,7 +152,8 @@ public class ActiveNumberImpl implements ActiveNumber {
     return regionCode.orElse(null);
   }
 
-  @JsonIgnore
+  @JsonProperty(JSON_PROPERTY_REGION_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<String> regionCode() {
     return regionCode;
   }
@@ -243,14 +244,14 @@ public class ActiveNumberImpl implements ActiveNumber {
   }
 
   @JsonIgnore
-  public String getCallbackUrl() {
-    return callbackUrl.orElse(null);
+  public String getEventDestinationTarget() {
+    return eventDestinationTarget.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> callbackUrl() {
-    return callbackUrl;
+  public OptionalValue<String> eventDestinationTarget() {
+    return eventDestinationTarget;
   }
 
   /** Return true if this ActiveNumberResponse object is equal to o. */
@@ -275,7 +276,7 @@ public class ActiveNumberImpl implements ActiveNumber {
         && Objects.equals(this.expireAt, activeNumberResponse.expireAt)
         && Objects.equals(this.smsConfiguration, activeNumberResponse.smsConfiguration)
         && Objects.equals(this.voiceConfiguration, activeNumberResponse.voiceConfiguration)
-        && Objects.equals(this.callbackUrl, activeNumberResponse.callbackUrl);
+        && Objects.equals(this.eventDestinationTarget, activeNumberResponse.eventDestinationTarget);
   }
 
   @Override
@@ -293,7 +294,7 @@ public class ActiveNumberImpl implements ActiveNumber {
         expireAt,
         smsConfiguration,
         voiceConfiguration,
-        callbackUrl);
+        eventDestinationTarget);
   }
 
   @Override
@@ -314,7 +315,9 @@ public class ActiveNumberImpl implements ActiveNumber {
     sb.append("    expireAt: ").append(toIndentedString(expireAt)).append("\n");
     sb.append("    smsConfiguration: ").append(toIndentedString(smsConfiguration)).append("\n");
     sb.append("    voiceConfiguration: ").append(toIndentedString(voiceConfiguration)).append("\n");
-    sb.append("    callbackUrl: ").append(toIndentedString(callbackUrl)).append("\n");
+    sb.append("    eventDestinationTarget: ")
+        .append(toIndentedString(eventDestinationTarget))
+        .append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -343,7 +346,7 @@ public class ActiveNumberImpl implements ActiveNumber {
     OptionalValue<Instant> expireAt = OptionalValue.empty();
     OptionalValue<SmsConfiguration> smsConfiguration = OptionalValue.empty();
     OptionalValue<VoiceConfiguration> voiceConfiguration = OptionalValue.empty();
-    OptionalValue<String> callbackUrl = OptionalValue.empty();
+    OptionalValue<String> eventDestinationTarget = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_PHONE_NUMBER)
     public Builder setPhoneNumber(String phoneNumber) {
@@ -418,8 +421,8 @@ public class ActiveNumberImpl implements ActiveNumber {
     }
 
     @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
-    public Builder setCallbackUrl(String callbackUrl) {
-      this.callbackUrl = OptionalValue.of(callbackUrl);
+    public Builder setEventDestinationTarget(String eventDestinationTarget) {
+      this.eventDestinationTarget = OptionalValue.of(eventDestinationTarget);
       return this;
     }
 
@@ -437,7 +440,7 @@ public class ActiveNumberImpl implements ActiveNumber {
           expireAt,
           smsConfiguration,
           voiceConfiguration,
-          callbackUrl);
+          eventDestinationTarget);
     }
   }
 }

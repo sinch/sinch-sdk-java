@@ -122,6 +122,15 @@ public class SvamlInstructionSayImpl
     OptionalValue<String> text = OptionalValue.empty();
     OptionalValue<String> locale = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.SAY)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.SAY, name));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_TEXT)
     public Builder setText(String text) {
       this.text = OptionalValue.of(text);

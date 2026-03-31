@@ -18,15 +18,15 @@ import java.util.stream.Stream;
 
 /**
  * Continues to set up a call. Available to use in a response to an <a
- * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/ace">Answered
- * Call Event</a> callback.
+ * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/ace">Answered Call
+ * Event</a> callback.
  */
 @JsonDeserialize(builder = SvamlActionContinueImpl.Builder.class)
 public interface SvamlActionContinue
     extends com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction {
 
   /** ready to use action to send a `continue` */
-  SvamlActionContinue DEFAULT = SvamlActionContinue.builder().build();
+  SvamlActionContinue SVAML_ACTION_CONTINUE = SvamlActionContinue.builder().build();
 
   /** The name property. Must have the value <code>continue</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {

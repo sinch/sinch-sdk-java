@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.numbers.api.v1.adapters.NumbersBaseTest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
-import com.sinch.sdk.domains.numbers.models.v1.response.internal.ActiveNumberListResponseInternal;
+import com.sinch.sdk.domains.numbers.models.v1.response.internal.ActiveNumbersListResponseInternal;
 import java.time.Instant;
 import java.util.Arrays;
 import org.json.JSONException;
@@ -42,7 +42,7 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
           .setExpireAt(Instant.parse("2023-10-06T15:49:58.813381Z"))
           .setSmsConfiguration(SmsConfigurationDtoTest.configurationResponse)
           .setVoiceConfiguration(VoiceConfigurationDtoTest.configurationResponseRTC)
-          .setCallbackUrl("foo callback")
+          .setEventDestinationTarget("foo callback")
           .build();
 
   public static ActiveNumberUpdateRequest activeNumberUpdateRequest =
@@ -57,18 +57,18 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
               VoiceConfigurationRTC.builder()
                   .setAppId("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE")
                   .build())
-          .setCallbackUrl("foo callback")
+          .setEventDestinationTarget("foo callback")
           .build();
 
-  public static ActiveNumberListResponseInternal activeNumberList =
-      ActiveNumberListResponseInternal.builder()
+  public static ActiveNumbersListResponseInternal activeNumberList =
+      ActiveNumbersListResponseInternal.builder()
           .setActiveNumbers(Arrays.asList(activeNumber))
           .setNextPageToken("foo")
           .setTotalSize(1)
           .build();
 
-  public static ActiveNumberListResponseInternal activeNumberListLight =
-      ActiveNumberListResponseInternal.builder()
+  public static ActiveNumbersListResponseInternal activeNumberListLight =
+      ActiveNumbersListResponseInternal.builder()
           .setActiveNumbers(
               Arrays.asList(
                   ActiveNumber.builder()
@@ -89,7 +89,7 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
                               .build())
                       .setVoiceConfiguration(
                           VoiceConfigurationRTC.builder().setAppId("app id").build())
-                      .setCallbackUrl("")
+                      .setEventDestinationTarget("")
                       .build()))
           .setNextPageToken("")
           .setTotalSize(1)
@@ -106,8 +106,8 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
   @Test
   void deserializeList() throws JsonProcessingException {
 
-    ActiveNumberListResponseInternal deserializedString =
-        objectMapper.readValue(activeListResponseJson, ActiveNumberListResponseInternal.class);
+    ActiveNumbersListResponseInternal deserializedString =
+        objectMapper.readValue(activeListResponseJson, ActiveNumbersListResponseInternal.class);
 
     TestHelpers.recursiveEquals(activeNumberList, deserializedString);
   }
@@ -115,8 +115,9 @@ public class ActiveNumberDtoTest extends NumbersBaseTest {
   @Test
   void deserializeListLight() throws JsonProcessingException {
 
-    ActiveNumberListResponseInternal deserializedString =
-        objectMapper.readValue(activeListLightResponseJson, ActiveNumberListResponseInternal.class);
+    ActiveNumbersListResponseInternal deserializedString =
+        objectMapper.readValue(
+            activeListLightResponseJson, ActiveNumbersListResponseInternal.class);
 
     TestHelpers.recursiveEquals(activeNumberListLight, deserializedString);
   }

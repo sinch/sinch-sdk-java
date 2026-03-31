@@ -165,6 +165,15 @@ public class SvamlActionParkImpl
     OptionalValue<String> holdPrompt = OptionalValue.empty();
     OptionalValue<Integer> maxDuration = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.PARK)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.PARK, name));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_LOCALE)
     public Builder setLocale(String locale) {
       this.locale = OptionalValue.of(locale);

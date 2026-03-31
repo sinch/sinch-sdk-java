@@ -1,0 +1,66 @@
+{
+  "card_message": {
+    "title": "title value",
+    "description": "description value",
+    "media_message": {
+      "url": "an url value",
+      "thumbnail_url": "another url",
+      "filename_override": "filename override value"
+    },
+    "message_properties": {
+      "whatsapp_header": "WhatsApp Header value"
+    },
+    "height": "MEDIUM",
+    "choices": [
+      {
+        "text_message": {
+          "text": "This is a text message."
+        },
+        "postback_data": "postback_data text"
+      },
+      {
+        "call_message": {
+          "title": "title value",
+          "phone_number": "phone number value"
+        },
+        "postback_data": "postback_data call"
+      },
+      {
+        "location_message": {
+          "coordinates": {
+            "latitude": 47.6279809,
+            "longitude": -2.8229159
+          },
+          "title": "title value",
+          "label": "label value"
+        },
+        "postback_data": "postback_data location"
+      },
+      {
+        "url_message": {
+          "title": "title value",
+          "url": "an url value"
+        },
+        "postback_data": "postback_data url"
+      },
+      {
+        "calendar_message": {
+          "title": "Calendar Message Example",
+          "event_start": "2023-10-01T10:00:00Z",
+          "event_end": "2023-10-01T11:00:00Z",
+          "event_title": "Team Meeting",
+          "event_description": "Monthly team sync-up",
+          "fallback_url": "https://calendar.example.com/event/12345"
+        },
+        "postback_data": "postback calendar_message data value"
+      },
+      {
+        "share_location_message": {
+          "title": "Share Location Example",
+          "fallback_url": "https://maps.example.com/?q=37.7749,-122.4194"
+        },
+        "postback_data": "postback share_location_message data value"
+      }
+    ]
+  }
+}

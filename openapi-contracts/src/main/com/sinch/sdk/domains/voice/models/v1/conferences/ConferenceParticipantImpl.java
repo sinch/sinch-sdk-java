@@ -39,7 +39,7 @@ public class ConferenceParticipantImpl implements ConferenceParticipant {
 
   public static final String JSON_PROPERTY_ONHOLD = "onhold";
 
-  private OptionalValue<Boolean> OnHold;
+  private OptionalValue<Boolean> onHold;
 
   public ConferenceParticipantImpl() {}
 
@@ -48,12 +48,12 @@ public class ConferenceParticipantImpl implements ConferenceParticipant {
       OptionalValue<String> id,
       OptionalValue<Integer> duration,
       OptionalValue<Boolean> muted,
-      OptionalValue<Boolean> OnHold) {
+      OptionalValue<Boolean> onHold) {
     this.cli = cli;
     this.id = id;
     this.duration = duration;
     this.muted = muted;
-    this.OnHold = OnHold;
+    this.onHold = onHold;
   }
 
   @JsonIgnore
@@ -102,13 +102,13 @@ public class ConferenceParticipantImpl implements ConferenceParticipant {
 
   @JsonIgnore
   public Boolean getOnHold() {
-    return OnHold.orElse(null);
+    return onHold.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_ONHOLD)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<Boolean> onHold() {
-    return OnHold;
+    return onHold;
   }
 
   /** Return true if this getConferenceInfoResponse_participants_inner object is equal to o. */
@@ -126,12 +126,12 @@ public class ConferenceParticipantImpl implements ConferenceParticipant {
         && Objects.equals(this.id, getConferenceInfoResponseParticipantsInner.id)
         && Objects.equals(this.duration, getConferenceInfoResponseParticipantsInner.duration)
         && Objects.equals(this.muted, getConferenceInfoResponseParticipantsInner.muted)
-        && Objects.equals(this.OnHold, getConferenceInfoResponseParticipantsInner.OnHold);
+        && Objects.equals(this.onHold, getConferenceInfoResponseParticipantsInner.onHold);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cli, id, duration, muted, OnHold);
+    return Objects.hash(cli, id, duration, muted, onHold);
   }
 
   @Override
@@ -142,7 +142,7 @@ public class ConferenceParticipantImpl implements ConferenceParticipant {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    duration: ").append(toIndentedString(duration)).append("\n");
     sb.append("    muted: ").append(toIndentedString(muted)).append("\n");
-    sb.append("    OnHold: ").append(toIndentedString(OnHold)).append("\n");
+    sb.append("    onHold: ").append(toIndentedString(onHold)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -163,7 +163,7 @@ public class ConferenceParticipantImpl implements ConferenceParticipant {
     OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<Integer> duration = OptionalValue.empty();
     OptionalValue<Boolean> muted = OptionalValue.empty();
-    OptionalValue<Boolean> OnHold = OptionalValue.empty();
+    OptionalValue<Boolean> onHold = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CLI)
     public Builder setCli(String cli) {
@@ -190,13 +190,13 @@ public class ConferenceParticipantImpl implements ConferenceParticipant {
     }
 
     @JsonProperty(JSON_PROPERTY_ONHOLD)
-    public Builder setOnHold(Boolean OnHold) {
-      this.OnHold = OptionalValue.of(OnHold);
+    public Builder setOnHold(Boolean onHold) {
+      this.onHold = OptionalValue.of(onHold);
       return this;
     }
 
     public ConferenceParticipant build() {
-      return new ConferenceParticipantImpl(cli, id, duration, muted, OnHold);
+      return new ConferenceParticipantImpl(cli, id, duration, muted, onHold);
     }
   }
 }

@@ -85,21 +85,12 @@ public class BatchDeliveryReportOneOfImpl extends AbstractOpenApiSchema
           deserialized = tree.traverse(jp.getCodec()).readValueAs(BatchDeliveryReportSMSImpl.class);
           newBatchDeliveryReportOneOfImpl.setActualInstance(deserialized);
           return newBatchDeliveryReportOneOfImpl;
-        case "BatchDeliveryReportMMS":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(BatchDeliveryReportMMSImpl.class);
-          newBatchDeliveryReportOneOfImpl.setActualInstance(deserialized);
-          return newBatchDeliveryReportOneOfImpl;
-        case "BatchDeliveryReportSMS":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(BatchDeliveryReportSMSImpl.class);
-          newBatchDeliveryReportOneOfImpl.setActualInstance(deserialized);
-          return newBatchDeliveryReportOneOfImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for BatchDeliveryReportOneOfImpl."
-                      + " Possible values: delivery_report_mms delivery_report_sms"
-                      + " BatchDeliveryReportMMS BatchDeliveryReportSMS",
+                      + " Possible values: delivery_report_mms delivery_report_sms",
                   discriminatorValue));
       }
 
@@ -235,8 +226,6 @@ public class BatchDeliveryReportOneOfImpl extends AbstractOpenApiSchema
     Map<String, Class<?>> mappings = new HashMap<String, Class<?>>();
     mappings.put("delivery_report_mms", BatchDeliveryReportMMSImpl.class);
     mappings.put("delivery_report_sms", BatchDeliveryReportSMSImpl.class);
-    mappings.put("BatchDeliveryReportMMS", BatchDeliveryReportMMSImpl.class);
-    mappings.put("BatchDeliveryReportSMS", BatchDeliveryReportSMSImpl.class);
     mappings.put("BatchDeliveryReportOneOf", BatchDeliveryReportOneOfImpl.class);
     JSONNavigator.registerDiscriminator(BatchDeliveryReportOneOfImpl.class, "type", mappings);
   }

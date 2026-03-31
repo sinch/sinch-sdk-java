@@ -9,7 +9,7 @@ package conversation.messages;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
-import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListRequest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.MessagesListResponse;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
@@ -45,8 +45,8 @@ public class List {
     LOGGER.info(
         String.format("List messages for application with ID '%s'", conversationApplicationId));
 
-    MessagesListRequest request =
-        MessagesListRequest.builder().setAppId(conversationApplicationId).build();
+    MessagesListQueryParameters request =
+        MessagesListQueryParameters.builder().setAppId(conversationApplicationId).build();
 
     MessagesListResponse response = messagesService.list(request);
 

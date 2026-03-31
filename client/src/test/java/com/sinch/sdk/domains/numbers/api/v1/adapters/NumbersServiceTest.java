@@ -26,12 +26,14 @@ class NumbersServiceTest {
   }
 
   @Test
-  void checkCredentialsCallback() {
-    CredentialsValidationHelper.checkCredentials(() -> httpClient, NumbersService::callback);
+  void checkCredentialsEventDestinations() {
+    CredentialsValidationHelper.checkCredentials(
+        () -> httpClient, NumbersService::eventDestinations);
   }
 
   @Test
-  void checkCredentialsWebhooks() {
-    assertDoesNotThrow(() -> new NumbersService(null, null, null, null).webhooks(), "Init passed");
+  void checkCredentialsSinchEvents() {
+    assertDoesNotThrow(
+        () -> new NumbersService(null, null, null, null).sinchEvents(), "Init passed");
   }
 }

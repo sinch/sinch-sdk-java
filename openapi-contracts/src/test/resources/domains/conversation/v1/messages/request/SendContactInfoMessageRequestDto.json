@@ -87,6 +87,24 @@
                 "url": "an url value"
               },
               "postback_data": "postback url_message data value"
+            },
+            {
+              "calendar_message": {
+                "title": "Calendar Message Example",
+                "event_start": "2023-10-01T10:00:00Z",
+                "event_end": "2023-10-01T11:00:00Z",
+                "event_title": "Team Meeting",
+                "event_description": "Monthly team sync-up",
+                "fallback_url": "https://calendar.example.com/event/12345"
+              },
+              "postback_data": "postback calendar_message data value"
+            },
+            {
+              "share_location_message": {
+                "title": "Share Location Example",
+                "fallback_url": "https://maps.example.com/?q=37.7749,-122.4194"
+              },
+              "postback_data": "postback share_location_message data value"
             }
           ]
         }

@@ -87,7 +87,7 @@ public class MediaResponseImpl implements MediaResponse, BatchResponse {
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callback_url";
 
-  private OptionalValue<String> callbackUrl;
+  private OptionalValue<String> eventDestinationTarget;
 
   public static final String JSON_PROPERTY_CLIENT_REFERENCE = "client_reference";
 
@@ -116,7 +116,7 @@ public class MediaResponseImpl implements MediaResponse, BatchResponse {
       OptionalValue<DeliveryReportType> deliveryReport,
       OptionalValue<Instant> sendAt,
       OptionalValue<Instant> expireAt,
-      OptionalValue<String> callbackUrl,
+      OptionalValue<String> eventDestinationTarget,
       OptionalValue<String> clientReference,
       OptionalValue<Boolean> feedbackEnabled,
       OptionalValue<Boolean> strictValidation) {
@@ -132,7 +132,7 @@ public class MediaResponseImpl implements MediaResponse, BatchResponse {
     this.deliveryReport = deliveryReport;
     this.sendAt = sendAt;
     this.expireAt = expireAt;
-    this.callbackUrl = callbackUrl;
+    this.eventDestinationTarget = eventDestinationTarget;
     this.clientReference = clientReference;
     this.feedbackEnabled = feedbackEnabled;
     this.strictValidation = strictValidation;
@@ -266,14 +266,14 @@ public class MediaResponseImpl implements MediaResponse, BatchResponse {
   }
 
   @JsonIgnore
-  public String getCallbackUrl() {
-    return callbackUrl.orElse(null);
+  public String getEventDestinationTarget() {
+    return eventDestinationTarget.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> callbackUrl() {
-    return callbackUrl;
+  public OptionalValue<String> eventDestinationTarget() {
+    return eventDestinationTarget;
   }
 
   @JsonIgnore
@@ -331,7 +331,7 @@ public class MediaResponseImpl implements MediaResponse, BatchResponse {
         && Objects.equals(this.deliveryReport, mediaResponse.deliveryReport)
         && Objects.equals(this.sendAt, mediaResponse.sendAt)
         && Objects.equals(this.expireAt, mediaResponse.expireAt)
-        && Objects.equals(this.callbackUrl, mediaResponse.callbackUrl)
+        && Objects.equals(this.eventDestinationTarget, mediaResponse.eventDestinationTarget)
         && Objects.equals(this.clientReference, mediaResponse.clientReference)
         && Objects.equals(this.feedbackEnabled, mediaResponse.feedbackEnabled)
         && Objects.equals(this.strictValidation, mediaResponse.strictValidation);
@@ -352,7 +352,7 @@ public class MediaResponseImpl implements MediaResponse, BatchResponse {
         deliveryReport,
         sendAt,
         expireAt,
-        callbackUrl,
+        eventDestinationTarget,
         clientReference,
         feedbackEnabled,
         strictValidation);
@@ -374,7 +374,9 @@ public class MediaResponseImpl implements MediaResponse, BatchResponse {
     sb.append("    deliveryReport: ").append(toIndentedString(deliveryReport)).append("\n");
     sb.append("    sendAt: ").append(toIndentedString(sendAt)).append("\n");
     sb.append("    expireAt: ").append(toIndentedString(expireAt)).append("\n");
-    sb.append("    callbackUrl: ").append(toIndentedString(callbackUrl)).append("\n");
+    sb.append("    eventDestinationTarget: ")
+        .append(toIndentedString(eventDestinationTarget))
+        .append("\n");
     sb.append("    clientReference: ").append(toIndentedString(clientReference)).append("\n");
     sb.append("    feedbackEnabled: ").append(toIndentedString(feedbackEnabled)).append("\n");
     sb.append("    strictValidation: ").append(toIndentedString(strictValidation)).append("\n");
@@ -406,7 +408,7 @@ public class MediaResponseImpl implements MediaResponse, BatchResponse {
     OptionalValue<DeliveryReportType> deliveryReport = OptionalValue.empty();
     OptionalValue<Instant> sendAt = OptionalValue.empty();
     OptionalValue<Instant> expireAt = OptionalValue.empty();
-    OptionalValue<String> callbackUrl = OptionalValue.empty();
+    OptionalValue<String> eventDestinationTarget = OptionalValue.empty();
     OptionalValue<String> clientReference = OptionalValue.empty();
     OptionalValue<Boolean> feedbackEnabled = OptionalValue.empty();
     OptionalValue<Boolean> strictValidation = OptionalValue.empty();
@@ -447,6 +449,15 @@ public class MediaResponseImpl implements MediaResponse, BatchResponse {
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, TypeEnum.MT_MEDIA)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", TypeEnum.MT_MEDIA, type));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_CREATED_AT)
     public Builder setCreatedAt(Instant createdAt) {
       this.createdAt = OptionalValue.of(createdAt);
@@ -478,8 +489,8 @@ public class MediaResponseImpl implements MediaResponse, BatchResponse {
     }
 
     @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
-    public Builder setCallbackUrl(String callbackUrl) {
-      this.callbackUrl = OptionalValue.of(callbackUrl);
+    public Builder setEventDestinationTarget(String eventDestinationTarget) {
+      this.eventDestinationTarget = OptionalValue.of(eventDestinationTarget);
       return this;
     }
 
@@ -515,7 +526,7 @@ public class MediaResponseImpl implements MediaResponse, BatchResponse {
           deliveryReport,
           sendAt,
           expireAt,
-          callbackUrl,
+          eventDestinationTarget,
           clientReference,
           feedbackEnabled,
           strictValidation);

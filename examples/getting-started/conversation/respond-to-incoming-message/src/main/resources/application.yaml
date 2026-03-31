@@ -1,0 +1,20 @@
+# springboot related config file
+
+logging:
+  level:
+    com: INFO
+
+server:
+  port: 8090
+
+credentials:
+  project-id:
+  key-id:
+  key-secret:
+
+conversation:
+  # Sets the region for Conversation
+  # See https://github.com/sinch/sinch-sdk-java/blob/main/client/src/main/com/sinch/sdk/models/ConversationRegion.java for list of supported values
+  # Required: Set it to the same region as the one your app was created in (e.g. "eu").
+  region:
+

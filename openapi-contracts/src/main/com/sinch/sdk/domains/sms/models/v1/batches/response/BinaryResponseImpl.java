@@ -86,7 +86,7 @@ public class BinaryResponseImpl implements BinaryResponse, BatchResponse {
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callback_url";
 
-  private OptionalValue<String> callbackUrl;
+  private OptionalValue<String> eventDestinationTarget;
 
   public static final String JSON_PROPERTY_CLIENT_REFERENCE = "client_reference";
 
@@ -119,7 +119,7 @@ public class BinaryResponseImpl implements BinaryResponse, BatchResponse {
       OptionalValue<DeliveryReportType> deliveryReport,
       OptionalValue<Instant> sendAt,
       OptionalValue<Instant> expireAt,
-      OptionalValue<String> callbackUrl,
+      OptionalValue<String> eventDestinationTarget,
       OptionalValue<String> clientReference,
       OptionalValue<Boolean> feedbackEnabled,
       OptionalValue<Integer> fromTon,
@@ -136,7 +136,7 @@ public class BinaryResponseImpl implements BinaryResponse, BatchResponse {
     this.deliveryReport = deliveryReport;
     this.sendAt = sendAt;
     this.expireAt = expireAt;
-    this.callbackUrl = callbackUrl;
+    this.eventDestinationTarget = eventDestinationTarget;
     this.clientReference = clientReference;
     this.feedbackEnabled = feedbackEnabled;
     this.fromTon = fromTon;
@@ -272,14 +272,14 @@ public class BinaryResponseImpl implements BinaryResponse, BatchResponse {
   }
 
   @JsonIgnore
-  public String getCallbackUrl() {
-    return callbackUrl.orElse(null);
+  public String getEventDestinationTarget() {
+    return eventDestinationTarget.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> callbackUrl() {
-    return callbackUrl;
+  public OptionalValue<String> eventDestinationTarget() {
+    return eventDestinationTarget;
   }
 
   @JsonIgnore
@@ -348,7 +348,7 @@ public class BinaryResponseImpl implements BinaryResponse, BatchResponse {
         && Objects.equals(this.deliveryReport, binaryResponse.deliveryReport)
         && Objects.equals(this.sendAt, binaryResponse.sendAt)
         && Objects.equals(this.expireAt, binaryResponse.expireAt)
-        && Objects.equals(this.callbackUrl, binaryResponse.callbackUrl)
+        && Objects.equals(this.eventDestinationTarget, binaryResponse.eventDestinationTarget)
         && Objects.equals(this.clientReference, binaryResponse.clientReference)
         && Objects.equals(this.feedbackEnabled, binaryResponse.feedbackEnabled)
         && Objects.equals(this.fromTon, binaryResponse.fromTon)
@@ -370,7 +370,7 @@ public class BinaryResponseImpl implements BinaryResponse, BatchResponse {
         deliveryReport,
         sendAt,
         expireAt,
-        callbackUrl,
+        eventDestinationTarget,
         clientReference,
         feedbackEnabled,
         fromTon,
@@ -393,7 +393,9 @@ public class BinaryResponseImpl implements BinaryResponse, BatchResponse {
     sb.append("    deliveryReport: ").append(toIndentedString(deliveryReport)).append("\n");
     sb.append("    sendAt: ").append(toIndentedString(sendAt)).append("\n");
     sb.append("    expireAt: ").append(toIndentedString(expireAt)).append("\n");
-    sb.append("    callbackUrl: ").append(toIndentedString(callbackUrl)).append("\n");
+    sb.append("    eventDestinationTarget: ")
+        .append(toIndentedString(eventDestinationTarget))
+        .append("\n");
     sb.append("    clientReference: ").append(toIndentedString(clientReference)).append("\n");
     sb.append("    feedbackEnabled: ").append(toIndentedString(feedbackEnabled)).append("\n");
     sb.append("    fromTon: ").append(toIndentedString(fromTon)).append("\n");
@@ -426,7 +428,7 @@ public class BinaryResponseImpl implements BinaryResponse, BatchResponse {
     OptionalValue<DeliveryReportType> deliveryReport = OptionalValue.empty();
     OptionalValue<Instant> sendAt = OptionalValue.empty();
     OptionalValue<Instant> expireAt = OptionalValue.empty();
-    OptionalValue<String> callbackUrl = OptionalValue.empty();
+    OptionalValue<String> eventDestinationTarget = OptionalValue.empty();
     OptionalValue<String> clientReference = OptionalValue.empty();
     OptionalValue<Boolean> feedbackEnabled = OptionalValue.empty();
     OptionalValue<Integer> fromTon = OptionalValue.empty();
@@ -468,6 +470,15 @@ public class BinaryResponseImpl implements BinaryResponse, BatchResponse {
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, TypeEnum.MT_BINARY)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", TypeEnum.MT_BINARY, type));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_CREATED_AT)
     public Builder setCreatedAt(Instant createdAt) {
       this.createdAt = OptionalValue.of(createdAt);
@@ -499,8 +510,8 @@ public class BinaryResponseImpl implements BinaryResponse, BatchResponse {
     }
 
     @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
-    public Builder setCallbackUrl(String callbackUrl) {
-      this.callbackUrl = OptionalValue.of(callbackUrl);
+    public Builder setEventDestinationTarget(String eventDestinationTarget) {
+      this.eventDestinationTarget = OptionalValue.of(eventDestinationTarget);
       return this;
     }
 
@@ -542,7 +553,7 @@ public class BinaryResponseImpl implements BinaryResponse, BatchResponse {
           deliveryReport,
           sendAt,
           expireAt,
-          callbackUrl,
+          eventDestinationTarget,
           clientReference,
           feedbackEnabled,
           fromTon,

@@ -5,12 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
-import com.sinch.sdk.models.MailgunContext;
-import com.sinch.sdk.models.MailgunRegion;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.VoiceContext;
 import com.sinch.sdk.models.VoiceRegion;
-import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 class SinchClientTest {
@@ -52,10 +49,10 @@ class SinchClientTest {
   }
 
   @Test
-  void defaultSmsRegionIsUS() {
+  void smsRegionIsNullWhenNotSet() {
     Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
-    assertEquals(SMSRegion.US, client.getConfiguration().getSmsContext().get().getSmsRegion());
+    assertNull(client.getConfiguration().getSmsContext().get().getSmsRegion());
   }
 
   @Test
@@ -67,11 +64,30 @@ class SinchClientTest {
   }
 
   @Test
-  void defaultConversationUrlAvailable() {
+  void smsUrlFromRegion() {
+    Configuration configuration = Configuration.builder().setSmsRegion(SMSRegion.AU).build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        "https://zt.au.sms.api.sinch.com",
+        client.getConfiguration().getSmsContext().get().getSmsServer().getUrl());
+  }
+
+  @Test
+  void smsUrlFromRegionWithServicePlanId() {
+    Configuration configuration =
+        Configuration.builder().setSmsServicePlanId("foo").setSmsRegion(SMSRegion.AU).build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        "https://au.sms.api.sinch.com",
+        client.getConfiguration().getSmsContext().get().getSmsServer().getUrl());
+  }
+
+  @Test
+  void conversationUrlIsNullWhenRegionNotSet() {
     Configuration configuration =
         Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
     SinchClient client = new SinchClient(configuration);
-    assertNotNull(client.getConfiguration().getConversationContext().get().getUrl());
+    assertNull(client.getConfiguration().getConversationContext().get().getUrl());
   }
 
   @Test
@@ -85,12 +101,10 @@ class SinchClientTest {
   }
 
   @Test
-  void defaultConversationTemplateUrlAvailable() {
-    Configuration configuration =
-        Configuration.builder().setConversationRegion(ConversationRegion.EU).build();
+  void conversationTemplateUrlIsNullWhenRegionNotSet() {
+    Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
-    assertNotNull(
-        client.getConfiguration().getConversationContext().get().getTemplateManagementUrl());
+    assertNull(client.getConfiguration().getConversationContext().get().getTemplateManagementUrl());
   }
 
   @Test
@@ -104,12 +118,10 @@ class SinchClientTest {
   }
 
   @Test
-  void defaultConversationRegionIsUS() {
+  void conversationRegionIsNullWhenNotSet() {
     Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
-    assertEquals(
-        ConversationRegion.US,
-        client.getConfiguration().getConversationContext().get().getRegion());
+    assertNull(client.getConfiguration().getConversationContext().get().getRegion());
   }
 
   @Test
@@ -205,97 +217,5 @@ class SinchClientTest {
     assertEquals(
         client.getConfiguration().getVoiceContext().get().getVoiceApplicationManagementUrl(),
         "my foo url");
-  }
-
-  @Test
-  void defaultMailgunUrlAvailable() {
-    Configuration configuration = Configuration.builder().build();
-    SinchClient client = new SinchClient(configuration);
-    assertNotNull(client.getConfiguration().getMailgunContext().get().getUrl());
-  }
-
-  @Test
-  void defaultMailgunRegionIsUS() {
-    Configuration configuration = Configuration.builder().build();
-    SinchClient client = new SinchClient(configuration);
-    assertEquals(client.getConfiguration().getMailgunContext().get().getRegion(), MailgunRegion.US);
-  }
-
-  @Test
-  void defaultMailgunStorages() {
-    Configuration configuration = Configuration.builder().build();
-    SinchClient client = new SinchClient(configuration);
-    assertNotNull(client.getConfiguration().getMailgunContext().get().getStorageServers());
-    assertFalse(client.getConfiguration().getMailgunContext().get().getStorageServers().isEmpty());
-  }
-
-  @Test
-  void mailgunUrlFromRegion() {
-    Configuration configuration =
-        Configuration.builder()
-            .setMailgunContext(
-                MailgunContext.builder().setRegion(MailgunRegion.from("foo value")).build())
-            .build();
-    SinchClient client = new SinchClient(configuration);
-    assertEquals(
-        client.getConfiguration().getMailgunContext().get().getUrl(),
-        "https://api.foo value.mailgun.net");
-  }
-
-  @Test
-  void mailgunUrlFromUrl() {
-    Configuration configuration =
-        Configuration.builder()
-            .setMailgunContext(
-                MailgunContext.builder()
-                    .setRegion(MailgunRegion.from("foo value"))
-                    .setUrl("my foo url")
-                    .build())
-            .build();
-    SinchClient client = new SinchClient(configuration);
-    assertEquals(client.getConfiguration().getMailgunContext().get().getUrl(), "my foo url");
-  }
-
-  @Test
-  void mailgunStoragesUrlFromRegion() {
-    Configuration configuration =
-        Configuration.builder()
-            .setMailgunContext(MailgunContext.builder().setRegion(MailgunRegion.from("EU")).build())
-            .build();
-    SinchClient client = new SinchClient(configuration);
-    assertEquals(
-        Collections.singletonList("https://storage-europe-west1.api.mailgun.net"),
-        client.getConfiguration().getMailgunContext().get().getStorageUrls());
-  }
-
-  @Test
-  void mailgunStoragesUrlFromStorageUrlWithoutRegion() {
-    Configuration configuration =
-        Configuration.builder()
-            .setMailgunContext(
-                MailgunContext.builder()
-                    .setStorageUrls(Collections.singletonList("my foo URL"))
-                    .build())
-            .build();
-    SinchClient client = new SinchClient(configuration);
-    assertEquals(
-        Collections.singletonList("my foo URL"),
-        client.getConfiguration().getMailgunContext().get().getStorageUrls());
-  }
-
-  @Test
-  void mailgunStoragesUrlFromStorageUrlWithRegion() {
-    Configuration configuration =
-        Configuration.builder()
-            .setMailgunContext(
-                MailgunContext.builder()
-                    .setRegion(MailgunRegion.from("EU"))
-                    .setStorageUrls(Collections.singletonList("my foo URL"))
-                    .build())
-            .build();
-    SinchClient client = new SinchClient(configuration);
-    assertEquals(
-        Collections.singletonList("my foo URL"),
-        client.getConfiguration().getMailgunContext().get().getStorageUrls());
   }
 }

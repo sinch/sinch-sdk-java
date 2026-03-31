@@ -9,10 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({
-  VerificationReportRequestSmsOptionsImpl.JSON_PROPERTY_CODE,
-  VerificationReportRequestSmsOptionsImpl.JSON_PROPERTY_CLI
-})
+@JsonPropertyOrder({VerificationReportRequestSmsOptionsImpl.JSON_PROPERTY_CODE})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VerificationReportRequestSmsOptionsImpl
@@ -23,16 +20,10 @@ public class VerificationReportRequestSmsOptionsImpl
 
   private OptionalValue<String> code;
 
-  public static final String JSON_PROPERTY_CLI = "cli";
-
-  private OptionalValue<String> cli;
-
   public VerificationReportRequestSmsOptionsImpl() {}
 
-  protected VerificationReportRequestSmsOptionsImpl(
-      OptionalValue<String> code, OptionalValue<String> cli) {
+  protected VerificationReportRequestSmsOptionsImpl(OptionalValue<String> code) {
     this.code = code;
-    this.cli = cli;
   }
 
   @JsonIgnore
@@ -46,17 +37,6 @@ public class VerificationReportRequestSmsOptionsImpl
     return code;
   }
 
-  @JsonIgnore
-  public String getCli() {
-    return cli.orElse(null);
-  }
-
-  @JsonProperty(JSON_PROPERTY_CLI)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> cli() {
-    return cli;
-  }
-
   /** Return true if this VerificationReportRequestSms_sms object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -68,13 +48,12 @@ public class VerificationReportRequestSmsOptionsImpl
     }
     VerificationReportRequestSmsOptionsImpl verificationReportRequestSmsSms =
         (VerificationReportRequestSmsOptionsImpl) o;
-    return Objects.equals(this.code, verificationReportRequestSmsSms.code)
-        && Objects.equals(this.cli, verificationReportRequestSmsSms.cli);
+    return Objects.equals(this.code, verificationReportRequestSmsSms.code);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, cli);
+    return Objects.hash(code);
   }
 
   @Override
@@ -82,7 +61,6 @@ public class VerificationReportRequestSmsOptionsImpl
     StringBuilder sb = new StringBuilder();
     sb.append("class VerificationReportRequestSmsOptionsImpl {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    cli: ").append(toIndentedString(cli)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -100,7 +78,6 @@ public class VerificationReportRequestSmsOptionsImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VerificationReportRequestSmsOptions.Builder {
     OptionalValue<String> code = OptionalValue.empty();
-    OptionalValue<String> cli = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_CODE, required = true)
     public Builder setCode(String code) {
@@ -108,14 +85,8 @@ public class VerificationReportRequestSmsOptionsImpl
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_CLI)
-    public Builder setCli(String cli) {
-      this.cli = OptionalValue.of(cli);
-      return this;
-    }
-
     public VerificationReportRequestSmsOptions build() {
-      return new VerificationReportRequestSmsOptionsImpl(code, cli);
+      return new VerificationReportRequestSmsOptionsImpl(code);
     }
   }
 }

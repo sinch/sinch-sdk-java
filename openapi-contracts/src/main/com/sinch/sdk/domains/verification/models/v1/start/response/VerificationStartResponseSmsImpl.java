@@ -13,7 +13,8 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
+import com.sinch.sdk.domains.verification.models.v1.start.internal.VerificationMethodStart;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseSmsContent;
 import com.sinch.sdk.domains.verification.models.v1.start.response.internal.VerificationStartResponseSmsContentImpl;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class VerificationStartResponseSmsImpl
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
-  private OptionalValue<VerificationMethod> method;
+  private OptionalValue<VerificationMethodStart> method;
 
   public static final String JSON_PROPERTY_LINKS = "_links";
 
@@ -54,7 +55,7 @@ public class VerificationStartResponseSmsImpl
 
   protected VerificationStartResponseSmsImpl(
       OptionalValue<String> id,
-      OptionalValue<VerificationMethod> method,
+      OptionalValue<VerificationMethodStart> method,
       OptionalValue<List<Link>> links,
       OptionalValue<VerificationStartResponseSmsContent> sms) {
     this.id = id;
@@ -75,13 +76,13 @@ public class VerificationStartResponseSmsImpl
   }
 
   @JsonIgnore
-  public VerificationMethod getMethod() {
+  public VerificationMethodStart getMethod() {
     return method.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationMethod> method() {
+  public OptionalValue<VerificationMethodStart> method() {
     return method;
   }
 
@@ -137,6 +138,26 @@ public class VerificationStartResponseSmsImpl
         : OptionalValue.empty();
   }
 
+  @JsonIgnore
+  public SmsCodeType getCodeType() {
+    if (null == sms || !sms.isPresent() || null == sms.get().getCodeType()) {
+      return null;
+    }
+    return sms.get().getCodeType();
+  }
+
+  public OptionalValue<SmsCodeType> codeType() {
+    return null != sms && sms.isPresent()
+        ? sms.map(f -> ((VerificationStartResponseSmsContentImpl) f).codeType())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public Object getExtraOption(String key) {
+    return null != sms && sms.isPresent() ? sms.get().get(key) : null;
+  }
+
   /** Return true if this VerificationStartResponseSms object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -184,7 +205,7 @@ public class VerificationStartResponseSmsImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VerificationStartResponseSms.Builder {
     OptionalValue<String> id = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.SMS);
+    OptionalValue<VerificationMethodStart> method = OptionalValue.of(VerificationMethodStart.SMS);
     OptionalValue<List<Link>> links = OptionalValue.empty();
     OptionalValue<VerificationStartResponseSmsContent> sms = OptionalValue.empty();
 
@@ -193,6 +214,15 @@ public class VerificationStartResponseSmsImpl
     @JsonProperty(value = JSON_PROPERTY_ID, required = true)
     public Builder setId(String id) {
       this.id = OptionalValue.of(id);
+      return this;
+    }
+
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(VerificationMethodStart method) {
+      if (!Objects.equals(method, VerificationMethodStart.SMS)) {
+        throw new IllegalArgumentException(
+            String.format("'method' must be '%s' (is '%s')", VerificationMethodStart.SMS, method));
+      }
       return this;
     }
 
@@ -217,6 +247,17 @@ public class VerificationStartResponseSmsImpl
     @JsonIgnore
     public Builder setInterceptionTimeout(Integer interceptionTimeout) {
       getDelegatedBuilder().setInterceptionTimeout(interceptionTimeout);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setCodeType(SmsCodeType codeType) {
+      getDelegatedBuilder().setCodeType(codeType);
+      return this;
+    }
+
+    public Builder putExtraOption(String key, Object value) {
+      getDelegatedBuilder().put(key, value);
       return this;
     }
 

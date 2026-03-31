@@ -24,8 +24,8 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionsService;
 import com.sinch.sdk.domains.numbers.models.v1.AvailableRegionsDtoTest;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.AvailableRegionListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.regions.request.AvailableRegionsListQueryParameters;
+import com.sinch.sdk.domains.numbers.models.v1.regions.response.AvailableRegionsListResponse;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -77,7 +77,7 @@ class AvailableRegionsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    AvailableRegionListResponse response = service.list();
+    AvailableRegionsListResponse response = service.list();
 
     TestHelpers.recursiveEquals(
         response.getContent(), AvailableRegionsDtoTest.availableRegionList.getAvailableRegions());
@@ -106,7 +106,7 @@ class AvailableRegionsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    AvailableRegionListResponse response =
+    AvailableRegionsListResponse response =
         service.list(
             AvailableRegionsListQueryParameters.builder()
                 .setTypes(Arrays.asList(NumberType.MOBILE))

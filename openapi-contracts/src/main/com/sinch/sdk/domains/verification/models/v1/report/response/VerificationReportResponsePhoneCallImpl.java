@@ -176,6 +176,16 @@ public class VerificationReportResponsePhoneCallImpl
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(VerificationMethod method) {
+      if (!Objects.equals(method, VerificationMethod.PHONE_CALL)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'method' must be '%s' (is '%s')", VerificationMethod.PHONE_CALL, method));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_STATUS)
     public Builder setStatus(VerificationStatus status) {
       this.status = OptionalValue.of(status);

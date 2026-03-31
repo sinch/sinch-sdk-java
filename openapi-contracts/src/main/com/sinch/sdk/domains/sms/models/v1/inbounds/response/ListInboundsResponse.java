@@ -12,23 +12,21 @@ package com.sinch.sdk.domains.sms.models.v1.inbounds.response;
 
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.domains.sms.api.v1.InboundsService;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.InboundMessage;
-import com.sinch.sdk.domains.sms.models.v1.inbounds.request.ListInboundMessagesQueryParameters;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 /** Auto paginated response for list of InboundMessage */
 public class ListInboundsResponse extends ListResponse<InboundMessage> {
 
-  private final Page<ListInboundMessagesQueryParameters, InboundMessage, Integer> page;
-  private final InboundsService service;
-  private ListInboundsResponse nextPage;
+  private final Page<InboundMessage, Integer> page;
+  private final Supplier<ListInboundsResponse> supplier;
 
   public ListInboundsResponse(
-      InboundsService service,
-      Page<ListInboundMessagesQueryParameters, InboundMessage, Integer> page) {
-    this.service = service;
+      Supplier<ListInboundsResponse> supplier, Page<InboundMessage, Integer> page) {
+    this.supplier = supplier;
     this.page = page;
   }
 
@@ -37,30 +35,20 @@ public class ListInboundsResponse extends ListResponse<InboundMessage> {
     if (null == page.getNextPageToken() || null == getContent() || getContent().isEmpty()) {
       return false;
     }
-    if (null == nextPage) {
-      ListInboundMessagesQueryParameters.Builder newParameters =
-          ListInboundMessagesQueryParameters.builder(page.getParameters());
-      newParameters.setPage(page.getNextPageToken());
-      nextPage = service.list(newParameters.build());
-    }
-    return (null != nextPage.getContent() && !nextPage.getContent().isEmpty());
+    return true;
   }
 
   @Override
   public ListInboundsResponse nextPage() {
-
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-
-    ListInboundsResponse response = nextPage;
-    nextPage = null;
-    return response;
+    return supplier.get();
   }
 
   @Override
   public Collection<InboundMessage> getContent() {
-    return page.getEntities();
+    return page == null ? Collections.emptyList() : page.getEntities();
   }
 
   @Override

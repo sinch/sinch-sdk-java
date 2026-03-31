@@ -9,7 +9,7 @@ package numbers.regions;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionsService;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.AvailableRegionListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.regions.response.AvailableRegionsListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.util.logging.Logger;
 import utils.Settings;
@@ -37,7 +37,7 @@ public class List {
 
     LOGGER.info("List");
 
-    AvailableRegionListResponse response = availableRegionsService.list();
+    AvailableRegionsListResponse response = availableRegionsService.list();
 
     LOGGER.info("Available regions:");
 

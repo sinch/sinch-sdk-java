@@ -8,7 +8,7 @@ package com.sinch.sdk.core.models.pagination;
 public class PageNavigator<T> {
   private final T token;
 
-  protected PageNavigator(T token) {
+  public PageNavigator(T token) {
     this.token = token;
   }
 

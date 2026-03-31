@@ -19,14 +19,14 @@ public interface MessageDeliveryStatus {
 
   /**
    * The detailed <a
-   * href="/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/section/Delivery-report-error-codes">status
+   * href="https://developers.sinch.com/docs/sms/api-reference/sms/delivery-reports/delivery-report-error-codes">status
    * code</a>.
    *
    * <p>Field is required
    *
    * @return code
    */
-  DeliveryReceiptErrorCode getCode();
+  DeliveryReceiptStatusCode getCode();
 
   /**
    * The number of messages that currently has this code.
@@ -75,7 +75,7 @@ public interface MessageDeliveryStatus {
      * @return Current builder
      * @see #getCode
      */
-    Builder setCode(DeliveryReceiptErrorCode code);
+    Builder setCode(DeliveryReceiptStatusCode code);
 
     /**
      * see getter

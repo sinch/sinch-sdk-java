@@ -18,17 +18,17 @@ import java.util.stream.Stream;
 
 /**
  * Hangs up a call. Available to use in a response to an <a
- * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/ice">Incoming
- * Call Event</a> callback or an <a
- * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/ace">Answered
- * Call Event</a> callback.
+ * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/ice">Incoming Call
+ * Event</a> callback or an <a
+ * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/ace">Answered Call
+ * Event</a> callback.
  */
 @JsonDeserialize(builder = SvamlActionHangupImpl.Builder.class)
 public interface SvamlActionHangup
     extends com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction {
 
   /** ready to use action to send a `hangup` */
-  SvamlActionHangup DEFAULT = SvamlActionHangup.builder().build();
+  SvamlActionHangup SVAML_ACTION_HANGUP = SvamlActionHangup.builder().build();
 
   /** The name property. Must have the value <code>hangup</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {

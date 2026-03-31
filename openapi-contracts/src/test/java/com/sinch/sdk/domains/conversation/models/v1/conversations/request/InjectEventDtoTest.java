@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentityDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.ProcessingMode;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectEventRequest;
 import com.sinch.sdk.domains.conversation.models.v1.events.types.GenericEventDtoTest;
 import java.time.Instant;
 import org.json.JSONException;

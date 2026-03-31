@@ -8,7 +8,7 @@
 package verification.status;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.verification.api.v1.VerificationStatusService;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsStatusService;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
 import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
 import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponse;
@@ -39,7 +39,7 @@ public class GetByIdentity {
 
     SinchClient client = new SinchClient(configuration);
 
-    VerificationStatusService verificationStatusService =
+    VerificationsStatusService verificationsStatusService =
         client.verification().v1().verificationStatus();
 
     LOGGER.info(String.format("Verification status for phone number '%s'", phoneNumber));
@@ -47,7 +47,7 @@ public class GetByIdentity {
     NumberIdentity identity = NumberIdentity.valueOf(phoneNumber);
 
     VerificationStatusResponse response =
-        verificationStatusService.getByIdentity(identity, verificationMethod);
+        verificationsStatusService.getByIdentity(identity, verificationMethod);
 
     LOGGER.info("Response: " + response);
   }

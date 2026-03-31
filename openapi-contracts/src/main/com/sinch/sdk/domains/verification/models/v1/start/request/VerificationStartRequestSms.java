@@ -11,11 +11,8 @@
 package com.sinch.sdk.domains.verification.models.v1.start.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
-import java.util.Arrays;
-import java.util.stream.Stream;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 
 /** VerificationStartRequestSms */
 @JsonDeserialize(builder = VerificationStartRequestSmsImpl.Builder.class)
@@ -32,18 +29,31 @@ public interface VerificationStartRequestSms
   Identity getIdentity();
 
   /**
-   * Used to pass your own reference in the request for tracking purposes.
+   * Used to pass your own reference in the request for tracking purposes. Must be a unique value
+   * for each started verification request. The value must be encodable in the URL path segment.
+   * This value is passed to all events and returned from the status and report endpoints. The
+   * reference can be used to check the <a
+   * href="https://developers.sinch.com/docs/verification/api-reference/verification/verification-status/verificationstatusbyreference">status
+   * of verifications</a>, like with ID or identity.
    *
    * @return reference
    */
   String getReference();
 
   /**
-   * Can be used to pass custom data in the request.
+   * Can be used to pass custom data in the request. Will be passed to all events. Max length 4096
+   * characters, can be arbitrary text data.
    *
    * @return custom
    */
   String getCustom();
+
+  /**
+   * Get codeType
+   *
+   * @return codeType
+   */
+  SmsCodeType getCodeType();
 
   /**
    * The expiration time for a verification process is represented in the format <code>HH:MM:SS
@@ -52,48 +62,6 @@ public interface VerificationStartRequestSms
    * @return expiry
    */
   String getExpiry();
-
-  /** Accepted values for the type of code to be generated are Numeric, Alpha, and Alphanumeric. */
-  public class CodeTypeEnum extends EnumDynamic<String, CodeTypeEnum> {
-    public static final CodeTypeEnum NUMERIC = new CodeTypeEnum("Numeric");
-    public static final CodeTypeEnum ALPHA = new CodeTypeEnum("Alpha");
-    public static final CodeTypeEnum ALPHANUMERIC = new CodeTypeEnum("Alphanumeric");
-
-    private static final EnumSupportDynamic<String, CodeTypeEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            CodeTypeEnum.class, CodeTypeEnum::new, Arrays.asList(NUMERIC, ALPHA, ALPHANUMERIC));
-
-    private CodeTypeEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<CodeTypeEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static CodeTypeEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(CodeTypeEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
-
-  /**
-   * Accepted values for the type of code to be generated are Numeric, Alpha, and Alphanumeric.
-   *
-   * @return codeType
-   */
-  CodeTypeEnum getCodeType();
-
-  /**
-   * The SMS template must include a placeholder <code>{{CODE}}</code> where the verification code
-   * will be inserted, and it can otherwise be customized as desired.
-   *
-   * @return template
-   */
-  String getTemplate();
 
   /**
    * In SMS Verification, value of <a
@@ -156,29 +124,20 @@ public interface VerificationStartRequestSms
     /**
      * see getter
      *
+     * @param codeType see getter
+     * @return Current builder
+     * @see #getCodeType
+     */
+    Builder setCodeType(SmsCodeType codeType);
+
+    /**
+     * see getter
+     *
      * @param expiry see getter
      * @return Current builder
      * @see #getExpiry
      */
     Builder setExpiry(String expiry);
-
-    /**
-     * see getter
-     *
-     * @param codeType see getter
-     * @return Current builder
-     * @see #getCodeType
-     */
-    Builder setCodeType(CodeTypeEnum codeType);
-
-    /**
-     * see getter
-     *
-     * @param template see getter
-     * @return Current builder
-     * @see #getTemplate
-     */
-    Builder setTemplate(String template);
 
     /**
      * see getter

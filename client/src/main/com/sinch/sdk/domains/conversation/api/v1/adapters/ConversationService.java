@@ -1,13 +1,21 @@
 package com.sinch.sdk.domains.conversation.api.v1.adapters;
 
+import com.sinch.sdk.auth.HmacAuthenticationValidation;
 import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
-import com.sinch.sdk.domains.conversation.api.templates.adapters.TemplatesService;
-import com.sinch.sdk.domains.conversation.api.v1.WebHooksService;
+import com.sinch.sdk.domains.conversation.api.v1.AppsService;
+import com.sinch.sdk.domains.conversation.api.v1.CapabilityService;
+import com.sinch.sdk.domains.conversation.api.v1.ContactsService;
+import com.sinch.sdk.domains.conversation.api.v1.ConversationsService;
+import com.sinch.sdk.domains.conversation.api.v1.EventDestinationsService;
+import com.sinch.sdk.domains.conversation.api.v1.EventsService;
+import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
+import com.sinch.sdk.domains.conversation.api.v1.ProjectSettingsService;
+import com.sinch.sdk.domains.conversation.api.v1.TranscodingService;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.credentials.LineEnterpriseCredentialsMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.app.AppEventMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.events.contactmessage.internal.ContactMessageEventMapper;
@@ -20,6 +28,9 @@ import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.ListSectionMa
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.OmniMessageOverrideMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.SendMessageRequestMapper;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.WhatsAppInteractiveHeaderMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.type.channelspecific.kakaotalk.buttons.KakaoTalkButtonMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.type.channelspecific.kakaotalk.commerce.KakaoTalkCommerceMapper;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.messages.type.channelspecific.kakaotalk.coupons.KakaoTalkCouponMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ChoiceItemMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.AppMessageInternalMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.internal.ChannelSpecificMessageInternalMapper;
@@ -28,7 +39,9 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.carousel.Caro
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.CardMessageMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChoiceMessageMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ListMessageInternalMapper;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.WhatsAppPaymentButtonMapper;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessageMapper;
+import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesService;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
@@ -52,14 +65,16 @@ public class ConversationService
   private final Supplier<HttpClient> httpClientSupplier;
 
   private volatile Map<String, AuthManager> authManagers;
-  private volatile AppService app;
-  private volatile ContactService contact;
+  private volatile AppsService apps;
+  private volatile ContactsService contacts;
   private volatile MessagesService messages;
   private volatile ConversationsService conversations;
   private volatile EventsService events;
   private volatile TranscodingService transcoding;
   private volatile CapabilityService capability;
-  private volatile WebHooksService webhooks;
+  private volatile ProjectSettingsService projectSettings;
+  private volatile EventDestinationsService eventDestinations;
+  private volatile SinchEventsService sinchEvents;
   private volatile TemplatesService templates;
 
   static {
@@ -79,79 +94,189 @@ public class ConversationService
     this.oAuthServer = oAuthServer;
   }
 
-  public AppService app() {
-    if (null == this.app) {
-      instanceLazyInit();
-      this.app = new AppService(uriUUID, context, httpClientSupplier.get(), authManagers);
+  public AppsService apps() {
+    if (null == this.apps) {
+      synchronized (this) {
+        if (null == this.apps) {
+          instanceLazyInit();
+          this.apps =
+              new AppsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
-    return this.app;
+    return this.apps;
   }
 
-  public ContactService contact() {
-    if (null == this.contact) {
-      instanceLazyInit();
-      this.contact = new ContactService(uriUUID, context, httpClientSupplier.get(), authManagers);
+  public ContactsService contacts() {
+    if (null == this.contacts) {
+      synchronized (this) {
+        if (null == this.contacts) {
+          instanceLazyInit();
+          this.contacts =
+              new ContactsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
-    return this.contact;
+    return this.contacts;
   }
 
   public MessagesService messages() {
     if (null == this.messages) {
-      instanceLazyInit();
-      this.messages = new MessagesService(uriUUID, context, httpClientSupplier.get(), authManagers);
+      synchronized (this) {
+        if (null == this.messages) {
+          instanceLazyInit();
+          this.messages =
+              new MessagesServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.messages;
   }
 
   public ConversationsService conversations() {
     if (null == this.conversations) {
-      instanceLazyInit();
-      this.conversations =
-          new ConversationsService(uriUUID, context, httpClientSupplier.get(), authManagers);
+      synchronized (this) {
+        if (null == this.conversations) {
+          instanceLazyInit();
+          this.conversations =
+              new ConversationsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.conversations;
   }
 
   public EventsService events() {
     if (null == this.events) {
-      instanceLazyInit();
-      this.events = new EventsService(uriUUID, context, httpClientSupplier.get(), authManagers);
+      synchronized (this) {
+        if (null == this.events) {
+          instanceLazyInit();
+          this.events =
+              new EventsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.events;
   }
 
   public TranscodingService transcoding() {
     if (null == this.transcoding) {
-      instanceLazyInit();
-      this.transcoding =
-          new TranscodingService(uriUUID, context, httpClientSupplier.get(), authManagers);
+      synchronized (this) {
+        if (null == this.transcoding) {
+          instanceLazyInit();
+          this.transcoding =
+              new TranscodingServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.transcoding;
   }
 
   public CapabilityService capability() {
     if (null == this.capability) {
-      instanceLazyInit();
-      this.capability =
-          new CapabilityService(uriUUID, context, httpClientSupplier.get(), authManagers);
+      synchronized (this) {
+        if (null == this.capability) {
+          instanceLazyInit();
+          this.capability =
+              new CapabilityServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.capability;
   }
 
   public TemplatesService templates() {
     if (null == this.templates) {
-      this.templates = new TemplatesService(credentials, context, oAuthServer, httpClientSupplier);
+      synchronized (this) {
+        if (null == this.templates) {
+          this.templates =
+              new TemplatesService(credentials, context, oAuthServer, httpClientSupplier);
+        }
+      }
     }
     return this.templates;
   }
 
-  public WebHooksService webhooks() {
-    if (null == this.webhooks) {
-      this.webhooks =
-          new WebHooksAdaptorService(
-              uriUUID, context, this::instanceLazyInit, httpClientSupplier, () -> authManagers);
+  public EventDestinationsService eventDestinations() {
+    if (null == this.eventDestinations) {
+      synchronized (this) {
+        if (null == this.eventDestinations) {
+          instanceLazyInit();
+          this.eventDestinations =
+              new EventDestinationsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
-    return this.webhooks;
+    return this.eventDestinations;
+  }
+
+  public SinchEventsService sinchEvents() {
+    if (null == this.sinchEvents) {
+      synchronized (this) {
+        if (null == this.sinchEvents) {
+          this.sinchEvents = new SinchEventsService(new HmacAuthenticationValidation());
+        }
+      }
+    }
+    return this.sinchEvents;
+  }
+
+  public ProjectSettingsService projectSettings() {
+    if (null == this.projectSettings) {
+      synchronized (this) {
+        if (null == this.projectSettings) {
+          instanceLazyInit();
+          this.projectSettings =
+              new ProjectSettingsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
+    }
+    return this.projectSettings;
   }
 
   private void instanceLazyInit() {
@@ -169,19 +294,12 @@ public class ConversationService
             credentials.getKeySecret(), "Conversation service requires 'keySecret' to be defined");
         StringUtil.requireNonEmpty(
             credentials.getProjectId(), "Conversation service requires 'projectId' to be defined");
+        Objects.requireNonNull(
+            context.getRegion(), "Conversation service requires 'region' to be defined");
+        StringUtil.requireNonEmpty(
+            context.getRegion().value(), "Conversation service requires 'region' to be defined");
         StringUtil.requireNonEmpty(
             context.getUrl(), "Conversation service requires 'url' to be defined");
-
-        // To be deprecated with 2.0: no more defaulting to US region
-        if (Boolean.TRUE == context.regionAsDefault()) {
-          LOGGER.warning(
-              String.format(
-                  "Using default region for Conversation '%s'. This default fallback will be"
-                      + " removed in next major release and will cause a runtime error. Please"
-                      + " configure the region you want to be used (see"
-                      + " https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.6.0/com/sinch/sdk/models/Configuration.Builder.html#setConversationRegion(com.sinch.sdk.models.ConversationRegion))",
-                  context.getRegion()));
-        }
 
         OAuthManager authManager =
             new OAuthManager(
@@ -214,6 +332,9 @@ public class ConversationService
       ContactMessageMapper.initMapper();
       ContactMessageInternalMapper.initMapper();
       ConversationMessageMapper.initMapper();
+      KakaoTalkButtonMapper.initMapper();
+      KakaoTalkCommerceMapper.initMapper();
+      KakaoTalkCouponMapper.initMapper();
       LineEnterpriseCredentialsMapper.initMapper();
       ListMessageInternalMapper.initMapper();
       ListSectionMapper.initMapper();
@@ -222,6 +343,7 @@ public class ConversationService
       SendMessageRequestMapper.initMapper();
       TemplateMessageMapper.initMapper();
       WhatsAppInteractiveHeaderMapper.initMapper();
+      WhatsAppPaymentButtonMapper.initMapper();
     }
 
     public static LocalLazyInit init() {

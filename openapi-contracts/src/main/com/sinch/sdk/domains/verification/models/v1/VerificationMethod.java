@@ -5,10 +5,10 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** The type of the verification request. */
+/** The type of the verification. */
 public class VerificationMethod extends EnumDynamic<String, VerificationMethod> {
 
-  /** Verification by SMS message with a PIN code. */
+  /** Verification by SMS message with an OTP code. */
   public static final VerificationMethod SMS = new VerificationMethod("sms");
 
   /**
@@ -23,17 +23,14 @@ public class VerificationMethod extends EnumDynamic<String, VerificationMethod> 
    */
   public static final VerificationMethod PHONE_CALL = new VerificationMethod("callout");
 
-  /**
-   * Data verification. Verification by accessing internal infrastructure of mobile carriers to
-   * verify if given verification attempt was originated from device with matching phone number.
-   */
-  public static final VerificationMethod DATA = new VerificationMethod("seamless");
+  /** Verification by WhatsApp message with an OTP code. */
+  public static final VerificationMethod WHATSAPP = new VerificationMethod("whatsapp");
 
   private static final EnumSupportDynamic<String, VerificationMethod> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
           VerificationMethod.class,
           VerificationMethod::new,
-          Arrays.asList(SMS, FLASH_CALL, PHONE_CALL, DATA));
+          Arrays.asList(SMS, FLASH_CALL, PHONE_CALL, WHATSAPP));
 
   private VerificationMethod(String value) {
     super(value);

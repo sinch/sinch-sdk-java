@@ -79,6 +79,15 @@ public class SvamlInstructionAnswerImpl
   static class Builder implements SvamlInstructionAnswer.Builder {
     OptionalValue<NameEnum> name = OptionalValue.of(NameEnum.ANSWER);
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.ANSWER)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.ANSWER, name));
+      }
+      return this;
+    }
+
     public SvamlInstructionAnswer build() {
       return new SvamlInstructionAnswerImpl(name);
     }

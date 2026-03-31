@@ -1,0 +1,7 @@
+{
+  "type": "PERCENTAGE_DISCOUNT_COMMERCE",
+  "title": "Special Discounted Product",
+  "regular_price": 1000,
+  "discount_price": 500,
+  "discount_rate": 40
+}

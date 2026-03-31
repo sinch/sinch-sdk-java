@@ -16,22 +16,24 @@ public class MessageContentType extends EnumDynamic<String, MessageContentType> 
   /**
    * The default content type, when the content is not clearly defined, can be any type of content.
    */
-  public static final MessageContentType UNKNOWN = new MessageContentType("CONTENT_UNKNOWN");
+  public static final MessageContentType CONTENT_UNKNOWN =
+      new MessageContentType("CONTENT_UNKNOWN");
 
   /**
    * Type that indicates that the content is related to Marketing, like marketing campaign messages.
    */
-  public static final MessageContentType MARKETING = new MessageContentType("CONTENT_MARKETING");
+  public static final MessageContentType CONTENT_MARKETING =
+      new MessageContentType("CONTENT_MARKETING");
 
   /** Type that indicates that the content is related to Notifications, like charges and alerts. */
-  public static final MessageContentType NOTIFICATION =
+  public static final MessageContentType CONTENT_NOTIFICATION =
       new MessageContentType("CONTENT_NOTIFICATION");
 
   private static final EnumSupportDynamic<String, MessageContentType> ENUM_SUPPORT =
       new EnumSupportDynamic<>(
           MessageContentType.class,
           MessageContentType::new,
-          Arrays.asList(UNKNOWN, MARKETING, NOTIFICATION));
+          Arrays.asList(CONTENT_UNKNOWN, CONTENT_MARKETING, CONTENT_NOTIFICATION));
 
   private MessageContentType(String value) {
     super(value);

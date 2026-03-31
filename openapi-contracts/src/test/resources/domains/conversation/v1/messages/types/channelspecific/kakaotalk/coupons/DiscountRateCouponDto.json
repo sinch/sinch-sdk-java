@@ -1,0 +1,9 @@
+{
+  "type": "PERCENTAGE_DISCOUNT_COUPON",
+  "discount_rate": 10,
+  "description": "description",
+  "link_mo": "https://example.com/mobile",
+  "link_pc": "https://example.com/desktop",
+  "scheme_ios": "alimtalk=coupon://ios/...",
+  "scheme_android": "alimtalk=coupon://android/..."
+}

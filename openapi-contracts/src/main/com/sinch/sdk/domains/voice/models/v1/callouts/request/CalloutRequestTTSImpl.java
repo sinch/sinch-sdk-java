@@ -281,6 +281,15 @@ public class CalloutRequestTTSImpl
 
     TtsCalloutInternal.Builder _delegatedBuilder = null;
 
+    @JsonProperty(JSON_PROPERTY_METHOD)
+    Builder setMethod(MethodEnum method) {
+      if (!Objects.equals(method, MethodEnum.TTS_CALLOUT)) {
+        throw new IllegalArgumentException(
+            String.format("'method' must be '%s' (is '%s')", MethodEnum.TTS_CALLOUT, method));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_TTS_CALLOUT)
     public Builder setTtsCallout(TtsCalloutInternal ttsCallout) {
       this.ttsCallout = OptionalValue.of(ttsCallout);

@@ -83,21 +83,6 @@ public class VerificationReportRequestSmsImpl
         : OptionalValue.empty();
   }
 
-  @JsonIgnore
-  public String getCli() {
-    if (null == sms || !sms.isPresent() || null == sms.get().getCli()) {
-      return null;
-    }
-    return sms.get().getCli();
-  }
-
-  public OptionalValue<String> cli() {
-    return null != sms && sms.isPresent()
-        ? sms.map(f -> ((VerificationReportRequestSmsOptionsImpl) f).cli())
-            .orElse(OptionalValue.empty())
-        : OptionalValue.empty();
-  }
-
   /** Return true if this VerificationReportRequestSms object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -145,6 +130,15 @@ public class VerificationReportRequestSmsImpl
 
     VerificationReportRequestSmsOptions.Builder _delegatedBuilder = null;
 
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(MethodEnum method) {
+      if (!Objects.equals(method, MethodEnum.SMS)) {
+        throw new IllegalArgumentException(
+            String.format("'method' must be '%s' (is '%s')", MethodEnum.SMS, method));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_SMS, required = true)
     public Builder setSms(VerificationReportRequestSmsOptions sms) {
       this.sms = OptionalValue.of(sms);
@@ -154,12 +148,6 @@ public class VerificationReportRequestSmsImpl
     @JsonIgnore
     public Builder setCode(String code) {
       getDelegatedBuilder().setCode(code);
-      return this;
-    }
-
-    @JsonIgnore
-    public Builder setCli(String cli) {
-      getDelegatedBuilder().setCli(cli);
       return this;
     }
 

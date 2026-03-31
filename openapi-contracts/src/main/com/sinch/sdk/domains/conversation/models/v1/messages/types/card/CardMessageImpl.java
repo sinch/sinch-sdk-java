@@ -128,6 +128,24 @@ public class CardMessageImpl
         : OptionalValue.empty();
   }
 
+  @JsonIgnore
+  public MessageProperties getMessageProperties() {
+    if (null == cardMessage
+        || !cardMessage.isPresent()
+        || null == cardMessage.get().getMessageProperties()) {
+      return null;
+    }
+    return cardMessage.get().getMessageProperties();
+  }
+
+  public OptionalValue<MessageProperties> messageProperties() {
+    return null != cardMessage && cardMessage.isPresent()
+        ? cardMessage
+            .map(f -> ((CardMessageInternalImpl) f).messageProperties())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
+  }
+
   /** Return true if this CardMessageField object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -204,6 +222,12 @@ public class CardMessageImpl
     @JsonIgnore
     public Builder setMedia(MediaMessage media) {
       getDelegatedBuilder().setMedia(media);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setMessageProperties(MessageProperties messageProperties) {
+      getDelegatedBuilder().setMessageProperties(messageProperties);
       return this;
     }
 

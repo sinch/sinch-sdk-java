@@ -40,7 +40,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   private volatile InboundsService inbounds;
   private volatile DeliveryReportsService deliveryReports;
   private volatile GroupsService groups;
-  private volatile WebHooksService webhooks;
+  private volatile SinchEventsService sinchEvents;
 
   public SMSService(
       UnifiedCredentials credentials,
@@ -66,14 +66,18 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public BatchesService batches() {
     if (null == this.batches) {
-      instanceLazyInit();
-      this.batches =
-          new BatchesServiceImpl(
-              httpClientSupplier.get(),
-              context.getSmsServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.batches) {
+          instanceLazyInit();
+          this.batches =
+              new BatchesServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getSmsServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.batches;
   }
@@ -81,14 +85,18 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public InboundsService inbounds() {
     if (null == this.inbounds) {
-      instanceLazyInit();
-      this.inbounds =
-          new InboundsServiceImpl(
-              httpClientSupplier.get(),
-              context.getSmsServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.inbounds) {
+          instanceLazyInit();
+          this.inbounds =
+              new InboundsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getSmsServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.inbounds;
   }
@@ -96,14 +104,18 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public DeliveryReportsService deliveryReports() {
     if (null == this.deliveryReports) {
-      instanceLazyInit();
-      this.deliveryReports =
-          new DeliveryReportsServiceImpl(
-              httpClientSupplier.get(),
-              context.getSmsServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.deliveryReports) {
+          instanceLazyInit();
+          this.deliveryReports =
+              new DeliveryReportsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getSmsServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.deliveryReports;
   }
@@ -111,24 +123,32 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   @Override
   public GroupsService groups() {
     if (null == this.groups) {
-      instanceLazyInit();
-      this.groups =
-          new GroupsServiceImpl(
-              httpClientSupplier.get(),
-              context.getSmsServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.groups) {
+          instanceLazyInit();
+          this.groups =
+              new GroupsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getSmsServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.groups;
   }
 
   @Override
-  public WebHooksService webhooks() {
-    if (null == this.webhooks) {
-      this.webhooks = new WebHooksService(new HmacAuthenticationValidation());
+  public SinchEventsService sinchEvents() {
+    if (null == this.sinchEvents) {
+      synchronized (this) {
+        if (null == this.sinchEvents) {
+          this.sinchEvents = new SinchEventsService(new HmacAuthenticationValidation());
+        }
+      }
     }
-    return this.webhooks;
+    return this.sinchEvents;
   }
 
   private void instanceLazyInit() {
@@ -140,18 +160,9 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
         AuthManager oAuthManager = null;
         Objects.requireNonNull(credentials, "Credentials must be defined");
         Objects.requireNonNull(context, "Context must be defined");
-        StringUtil.requireNonEmpty(context.getSmsUrl(), "'smsUrl' must be defined");
-
-        // To be deprecated with 2.0: no more defaulting to US region
-        if (Boolean.TRUE == context.regionAsDefault()) {
-          LOGGER.warning(
-              String.format(
-                  "Using default region for SMS '%s'. This default fallback will be removed in next"
-                      + " major release and will cause a runtime error. Please configure the region"
-                      + " you want to be used (see"
-                      + " https://www.javadoc.io/static/com.sinch.sdk/sinch-sdk-java/1.6.0/com/sinch/sdk/models/Configuration.Builder.html#setSmsRegion(com.sinch.sdk.models.SMSRegion))",
-                  context.getSmsRegion()));
-        }
+        StringUtil.requireNonEmpty(context.getSmsUrl(), "'SMS Url' must be defined");
+        Objects.requireNonNull(context.getSmsRegion(), "'SMS Region' must be defined");
+        StringUtil.requireNonEmpty(context.getSmsRegion().value(), "'SMS Region' must be defined");
 
         if (credentials instanceof UnifiedCredentials) {
           UnifiedCredentials unifiedCredentials = (UnifiedCredentials) credentials;

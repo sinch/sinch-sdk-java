@@ -14,6 +14,8 @@ import java.util.Objects;
   ChoiceMessageOneOfInternalImpl.JSON_PROPERTY_LOCATION_MESSAGE,
   ChoiceMessageOneOfInternalImpl.JSON_PROPERTY_TEXT_MESSAGE,
   ChoiceMessageOneOfInternalImpl.JSON_PROPERTY_URL_MESSAGE,
+  ChoiceMessageOneOfInternalImpl.JSON_PROPERTY_CALENDAR_MESSAGE,
+  ChoiceMessageOneOfInternalImpl.JSON_PROPERTY_SHARE_LOCATION_MESSAGE,
   ChoiceMessageOneOfInternalImpl.JSON_PROPERTY_POSTBACK_DATA
 })
 @JsonFilter("uninitializedFilter")
@@ -37,6 +39,14 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
 
   private OptionalValue<UrlMessageInternal> urlMessage;
 
+  public static final String JSON_PROPERTY_CALENDAR_MESSAGE = "calendar_message";
+
+  private OptionalValue<CalendarMessageInternal> calendarMessage;
+
+  public static final String JSON_PROPERTY_SHARE_LOCATION_MESSAGE = "share_location_message";
+
+  private OptionalValue<ShareLocationMessageInternal> shareLocationMessage;
+
   public static final String JSON_PROPERTY_POSTBACK_DATA = "postback_data";
 
   private OptionalValue<Object> postbackData;
@@ -48,11 +58,15 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
       OptionalValue<LocationMessageInternal> locationMessage,
       OptionalValue<TextMessageInternal> textMessage,
       OptionalValue<UrlMessageInternal> urlMessage,
+      OptionalValue<CalendarMessageInternal> calendarMessage,
+      OptionalValue<ShareLocationMessageInternal> shareLocationMessage,
       OptionalValue<Object> postbackData) {
     this.callMessage = callMessage;
     this.locationMessage = locationMessage;
     this.textMessage = textMessage;
     this.urlMessage = urlMessage;
+    this.calendarMessage = calendarMessage;
+    this.shareLocationMessage = shareLocationMessage;
     this.postbackData = postbackData;
   }
 
@@ -101,6 +115,28 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
   }
 
   @JsonIgnore
+  public CalendarMessageInternal getCalendarMessage() {
+    return calendarMessage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_CALENDAR_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<CalendarMessageInternal> calendarMessage() {
+    return calendarMessage;
+  }
+
+  @JsonIgnore
+  public ShareLocationMessageInternal getShareLocationMessage() {
+    return shareLocationMessage.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_SHARE_LOCATION_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<ShareLocationMessageInternal> shareLocationMessage() {
+    return shareLocationMessage;
+  }
+
+  @JsonIgnore
   public Object getPostbackData() {
     return postbackData.orElse(null);
   }
@@ -125,12 +161,21 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
         && Objects.equals(this.locationMessage, choice.locationMessage)
         && Objects.equals(this.textMessage, choice.textMessage)
         && Objects.equals(this.urlMessage, choice.urlMessage)
+        && Objects.equals(this.calendarMessage, choice.calendarMessage)
+        && Objects.equals(this.shareLocationMessage, choice.shareLocationMessage)
         && Objects.equals(this.postbackData, choice.postbackData);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(callMessage, locationMessage, textMessage, urlMessage, postbackData);
+    return Objects.hash(
+        callMessage,
+        locationMessage,
+        textMessage,
+        urlMessage,
+        calendarMessage,
+        shareLocationMessage,
+        postbackData);
   }
 
   @Override
@@ -141,6 +186,10 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
     sb.append("    locationMessage: ").append(toIndentedString(locationMessage)).append("\n");
     sb.append("    textMessage: ").append(toIndentedString(textMessage)).append("\n");
     sb.append("    urlMessage: ").append(toIndentedString(urlMessage)).append("\n");
+    sb.append("    calendarMessage: ").append(toIndentedString(calendarMessage)).append("\n");
+    sb.append("    shareLocationMessage: ")
+        .append(toIndentedString(shareLocationMessage))
+        .append("\n");
     sb.append("    postbackData: ").append(toIndentedString(postbackData)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -162,6 +211,8 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
     OptionalValue<LocationMessageInternal> locationMessage = OptionalValue.empty();
     OptionalValue<TextMessageInternal> textMessage = OptionalValue.empty();
     OptionalValue<UrlMessageInternal> urlMessage = OptionalValue.empty();
+    OptionalValue<CalendarMessageInternal> calendarMessage = OptionalValue.empty();
+    OptionalValue<ShareLocationMessageInternal> shareLocationMessage = OptionalValue.empty();
     OptionalValue<Object> postbackData = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CALL_MESSAGE)
@@ -188,6 +239,18 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_CALENDAR_MESSAGE)
+    public Builder setCalendarMessage(CalendarMessageInternal calendarMessage) {
+      this.calendarMessage = OptionalValue.of(calendarMessage);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_SHARE_LOCATION_MESSAGE)
+    public Builder setShareLocationMessage(ShareLocationMessageInternal shareLocationMessage) {
+      this.shareLocationMessage = OptionalValue.of(shareLocationMessage);
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_POSTBACK_DATA)
     public Builder setPostbackData(Object postbackData) {
       this.postbackData = OptionalValue.of(postbackData);
@@ -196,7 +259,13 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
 
     public ChoiceMessageOneOfInternal build() {
       return new ChoiceMessageOneOfInternalImpl(
-          callMessage, locationMessage, textMessage, urlMessage, postbackData);
+          callMessage,
+          locationMessage,
+          textMessage,
+          urlMessage,
+          calendarMessage,
+          shareLocationMessage,
+          postbackData);
     }
   }
 }

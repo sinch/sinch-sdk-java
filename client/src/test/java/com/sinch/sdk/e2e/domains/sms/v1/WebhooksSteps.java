@@ -1,14 +1,14 @@
 package com.sinch.sdk.e2e.domains.sms.v1;
 
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.sms.api.v1.WebHooksService;
+import com.sinch.sdk.domains.sms.api.v1.SinchEventsService;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.BatchDeliveryReportSMS;
-import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptErrorCode;
+import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryReceiptStatusCode;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.DeliveryStatus;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.MessageDeliveryStatus;
 import com.sinch.sdk.domains.sms.models.v1.deliveryreports.RecipientDeliveryReportSMS;
 import com.sinch.sdk.domains.sms.models.v1.inbounds.TextMessage;
-import com.sinch.sdk.domains.sms.models.v1.webhooks.SmsEvent;
+import com.sinch.sdk.domains.sms.models.v1.sinchevents.SmsSinchEvent;
 import com.sinch.sdk.e2e.Config;
 import com.sinch.sdk.e2e.domains.WebhooksHelper;
 import io.cucumber.java.en.Given;
@@ -28,16 +28,16 @@ public class WebhooksSteps {
 
   static final String SECRET = "KayakingTheSwell";
 
-  WebHooksService service;
-  WebhooksHelper.Response<SmsEvent> incoming;
-  WebhooksHelper.Response<SmsEvent> deliveryReport;
-  WebhooksHelper.Response<SmsEvent> deliveryReportRecipientDelivered;
-  WebhooksHelper.Response<SmsEvent> deliveryReportRecipientAborted;
+  SinchEventsService service;
+  WebhooksHelper.Response<SmsSinchEvent> incoming;
+  WebhooksHelper.Response<SmsSinchEvent> deliveryReport;
+  WebhooksHelper.Response<SmsSinchEvent> deliveryReportRecipientDelivered;
+  WebhooksHelper.Response<SmsSinchEvent> deliveryReportRecipientAborted;
 
   @Given("^the SMS Webhooks handler is available")
   public void serviceAvailable() {
 
-    service = Config.getSinchClient().sms().v1().webhooks();
+    service = Config.getSinchClient().sms().v1().sinchEvents();
   }
 
   @When("^I send a request to trigger an \"incoming SMS\" event")
@@ -76,7 +76,7 @@ public class WebhooksSteps {
 
   @Then("the SMS event describes an \"incoming SMS\" event")
   public void incomingResult() {
-    SmsEvent expected =
+    SmsSinchEvent expected =
         TextMessage.builder()
             .setBody("Hello John! 👋")
             .setFrom("12015555555")
@@ -91,14 +91,14 @@ public class WebhooksSteps {
 
   @Then("the SMS event describes an \"SMS delivery report\" event")
   public void deliveryReportResult() {
-    SmsEvent expected =
+    SmsSinchEvent expected =
         BatchDeliveryReportSMS.builder()
             .setBatchId("01W4FFL35P4NC4K35SMSBATCH8")
             .setClientReference("client-ref")
             .setStatuses(
                 Arrays.asList(
                     MessageDeliveryStatus.builder()
-                        .setCode(DeliveryReceiptErrorCode.from(0))
+                        .setCode(DeliveryReceiptStatusCode.from(0))
                         .setCount(2)
                         .setRecipients(new HashSet<>(Arrays.asList("12017777777", "33612345678")))
                         .setStatus(DeliveryStatus.DELIVERED)
@@ -113,12 +113,12 @@ public class WebhooksSteps {
       "the SMS event describes an SMS recipient delivery report event with the status"
           + " \"Delivered\"")
   public void deliveryReportRecipientDeliveredResult() {
-    SmsEvent expected =
+    SmsSinchEvent expected =
         RecipientDeliveryReportSMS.builder()
             .setCreatedAt(Instant.parse("2024-06-06T08:17:19.210Z"))
             .setBatchId("01W4FFL35P4NC4K35SMSBATCH9")
             .setClientReference("client-ref")
-            .setCode(DeliveryReceiptErrorCode.from(0))
+            .setCode(DeliveryReceiptStatusCode.from(0))
             .setOperatorStatusAt(Instant.parse("2024-06-06T08:17:00Z"))
             .setRecipient("12017777777")
             .setStatus(DeliveryStatus.DELIVERED)
@@ -130,12 +130,12 @@ public class WebhooksSteps {
   @Then(
       "the SMS event describes an SMS recipient delivery report event with the status \"Aborted\"")
   public void deliveryReportRecipientAbortedResult() {
-    SmsEvent expected =
+    SmsSinchEvent expected =
         RecipientDeliveryReportSMS.builder()
             .setCreatedAt(Instant.parse("2024-06-06T08:17:15.603Z"))
             .setBatchId("01W4FFL35P4NC4K35SMSBATCH9")
             .setClientReference("client-ref")
-            .setCode(DeliveryReceiptErrorCode.UNPROVISIONED_REGION)
+            .setCode(DeliveryReceiptStatusCode.UNPROVISIONED_REGION)
             .setRecipient("12010000000")
             .setStatus(DeliveryStatus.ABORTED)
             .build();
@@ -146,7 +146,7 @@ public class WebhooksSteps {
   @Then("the header of the event {string} contains a valid signature")
   public void validateHeader(String event) {
 
-    WebhooksHelper.Response<SmsEvent> response = null;
+    WebhooksHelper.Response<SmsSinchEvent> response = null;
     if (event.equals("IncomingSMS")) {
       response = incoming;
     } else if (event.equals("DeliveryReport")) {
@@ -161,7 +161,7 @@ public class WebhooksSteps {
   @Then("the header of the event {string} with the status {string} contains a valid signature")
   public void validateHeader(String _unused, String status) {
 
-    WebhooksHelper.Response<SmsEvent> response = null;
+    WebhooksHelper.Response<SmsSinchEvent> response = null;
     if (status.equals("Delivered")) {
       response = deliveryReportRecipientDelivered;
     } else if (status.equals("Aborted")) {

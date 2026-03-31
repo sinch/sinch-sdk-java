@@ -1,5 +1,4 @@
 {
   "expiry": "01:02:03",
-  "codeType": "Alphanumeric",
-  "template": "My template requires to use '{{CODE}}' placeholder"
+  "codeType": "Alphanumeric"
 }

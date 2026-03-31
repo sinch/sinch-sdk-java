@@ -20,7 +20,7 @@ public interface ActiveNumber {
 
   /**
    * The phone number in <a href="https://community.sinch.com/t5/Glossary/E-164/ta-p/7537">E.164</a>
-   * format with leading <code>+</code>. Example: <code>+12025550134</code>.
+   * format with leading <code>+</code>. Example <code>+12025550134</code>.
    *
    * @return phoneNumber
    */
@@ -42,10 +42,9 @@ public interface ActiveNumber {
   String getDisplayName();
 
   /**
-   * ISO 3166-1 alpha-2 country code of the phone number. Example US, UK or SE.
+   * ISO 3166-1 alpha-2 country code of the phone number. Example: US, GB or SE.
    *
    * @return regionCode
-   * @readOnly <em>This field is returned by the server and cannot be modified</em>
    */
   String getRegionCode();
 
@@ -111,9 +110,9 @@ public interface ActiveNumber {
   /**
    * The callback URL to be called for a rented number's provisioning / deprovisioning operations.
    *
-   * @return callbackUrl
+   * @return eventDestinationTarget
    */
-  String getCallbackUrl();
+  String getEventDestinationTarget();
 
   /**
    * Getting builder
@@ -160,7 +159,6 @@ public interface ActiveNumber {
      * @param regionCode see getter
      * @return Current builder
      * @see #getRegionCode
-     * @readOnly <em>This field is returned by the server and cannot be modified</em>
      */
     Builder setRegionCode(String regionCode);
 
@@ -242,11 +240,11 @@ public interface ActiveNumber {
     /**
      * see getter
      *
-     * @param callbackUrl see getter
+     * @param eventDestinationTarget see getter
      * @return Current builder
-     * @see #getCallbackUrl
+     * @see #getEventDestinationTarget
      */
-    Builder setCallbackUrl(String callbackUrl);
+    Builder setEventDestinationTarget(String eventDestinationTarget);
 
     /**
      * Create instance

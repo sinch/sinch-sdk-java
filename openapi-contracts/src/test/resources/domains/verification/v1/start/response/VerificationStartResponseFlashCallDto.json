@@ -5,7 +5,8 @@
     "cliFilter": "(.*)5312(.*)",
     "interceptionTimeout": 45,
     "reportTimeout": 75,
-    "denyCallAfter": 0
+    "denyCallAfter": 0,
+    "my key": "my value"
   },
   "_links": [
     {

@@ -63,69 +63,6 @@ public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Inb
   }
 
   @Override
-  public InboundMessage get(String inboundId) throws ApiException {
-
-    LOGGER.finest("[get]" + " " + "inboundId: " + inboundId);
-
-    HttpRequest httpRequest = getRequestBuilder(inboundId);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-      return mapper.deserialize(response, new TypeReference<InboundMessage>() {});
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest getRequestBuilder(String inboundId) throws ApiException {
-    // verify the required parameter 'this.servicePlanId' is set
-    if (this.servicePlanId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling get");
-    }
-    // verify the required parameter 'inboundId' is set
-    if (inboundId == null) {
-      throw new ApiException(400, "Missing the required parameter 'inboundId' when calling get");
-    }
-
-    String localVarPath =
-        "/xms/v1/{service_plan_id}/inbounds/{inbound_id}"
-            .replaceAll(
-                "\\{" + "service_plan_id" + "\\}",
-                URLPathUtils.encodePathSegment(this.servicePlanId.toString()))
-            .replaceAll(
-                "\\{" + "inbound_id" + "\\}", URLPathUtils.encodePathSegment(inboundId.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.GET,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  @Override
   public ListInboundsResponse list() throws ApiException {
 
     return list((ListInboundMessagesQueryParameters) null);
@@ -138,6 +75,12 @@ public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Inb
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
+    return _fetchListPage(queryParameter, httpRequest);
+  }
+
+  private ListInboundsResponse _fetchListPage(
+      ListInboundMessagesQueryParameters queryParameter, HttpRequest httpRequest)
+      throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -147,12 +90,29 @@ public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Inb
       ApiInboundList deserialized =
           mapper.deserialize(response, new TypeReference<ApiInboundList>() {});
 
-      return new ListInboundsResponse(
-          this,
+      // if page size was set we can compute end of list now if returned items count
+      // is less than page size, otherwise we will have to perform an additional request to be sure
+      // if we reached the end of the list or not, this is handled by SMSCursorPageNavigator
+      boolean stopPagination =
+          null != queryParameter
+              && queryParameter.getPageSize().isPresent()
+              && deserialized.getItems().size() < queryParameter.getPageSize().get();
+
+      Page<InboundMessage, Integer> page =
           new Page<>(
-              queryParameter,
               deserialized.getItems(),
-              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize())));
+              new SMSCursorPageNavigator(
+                  deserialized.getPage(), stopPagination ? null : deserialized.getPageSize()));
+
+      Integer nextPage = page.getNextPageToken();
+
+      ListInboundMessagesQueryParameters nextParameters =
+          ListInboundMessagesQueryParameters.builder(queryParameter).setPage(nextPage).build();
+
+      final HttpRequest nextHttpRequest =
+          nextPage != null ? listRequestBuilder(nextParameters) : null;
+
+      return new ListInboundsResponse(() -> _fetchListPage(nextParameters, nextHttpRequest), page);
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -218,6 +178,69 @@ public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Inb
           localVarQueryParams,
           true);
     }
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public InboundMessage get(String inboundId) throws ApiException {
+
+    LOGGER.finest("[get]" + " " + "inboundId: " + inboundId);
+
+    HttpRequest httpRequest = getRequestBuilder(inboundId);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return mapper.deserialize(response, new TypeReference<InboundMessage>() {});
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest getRequestBuilder(String inboundId) throws ApiException {
+    // verify the required parameter 'this.servicePlanId' is set
+    if (this.servicePlanId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.servicePlanId' when calling get");
+    }
+    // verify the required parameter 'inboundId' is set
+    if (inboundId == null) {
+      throw new ApiException(400, "Missing the required parameter 'inboundId' when calling get");
+    }
+
+    String localVarPath =
+        "/xms/v1/{service_plan_id}/inbounds/{inbound_id}"
+            .replaceAll(
+                "\\{" + "service_plan_id" + "\\}",
+                URLPathUtils.encodePathSegment(this.servicePlanId.toString()))
+            .replaceAll(
+                "\\{" + "inbound_id" + "\\}", URLPathUtils.encodePathSegment(inboundId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 

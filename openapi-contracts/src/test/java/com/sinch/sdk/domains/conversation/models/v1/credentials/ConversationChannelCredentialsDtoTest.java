@@ -460,34 +460,6 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
           .setCredentialOrdinalNumber(0)
           .build();
 
-  @GivenTextResource("/domains/conversation/v1/credentials/ConversationChannelViberRequestDto.json")
-  String jsonConversationChannelViberRequestDto;
-
-  @GivenJsonResource(
-      "/domains/conversation/v1/credentials/ConversationChannelViberResponseDto.json")
-  ConversationChannelCredentials loadedConversationChannelViberDto;
-
-  public static ConversationChannelCredentials conversationChannelViberResponseDto =
-      ConversationChannelCredentials.builder()
-          .setChannel(ConversationChannel.VIBER)
-          .setCallbackSecret("callback secret")
-          .setChannelKnownId("channel id")
-          .setState(
-              ChannelIntegrationState.builder()
-                  .setStatus(ChannelIntegrationStatus.PENDING)
-                  .setDescription("description value")
-                  .build())
-          .setCredentials(StaticTokenCredentials.builder().setToken("viberChannel token").build())
-          .setCredentialOrdinalNumber(0)
-          .build();
-  public static ConversationChannelCredentials conversationChannelViberRequestDto =
-      ConversationChannelCredentials.builder()
-          .setChannel(ConversationChannel.VIBER)
-          .setCallbackSecret("callback secret")
-          .setCredentials(StaticTokenCredentials.builder().setToken("viberChannel token").build())
-          .setCredentialOrdinalNumber(0)
-          .build();
-
   @GivenTextResource(
       "/domains/conversation/v1/credentials/ConversationChannelViberBmRequestDto.json")
   String jsonConversationChannelViberBmRequestDto;
@@ -771,19 +743,6 @@ public class ConversationChannelCredentialsDtoTest extends ConversationBaseTest 
   void deserializeConversationChannelTelegramDto() {
     TestHelpers.recursiveEquals(
         loadedConversationChannelTelegramDto, conversationChannelTelegramResponseDto);
-  }
-
-  @Test
-  void serializeConversationChannelViberDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(conversationChannelViberRequestDto);
-
-    JSONAssert.assertEquals(jsonConversationChannelViberRequestDto, serializedString, true);
-  }
-
-  @Test
-  void deserializeConversationChannelViberDto() {
-    TestHelpers.recursiveEquals(
-        loadedConversationChannelViberDto, conversationChannelViberResponseDto);
   }
 
   @Test

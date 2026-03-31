@@ -11,6 +11,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.events.types;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Collections;
 
 /** Composing */
@@ -20,8 +21,7 @@ public interface ComposingEvent
         com.sinch.sdk.domains.conversation.models.v1.events.ContactEvent {
 
   /** Default EMPTY message to be used to send a ComposingEvent */
-  ComposingEvent EMPTY =
-      new ComposingEventImpl.Builder().setComposingEvent(Collections.EMPTY_MAP).build();
+  ComposingEvent COMPOSING_EVENT = new ComposingEventImpl(OptionalValue.of(Collections.emptyMap()));
 
   /**
    * Getting builder

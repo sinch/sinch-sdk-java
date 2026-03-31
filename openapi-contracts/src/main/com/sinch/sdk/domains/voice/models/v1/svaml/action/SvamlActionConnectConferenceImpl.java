@@ -38,7 +38,7 @@ public class SvamlActionConnectConferenceImpl
 
   public static final String JSON_PROPERTY_MOH = "moh";
 
-  private OptionalValue<MusicOnHold> MusicOnHold;
+  private OptionalValue<MusicOnHold> musicOnHold;
 
   public SvamlActionConnectConferenceImpl() {}
 
@@ -46,11 +46,11 @@ public class SvamlActionConnectConferenceImpl
       OptionalValue<NameEnum> name,
       OptionalValue<String> conferenceId,
       OptionalValue<ConferenceDtmfOptions> conferenceDtmfOptions,
-      OptionalValue<MusicOnHold> MusicOnHold) {
+      OptionalValue<MusicOnHold> musicOnHold) {
     this.name = name;
     this.conferenceId = conferenceId;
     this.conferenceDtmfOptions = conferenceDtmfOptions;
-    this.MusicOnHold = MusicOnHold;
+    this.musicOnHold = musicOnHold;
   }
 
   @JsonIgnore
@@ -88,13 +88,13 @@ public class SvamlActionConnectConferenceImpl
 
   @JsonIgnore
   public MusicOnHold getMusicOnHold() {
-    return MusicOnHold.orElse(null);
+    return musicOnHold.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_MOH)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public OptionalValue<MusicOnHold> musicOnHold() {
-    return MusicOnHold;
+    return musicOnHold;
   }
 
   /** Return true if this svaml.action.connectConf object is equal to o. */
@@ -110,12 +110,12 @@ public class SvamlActionConnectConferenceImpl
     return Objects.equals(this.name, svamlActionConnectConf.name)
         && Objects.equals(this.conferenceId, svamlActionConnectConf.conferenceId)
         && Objects.equals(this.conferenceDtmfOptions, svamlActionConnectConf.conferenceDtmfOptions)
-        && Objects.equals(this.MusicOnHold, svamlActionConnectConf.MusicOnHold);
+        && Objects.equals(this.musicOnHold, svamlActionConnectConf.musicOnHold);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, conferenceId, conferenceDtmfOptions, MusicOnHold);
+    return Objects.hash(name, conferenceId, conferenceDtmfOptions, musicOnHold);
   }
 
   @Override
@@ -127,7 +127,7 @@ public class SvamlActionConnectConferenceImpl
     sb.append("    conferenceDtmfOptions: ")
         .append(toIndentedString(conferenceDtmfOptions))
         .append("\n");
-    sb.append("    MusicOnHold: ").append(toIndentedString(MusicOnHold)).append("\n");
+    sb.append("    musicOnHold: ").append(toIndentedString(musicOnHold)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -147,7 +147,16 @@ public class SvamlActionConnectConferenceImpl
     OptionalValue<NameEnum> name = OptionalValue.of(NameEnum.CONNECT_CONF);
     OptionalValue<String> conferenceId = OptionalValue.empty();
     OptionalValue<ConferenceDtmfOptions> conferenceDtmfOptions = OptionalValue.empty();
-    OptionalValue<MusicOnHold> MusicOnHold = OptionalValue.empty();
+    OptionalValue<MusicOnHold> musicOnHold = OptionalValue.empty();
+
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.CONNECT_CONF)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.CONNECT_CONF, name));
+      }
+      return this;
+    }
 
     @JsonProperty(value = JSON_PROPERTY_CONFERENCE_ID, required = true)
     public Builder setConferenceId(String conferenceId) {
@@ -162,14 +171,14 @@ public class SvamlActionConnectConferenceImpl
     }
 
     @JsonProperty(JSON_PROPERTY_MOH)
-    public Builder setMusicOnHold(MusicOnHold MusicOnHold) {
-      this.MusicOnHold = OptionalValue.of(MusicOnHold);
+    public Builder setMusicOnHold(MusicOnHold musicOnHold) {
+      this.musicOnHold = OptionalValue.of(musicOnHold);
       return this;
     }
 
     public SvamlActionConnectConference build() {
       return new SvamlActionConnectConferenceImpl(
-          name, conferenceId, conferenceDtmfOptions, MusicOnHold);
+          name, conferenceId, conferenceDtmfOptions, musicOnHold);
     }
   }
 }

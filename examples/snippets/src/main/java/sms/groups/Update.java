@@ -32,7 +32,7 @@ public class Update {
     // The ID of the group to update
     String groupId = "GROUP_ID";
     // New name for the group
-    String groupName = "Updated Group Name from Java SDK";
+    String groupName = "Updated by Java SDK";
     // Members to remove from the group
     List<String> toRemove = Arrays.asList("+11111111111", "+29999999999");
     // Members to add to the group

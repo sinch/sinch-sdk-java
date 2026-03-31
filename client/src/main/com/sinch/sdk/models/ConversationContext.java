@@ -1,7 +1,6 @@
 package com.sinch.sdk.models;
 
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.models.SmsContext.Builder;
 
 /** Execution context related to Conversation domains */
 public class ConversationContext {
@@ -9,17 +8,11 @@ public class ConversationContext {
   private final ConversationRegion region;
   private final String url;
   private final String templateManagementUrl;
-  private final Boolean regionAsDefault;
 
-  private ConversationContext(
-      ConversationRegion region,
-      String url,
-      String templateManagementUrl,
-      Boolean regionAsDefault) {
+  private ConversationContext(ConversationRegion region, String url, String templateManagementUrl) {
     this.region = region;
     this.url = url;
     this.templateManagementUrl = templateManagementUrl;
-    this.regionAsDefault = regionAsDefault;
   }
 
   /**
@@ -73,14 +66,6 @@ public class ConversationContext {
   }
 
   /**
-   * @deprecated Helper for transition period until 2.0 release
-   */
-  @Deprecated
-  public Boolean regionAsDefault() {
-    return regionAsDefault;
-  }
-
-  /**
    * Getting Builder
    *
    * @return New Builder instance
@@ -111,7 +96,6 @@ public class ConversationContext {
     ConversationRegion region;
     String url;
     String templateManagementUrl;
-    Boolean regionAsDefault;
 
     protected Builder() {}
 
@@ -125,7 +109,6 @@ public class ConversationContext {
       this.region = null != context ? context.getRegion() : null;
       this.url = null != context ? context.getUrl() : null;
       this.templateManagementUrl = null != context ? context.getTemplateManagementUrl() : null;
-      this.regionAsDefault = null != context ? context.regionAsDefault() : null;
     }
 
     /**
@@ -164,14 +147,6 @@ public class ConversationContext {
       return this;
     }
 
-    /**
-     * @deprecated Helper for transition period until 2.0 release
-     */
-    public Builder setRegionAsDefault(Boolean regionAsDefault) {
-      this.regionAsDefault = regionAsDefault;
-      return this;
-    }
-
     public ConversationRegion getRegion() {
       return region;
     }
@@ -184,10 +159,6 @@ public class ConversationContext {
       return templateManagementUrl;
     }
 
-    public Boolean getRegionAsDefault() {
-      return regionAsDefault;
-    }
-
     /**
      * Create instance
      *
@@ -196,7 +167,7 @@ public class ConversationContext {
      */
     public ConversationContext build() {
 
-      return new ConversationContext(region, url, templateManagementUrl, regionAsDefault);
+      return new ConversationContext(region, url, templateManagementUrl);
     }
   }
 }

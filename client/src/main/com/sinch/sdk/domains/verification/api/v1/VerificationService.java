@@ -17,7 +17,7 @@ public interface VerificationService {
    *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verifications">Documentation</a>
    * @since 1.1
    */
-  VerificationStartService verificationStart();
+  VerificationsStartService verificationStart();
 
   /**
    * Verifications Report Service instance
@@ -27,7 +27,7 @@ public interface VerificationService {
    *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verifications">Documentation</a>
    * @since 1.1
    */
-  VerificationReportService verificationReport();
+  VerificationsReportService verificationReport();
 
   /**
    * Verifications Status Service instance
@@ -37,15 +37,15 @@ public interface VerificationService {
    *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-status">Documentation</a>
    * @since 1.1
    */
-  VerificationStatusService verificationStatus();
+  VerificationsStatusService verificationStatus();
 
   /**
-   * Webhooks helpers instance
+   * Sinch Events helpers instance
    *
    * @return service instance for project
    * @see <a
    *     href="https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks">Documentation</a>
-   * @since 1.1
+   * @since 2.0
    */
-  WebHooksService webhooks();
+  SinchEventsService sinchEvents();
 }

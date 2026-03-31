@@ -15,7 +15,7 @@ import com.sinch.sdk.domains.voice.models.v1.destination.DestinationMxp;
 import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
 import com.sinch.sdk.domains.voice.models.v1.svaml.ControlUrl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.ConnectPstnAnsweringMachineDetection;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.AnsweringMachineDetectionQuery;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionConnectPstn;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangup;
 import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSay;
@@ -91,10 +91,7 @@ public class CalloutRequestDtoTest extends VoiceBaseTest {
                       SvamlActionConnectPstn.builder()
                           .setNumber("+12233445566")
                           .setCli("+12234325234")
-                          .setAmd(
-                              ConnectPstnAnsweringMachineDetection.builder()
-                                  .setEnabled(true)
-                                  .build())
+                          .setAmd(AnsweringMachineDetectionQuery.builder().setEnabled(true).build())
                           .build())
                   .build())
           .setAce(
@@ -104,7 +101,7 @@ public class CalloutRequestDtoTest extends VoiceBaseTest {
                           SvamlInstructionSay.builder()
                               .setText("Hello, this is a call from Sinch!")
                               .build()))
-                  .setAction(SvamlActionHangup.DEFAULT)
+                  .setAction(SvamlActionHangup.SVAML_ACTION_HANGUP)
                   .build())
           .setPie(ControlUrl.from("https://your-application-server-host/application"))
           .build();

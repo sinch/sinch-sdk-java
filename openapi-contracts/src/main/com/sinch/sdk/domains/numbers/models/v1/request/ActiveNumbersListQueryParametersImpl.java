@@ -15,7 +15,7 @@ public class ActiveNumbersListQueryParametersImpl implements ActiveNumbersListQu
   private final OptionalValue<List<Capability>> capabilities;
   private final OptionalValue<Integer> pageSize;
   private final OptionalValue<String> pageToken;
-  private final OptionalValue<OrderByEnum> orderBy;
+  private final OptionalValue<OrderBy> orderBy;
 
   private ActiveNumbersListQueryParametersImpl(
       OptionalValue<String> regionCode,
@@ -25,7 +25,7 @@ public class ActiveNumbersListQueryParametersImpl implements ActiveNumbersListQu
       OptionalValue<List<Capability>> capabilities,
       OptionalValue<Integer> pageSize,
       OptionalValue<String> pageToken,
-      OptionalValue<OrderByEnum> orderBy) {
+      OptionalValue<OrderBy> orderBy) {
     this.regionCode = regionCode;
     this.searchPattern = searchPattern;
     this.searchPosition = searchPosition;
@@ -64,7 +64,7 @@ public class ActiveNumbersListQueryParametersImpl implements ActiveNumbersListQu
     return pageToken;
   }
 
-  public OptionalValue<OrderByEnum> getOrderBy() {
+  public OptionalValue<OrderBy> getOrderBy() {
     return orderBy;
   }
 
@@ -139,7 +139,7 @@ public class ActiveNumbersListQueryParametersImpl implements ActiveNumbersListQu
     OptionalValue<List<Capability>> capabilities = OptionalValue.empty();
     OptionalValue<Integer> pageSize = OptionalValue.empty();
     OptionalValue<String> pageToken = OptionalValue.empty();
-    OptionalValue<OrderByEnum> orderBy = OptionalValue.empty();
+    OptionalValue<OrderBy> orderBy = OptionalValue.empty();
 
     protected Builder() {}
 
@@ -194,7 +194,7 @@ public class ActiveNumbersListQueryParametersImpl implements ActiveNumbersListQu
       return this;
     }
 
-    public Builder setOrderBy(OrderByEnum orderBy) {
+    public Builder setOrderBy(OrderBy orderBy) {
       this.orderBy = OptionalValue.of(orderBy);
       return this;
     }

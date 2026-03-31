@@ -8,11 +8,10 @@
 package conversation.templates.v2;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.conversation.api.templates.v2.TemplatesServiceV2;
-import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateV2;
+import com.sinch.sdk.domains.conversation.templates.api.v2.TemplatesV2Service;
+import com.sinch.sdk.domains.conversation.templates.models.v2.response.TemplatesV2ListResponse;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
-import java.util.Collection;
 import java.util.logging.Logger;
 import utils.Settings;
 
@@ -37,11 +36,11 @@ public class List {
 
     SinchClient client = new SinchClient(configuration);
 
-    TemplatesServiceV2 templatesServiceV2 = client.conversation().templates().v2();
+    TemplatesV2Service templatesServiceV2 = client.conversation().templates().v2();
 
     LOGGER.info("List templates V2");
 
-    Collection<TemplateV2> result = templatesServiceV2.list();
+    TemplatesV2ListResponse result = templatesServiceV2.list();
 
     LOGGER.info("Response: ");
     result.iterator().forEachRemaining(f -> LOGGER.info(String.format("- %s: %s", f.getId(), f)));

@@ -47,7 +47,7 @@ class SinchClientTestIT extends BaseTest {
         new MockResponse().setBody("foo").addHeader("Content-Type", "application/json"));
 
     try {
-      sinchClient.numbers().available().checkAvailability("foo");
+      sinchClient.numbers().v1().checkAvailability("foo");
     } catch (ApiException ae) {
       // noop
     }

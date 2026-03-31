@@ -179,7 +179,7 @@ public interface CalloutRequestConference
    * <br>
    * If no “music-on-hold” is specified, the user will only hear silence.
    *
-   * @return MusicOnHold
+   * @return musicOnHold
    */
   MusicOnHold getMusicOnHold();
 
@@ -313,11 +313,11 @@ public interface CalloutRequestConference
     /**
      * see getter
      *
-     * @param MusicOnHold see getter
+     * @param musicOnHold see getter
      * @return Current builder
      * @see #getMusicOnHold
      */
-    Builder setMusicOnHold(MusicOnHold MusicOnHold);
+    Builder setMusicOnHold(MusicOnHold musicOnHold);
 
     /**
      * see getter

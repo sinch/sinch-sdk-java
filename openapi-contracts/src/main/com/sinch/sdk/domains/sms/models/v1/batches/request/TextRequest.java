@@ -44,8 +44,8 @@ public interface TextRequest extends BatchRequest {
 
   /**
    * Contains the parameters that will be used for customizing the message for each recipient. <a
-   * href="/docs/sms/resources/message-info/message-parameterization">Click here to learn more about
-   * parameterization</a>.
+   * href="https://developers.sinch.com/docs/sms/resources/message-info/message-parameterization">Click
+   * here to learn more about parameterization</a>.
    *
    * @return parameters
    */
@@ -116,9 +116,9 @@ public interface TextRequest extends BatchRequest {
    * set a default callback URL <a
    * href="https://community.sinch.com/t5/SMS/How-do-I-assign-a-callback-URL-to-an-SMS-service-plan/ta-p/8414">here</a>.
    *
-   * @return callbackUrl
+   * @return eventDestinationTarget
    */
-  String getCallbackUrl();
+  String getEventDestinationTarget();
 
   /**
    * The client identifier of a batch message. If set, the identifier will be added in the delivery
@@ -130,7 +130,7 @@ public interface TextRequest extends BatchRequest {
 
   /**
    * If set to <code>true</code>, then <a
-   * href="/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/deliveryFeedback">feedback</a>
+   * href="https://developers.sinch.com/docs/sms/api-reference/sms/batches/deliveryfeedback">feedback</a>
    * is expected after successful delivery.
    *
    * @return feedbackEnabled
@@ -257,11 +257,11 @@ public interface TextRequest extends BatchRequest {
     /**
      * see getter
      *
-     * @param callbackUrl see getter
+     * @param eventDestinationTarget see getter
      * @return Current builder
-     * @see #getCallbackUrl
+     * @see #getEventDestinationTarget
      */
-    Builder setCallbackUrl(String callbackUrl);
+    Builder setEventDestinationTarget(String eventDestinationTarget);
 
     /**
      * see getter

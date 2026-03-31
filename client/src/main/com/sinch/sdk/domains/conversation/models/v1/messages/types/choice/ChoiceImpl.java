@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.calendar.CalendarMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.calendar.CalendarMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.call.CallMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.call.CallMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice.Builder;
@@ -15,6 +17,8 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.Choi
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.ChoiceMessageOneOfInternalImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.LocationMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.location.LocationMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.sharelocation.ShareLocationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.sharelocation.ShareLocationMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.url.UrlMessage;
@@ -110,6 +114,11 @@ public class ChoiceImpl<T extends ChoiceMessageType> implements Choice<T> {
                   internal.setTextMessage(((TextMessageImpl) m).getTextMessage());
                 } else if (m instanceof UrlMessage) {
                   internal.setUrlMessage(((UrlMessageImpl) m).getUrlMessage());
+                } else if (m instanceof CalendarMessage) {
+                  internal.setCalendarMessage(((CalendarMessageImpl) m).getCalendarMessage());
+                } else if (m instanceof ShareLocationMessage) {
+                  internal.setShareLocationMessage(
+                      ((ShareLocationMessageImpl) m).getShareLocationMessage());
                 } else {
                   LOGGER.severe("Unexpected class '" + m.getClass() + "'");
                 }
@@ -164,6 +173,18 @@ public class ChoiceImpl<T extends ChoiceMessageType> implements Choice<T> {
             UrlMessageImpl.delegatedConverter(deserialized.getUrlMessage());
         if (message.isPresent()) {
           builder = Choice.<UrlMessage>builder().setMessage(message.get());
+        }
+      } else if (deserialized.calendarMessage().isPresent()) {
+        Optional<CalendarMessage> message =
+            CalendarMessageImpl.delegatedConverter(deserialized.getCalendarMessage());
+        if (message.isPresent()) {
+          builder = Choice.<CalendarMessage>builder().setMessage(message.get());
+        }
+      } else if (deserialized.shareLocationMessage().isPresent()) {
+        Optional<ShareLocationMessage> message =
+            ShareLocationMessageImpl.delegatedConverter(deserialized.getShareLocationMessage());
+        if (message.isPresent()) {
+          builder = Choice.<ShareLocationMessage>builder().setMessage(message.get());
         }
       } else {
         LOGGER.severe("Unexpected content'" + deserialized + "'");

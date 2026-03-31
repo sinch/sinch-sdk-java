@@ -20,9 +20,6 @@ public class ConversationChannel extends EnumDynamic<String, ConversationChannel
   /** The Facebook Messenger channel. */
   public static final ConversationChannel MESSENGER = new ConversationChannel("MESSENGER");
 
-  /** The Viber Bot channel. */
-  public static final ConversationChannel VIBER = new ConversationChannel("VIBER");
-
   /** The Viber Business Messages channel. */
   public static final ConversationChannel VIBERBM = new ConversationChannel("VIBERBM");
 
@@ -59,7 +56,6 @@ public class ConversationChannel extends EnumDynamic<String, ConversationChannel
               RCS,
               SMS,
               MESSENGER,
-              VIBER,
               VIBERBM,
               MMS,
               INSTAGRAM,

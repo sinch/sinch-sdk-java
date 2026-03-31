@@ -11,7 +11,8 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class SvamlInstructionStopRecordingTest extends BaseTest {
 
-  public static SvamlInstructionStopRecording dto = SvamlInstructionStopRecording.DEFAULT;
+  public static SvamlInstructionStopRecording dto =
+      SvamlInstructionStopRecording.SVAML_INSTRUCTION_STOP_RECORDING;
 
   @GivenTextResource("/domains/voice/v1/svaml/instruction/SvamlInstructionStopRecordingDto.json")
   String json;

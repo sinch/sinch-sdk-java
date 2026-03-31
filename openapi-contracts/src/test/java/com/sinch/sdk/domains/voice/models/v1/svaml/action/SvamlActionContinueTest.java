@@ -11,7 +11,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class SvamlActionContinueTest extends BaseTest {
 
-  public static SvamlActionContinue dto = SvamlActionContinue.DEFAULT;
+  public static SvamlActionContinue dto = SvamlActionContinue.SVAML_ACTION_CONTINUE;
 
   @GivenTextResource("/domains/voice/v1/svaml/action/SvamlActionContinueDto.json")
   String json;

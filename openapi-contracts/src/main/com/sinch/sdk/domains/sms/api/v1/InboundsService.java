@@ -19,17 +19,6 @@ import com.sinch.sdk.domains.sms.models.v1.inbounds.response.ListInboundsRespons
 public interface InboundsService {
 
   /**
-   * Retrieve inbound message
-   *
-   * <p>This operation retrieves a specific inbound message with the provided inbound ID.
-   *
-   * @param inboundId The inbound ID found when listing inbound messages. (required)
-   * @return InboundMessage
-   * @throws ApiException if fails to make API call
-   */
-  InboundMessage get(String inboundId) throws ApiException;
-
-  /**
    * List incoming messages (using default parameters)
    *
    * <p>With the list operation, you can list all inbound messages that you have received. This
@@ -51,4 +40,15 @@ public interface InboundsService {
    * @throws ApiException if fails to make API call
    */
   ListInboundsResponse list(ListInboundMessagesQueryParameters queryParameter) throws ApiException;
+
+  /**
+   * Retrieve inbound message
+   *
+   * <p>This operation retrieves a specific inbound message using the provided inbound ID.
+   *
+   * @param inboundId The inbound ID found when listing inbound messages. (required)
+   * @return InboundMessage
+   * @throws ApiException if fails to make API call
+   */
+  InboundMessage get(String inboundId) throws ApiException;
 }

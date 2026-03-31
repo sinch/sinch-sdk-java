@@ -2,6 +2,9 @@ package com.sinch.sdk.domains.sms.api.v1.adapters;
 
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
@@ -22,7 +25,6 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameter.STYLE;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.PaginationFillerHelper;
 import com.sinch.sdk.domains.sms.api.v1.BatchesService;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.DryRunQueryParameters;
 import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesQueryParameters;
@@ -33,6 +35,7 @@ import com.sinch.sdk.domains.sms.models.v1.batches.response.BatchResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
 import com.sinch.sdk.domains.sms.models.v1.batches.response.internal.ApiBatchList;
+import com.sinch.sdk.domains.voice.api.v1.adapters.PaginationFillerHelper;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
@@ -288,6 +291,116 @@ public class BatchesServiceTest extends BaseTest {
         PaginationFillerHelper.parametersFiller("page", 0, STYLE.FORM, true, commonParameters);
     Collection<URLParameter> urlParametersPage1 =
         PaginationFillerHelper.parametersFiller("page", 1, STYLE.FORM, true, commonParameters);
+
+    HttpRequest httpRequest0 =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
+            HttpMethod.GET,
+            urlParametersPage0,
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+
+    HttpRequest httpRequest1 =
+        new HttpRequest(
+            "/xms/v1/" + URLPathUtils.encodePathSegment(SERVICE_PLAN_ID) + "/batches",
+            HttpMethod.GET,
+            urlParametersPage1,
+            (String) null,
+            Collections.emptyMap(),
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            Collections.emptyList(),
+            Collections.singletonList(SMS_AUTH_NAMES));
+
+    HttpResponse httpResponse0 =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonBatchesResponseDtoPage0.getBytes());
+    HttpResponse httpResponse1 =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonBatchesResponseDtoPage1.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest0))))
+        .thenReturn(httpResponse0);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1))))
+        .thenReturn(httpResponse1);
+
+    ListBatchesQueryParameters initialRequest =
+        ListBatchesQueryParameters.builder()
+            .setPage(0)
+            .setPageSize(2)
+            .setFrom(Arrays.asList("+1234567890"))
+            .setClientReference("client reference")
+            .setStartDate(Instant.parse("2023-11-03T15:21:21.113Z"))
+            .setEndDate(Instant.parse("2023-12-12T15:54:21.321Z"))
+            .build();
+
+    ListBatchesResponse response = service.list(initialRequest);
+
+    Iterator<BatchResponse> iterator = response.iterator();
+
+    BatchResponse item = iterator.next();
+    TestHelpers.recursiveEquals(item, listBatchesResponseDtoPage0.getItems().get(0));
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+
+    item = iterator.next();
+    TestHelpers.recursiveEquals(item, listBatchesResponseDtoPage0.getItems().get(1));
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(true);
+
+    item = iterator.next();
+    TestHelpers.recursiveEquals(item, listBatchesResponseDtoPage1.getItems().get(0));
+
+    Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
+
+    // Verify that each API call was made exactly once
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest0)));
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1)));
+    verifyNoMoreInteractions(httpClient);
+  }
+
+  @Test
+  void listWithoutSMSNavigatorAutoStopNavigationDetection() throws ApiException {
+    List<Object> commonParameters =
+        Arrays.asList(
+            "page_size",
+            1,
+            STYLE.FORM,
+            true,
+            "start_date",
+            "2023-11-03T15:21:21.113Z",
+            STYLE.FORM,
+            true,
+            "end_date",
+            "2023-12-12T15:54:21.321Z",
+            STYLE.FORM,
+            true,
+            "from",
+            Arrays.asList("+1234567890"),
+            STYLE.FORM,
+            false,
+            "client_reference",
+            "client reference",
+            STYLE.FORM,
+            true);
+
+    Collection<URLParameter> urlParametersPage0 =
+        PaginationFillerHelper.parametersFiller("page", 0, STYLE.FORM, true, commonParameters);
+    Collection<URLParameter> urlParametersPage1 =
+        PaginationFillerHelper.parametersFiller("page", 1, STYLE.FORM, true, commonParameters);
     Collection<URLParameter> urlParametersPage2 =
         PaginationFillerHelper.parametersFiller("page", 2, STYLE.FORM, true, commonParameters);
 
@@ -352,7 +465,7 @@ public class BatchesServiceTest extends BaseTest {
     ListBatchesQueryParameters initialRequest =
         ListBatchesQueryParameters.builder()
             .setPage(0)
-            .setPageSize(2)
+            .setPageSize(1)
             .setFrom(Arrays.asList("+1234567890"))
             .setClientReference("client reference")
             .setStartDate(Instant.parse("2023-11-03T15:21:21.113Z"))
@@ -375,6 +488,24 @@ public class BatchesServiceTest extends BaseTest {
     TestHelpers.recursiveEquals(item, listBatchesResponseDtoPage1.getItems().get(0));
 
     Assertions.assertThat(iterator.hasNext()).isEqualTo(false);
+
+    // Verify that each API call was made exactly once
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest0)));
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest1)));
+    verify(httpClient, times(1))
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest2)));
+    verifyNoMoreInteractions(httpClient);
   }
 
   @Test

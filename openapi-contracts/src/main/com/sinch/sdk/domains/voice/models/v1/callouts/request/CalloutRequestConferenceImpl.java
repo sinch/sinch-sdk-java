@@ -373,6 +373,17 @@ public class CalloutRequestConferenceImpl
 
     ConferenceCalloutInternal.Builder _delegatedBuilder = null;
 
+    @JsonProperty(JSON_PROPERTY_METHOD)
+    Builder setMethod(MethodEnum method) {
+      if (!Objects.equals(method, CalloutRequestConference.MethodEnum.CONFERENCE_CALLOUT)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'method' must be '%s' (is '%s')",
+                CalloutRequestConference.MethodEnum.CONFERENCE_CALLOUT, method));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_CONFERENCE_CALLOUT)
     public Builder setConferenceCallout(ConferenceCalloutInternal conferenceCallout) {
       this.conferenceCallout = OptionalValue.of(conferenceCallout);
@@ -452,8 +463,8 @@ public class CalloutRequestConferenceImpl
     }
 
     @JsonIgnore
-    public Builder setMusicOnHold(MusicOnHold MusicOnHold) {
-      getDelegatedBuilder().setMusicOnHold(MusicOnHold);
+    public Builder setMusicOnHold(MusicOnHold musicOnHold) {
+      getDelegatedBuilder().setMusicOnHold(musicOnHold);
       return this;
     }
 

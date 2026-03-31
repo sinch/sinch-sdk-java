@@ -108,35 +108,13 @@ public class FlowChannelSpecificMessageHeaderInternalImpl extends AbstractOpenAp
               tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderVideoImpl.class);
           newFlowChannelSpecificMessageHeaderInternalImpl.setActualInstance(deserialized);
           return newFlowChannelSpecificMessageHeaderInternalImpl;
-        case "WhatsAppInteractiveDocumentHeader":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderDocumentImpl.class);
-          newFlowChannelSpecificMessageHeaderInternalImpl.setActualInstance(deserialized);
-          return newFlowChannelSpecificMessageHeaderInternalImpl;
-        case "WhatsAppInteractiveImageHeader":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderImageImpl.class);
-          newFlowChannelSpecificMessageHeaderInternalImpl.setActualInstance(deserialized);
-          return newFlowChannelSpecificMessageHeaderInternalImpl;
-        case "WhatsAppInteractiveTextHeader":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderTextImpl.class);
-          newFlowChannelSpecificMessageHeaderInternalImpl.setActualInstance(deserialized);
-          return newFlowChannelSpecificMessageHeaderInternalImpl;
-        case "WhatsAppInteractiveVideoHeader":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(WhatsAppInteractiveHeaderVideoImpl.class);
-          newFlowChannelSpecificMessageHeaderInternalImpl.setActualInstance(deserialized);
-          return newFlowChannelSpecificMessageHeaderInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for"
                       + " FlowChannelSpecificMessageHeaderInternalImpl. Possible values: document"
-                      + " image text video WhatsAppInteractiveDocumentHeader"
-                      + " WhatsAppInteractiveImageHeader WhatsAppInteractiveTextHeader"
-                      + " WhatsAppInteractiveVideoHeader",
+                      + " image text video",
                   discriminatorValue));
       }
 
@@ -384,10 +362,6 @@ public class FlowChannelSpecificMessageHeaderInternalImpl extends AbstractOpenAp
     mappings.put("image", WhatsAppInteractiveHeaderImageImpl.class);
     mappings.put("text", WhatsAppInteractiveHeaderTextImpl.class);
     mappings.put("video", WhatsAppInteractiveHeaderVideoImpl.class);
-    mappings.put("WhatsAppInteractiveDocumentHeader", WhatsAppInteractiveHeaderDocumentImpl.class);
-    mappings.put("WhatsAppInteractiveImageHeader", WhatsAppInteractiveHeaderImageImpl.class);
-    mappings.put("WhatsAppInteractiveTextHeader", WhatsAppInteractiveHeaderTextImpl.class);
-    mappings.put("WhatsAppInteractiveVideoHeader", WhatsAppInteractiveHeaderVideoImpl.class);
     mappings.put(
         "ChannelSpecificCommonProps_header", FlowChannelSpecificMessageHeaderInternalImpl.class);
     JSONNavigator.registerDiscriminator(

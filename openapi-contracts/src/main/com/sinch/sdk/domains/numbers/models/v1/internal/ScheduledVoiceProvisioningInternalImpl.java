@@ -102,29 +102,12 @@ public class ScheduledVoiceProvisioningInternalImpl extends AbstractOpenApiSchem
               tree.traverse(jp.getCodec()).readValueAs(ScheduledVoiceProvisioningRTCImpl.class);
           newScheduledVoiceProvisioningInternalImpl.setActualInstance(deserialized);
           return newScheduledVoiceProvisioningInternalImpl;
-        case "ScheduledVoiceProvisioningEST":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(ScheduledVoiceProvisioningESTImpl.class);
-          newScheduledVoiceProvisioningInternalImpl.setActualInstance(deserialized);
-          return newScheduledVoiceProvisioningInternalImpl;
-        case "ScheduledVoiceProvisioningFAX":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(ScheduledVoiceProvisioningFAXImpl.class);
-          newScheduledVoiceProvisioningInternalImpl.setActualInstance(deserialized);
-          return newScheduledVoiceProvisioningInternalImpl;
-        case "ScheduledVoiceProvisioningRTC":
-          deserialized =
-              tree.traverse(jp.getCodec()).readValueAs(ScheduledVoiceProvisioningRTCImpl.class);
-          newScheduledVoiceProvisioningInternalImpl.setActualInstance(deserialized);
-          return newScheduledVoiceProvisioningInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for"
-                      + " ScheduledVoiceProvisioningInternalImpl. Possible values: EST FAX RTC"
-                      + " ScheduledVoiceProvisioningEST ScheduledVoiceProvisioningFAX"
-                      + " ScheduledVoiceProvisioningRTC",
+                      + " ScheduledVoiceProvisioningInternalImpl. Possible values: EST FAX RTC",
                   discriminatorValue));
       }
 
@@ -314,9 +297,6 @@ public class ScheduledVoiceProvisioningInternalImpl extends AbstractOpenApiSchem
     mappings.put("EST", ScheduledVoiceProvisioningESTImpl.class);
     mappings.put("FAX", ScheduledVoiceProvisioningFAXImpl.class);
     mappings.put("RTC", ScheduledVoiceProvisioningRTCImpl.class);
-    mappings.put("ScheduledVoiceProvisioningEST", ScheduledVoiceProvisioningESTImpl.class);
-    mappings.put("ScheduledVoiceProvisioningFAX", ScheduledVoiceProvisioningFAXImpl.class);
-    mappings.put("ScheduledVoiceProvisioningRTC", ScheduledVoiceProvisioningRTCImpl.class);
     mappings.put("ScheduledVoiceProvisioning", ScheduledVoiceProvisioningInternalImpl.class);
     JSONNavigator.registerDiscriminator(
         ScheduledVoiceProvisioningInternalImpl.class, "type", mappings);

@@ -16,7 +16,7 @@ import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyReq
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
-import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumbersListResponse;
 
 /** Available Number Service */
 public interface AvailableNumberService {
@@ -79,9 +79,9 @@ public interface AvailableNumberService {
    * To search for a number capable of both, list both &#x60;SMS&#x60; and &#x60;VOICE&#x60;.
    *
    * @param queryParameter (optional)
-   * @return AvailableNumberListResponse
+   * @return AvailableNumbersListResponse
    * @throws ApiException if fails to make API call
    */
-  AvailableNumberListResponse searchForAvailableNumbers(
+  AvailableNumbersListResponse searchForAvailableNumbers(
       AvailableNumbersListQueryParameters queryParameter) throws ApiException;
 }

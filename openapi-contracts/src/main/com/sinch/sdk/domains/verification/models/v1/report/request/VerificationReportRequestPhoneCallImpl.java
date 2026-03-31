@@ -132,6 +132,15 @@ public class VerificationReportRequestPhoneCallImpl
 
     VerificationReportRequestPhoneCallOptions.Builder _delegatedBuilder = null;
 
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(MethodEnum method) {
+      if (!Objects.equals(method, MethodEnum.PHONE_CALL)) {
+        throw new IllegalArgumentException(
+            String.format("'method' must be '%s' (is '%s')", MethodEnum.PHONE_CALL, method));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_CALLOUT, required = true)
     public Builder setCallout(VerificationReportRequestPhoneCallOptions callout) {
       this.callout = OptionalValue.of(callout);

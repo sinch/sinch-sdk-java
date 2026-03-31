@@ -60,12 +60,20 @@ public interface VerificationStartResponseFlashCall
   Integer getReportTimeout();
 
   /**
-   * Used by the SDKs, this setting makes the handset deny the flash call after the set time in
-   * seconds.
+   * Used by the mobile SDKs, this setting makes the handset deny the flash call after the set time
+   * in seconds.
    *
    * @return denyCallAfter
    */
   Integer getDenyCallAfter();
+
+  /**
+   * Return the additional "flashCall" with the specified name.
+   *
+   * @param key the name of the property
+   * @return the additional property with the specified name
+   */
+  Object getExtraOption(String key);
 
   /**
    * Getting builder
@@ -134,6 +142,14 @@ public interface VerificationStartResponseFlashCall
      * @see #getDenyCallAfter
      */
     Builder setDenyCallAfter(Integer denyCallAfter);
+
+    /**
+     * see getter
+     *
+     * @return Current builder
+     * @see #getExtraOption
+     */
+    Builder putExtraOption(String key, Object value);
 
     /**
      * Create instance

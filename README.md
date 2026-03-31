@@ -70,7 +70,6 @@ Here is the list of the Sinch products and their level of support by the Java SD
 
 | API Category           | API Name                                                                                                                                               | Status |
 |------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|:------:|
-| Email                  | `(preview)` Mailgun API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/mailgun/package-summary.html) |   ✅    |
 | Messaging              | Conversation API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/conversation/package-summary.html)   |   ✅    |
 |                        | SMS API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/sms/package-summary.html)                     |   ✅    |
 | Numbers & Connectivity | Numbers API [(javadoc)](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/com/sinch/sdk/domains/numbers/package-summary.html)             |   ✅    |
@@ -155,12 +154,9 @@ Note: Replace <code>VERSION-YOU-WANT-TO-BE-USED</code> by a Jackson version of a
 ...
 ```
 
-## Migration guides
-Find migration guides in the developer documentation portal:
-- [Messaging](https://developers.sinch.com/docs/sms/sdks/java/migration-guides)
-- [Numbers](https://developers.sinch.com/docs/numbers/sdk/java/migration-guides/migration-to-versioned)
-- [Verification](https://developers.sinch.com/docs/verification/sdk/java/migration-guides/migration-to-versioned)
-- [Voice](https://developers.sinch.com/docs/voice/sdk/java/migration-guides/migration-to-versioned)
+## Changelog & Migration
+For information about the latest changes in the SDK, please refer to the [CHANGELOG](CHANGELOG.md) file
+and the [MIGRATION-GUIDE](MIGRATION-GUIDE.md) for instructions on how to update your code when upgrading to a new major version of the SDK.
 
 ## License
 

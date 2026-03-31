@@ -24,6 +24,29 @@ import com.sinch.sdk.domains.sms.models.v1.batches.response.ListBatchesResponse;
 public interface BatchesService {
 
   /**
+   * List Batches (using default parameters)
+   *
+   * <p>With the list operation you can list batch messages created in the last 14 days that you
+   * have created. This operation supports pagination.
+   *
+   * @return ListBatchesResponse
+   * @throws ApiException if fails to make API call
+   */
+  ListBatchesResponse list() throws ApiException;
+
+  /**
+   * List Batches
+   *
+   * <p>With the list operation you can list batch messages created in the last 14 days that you
+   * have created. This operation supports pagination.
+   *
+   * @param queryParameter (optional)
+   * @return ListBatchesResponse
+   * @throws ApiException if fails to make API call
+   */
+  ListBatchesResponse list(ListBatchesQueryParameters queryParameter) throws ApiException;
+
+  /**
    * Cancel a batch message
    *
    * <p>A batch can be canceled at any point. If a batch is canceled while it&#39;s currently being
@@ -76,29 +99,6 @@ public interface BatchesService {
   BatchResponse get(String batchId) throws ApiException;
 
   /**
-   * List Batches (using default parameters)
-   *
-   * <p>With the list operation you can list batch messages created in the last 14 days that you
-   * have created. This operation supports pagination.
-   *
-   * @return ListBatchesResponse
-   * @throws ApiException if fails to make API call
-   */
-  ListBatchesResponse list() throws ApiException;
-
-  /**
-   * List Batches
-   *
-   * <p>With the list operation you can list batch messages created in the last 14 days that you
-   * have created. This operation supports pagination.
-   *
-   * @param queryParameter (optional)
-   * @return ListBatchesResponse
-   * @throws ApiException if fails to make API call
-   */
-  ListBatchesResponse list(ListBatchesQueryParameters queryParameter) throws ApiException;
-
-  /**
    * Replace a batch
    *
    * <p>This operation will replace all the parameters of a batch with the provided values. It is
@@ -118,7 +118,7 @@ public interface BatchesService {
    * might be split into multiple parts and charged accordingly. Any groups targeted in a scheduled
    * batch will be evaluated at the time of sending. If a group is deleted between batch creation
    * and scheduled date, it will be considered empty. Be sure to use the correct
-   * [region](/docs/sms/api-reference/#base-url) in the server URL.
+   * [region](https://developers.sinch.com/docs/sms/api-reference/#base-url) in the server URL.
    *
    * @param sendRequest (required)
    * @return BatchResponse
@@ -134,7 +134,7 @@ public interface BatchesService {
    * possible to submit feedback multiple times for the same batch for different recipients.
    * Feedback without specified recipients is treated as successful message delivery to all
    * recipients referenced in the batch. Note that the &#x60;recipients&#x60; key is still required
-   * even if the value is empty. **Groups**: If the batch message was creating using a group ID, at
+   * even if the value is empty. **Groups**: If the batch message was created using a group ID, at
    * least one recipient is required. Excluding recipients (an empty recipient list) does not work
    * and will result in a failed request.
    *

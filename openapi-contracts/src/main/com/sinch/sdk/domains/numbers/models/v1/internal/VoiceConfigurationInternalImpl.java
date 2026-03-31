@@ -92,25 +92,12 @@ public class VoiceConfigurationInternalImpl extends AbstractOpenApiSchema
           deserialized = tree.traverse(jp.getCodec()).readValueAs(VoiceConfigurationRTCImpl.class);
           newVoiceConfigurationInternalImpl.setActualInstance(deserialized);
           return newVoiceConfigurationInternalImpl;
-        case "VoiceConfigurationEST":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(VoiceConfigurationESTImpl.class);
-          newVoiceConfigurationInternalImpl.setActualInstance(deserialized);
-          return newVoiceConfigurationInternalImpl;
-        case "VoiceConfigurationFAX":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(VoiceConfigurationFAXImpl.class);
-          newVoiceConfigurationInternalImpl.setActualInstance(deserialized);
-          return newVoiceConfigurationInternalImpl;
-        case "VoiceConfigurationRTC":
-          deserialized = tree.traverse(jp.getCodec()).readValueAs(VoiceConfigurationRTCImpl.class);
-          newVoiceConfigurationInternalImpl.setActualInstance(deserialized);
-          return newVoiceConfigurationInternalImpl;
         default:
           log.log(
               Level.WARNING,
               String.format(
                   "Failed to lookup discriminator value `%s` for VoiceConfigurationInternalImpl."
-                      + " Possible values: EST FAX RTC VoiceConfigurationEST VoiceConfigurationFAX"
-                      + " VoiceConfigurationRTC",
+                      + " Possible values: EST FAX RTC",
                   discriminatorValue));
       }
 
@@ -294,9 +281,6 @@ public class VoiceConfigurationInternalImpl extends AbstractOpenApiSchema
     mappings.put("EST", VoiceConfigurationESTImpl.class);
     mappings.put("FAX", VoiceConfigurationFAXImpl.class);
     mappings.put("RTC", VoiceConfigurationRTCImpl.class);
-    mappings.put("VoiceConfigurationEST", VoiceConfigurationESTImpl.class);
-    mappings.put("VoiceConfigurationFAX", VoiceConfigurationFAXImpl.class);
-    mappings.put("VoiceConfigurationRTC", VoiceConfigurationRTCImpl.class);
     mappings.put("VoiceConfiguration", VoiceConfigurationInternalImpl.class);
     JSONNavigator.registerDiscriminator(VoiceConfigurationInternalImpl.class, "type", mappings);
   }

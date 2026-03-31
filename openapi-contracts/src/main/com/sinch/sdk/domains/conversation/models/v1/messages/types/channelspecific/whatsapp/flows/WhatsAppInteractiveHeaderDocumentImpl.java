@@ -105,6 +105,17 @@ public class WhatsAppInteractiveHeaderDocumentImpl
         OptionalValue.of(WhatsAppInteractiveHeaderDocument.TypeEnum.DOCUMENT);
     OptionalValue<WhatsAppInteractiveHeaderMedia> document = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, WhatsAppInteractiveHeaderDocument.TypeEnum.DOCUMENT)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'type' must be '%s' (is '%s')",
+                WhatsAppInteractiveHeaderDocument.TypeEnum.DOCUMENT, type));
+      }
+      return this;
+    }
+
     @JsonProperty(value = JSON_PROPERTY_DOCUMENT, required = true)
     public Builder setDocument(WhatsAppInteractiveHeaderMedia document) {
       this.document = OptionalValue.of(document);

@@ -147,6 +147,15 @@ public class VoiceConfigurationRTCImpl
     OptionalValue<ScheduledVoiceProvisioning> scheduledProvisioning = OptionalValue.empty();
     OptionalValue<String> appId = OptionalValue.empty();
 
+    @JsonProperty(JSON_PROPERTY_TYPE)
+    Builder setType(VoiceApplicationType type) {
+      if (!Objects.equals(type, VoiceApplicationType.RTC)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", VoiceApplicationType.RTC, type));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_LAST_UPDATED_TIME)
     public Builder setLastUpdatedTime(Instant lastUpdatedTime) {
       this.lastUpdatedTime = OptionalValue.of(lastUpdatedTime);

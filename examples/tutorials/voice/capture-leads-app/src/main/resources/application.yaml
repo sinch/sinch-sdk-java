@@ -1,0 +1,16 @@
+# springboot related config file
+
+logging:
+  level:
+    com: INFO
+
+server:
+    port: 8090
+
+credentials:
+  application-api-key:
+  application-api-secret: 
+
+# see README.md, "Required values" section for details about these settings
+sinch-number:
+sip-address:

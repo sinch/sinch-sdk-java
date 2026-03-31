@@ -1,0 +1,38 @@
+package com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.kakaotalk.image;
+
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
+import com.adelean.inject.resources.junit.jupiter.TestWithResources;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
+import org.json.JSONException;
+import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+
+@TestWithResources
+public class KakaoTalkImageDtoTest extends ConversationBaseTest {
+
+  @GivenTextResource(
+      "/domains/conversation/v1/messages/types/channelspecific/kakaotalk/image/ImageDto.json")
+  static String jsonImageDto;
+
+  public static Image imageDto =
+      Image.builder()
+          .setImageUrl("https://example.com/assets/image/image-product-123.jpg")
+          .setImageLink("https://example.com/product/123")
+          .build();
+
+  @Test
+  void deserializeImageDto() throws JsonProcessingException {
+    Object deserialized = objectMapper.readValue(jsonImageDto, Image.class);
+
+    TestHelpers.recursiveEquals(deserialized, imageDto);
+  }
+
+  @Test
+  void serializeImageDto() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(imageDto);
+
+    JSONAssert.assertEquals(jsonImageDto, serializedString, true);
+  }
+}

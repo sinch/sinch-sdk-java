@@ -261,6 +261,15 @@ public class CalloutRequestCustomImpl
 
     CustomCalloutInternal.Builder _delegatedBuilder = null;
 
+    @JsonProperty(JSON_PROPERTY_METHOD)
+    Builder setMethod(MethodEnum method) {
+      if (!Objects.equals(method, MethodEnum.CUSTOM_CALLOUT)) {
+        throw new IllegalArgumentException(
+            String.format("'method' must be '%s' (is '%s')", MethodEnum.CUSTOM_CALLOUT, method));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_CUSTOM_CALLOUT)
     public Builder setCustomCallout(CustomCalloutInternal customCallout) {
       this.customCallout = OptionalValue.of(customCallout);

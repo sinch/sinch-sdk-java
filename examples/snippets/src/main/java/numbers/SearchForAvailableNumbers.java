@@ -11,7 +11,7 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
-import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumbersListResponse;
 import com.sinch.sdk.models.Configuration;
 import java.util.logging.Logger;
 import utils.Settings;
@@ -50,7 +50,7 @@ public class SearchForAvailableNumbers {
 
     LOGGER.info("Looking for available numbers");
 
-    AvailableNumberListResponse response = numbersService.searchForAvailableNumbers(parameters);
+    AvailableNumbersListResponse response = numbersService.searchForAvailableNumbers(parameters);
 
     response
         .iterator()

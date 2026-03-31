@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.CardHeight;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.card.MessageProperties;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.Choice;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.media.MediaMessage;
 import java.util.List;
@@ -18,7 +19,8 @@ import java.util.Objects;
   CardMessageInternalImpl.JSON_PROPERTY_DESCRIPTION,
   CardMessageInternalImpl.JSON_PROPERTY_HEIGHT,
   CardMessageInternalImpl.JSON_PROPERTY_TITLE,
-  CardMessageInternalImpl.JSON_PROPERTY_MEDIA_MESSAGE
+  CardMessageInternalImpl.JSON_PROPERTY_MEDIA_MESSAGE,
+  CardMessageInternalImpl.JSON_PROPERTY_MESSAGE_PROPERTIES
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -45,6 +47,10 @@ public class CardMessageInternalImpl implements CardMessageInternal {
 
   private OptionalValue<MediaMessage> media;
 
+  public static final String JSON_PROPERTY_MESSAGE_PROPERTIES = "message_properties";
+
+  private OptionalValue<MessageProperties> messageProperties;
+
   public CardMessageInternalImpl() {}
 
   protected CardMessageInternalImpl(
@@ -52,12 +58,14 @@ public class CardMessageInternalImpl implements CardMessageInternal {
       OptionalValue<String> description,
       OptionalValue<CardHeight> height,
       OptionalValue<String> title,
-      OptionalValue<MediaMessage> media) {
+      OptionalValue<MediaMessage> media,
+      OptionalValue<MessageProperties> messageProperties) {
     this.choices = choices;
     this.description = description;
     this.height = height;
     this.title = title;
     this.media = media;
+    this.messageProperties = messageProperties;
   }
 
   @JsonIgnore
@@ -115,6 +123,17 @@ public class CardMessageInternalImpl implements CardMessageInternal {
     return media;
   }
 
+  @JsonIgnore
+  public MessageProperties getMessageProperties() {
+    return messageProperties.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_MESSAGE_PROPERTIES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<MessageProperties> messageProperties() {
+    return messageProperties;
+  }
+
   /** Return true if this CardMessage object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -129,12 +148,13 @@ public class CardMessageInternalImpl implements CardMessageInternal {
         && Objects.equals(this.description, cardMessage.description)
         && Objects.equals(this.height, cardMessage.height)
         && Objects.equals(this.title, cardMessage.title)
-        && Objects.equals(this.media, cardMessage.media);
+        && Objects.equals(this.media, cardMessage.media)
+        && Objects.equals(this.messageProperties, cardMessage.messageProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(choices, description, height, title, media);
+    return Objects.hash(choices, description, height, title, media, messageProperties);
   }
 
   @Override
@@ -146,6 +166,7 @@ public class CardMessageInternalImpl implements CardMessageInternal {
     sb.append("    height: ").append(toIndentedString(height)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    media: ").append(toIndentedString(media)).append("\n");
+    sb.append("    messageProperties: ").append(toIndentedString(messageProperties)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -167,6 +188,7 @@ public class CardMessageInternalImpl implements CardMessageInternal {
     OptionalValue<CardHeight> height = OptionalValue.empty();
     OptionalValue<String> title = OptionalValue.empty();
     OptionalValue<MediaMessage> media = OptionalValue.empty();
+    OptionalValue<MessageProperties> messageProperties = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CHOICES)
     public Builder setChoices(List<Choice<?>> choices) {
@@ -198,8 +220,15 @@ public class CardMessageInternalImpl implements CardMessageInternal {
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_MESSAGE_PROPERTIES)
+    public Builder setMessageProperties(MessageProperties messageProperties) {
+      this.messageProperties = OptionalValue.of(messageProperties);
+      return this;
+    }
+
     public CardMessageInternal build() {
-      return new CardMessageInternalImpl(choices, description, height, title, media);
+      return new CardMessageInternalImpl(
+          choices, description, height, title, media, messageProperties);
     }
   }
 }

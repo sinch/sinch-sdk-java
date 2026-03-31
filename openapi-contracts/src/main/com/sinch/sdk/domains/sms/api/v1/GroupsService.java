@@ -22,6 +22,29 @@ import java.util.List;
 public interface GroupsService {
 
   /**
+   * List Groups (using default parameters)
+   *
+   * <p>With the list operation you can list all groups that you have created. This operation
+   * supports pagination. Groups are returned in reverse chronological order.
+   *
+   * @return ListGroupsResponse
+   * @throws ApiException if fails to make API call
+   */
+  ListGroupsResponse list() throws ApiException;
+
+  /**
+   * List Groups
+   *
+   * <p>With the list operation you can list all groups that you have created. This operation
+   * supports pagination. Groups are returned in reverse chronological order.
+   *
+   * @param queryParameter (optional)
+   * @return ListGroupsResponse
+   * @throws ApiException if fails to make API call
+   */
+  ListGroupsResponse list(ListGroupsQueryParameters queryParameter) throws ApiException;
+
+  /**
    * Create a group
    *
    * <p>This endpoint allows you to create a group of recipients. A new group must be created with a
@@ -59,29 +82,6 @@ public interface GroupsService {
    * @throws ApiException if fails to make API call
    */
   Group get(String groupId) throws ApiException;
-
-  /**
-   * List Groups (using default parameters)
-   *
-   * <p>With the list operation you can list all groups that you have created. This operation
-   * supports pagination. Groups are returned in reverse chronological order.
-   *
-   * @return ListGroupsResponse
-   * @throws ApiException if fails to make API call
-   */
-  ListGroupsResponse list() throws ApiException;
-
-  /**
-   * List Groups
-   *
-   * <p>With the list operation you can list all groups that you have created. This operation
-   * supports pagination. Groups are returned in reverse chronological order.
-   *
-   * @param queryParameter (optional)
-   * @return ListGroupsResponse
-   * @throws ApiException if fails to make API call
-   */
-  ListGroupsResponse list(ListGroupsQueryParameters queryParameter) throws ApiException;
 
   /**
    * Get phone numbers for a group

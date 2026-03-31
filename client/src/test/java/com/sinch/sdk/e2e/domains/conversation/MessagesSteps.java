@@ -1,11 +1,14 @@
 package com.sinch.sdk.e2e.domains.conversation;
 
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.MessagesService;
 import com.sinch.sdk.domains.conversation.models.v1.ContactId;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.ConversationMessage;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.LastMessagesByChannelIdentityListQueryParameters;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageSource;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessageUpdateRequest;
-import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListRequest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.request.MessagesListQueryParameters;
 import com.sinch.sdk.domains.conversation.models.v1.messages.request.SendMessageRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.MessagesListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.messages.response.SendMessageResponse;
@@ -15,6 +18,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.time.Instant;
+import java.util.Arrays;
+import java.util.Iterator;
 import org.junit.jupiter.api.Assertions;
 
 public class MessagesSteps {
@@ -28,6 +33,10 @@ public class MessagesSteps {
   MessagesListResponse listPageIterateResponse;
   ConversationMessage getResponse;
   ConversationMessage updateResponse;
+  MessagesListResponse listLastMessagesByChannelIdentityResponse;
+  MessagesListResponse listAllLastMessagesByChannelIdentityResponse;
+  MessagesListResponse listPageIteratorLastMessagesByChannelIdentityResponse;
+
   boolean deletePassed;
 
   @Given("^the Conversation service \"Messages\" is available$")
@@ -54,21 +63,24 @@ public class MessagesSteps {
   @When("^I send a request to list the existing messages$")
   public void listPage() {
 
-    MessagesListRequest request = MessagesListRequest.builder().setPageSize(2).build();
+    MessagesListQueryParameters request =
+        MessagesListQueryParameters.builder().setPageSize(2).build();
     listPageResponse = service.list(request);
   }
 
   @When("^I send a request to list all the messages$")
   public void listAll() {
 
-    MessagesListRequest request = MessagesListRequest.builder().setPageSize(2).build();
+    MessagesListQueryParameters request =
+        MessagesListQueryParameters.builder().setPageSize(2).build();
     listAllResponse = service.list(request);
   }
 
   @When("^I iterate manually over the messages pages$")
   public void listPageIterate() {
 
-    MessagesListRequest request = MessagesListRequest.builder().setPageSize(2).build();
+    MessagesListQueryParameters request =
+        MessagesListQueryParameters.builder().setPageSize(2).build();
     listPageIterateResponse = service.list(request);
   }
 
@@ -93,6 +105,44 @@ public class MessagesSteps {
     deletePassed = true;
   }
 
+  @When("^I send a request to list the last messages sent to specified channel identities$")
+  public void listLastMessagesByChannelIdentity() {
+
+    LastMessagesByChannelIdentityListQueryParameters request =
+        LastMessagesByChannelIdentityListQueryParameters.builder()
+            .setChannelIdentities(Arrays.asList("12015555555", "12017777777", "7504610123456789"))
+            .setMessagesSource(MessageSource.CONVERSATION_SOURCE)
+            .setPageSize(2)
+            .build();
+    listLastMessagesByChannelIdentityResponse = service.listLastMessagesByChannelIdentity(request);
+  }
+
+  @When("^I send a request to list all the last messages sent to specified channel identities$")
+  public void listAllLastMessagesByChannelIdentity() {
+
+    LastMessagesByChannelIdentityListQueryParameters request =
+        LastMessagesByChannelIdentityListQueryParameters.builder()
+            .setChannelIdentities(Arrays.asList("12015555555", "12017777777", "7504610123456789"))
+            .setMessagesSource(MessageSource.CONVERSATION_SOURCE)
+            .setPageSize(2)
+            .build();
+    listAllLastMessagesByChannelIdentityResponse =
+        service.listLastMessagesByChannelIdentity(request);
+  }
+
+  @When("^I iterate manually over the last messages sent to specified channel identities pages$")
+  public void listLastMessagesByChannelIdentityPageIterator() {
+
+    LastMessagesByChannelIdentityListQueryParameters request =
+        LastMessagesByChannelIdentityListQueryParameters.builder()
+            .setChannelIdentities(Arrays.asList("12015555555", "12017777777", "7504610123456789"))
+            .setMessagesSource(MessageSource.CONVERSATION_SOURCE)
+            .setPageSize(2)
+            .build();
+    listPageIteratorLastMessagesByChannelIdentityResponse =
+        service.listLastMessagesByChannelIdentity(request);
+  }
+
   @Then("the response contains the id of the message")
   public void sendResult() {
 
@@ -111,9 +161,15 @@ public class MessagesSteps {
   public void listAllResult(int size) {
 
     // FIXME: to be thread-safe compliant we need to check which variables are set
-    if (null != listAllResponse) Assertions.assertEquals(listAllResponse.stream().count(), size);
-    if (null != listPageIterateResponse)
-      Assertions.assertEquals(listPageIterateResponse.stream().count(), size);
+    Iterator<?> iterator = null;
+    if (null != listAllResponse) {
+      iterator = listAllResponse.iterator();
+    }
+
+    if (null != listPageIterateResponse) {
+      iterator = listPageIterateResponse.iterator();
+    }
+    TestHelpers.checkIteratorItems(iterator, size);
   }
 
   @Then("the result contains the data from \"{int}\" pages")
@@ -149,7 +205,47 @@ public class MessagesSteps {
 
   @Then("the delete message response contains no data")
   public void deleteResult() {
-
     Assertions.assertTrue(deletePassed);
+  }
+
+  @Then("the response contains \"{int}\" last messages sent to specified channel identities")
+  public void listLastMessagesByChannelIdentity(int size) {
+    Assertions.assertEquals(listLastMessagesByChannelIdentityResponse.getContent().size(), size);
+  }
+
+  @Then("the response list contains \"{int}\" last messages sent to specified channel identities")
+  public void listAllLastMessagesByChannelIdentity(int size) {
+    Iterator<?> iterator = null;
+
+    if (null != listAllLastMessagesByChannelIdentityResponse) {
+      iterator = listAllLastMessagesByChannelIdentityResponse.iterator();
+    }
+
+    if (null != listPageIteratorLastMessagesByChannelIdentityResponse) {
+      iterator = listPageIteratorLastMessagesByChannelIdentityResponse.iterator();
+    }
+
+    TestHelpers.checkIteratorItems(iterator, size);
+  }
+
+  @Then(
+      "the result contains the data from \"{int}\" pages of last messages sent to specified channel"
+          + " identities")
+  public void listAllLastMessagesByChannelIdentityPageIterator(int size) {
+
+    int pageCount = 0;
+
+    MessagesListResponse listPageIterateResponseThreadSafety =
+        listPageIteratorLastMessagesByChannelIdentityResponse;
+    do {
+      pageCount++;
+      if (!listPageIterateResponseThreadSafety.hasNextPage()) {
+        break;
+      }
+      listPageIterateResponseThreadSafety = listPageIterateResponseThreadSafety.nextPage();
+
+    } while (true);
+
+    Assertions.assertEquals(pageCount, size);
   }
 }

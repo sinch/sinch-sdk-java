@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.Conversation;
 import java.time.Instant;
 import java.util.Collections;
 import org.json.JSONException;
@@ -30,7 +29,6 @@ public class ConversationDtoTest extends ConversationBaseTest {
           .setContactId("contact ID")
           .setId("a conversation id")
           .setLastReceived(Instant.parse("2020-11-17T15:00:00Z"))
-          .setMetadata("metadata value")
           .setMetadataJson(Collections.singletonMap("metadata_json_key", "metadata json value"))
           .setCorrelationId("correlation id value")
           .build();
@@ -43,7 +41,6 @@ public class ConversationDtoTest extends ConversationBaseTest {
           .setContactId("contact ID")
           .setId("a conversation id")
           .setLastReceived(Instant.parse("2020-11-17T15:00:00Z"))
-          .setMetadata("metadata value")
           .setMetadataJson(Collections.singletonMap("metadata_json_key", "metadata json value"))
           .setCorrelationId("correlation id value")
           .build();

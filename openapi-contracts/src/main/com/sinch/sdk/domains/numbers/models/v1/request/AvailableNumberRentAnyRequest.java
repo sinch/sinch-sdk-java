@@ -31,8 +31,7 @@ public interface AvailableNumberRentAnyRequest {
   SearchPattern getNumberPattern();
 
   /**
-   * Region code to filter by. ISO 3166-1 alpha-2 country code of the phone number. Example: <code>
-   * US</code>, <code>GB</code> or <code>SE</code>.
+   * ISO 3166-1 alpha-2 country code of the phone number. Example: US, GB or SE.
    *
    * <p>Field is required
    *
@@ -73,9 +72,9 @@ public interface AvailableNumberRentAnyRequest {
   /**
    * The callback URL to be called for a rented number's provisioning / deprovisioning operations.
    *
-   * @return callbackUrl
+   * @return eventDestinationTarget
    */
-  String getCallbackUrl();
+  String getEventDestinationTarget();
 
   /**
    * Getting builder
@@ -146,11 +145,11 @@ public interface AvailableNumberRentAnyRequest {
     /**
      * see getter
      *
-     * @param callbackUrl see getter
+     * @param eventDestinationTarget see getter
      * @return Current builder
-     * @see #getCallbackUrl
+     * @see #getEventDestinationTarget
      */
-    Builder setCallbackUrl(String callbackUrl);
+    Builder setEventDestinationTarget(String eventDestinationTarget);
 
     /**
      * Create instance

@@ -65,8 +65,7 @@ public interface Menu {
 
   /**
    * The maximum number of digits expected for a user to enter. Once these digits are collected, a
-   * <a
-   * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/pie">Prompt
+   * <a href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/pie">Prompt
    * Input Event (PIE)</a> is triggered containing these digits.
    *
    * @return maxDigits

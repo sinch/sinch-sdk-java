@@ -15,6 +15,9 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.sinch.sdk.core.models.AbstractOpenApiSchema;
 import com.sinch.sdk.core.utils.databind.JSONNavigator;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.kakaotalk.carousel.KakaoTalkCarouselCommerceChannelSpecificMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.kakaotalk.commerce.KakaoTalkCommerceChannelSpecificMessageImpl;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.line.LineNotificationMessageTemplateChannelSpecificMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.FlowChannelSpecificMessageImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment.OrderDetailsImpl;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment.OrderStatusImpl;
@@ -124,6 +127,162 @@ public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSc
         // deserialization failed, continue
         log.log(
             Level.FINER, "Input data does not match schema 'FlowChannelSpecificMessageImpl'", e);
+      }
+
+      // deserialize KakaoTalkCarouselCommerceChannelSpecificMessageImpl
+      try {
+        boolean attemptParsing = true;
+        // ensure that we respect type coercion as set on the client ObjectMapper
+        if (KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class.equals(Integer.class)
+            || KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class.equals(Long.class)
+            || KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class.equals(Float.class)
+            || KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class.equals(Double.class)
+            || KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class.equals(Boolean.class)
+            || KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class.equals(String.class)) {
+          attemptParsing = typeCoercion;
+          if (!attemptParsing) {
+            attemptParsing |=
+                ((KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class.equals(Integer.class)
+                        || KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class.equals(
+                            Long.class))
+                    && token == JsonToken.VALUE_NUMBER_INT);
+            attemptParsing |=
+                ((KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class.equals(Float.class)
+                        || KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class.equals(
+                            Double.class))
+                    && token == JsonToken.VALUE_NUMBER_FLOAT);
+            attemptParsing |=
+                (KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class.equals(Boolean.class)
+                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+            attemptParsing |=
+                (KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class.equals(String.class)
+                    && token == JsonToken.VALUE_STRING);
+          }
+        }
+        if (attemptParsing) {
+          deserialized =
+              tree.traverse(jp.getCodec())
+                  .readValueAs(KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class);
+          // TODO: there is no validation against JSON schema constraints
+          // (min, max, enum, pattern...), this does not perform a strict JSON
+          // validation, which means the 'match' count may be higher than it should be.
+          match++;
+          log.log(
+              Level.FINER,
+              "Input data matches schema 'KakaoTalkCarouselCommerceChannelSpecificMessageImpl'");
+        }
+      } catch (Exception e) {
+        // deserialization failed, continue
+        log.log(
+            Level.FINER,
+            "Input data does not match schema"
+                + " 'KakaoTalkCarouselCommerceChannelSpecificMessageImpl'",
+            e);
+      }
+
+      // deserialize KakaoTalkCommerceChannelSpecificMessageImpl
+      try {
+        boolean attemptParsing = true;
+        // ensure that we respect type coercion as set on the client ObjectMapper
+        if (KakaoTalkCommerceChannelSpecificMessageImpl.class.equals(Integer.class)
+            || KakaoTalkCommerceChannelSpecificMessageImpl.class.equals(Long.class)
+            || KakaoTalkCommerceChannelSpecificMessageImpl.class.equals(Float.class)
+            || KakaoTalkCommerceChannelSpecificMessageImpl.class.equals(Double.class)
+            || KakaoTalkCommerceChannelSpecificMessageImpl.class.equals(Boolean.class)
+            || KakaoTalkCommerceChannelSpecificMessageImpl.class.equals(String.class)) {
+          attemptParsing = typeCoercion;
+          if (!attemptParsing) {
+            attemptParsing |=
+                ((KakaoTalkCommerceChannelSpecificMessageImpl.class.equals(Integer.class)
+                        || KakaoTalkCommerceChannelSpecificMessageImpl.class.equals(Long.class))
+                    && token == JsonToken.VALUE_NUMBER_INT);
+            attemptParsing |=
+                ((KakaoTalkCommerceChannelSpecificMessageImpl.class.equals(Float.class)
+                        || KakaoTalkCommerceChannelSpecificMessageImpl.class.equals(Double.class))
+                    && token == JsonToken.VALUE_NUMBER_FLOAT);
+            attemptParsing |=
+                (KakaoTalkCommerceChannelSpecificMessageImpl.class.equals(Boolean.class)
+                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+            attemptParsing |=
+                (KakaoTalkCommerceChannelSpecificMessageImpl.class.equals(String.class)
+                    && token == JsonToken.VALUE_STRING);
+          }
+        }
+        if (attemptParsing) {
+          deserialized =
+              tree.traverse(jp.getCodec())
+                  .readValueAs(KakaoTalkCommerceChannelSpecificMessageImpl.class);
+          // TODO: there is no validation against JSON schema constraints
+          // (min, max, enum, pattern...), this does not perform a strict JSON
+          // validation, which means the 'match' count may be higher than it should be.
+          match++;
+          log.log(
+              Level.FINER,
+              "Input data matches schema 'KakaoTalkCommerceChannelSpecificMessageImpl'");
+        }
+      } catch (Exception e) {
+        // deserialization failed, continue
+        log.log(
+            Level.FINER,
+            "Input data does not match schema 'KakaoTalkCommerceChannelSpecificMessageImpl'",
+            e);
+      }
+
+      // deserialize LineNotificationMessageTemplateChannelSpecificMessageImpl
+      try {
+        boolean attemptParsing = true;
+        // ensure that we respect type coercion as set on the client ObjectMapper
+        if (LineNotificationMessageTemplateChannelSpecificMessageImpl.class.equals(Integer.class)
+            || LineNotificationMessageTemplateChannelSpecificMessageImpl.class.equals(Long.class)
+            || LineNotificationMessageTemplateChannelSpecificMessageImpl.class.equals(Float.class)
+            || LineNotificationMessageTemplateChannelSpecificMessageImpl.class.equals(Double.class)
+            || LineNotificationMessageTemplateChannelSpecificMessageImpl.class.equals(Boolean.class)
+            || LineNotificationMessageTemplateChannelSpecificMessageImpl.class.equals(
+                String.class)) {
+          attemptParsing = typeCoercion;
+          if (!attemptParsing) {
+            attemptParsing |=
+                ((LineNotificationMessageTemplateChannelSpecificMessageImpl.class.equals(
+                            Integer.class)
+                        || LineNotificationMessageTemplateChannelSpecificMessageImpl.class.equals(
+                            Long.class))
+                    && token == JsonToken.VALUE_NUMBER_INT);
+            attemptParsing |=
+                ((LineNotificationMessageTemplateChannelSpecificMessageImpl.class.equals(
+                            Float.class)
+                        || LineNotificationMessageTemplateChannelSpecificMessageImpl.class.equals(
+                            Double.class))
+                    && token == JsonToken.VALUE_NUMBER_FLOAT);
+            attemptParsing |=
+                (LineNotificationMessageTemplateChannelSpecificMessageImpl.class.equals(
+                        Boolean.class)
+                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+            attemptParsing |=
+                (LineNotificationMessageTemplateChannelSpecificMessageImpl.class.equals(
+                        String.class)
+                    && token == JsonToken.VALUE_STRING);
+          }
+        }
+        if (attemptParsing) {
+          deserialized =
+              tree.traverse(jp.getCodec())
+                  .readValueAs(LineNotificationMessageTemplateChannelSpecificMessageImpl.class);
+          // TODO: there is no validation against JSON schema constraints
+          // (min, max, enum, pattern...), this does not perform a strict JSON
+          // validation, which means the 'match' count may be higher than it should be.
+          match++;
+          log.log(
+              Level.FINER,
+              "Input data matches schema"
+                  + " 'LineNotificationMessageTemplateChannelSpecificMessageImpl'");
+        }
+      } catch (Exception e) {
+        // deserialization failed, continue
+        log.log(
+            Level.FINER,
+            "Input data does not match schema"
+                + " 'LineNotificationMessageTemplateChannelSpecificMessageImpl'",
+            e);
       }
 
       // deserialize OrderDetailsImpl
@@ -240,6 +399,23 @@ public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSc
     setActualInstance(o);
   }
 
+  public ChannelSpecificMessageMessageInternalImpl(
+      KakaoTalkCarouselCommerceChannelSpecificMessageImpl o) {
+    super("oneOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
+  public ChannelSpecificMessageMessageInternalImpl(KakaoTalkCommerceChannelSpecificMessageImpl o) {
+    super("oneOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
+  public ChannelSpecificMessageMessageInternalImpl(
+      LineNotificationMessageTemplateChannelSpecificMessageImpl o) {
+    super("oneOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
   public ChannelSpecificMessageMessageInternalImpl(OrderDetailsImpl o) {
     super("oneOf", Boolean.FALSE);
     setActualInstance(o);
@@ -252,6 +428,15 @@ public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSc
 
   static {
     schemas.put("FlowChannelSpecificMessageImpl", FlowChannelSpecificMessageImpl.class);
+    schemas.put(
+        "KakaoTalkCarouselCommerceChannelSpecificMessageImpl",
+        KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class);
+    schemas.put(
+        "KakaoTalkCommerceChannelSpecificMessageImpl",
+        KakaoTalkCommerceChannelSpecificMessageImpl.class);
+    schemas.put(
+        "LineNotificationMessageTemplateChannelSpecificMessageImpl",
+        LineNotificationMessageTemplateChannelSpecificMessageImpl.class);
     schemas.put("OrderDetailsImpl", OrderDetailsImpl.class);
     schemas.put("OrderStatusImpl", OrderStatusImpl.class);
     JSONNavigator.registerDescendants(
@@ -265,8 +450,10 @@ public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSc
 
   /**
    * Set the instance that matches the oneOf child schema, check the instance parameter is valid
-   * against the oneOf child schemas: FlowChannelSpecificMessageImpl, OrderDetailsImpl,
-   * OrderStatusImpl
+   * against the oneOf child schemas: FlowChannelSpecificMessageImpl,
+   * KakaoTalkCarouselCommerceChannelSpecificMessageImpl,
+   * KakaoTalkCommerceChannelSpecificMessageImpl,
+   * LineNotificationMessageTemplateChannelSpecificMessageImpl, OrderDetailsImpl, OrderStatusImpl
    *
    * <p>It could be an instance of the 'oneOf' schemas. The oneOf child schemas may themselves be a
    * composed schema (allOf, anyOf, oneOf).
@@ -275,6 +462,28 @@ public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSc
   public void setActualInstance(Object instance) {
     if (JSONNavigator.isInstanceOf(
         FlowChannelSpecificMessageImpl.class, instance, new HashSet<Class<?>>())) {
+      super.setActualInstance(instance);
+      return;
+    }
+
+    if (JSONNavigator.isInstanceOf(
+        KakaoTalkCarouselCommerceChannelSpecificMessageImpl.class,
+        instance,
+        new HashSet<Class<?>>())) {
+      super.setActualInstance(instance);
+      return;
+    }
+
+    if (JSONNavigator.isInstanceOf(
+        KakaoTalkCommerceChannelSpecificMessageImpl.class, instance, new HashSet<Class<?>>())) {
+      super.setActualInstance(instance);
+      return;
+    }
+
+    if (JSONNavigator.isInstanceOf(
+        LineNotificationMessageTemplateChannelSpecificMessageImpl.class,
+        instance,
+        new HashSet<Class<?>>())) {
       super.setActualInstance(instance);
       return;
     }
@@ -290,15 +499,24 @@ public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSc
     }
 
     throw new RuntimeException(
-        "Invalid instance type. Must be FlowChannelSpecificMessageImpl, OrderDetailsImpl,"
+        "Invalid instance type. Must be FlowChannelSpecificMessageImpl,"
+            + " KakaoTalkCarouselCommerceChannelSpecificMessageImpl,"
+            + " KakaoTalkCommerceChannelSpecificMessageImpl,"
+            + " LineNotificationMessageTemplateChannelSpecificMessageImpl, OrderDetailsImpl,"
             + " OrderStatusImpl");
   }
 
   /**
    * Get the actual instance, which can be the following: FlowChannelSpecificMessageImpl,
-   * OrderDetailsImpl, OrderStatusImpl
+   * KakaoTalkCarouselCommerceChannelSpecificMessageImpl,
+   * KakaoTalkCommerceChannelSpecificMessageImpl,
+   * LineNotificationMessageTemplateChannelSpecificMessageImpl, OrderDetailsImpl, OrderStatusImpl
    *
-   * @return The actual instance (FlowChannelSpecificMessageImpl, OrderDetailsImpl, OrderStatusImpl)
+   * @return The actual instance (FlowChannelSpecificMessageImpl,
+   *     KakaoTalkCarouselCommerceChannelSpecificMessageImpl,
+   *     KakaoTalkCommerceChannelSpecificMessageImpl,
+   *     LineNotificationMessageTemplateChannelSpecificMessageImpl, OrderDetailsImpl,
+   *     OrderStatusImpl)
    */
   @Override
   public Object getActualInstance() {
@@ -315,6 +533,47 @@ public class ChannelSpecificMessageMessageInternalImpl extends AbstractOpenApiSc
   public FlowChannelSpecificMessageImpl getFlowChannelSpecificMessageImpl()
       throws ClassCastException {
     return (FlowChannelSpecificMessageImpl) super.getActualInstance();
+  }
+
+  /**
+   * Get the actual instance of `KakaoTalkCarouselCommerceChannelSpecificMessageImpl`. If the actual
+   * instance is not `KakaoTalkCarouselCommerceChannelSpecificMessageImpl`, the ClassCastException
+   * will be thrown.
+   *
+   * @return The actual instance of `KakaoTalkCarouselCommerceChannelSpecificMessageImpl`
+   * @throws ClassCastException if the instance is not
+   *     `KakaoTalkCarouselCommerceChannelSpecificMessageImpl`
+   */
+  public KakaoTalkCarouselCommerceChannelSpecificMessageImpl
+      getKakaoTalkCarouselCommerceChannelSpecificMessageImpl() throws ClassCastException {
+    return (KakaoTalkCarouselCommerceChannelSpecificMessageImpl) super.getActualInstance();
+  }
+
+  /**
+   * Get the actual instance of `KakaoTalkCommerceChannelSpecificMessageImpl`. If the actual
+   * instance is not `KakaoTalkCommerceChannelSpecificMessageImpl`, the ClassCastException will be
+   * thrown.
+   *
+   * @return The actual instance of `KakaoTalkCommerceChannelSpecificMessageImpl`
+   * @throws ClassCastException if the instance is not `KakaoTalkCommerceChannelSpecificMessageImpl`
+   */
+  public KakaoTalkCommerceChannelSpecificMessageImpl
+      getKakaoTalkCommerceChannelSpecificMessageImpl() throws ClassCastException {
+    return (KakaoTalkCommerceChannelSpecificMessageImpl) super.getActualInstance();
+  }
+
+  /**
+   * Get the actual instance of `LineNotificationMessageTemplateChannelSpecificMessageImpl`. If the
+   * actual instance is not `LineNotificationMessageTemplateChannelSpecificMessageImpl`, the
+   * ClassCastException will be thrown.
+   *
+   * @return The actual instance of `LineNotificationMessageTemplateChannelSpecificMessageImpl`
+   * @throws ClassCastException if the instance is not
+   *     `LineNotificationMessageTemplateChannelSpecificMessageImpl`
+   */
+  public LineNotificationMessageTemplateChannelSpecificMessageImpl
+      getLineNotificationMessageTemplateChannelSpecificMessageImpl() throws ClassCastException {
+    return (LineNotificationMessageTemplateChannelSpecificMessageImpl) super.getActualInstance();
   }
 
   /**

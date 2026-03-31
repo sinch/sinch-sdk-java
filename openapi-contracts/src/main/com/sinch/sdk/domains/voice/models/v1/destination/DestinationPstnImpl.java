@@ -11,6 +11,7 @@ import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformationFrom;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformationTo;
 import com.sinch.sdk.domains.voice.models.v1.destination.internal.PstnDestination;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 @JsonPropertyOrder({
   DestinationPstnImpl.JSON_PROPERTY_TYPE,
@@ -109,6 +110,16 @@ public class DestinationPstnImpl
   static class Builder implements DestinationPstn.Builder {
     OptionalValue<PstnDestination> type = OptionalValue.of(PstnDestination.NUMBER);
     OptionalValue<String> endpoint = OptionalValue.empty();
+
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(PstnDestination type) {
+      if (Stream.of(PstnDestination.NUMBER, PstnDestination.NUMBER2)
+          .noneMatch(d -> Objects.equals(d, type))) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", type, PstnDestination.NUMBER));
+      }
+      return this;
+    }
 
     @JsonProperty(value = JSON_PROPERTY_ENDPOINT, required = true)
     public Builder setEndpoint(String endpoint) {

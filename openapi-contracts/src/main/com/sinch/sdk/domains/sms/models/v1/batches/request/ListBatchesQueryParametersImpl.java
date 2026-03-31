@@ -123,11 +123,6 @@ public class ListBatchesQueryParametersImpl implements ListBatchesQueryParameter
       this.clientReference = parameters.getClientReference();
     }
 
-    public Builder setFrom(String from) {
-      setFrom(java.util.Collections.singletonList(from));
-      return this;
-    }
-
     public Builder setPage(Integer page) {
       this.page = OptionalValue.of(page);
       return this;

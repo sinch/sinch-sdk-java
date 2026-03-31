@@ -90,7 +90,7 @@ public class TextResponseImpl implements TextResponse, BatchResponse {
 
   public static final String JSON_PROPERTY_CALLBACK_URL = "callback_url";
 
-  private OptionalValue<String> callbackUrl;
+  private OptionalValue<String> eventDestinationTarget;
 
   public static final String JSON_PROPERTY_CLIENT_REFERENCE = "client_reference";
 
@@ -136,7 +136,7 @@ public class TextResponseImpl implements TextResponse, BatchResponse {
       OptionalValue<DeliveryReportType> deliveryReport,
       OptionalValue<Instant> sendAt,
       OptionalValue<Instant> expireAt,
-      OptionalValue<String> callbackUrl,
+      OptionalValue<String> eventDestinationTarget,
       OptionalValue<String> clientReference,
       OptionalValue<Boolean> feedbackEnabled,
       OptionalValue<Boolean> flashMessage,
@@ -156,7 +156,7 @@ public class TextResponseImpl implements TextResponse, BatchResponse {
     this.deliveryReport = deliveryReport;
     this.sendAt = sendAt;
     this.expireAt = expireAt;
-    this.callbackUrl = callbackUrl;
+    this.eventDestinationTarget = eventDestinationTarget;
     this.clientReference = clientReference;
     this.feedbackEnabled = feedbackEnabled;
     this.flashMessage = flashMessage;
@@ -294,14 +294,14 @@ public class TextResponseImpl implements TextResponse, BatchResponse {
   }
 
   @JsonIgnore
-  public String getCallbackUrl() {
-    return callbackUrl.orElse(null);
+  public String getEventDestinationTarget() {
+    return eventDestinationTarget.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<String> callbackUrl() {
-    return callbackUrl;
+  public OptionalValue<String> eventDestinationTarget() {
+    return eventDestinationTarget;
   }
 
   @JsonIgnore
@@ -403,7 +403,7 @@ public class TextResponseImpl implements TextResponse, BatchResponse {
         && Objects.equals(this.deliveryReport, textResponse.deliveryReport)
         && Objects.equals(this.sendAt, textResponse.sendAt)
         && Objects.equals(this.expireAt, textResponse.expireAt)
-        && Objects.equals(this.callbackUrl, textResponse.callbackUrl)
+        && Objects.equals(this.eventDestinationTarget, textResponse.eventDestinationTarget)
         && Objects.equals(this.clientReference, textResponse.clientReference)
         && Objects.equals(this.feedbackEnabled, textResponse.feedbackEnabled)
         && Objects.equals(this.flashMessage, textResponse.flashMessage)
@@ -428,7 +428,7 @@ public class TextResponseImpl implements TextResponse, BatchResponse {
         deliveryReport,
         sendAt,
         expireAt,
-        callbackUrl,
+        eventDestinationTarget,
         clientReference,
         feedbackEnabled,
         flashMessage,
@@ -454,7 +454,9 @@ public class TextResponseImpl implements TextResponse, BatchResponse {
     sb.append("    deliveryReport: ").append(toIndentedString(deliveryReport)).append("\n");
     sb.append("    sendAt: ").append(toIndentedString(sendAt)).append("\n");
     sb.append("    expireAt: ").append(toIndentedString(expireAt)).append("\n");
-    sb.append("    callbackUrl: ").append(toIndentedString(callbackUrl)).append("\n");
+    sb.append("    eventDestinationTarget: ")
+        .append(toIndentedString(eventDestinationTarget))
+        .append("\n");
     sb.append("    clientReference: ").append(toIndentedString(clientReference)).append("\n");
     sb.append("    feedbackEnabled: ").append(toIndentedString(feedbackEnabled)).append("\n");
     sb.append("    flashMessage: ").append(toIndentedString(flashMessage)).append("\n");
@@ -492,7 +494,7 @@ public class TextResponseImpl implements TextResponse, BatchResponse {
     OptionalValue<DeliveryReportType> deliveryReport = OptionalValue.empty();
     OptionalValue<Instant> sendAt = OptionalValue.empty();
     OptionalValue<Instant> expireAt = OptionalValue.empty();
-    OptionalValue<String> callbackUrl = OptionalValue.empty();
+    OptionalValue<String> eventDestinationTarget = OptionalValue.empty();
     OptionalValue<String> clientReference = OptionalValue.empty();
     OptionalValue<Boolean> feedbackEnabled = OptionalValue.empty();
     OptionalValue<Boolean> flashMessage = OptionalValue.empty();
@@ -537,6 +539,15 @@ public class TextResponseImpl implements TextResponse, BatchResponse {
       return this;
     }
 
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, TypeEnum.MT_TEXT)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", TypeEnum.MT_TEXT, type));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_CREATED_AT)
     public Builder setCreatedAt(Instant createdAt) {
       this.createdAt = OptionalValue.of(createdAt);
@@ -568,8 +579,8 @@ public class TextResponseImpl implements TextResponse, BatchResponse {
     }
 
     @JsonProperty(JSON_PROPERTY_CALLBACK_URL)
-    public Builder setCallbackUrl(String callbackUrl) {
-      this.callbackUrl = OptionalValue.of(callbackUrl);
+    public Builder setEventDestinationTarget(String eventDestinationTarget) {
+      this.eventDestinationTarget = OptionalValue.of(eventDestinationTarget);
       return this;
     }
 
@@ -629,7 +640,7 @@ public class TextResponseImpl implements TextResponse, BatchResponse {
           deliveryReport,
           sendAt,
           expireAt,
-          callbackUrl,
+          eventDestinationTarget,
           clientReference,
           feedbackEnabled,
           flashMessage,

@@ -4,6 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenJsonResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import com.sinch.sdk.domains.sms.models.v1.batches.response.DryRunPerRecipientDetails.EncodingEnum;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ class DryRunResponseDtoTest extends BaseTest {
                       .setRecipient("recipient string")
                       .setNumberOfParts(1)
                       .setBody("body string")
-                      .setEncoding("encoding string")
+                      .setEncoding(EncodingEnum.from("encoding string"))
                       .build()))
           .build();
 

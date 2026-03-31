@@ -1,7 +1,0 @@
-{
-  "flashCall": {
-    "cli": "cli code",
-    "dialTimeout": 123
-  },
-  "action": "allow"
-}

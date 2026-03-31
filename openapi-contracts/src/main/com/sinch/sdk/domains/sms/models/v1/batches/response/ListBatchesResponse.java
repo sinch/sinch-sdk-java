@@ -12,21 +12,20 @@ package com.sinch.sdk.domains.sms.models.v1.batches.response;
 
 import com.sinch.sdk.core.models.pagination.ListResponse;
 import com.sinch.sdk.core.models.pagination.Page;
-import com.sinch.sdk.domains.sms.api.v1.BatchesService;
-import com.sinch.sdk.domains.sms.models.v1.batches.request.ListBatchesQueryParameters;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 /** Auto paginated response for list of BatchResponse */
 public class ListBatchesResponse extends ListResponse<BatchResponse> {
 
-  private final Page<ListBatchesQueryParameters, BatchResponse, Integer> page;
-  private final BatchesService service;
-  private ListBatchesResponse nextPage;
+  private final Page<BatchResponse, Integer> page;
+  private final Supplier<ListBatchesResponse> supplier;
 
   public ListBatchesResponse(
-      BatchesService service, Page<ListBatchesQueryParameters, BatchResponse, Integer> page) {
-    this.service = service;
+      Supplier<ListBatchesResponse> supplier, Page<BatchResponse, Integer> page) {
+    this.supplier = supplier;
     this.page = page;
   }
 
@@ -35,30 +34,20 @@ public class ListBatchesResponse extends ListResponse<BatchResponse> {
     if (null == page.getNextPageToken() || null == getContent() || getContent().isEmpty()) {
       return false;
     }
-    if (null == nextPage) {
-      ListBatchesQueryParameters.Builder newParameters =
-          ListBatchesQueryParameters.builder(page.getParameters());
-      newParameters.setPage(page.getNextPageToken());
-      nextPage = service.list(newParameters.build());
-    }
-    return (null != nextPage.getContent() && !nextPage.getContent().isEmpty());
+    return true;
   }
 
   @Override
   public ListBatchesResponse nextPage() {
-
     if (!hasNextPage()) {
       throw new NoSuchElementException("Reached the last page of the API response");
     }
-
-    ListBatchesResponse response = nextPage;
-    nextPage = null;
-    return response;
+    return supplier.get();
   }
 
   @Override
   public Collection<BatchResponse> getContent() {
-    return page.getEntities();
+    return page == null ? Collections.emptyList() : page.getEntities();
   }
 
   @Override

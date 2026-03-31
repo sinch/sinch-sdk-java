@@ -2,7 +2,7 @@ package com.sinch.sdk.domains.conversation.adapters;
 
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.conversation.api.templates.adapters.TemplatesService;
+import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesService;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.function.Supplier;
@@ -14,8 +14,8 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
   private final ServerConfiguration oAuthServer;
   private final Supplier<HttpClient> httpClientSupplier;
 
-  private com.sinch.sdk.domains.conversation.api.v1.ConversationService conversationV1;
-  private TemplatesService templates;
+  private volatile com.sinch.sdk.domains.conversation.api.v1.ConversationService conversationV1;
+  private volatile TemplatesService templates;
 
   public ConversationService(
       UnifiedCredentials credentials,
@@ -30,16 +30,25 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
 
   public com.sinch.sdk.domains.conversation.api.v1.ConversationService v1() {
     if (null == this.conversationV1) {
-      this.conversationV1 =
-          new com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationService(
-              credentials, context, oAuthServer, httpClientSupplier);
+      synchronized (this) {
+        if (null == this.conversationV1) {
+          this.conversationV1 =
+              new com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationService(
+                  credentials, context, oAuthServer, httpClientSupplier);
+        }
+      }
     }
     return this.conversationV1;
   }
 
   public TemplatesService templates() {
     if (null == this.templates) {
-      this.templates = new TemplatesService(credentials, context, oAuthServer, httpClientSupplier);
+      synchronized (this) {
+        if (null == this.templates) {
+          this.templates =
+              new TemplatesService(credentials, context, oAuthServer, httpClientSupplier);
+        }
+      }
     }
     return this.templates;
   }

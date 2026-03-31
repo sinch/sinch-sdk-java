@@ -11,6 +11,7 @@ import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformationFrom;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformationTo;
 import com.sinch.sdk.domains.voice.models.v1.destination.internal.MxpDestination;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 @JsonPropertyOrder({
   DestinationMxpImpl.JSON_PROPERTY_TYPE,
@@ -108,6 +109,16 @@ public class DestinationMxpImpl
   static class Builder implements DestinationMxp.Builder {
     OptionalValue<MxpDestination> type = OptionalValue.of(MxpDestination.USERNAME);
     OptionalValue<String> endpoint = OptionalValue.empty();
+
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(MxpDestination type) {
+      if (Stream.of(MxpDestination.USERNAME, MxpDestination.USERNAME2)
+          .noneMatch(d -> Objects.equals(d, type))) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", type, MxpDestination.USERNAME));
+      }
+      return this;
+    }
 
     @JsonProperty(value = JSON_PROPERTY_ENDPOINT, required = true)
     public Builder setEndpoint(String endpoint) {

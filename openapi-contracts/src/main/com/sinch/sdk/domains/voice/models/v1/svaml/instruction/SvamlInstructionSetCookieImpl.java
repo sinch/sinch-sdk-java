@@ -122,6 +122,15 @@ public class SvamlInstructionSetCookieImpl
     OptionalValue<String> key = OptionalValue.empty();
     OptionalValue<String> value = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.SET_COOKIE)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.SET_COOKIE, name));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_KEY)
     public Builder setKey(String key) {
       this.key = OptionalValue.of(key);

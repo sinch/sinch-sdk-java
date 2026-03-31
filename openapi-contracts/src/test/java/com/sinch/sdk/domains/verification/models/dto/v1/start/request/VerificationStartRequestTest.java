@@ -5,15 +5,15 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.verification.adapters.VerificationBaseTest;
 import com.sinch.sdk.domains.verification.models.v1.NumberIdentity;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
+import com.sinch.sdk.domains.verification.models.v1.WhatsAppCodeType;
 import com.sinch.sdk.domains.verification.models.v1.start.request.PhoneCallSpeech;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestData;
-import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestDataImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCall;
-import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestFlashCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCall;
-import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestPhoneCallImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSms;
-import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestSmsImpl;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestWhatsApp;
+import com.sinch.sdk.domains.verification.models.v1.start.request.VerificationStartRequestWhatsAppImpl;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartRequestInternalImpl;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -22,57 +22,59 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class VerificationStartRequestTest extends VerificationBaseTest {
 
-  public static VerificationStartRequestInternalImpl startVerificationPhoneCallDto =
-      new VerificationStartRequestInternalImpl(
-          (VerificationStartRequestPhoneCallImpl)
-              VerificationStartRequestPhoneCall.builder()
-                  .setCustom("a custom")
-                  .setReference("a reference")
-                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
-                  .setSpeech(PhoneCallSpeech.builder().setLocale("fr-FR").build())
-                  .build());
+  public static VerificationStartRequestPhoneCall startVerificationPhoneCallDto =
+      VerificationStartRequestPhoneCall.builder()
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(NumberIdentity.valueOf("+endpoint"))
+          .setSpeech(PhoneCallSpeech.builder().setLocale("fr-FR").build())
+          .putExtraOption("my key", "my value")
+          .build();
 
-  public static VerificationStartRequestInternalImpl startVerificationFlashCallDto =
-      new VerificationStartRequestInternalImpl(
-          (VerificationStartRequestFlashCallImpl)
-              VerificationStartRequestFlashCall.builder()
-                  .setCustom("a custom")
-                  .setReference("a reference")
-                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
-                  .setDialTimeout(17)
-                  .build());
-  public static VerificationStartRequestInternalImpl startVerificationDataDto =
-      new VerificationStartRequestInternalImpl(
-          (VerificationStartRequestDataImpl)
-              VerificationStartRequestData.builder()
-                  .setCustom("a custom")
-                  .setReference("a reference")
-                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
-                  .build());
-  public static VerificationStartRequestInternalImpl startVerificationSmsDto =
-      new VerificationStartRequestInternalImpl(
-          (VerificationStartRequestSmsImpl)
-              VerificationStartRequestSms.builder()
-                  .setCustom("a custom")
-                  .setReference("a reference")
-                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
-                  .setExpiry("01:02:03")
-                  .setCodeType(VerificationStartRequestSms.CodeTypeEnum.ALPHANUMERIC)
-                  .setTemplate("My template require to use '{{CODE}}' code")
-                  .putExtraOption("my key", "my value")
-                  .build());
+  public static VerificationStartRequestFlashCall startVerificationFlashCallDto =
+      VerificationStartRequestFlashCall.builder()
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(NumberIdentity.valueOf("+endpoint"))
+          .setDialTimeout(17)
+          .setInterceptionTimeout(23)
+          .putExtraOption("my key", "my value")
+          .build();
+  public static VerificationStartRequestData startVerificationDataDto =
+      VerificationStartRequestData.builder()
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(NumberIdentity.valueOf("+endpoint"))
+          .build();
+  public static VerificationStartRequestSms startVerificationSmsDto =
+      VerificationStartRequestSms.builder()
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(NumberIdentity.valueOf("+endpoint"))
+          .setExpiry("01:02:03")
+          .setCodeType(SmsCodeType.ALPHANUMERIC)
+          .putExtraOption("my key", "my value")
+          .build();
 
-  public static VerificationStartRequestInternalImpl startVerificationSmsDtoWithAcceptLanguage =
+  public static VerificationStartRequestSms startVerificationSmsDtoWithAcceptLanguage =
+      VerificationStartRequestSms.builder()
+          .setCustom("a custom")
+          .setReference("a reference")
+          .setIdentity(NumberIdentity.valueOf("+endpoint"))
+          .setExpiry("01:02:03")
+          .setCodeType(SmsCodeType.ALPHANUMERIC)
+          .setAcceptLanguage("es-ES")
+          .putExtraOption("my key", "my value")
+          .build();
+
+  public static VerificationStartRequestInternalImpl startVerificationWhatsAppDto =
       new VerificationStartRequestInternalImpl(
-          (VerificationStartRequestSmsImpl)
-              VerificationStartRequestSms.builder()
+          (VerificationStartRequestWhatsAppImpl)
+              VerificationStartRequestWhatsApp.builder()
                   .setCustom("a custom")
                   .setReference("a reference")
-                  .setIdentity(NumberIdentity.valueOf("+endpoint"))
-                  .setExpiry("01:02:03")
-                  .setCodeType(VerificationStartRequestSms.CodeTypeEnum.ALPHANUMERIC)
-                  .setTemplate("My template require to use '{{CODE}}' code")
-                  .setAcceptLanguage("es-ES")
+                  .setIdentity(NumberIdentity.valueOf("+33123456789"))
+                  .setCodeType(WhatsAppCodeType.ALPHANUMERIC)
                   .putExtraOption("my key", "my value")
                   .build());
 
@@ -90,6 +92,10 @@ public class VerificationStartRequestTest extends VerificationBaseTest {
   @GivenTextResource("/domains/verification/v1/start/request/VerificationStartRequestSmsDto.json")
   String jsonStartVerificationSms;
 
+  @GivenTextResource(
+      "/domains/verification/v1/start/request/VerificationStartRequestWhatsAppDto.json")
+  String jsonStartVerificationWhatsApp;
+
   @Test
   void serializeStartPhoneCall() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(startVerificationPhoneCallDto);
@@ -105,24 +111,31 @@ public class VerificationStartRequestTest extends VerificationBaseTest {
   }
 
   @Test
-  void serializeStartDataCall() throws JsonProcessingException, JSONException {
+  void serializeStartData() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(startVerificationDataDto);
 
     JSONAssert.assertEquals(jsonStartVerificationData, serializedString, true);
   }
 
   @Test
-  void serializeStartSmsCall() throws JsonProcessingException, JSONException {
+  void serializeStartSms() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(startVerificationSmsDto);
 
     JSONAssert.assertEquals(jsonStartVerificationSms, serializedString, true);
   }
 
   @Test
-  void serializeStartSmsCallWithAcceptLanguage() throws JsonProcessingException, JSONException {
+  void serializeStartSmsWithAcceptLanguage() throws JsonProcessingException, JSONException {
     String serializedString =
         objectMapper.writeValueAsString(startVerificationSmsDtoWithAcceptLanguage);
     // acceptLanguage do not have to be serialized
     JSONAssert.assertEquals(jsonStartVerificationSms, serializedString, true);
+  }
+
+  @Test
+  void serializeStartWhatsApp() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(startVerificationWhatsAppDto);
+
+    JSONAssert.assertEquals(jsonStartVerificationWhatsApp, serializedString, true);
   }
 }

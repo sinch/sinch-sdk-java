@@ -28,7 +28,8 @@ class VerificationServiceTest {
   }
 
   @Test
-  void checkCredentialsWebhooks() {
-    CredentialsValidationHelper.checkCredentials(() -> httpClient, VerificationService::webhooks);
+  void checkCredentialsSinchEvents() {
+    CredentialsValidationHelper.checkCredentials(
+        () -> httpClient, VerificationService::sinchEvents);
   }
 }

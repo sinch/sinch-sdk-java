@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
-import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.internal.VerificationMethodStart;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartPhoneCallOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartPhoneCallOptionsImpl;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class VerificationStartRequestPhoneCallImpl
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
-  private OptionalValue<VerificationMethod> method;
+  private OptionalValue<VerificationMethodStart> method;
 
   public static final String JSON_PROPERTY_REFERENCE = "reference";
 
@@ -59,7 +59,7 @@ public class VerificationStartRequestPhoneCallImpl
 
   protected VerificationStartRequestPhoneCallImpl(
       OptionalValue<Identity> identity,
-      OptionalValue<VerificationMethod> method,
+      OptionalValue<VerificationMethodStart> method,
       OptionalValue<String> reference,
       OptionalValue<String> custom,
       OptionalValue<VerificationStartPhoneCallOptions> calloutOptions) {
@@ -82,13 +82,13 @@ public class VerificationStartRequestPhoneCallImpl
   }
 
   @JsonIgnore
-  public VerificationMethod getMethod() {
+  public VerificationMethodStart getMethod() {
     return method.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationMethod> method() {
+  public OptionalValue<VerificationMethodStart> method() {
     return method;
   }
 
@@ -143,6 +143,13 @@ public class VerificationStartRequestPhoneCallImpl
         : OptionalValue.empty();
   }
 
+  @JsonIgnore
+  public Object getExtraOption(String key) {
+    return null != calloutOptions && calloutOptions.isPresent()
+        ? calloutOptions.get().get(key)
+        : null;
+  }
+
   /** Return true if this VerificationStartRequestPhoneCall object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -192,7 +199,8 @@ public class VerificationStartRequestPhoneCallImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VerificationStartRequestPhoneCall.Builder {
     OptionalValue<Identity> identity = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.PHONE_CALL);
+    OptionalValue<VerificationMethodStart> method =
+        OptionalValue.of(VerificationMethodStart.PHONE_CALL);
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<VerificationStartPhoneCallOptions> calloutOptions = OptionalValue.empty();
@@ -202,6 +210,16 @@ public class VerificationStartRequestPhoneCallImpl
     @JsonProperty(value = JSON_PROPERTY_IDENTITY, required = true)
     public Builder setIdentity(Identity identity) {
       this.identity = OptionalValue.of(identity);
+      return this;
+    }
+
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(VerificationMethodStart method) {
+      if (!Objects.equals(method, VerificationMethodStart.PHONE_CALL)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'method' must be '%s' (is '%s')", VerificationMethodStart.PHONE_CALL, method));
+      }
       return this;
     }
 
@@ -226,6 +244,11 @@ public class VerificationStartRequestPhoneCallImpl
     @JsonIgnore
     public Builder setSpeech(PhoneCallSpeech speech) {
       getDelegatedBuilder().setSpeech(speech);
+      return this;
+    }
+
+    public Builder putExtraOption(String key, Object value) {
+      getDelegatedBuilder().put(key, value);
       return this;
     }
 

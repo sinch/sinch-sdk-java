@@ -282,6 +282,15 @@ public class SvamlActionConnectPstnImpl
     OptionalValue<IndicationsEnum> indications = OptionalValue.empty();
     OptionalValue<AnsweringMachineDetectionQuery> amd = OptionalValue.empty();
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.CONNECT_PSTN)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.CONNECT_PSTN, name));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_NUMBER)
     public Builder setNumber(String number) {
       this.number = OptionalValue.of(number);

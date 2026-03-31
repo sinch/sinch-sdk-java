@@ -4,8 +4,15 @@ import com.sinch.sdk.auth.adapters.ApplicationAuthManager;
 import com.sinch.sdk.auth.adapters.BasicAuthManager;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
+import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.verification.adapters.IdentityMapper;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsReportService;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsStartService;
+import com.sinch.sdk.domains.verification.api.v1.VerificationsStatusService;
+import com.sinch.sdk.domains.verification.models.v1.report.response.VerificationReportResponseMapper;
+import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationStartResponseMapper;
+import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseMapper;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
@@ -28,13 +35,13 @@ public class VerificationService
 
   private final VerificationContext context;
   private final Supplier<HttpClient> httpClientSupplier;
-  private volatile VerificationStartService startService;
-  private volatile VerificationReportService reportService;
-  private volatile VerificationStatusService statusService;
-  private volatile WebHooksService webhooks;
+  private volatile VerificationsStartService startService;
+  private volatile VerificationsReportService reportService;
+  private volatile VerificationsStatusService statusService;
+  private volatile SinchEventsService sinchEvents;
 
   private volatile Map<String, AuthManager> clientAuthManagers;
-  private volatile Map<String, AuthManager> webhooksAuthManagers;
+  private volatile Map<String, AuthManager> sinchEventsAuthManagers;
 
   static {
     LocalLazyInit.init();
@@ -59,65 +66,96 @@ public class VerificationService
             credentials.getApplicationKey(), credentials.getApplicationSecret());
 
     boolean useApplicationAuth = true;
-    // to handle request from client we can only have "Basic" keyword behind the auth managers
+    // To handle request from client we can only have "Basic" keyword behind the auth managers
     // because of the OAS file only contains it; so we need to trick the application auth manager
     // hidden behind the "Basic" keyword
-    // we need both auth manager to handle webhooks because of customer will choose from his
+    // We need both auth manager to handle Sinch Events because of customer will choose from his
     // dashboard which scheme to be used
-    clientAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    clientAuthManagers.put(
+    Map<String, AuthManager> localClientAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    localClientAuthManagers.put(
         BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION,
         useApplicationAuth ? applicationAuthManager : basicAuthManager);
+    clientAuthManagers = localClientAuthManagers;
 
-    // here we need both auth managers to handle webhooks because we are receiving an Authorization
-    // header with "Application" keyword
-    webhooksAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    webhooksAuthManagers.put(BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION, basicAuthManager);
-    webhooksAuthManagers.put(
+    // here we need both auth managers to handle Sinch Events because we are receiving an
+    // Authorization header with "Application" keyword
+    Map<String, AuthManager> localSinchEventsAuthManagers =
+        new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    localSinchEventsAuthManagers.put(BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION, basicAuthManager);
+    localSinchEventsAuthManagers.put(
         APPLICATION_SECURITY_SCHEME_KEYWORD_VERIFICATION, applicationAuthManager);
+    sinchEventsAuthManagers = localSinchEventsAuthManagers;
   }
 
-  public VerificationStartService verificationStart() {
+  public VerificationsStartService verificationStart() {
     if (null == this.startService) {
-      instanceLazyInit();
-      this.startService =
-          new VerificationStartService(context, httpClientSupplier.get(), clientAuthManagers);
+      synchronized (this) {
+        if (null == this.startService) {
+          instanceLazyInit();
+          this.startService =
+              new VerificationsStartServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getVerificationServer(),
+                  clientAuthManagers,
+                  HttpMapper.getInstance());
+        }
+      }
     }
     return this.startService;
   }
 
-  public VerificationReportService verificationReport() {
+  public VerificationsReportService verificationReport() {
     if (null == this.reportService) {
-      instanceLazyInit();
-      this.reportService =
-          new VerificationReportService(context, httpClientSupplier.get(), clientAuthManagers);
+      synchronized (this) {
+        if (null == this.reportService) {
+          instanceLazyInit();
+          this.reportService =
+              new VerificationsReportServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getVerificationServer(),
+                  clientAuthManagers,
+                  HttpMapper.getInstance());
+        }
+      }
     }
     return this.reportService;
   }
 
-  public VerificationStatusService verificationStatus() {
+  public VerificationsStatusService verificationStatus() {
     if (null == this.statusService) {
-      instanceLazyInit();
-      this.statusService =
-          new VerificationStatusService(context, httpClientSupplier.get(), clientAuthManagers);
+      synchronized (this) {
+        if (null == this.statusService) {
+          instanceLazyInit();
+          this.statusService =
+              new VerificationsStatusServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getVerificationServer(),
+                  clientAuthManagers,
+                  HttpMapper.getInstance());
+        }
+      }
     }
     return this.statusService;
   }
 
-  public WebHooksService webhooks() {
-    if (null == this.webhooks) {
-      instanceLazyInit();
-      this.webhooks = new WebHooksService(webhooksAuthManagers);
+  public SinchEventsService sinchEvents() {
+    if (null == this.sinchEvents) {
+      synchronized (this) {
+        if (null == this.sinchEvents) {
+          instanceLazyInit();
+          this.sinchEvents = new SinchEventsService(sinchEventsAuthManagers);
+        }
+      }
     }
-    return this.webhooks;
+    return this.sinchEvents;
   }
 
   private void instanceLazyInit() {
-    if (null != this.clientAuthManagers && null != this.webhooksAuthManagers) {
+    if (null != this.clientAuthManagers && null != this.sinchEventsAuthManagers) {
       return;
     }
     synchronized (this) {
-      if (null == this.clientAuthManagers || null == this.webhooksAuthManagers) {
+      if (null == this.clientAuthManagers || null == this.sinchEventsAuthManagers) {
 
         // Currently, we are not supporting unified credentials: ensure application credentials are
         // defined
@@ -147,6 +185,9 @@ public class VerificationService
 
     private LocalLazyInit() {
       IdentityMapper.initMapper();
+      VerificationStartResponseMapper.initMapper();
+      VerificationStatusResponseMapper.initMapper();
+      VerificationReportResponseMapper.initMapper();
     }
 
     public static LocalLazyInit init() {

@@ -24,7 +24,7 @@ public class TranscodeMessageRequestDtoTest extends ConversationBaseTest {
           .build();
 
   @GivenTextResource("/domains/conversation/v1/transcoding/request/TranscodeMessageRequestDto.json")
-  static String jsonTranscodeMessageRequestDto;
+  String jsonTranscodeMessageRequestDto;
 
   @Test
   void serializeDto() throws JsonProcessingException, JSONException {

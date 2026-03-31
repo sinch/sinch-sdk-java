@@ -3,7 +3,9 @@
   "method": "sms",
   "sms": {
     "template": "Your verification code is {{CODE}}. Verified by Sinch",
-    "interceptionTimeout": 298
+    "interceptionTimeout": 298,
+    "codeType": "Numeric",
+    "my key": "my value"
   },
   "_links": [
     {

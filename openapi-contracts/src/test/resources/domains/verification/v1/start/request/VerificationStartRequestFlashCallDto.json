@@ -7,6 +7,8 @@
   "custom": "a custom",
   "method": "flashcall",
   "flashCallOptions": {
-    "dialTimeout": 17
+    "dialTimeout": 17,
+    "interceptionTimeout": 23,
+    "my key": "my value"
   }
 }

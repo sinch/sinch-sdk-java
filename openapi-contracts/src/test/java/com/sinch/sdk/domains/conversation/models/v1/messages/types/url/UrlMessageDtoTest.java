@@ -3,8 +3,8 @@ package com.sinch.sdk.domains.conversation.models.v1.messages.types.url;
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
-import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -29,6 +29,6 @@ public class UrlMessageDtoTest extends ConversationBaseTest {
   void deserializeMessageDto() throws JsonProcessingException {
     Object deserialized = objectMapper.readValue(jsonUrlMessageDto, UrlMessage.class);
 
-    Assertions.assertThat(deserialized).usingRecursiveComparison().isEqualTo(urlMessageDto);
+    TestHelpers.recursiveEquals(deserialized, urlMessageDto);
   }
 }

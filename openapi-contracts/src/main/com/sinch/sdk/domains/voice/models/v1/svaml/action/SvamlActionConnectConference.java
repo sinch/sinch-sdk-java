@@ -20,8 +20,8 @@ import java.util.stream.Stream;
 
 /**
  * Connects an incoming call to a conference. Available to use in a response to an <a
- * href="https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/#tag/Callbacks/operation/ice">Incoming
- * Call Event</a> callback.
+ * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/ice">Incoming Call
+ * Event</a> callback.
  */
 @JsonDeserialize(builder = SvamlActionConnectConferenceImpl.Builder.class)
 public interface SvamlActionConnectConference
@@ -73,7 +73,7 @@ public interface SvamlActionConnectConference
    * join. If <code>moh</code> isn't specified, the user will only hear silence while alone in the
    * conference.
    *
-   * @return MusicOnHold
+   * @return musicOnHold
    */
   MusicOnHold getMusicOnHold();
 
@@ -110,11 +110,11 @@ public interface SvamlActionConnectConference
     /**
      * see getter
      *
-     * @param MusicOnHold see getter
+     * @param musicOnHold see getter
      * @return Current builder
      * @see #getMusicOnHold
      */
-    Builder setMusicOnHold(MusicOnHold MusicOnHold);
+    Builder setMusicOnHold(MusicOnHold musicOnHold);
 
     /**
      * Create instance

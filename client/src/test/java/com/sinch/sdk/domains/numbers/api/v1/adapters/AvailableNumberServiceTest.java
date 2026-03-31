@@ -23,6 +23,7 @@ import com.sinch.sdk.core.http.URLParameter.STYLE;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.models.ServerConfigurationTest.ServerConfigurationMatcher;
+import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.numbers.api.v1.NumbersService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumberDtoTest;
@@ -31,13 +32,11 @@ import com.sinch.sdk.domains.numbers.models.v1.Capability;
 import com.sinch.sdk.domains.numbers.models.v1.NumberType;
 import com.sinch.sdk.domains.numbers.models.v1.SmsConfiguration;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
-import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
-import com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern;
 import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
-import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumbersListResponse;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.Arrays;
@@ -100,45 +99,6 @@ class AvailableNumberServiceTest extends BaseTest {
   }
 
   @Test
-  void searchForAvailableNumbersWithRequiredParametersDeprecated() throws ApiException {
-
-    AvailableNumberListRequest parameters =
-        AvailableNumberListRequest.builder()
-            .setRegionCode("region")
-            .setType(NumberType.MOBILE)
-            .build();
-
-    HttpRequest httpRequest =
-        new HttpRequest(
-            "/v1/projects/" + URLPathUtils.encodePathSegment(URI_UUID) + "/availableNumbers",
-            HttpMethod.GET,
-            Arrays.asList(
-                new URLParameter("regionCode", "region", STYLE.FORM, true),
-                new URLParameter("type", NumberType.MOBILE, STYLE.FORM, true)),
-            (String) null,
-            Collections.emptyMap(),
-            Collections.singletonList(HttpContentType.APPLICATION_JSON),
-            Collections.emptyList(),
-            NUMBERS_AUTH_NAMES);
-    HttpResponse httpResponse =
-        new HttpResponse(200, null, Collections.emptyMap(), jsonAvailableListResponse.getBytes());
-
-    when(httpClient.invokeAPI(
-            argThat(new ServerConfigurationMatcher(serverConfiguration)),
-            argThat(new AuthManagersMatcher(authManagers)),
-            argThat(new HttpRequestMatcher(httpRequest))))
-        .thenReturn(httpResponse);
-
-    AvailableNumberListResponse response = service.searchForAvailableNumbers(parameters);
-
-    AvailableNumberListResponse expected =
-        new AvailableNumberListResponse(
-            AvailableNumberDtoTest.availableNumberList.getAvailableNumbers());
-
-    TestHelpers.recursiveEquals(response, expected);
-  }
-
-  @Test
   void searchForAvailableNumbersWithRequiredParameters() throws ApiException {
 
     AvailableNumbersListQueryParameters parameters =
@@ -168,11 +128,11 @@ class AvailableNumberServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    AvailableNumberListResponse response = service.searchForAvailableNumbers(parameters);
+    AvailableNumbersListResponse response = service.searchForAvailableNumbers(parameters);
 
-    AvailableNumberListResponse expected =
-        new AvailableNumberListResponse(
-            AvailableNumberDtoTest.availableNumberList.getAvailableNumbers());
+    AvailableNumbersListResponse expected =
+        new AvailableNumbersListResponse(
+            new Page<>(AvailableNumberDtoTest.availableNumberList.getAvailableNumbers(), null));
 
     TestHelpers.recursiveEquals(response, expected);
   }
@@ -216,62 +176,11 @@ class AvailableNumberServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    AvailableNumberListResponse response = service.searchForAvailableNumbers(parameters);
+    AvailableNumbersListResponse response = service.searchForAvailableNumbers(parameters);
 
-    AvailableNumberListResponse expected =
-        new AvailableNumberListResponse(
-            AvailableNumberDtoTest.availableNumberList.getAvailableNumbers());
-
-    TestHelpers.recursiveEquals(response, expected);
-  }
-
-  @Test
-  void searchForAvailableNumbersWithOptionalParametersDeprecated() throws ApiException {
-
-    AvailableNumberListRequest parameters =
-        AvailableNumberListRequest.builder()
-            .setRegionCode("another region")
-            .setType(NumberType.TOLL_FREE)
-            .setSearchPattern(
-                SearchPattern.builder()
-                    .setPattern("pattern value")
-                    .setPosition(SearchPosition.END)
-                    .build())
-            .setCapabilities(Arrays.asList(Capability.VOICE))
-            .setSize(5)
-            .build();
-
-    HttpRequest httpRequest =
-        new HttpRequest(
-            "/v1/projects/" + URLPathUtils.encodePathSegment(URI_UUID) + "/availableNumbers",
-            HttpMethod.GET,
-            Arrays.asList(
-                new URLParameter("numberPattern.pattern", "pattern value", STYLE.FORM, true),
-                new URLParameter(
-                    "numberPattern.searchPattern", SearchPosition.END, STYLE.FORM, true),
-                new URLParameter("regionCode", "another region", STYLE.FORM, true),
-                new URLParameter("type", NumberType.TOLL_FREE, STYLE.FORM, true),
-                new URLParameter("capabilities", Arrays.asList(Capability.VOICE), STYLE.FORM, true),
-                new URLParameter("size", 5, STYLE.FORM, true)),
-            (String) null,
-            Collections.emptyMap(),
-            Collections.singletonList(HttpContentType.APPLICATION_JSON),
-            Collections.emptyList(),
-            NUMBERS_AUTH_NAMES);
-    HttpResponse httpResponse =
-        new HttpResponse(200, null, Collections.emptyMap(), jsonAvailableListResponse.getBytes());
-
-    when(httpClient.invokeAPI(
-            argThat(new ServerConfigurationMatcher(serverConfiguration)),
-            argThat(new AuthManagersMatcher(authManagers)),
-            argThat(new HttpRequestMatcher(httpRequest))))
-        .thenReturn(httpResponse);
-
-    AvailableNumberListResponse response = service.searchForAvailableNumbers(parameters);
-
-    AvailableNumberListResponse expected =
-        new AvailableNumberListResponse(
-            AvailableNumberDtoTest.availableNumberList.getAvailableNumbers());
+    AvailableNumbersListResponse expected =
+        new AvailableNumbersListResponse(
+            new Page<>(AvailableNumberDtoTest.availableNumberList.getAvailableNumbers(), null));
 
     TestHelpers.recursiveEquals(response, expected);
   }
@@ -318,7 +227,7 @@ class AvailableNumberServiceTest extends BaseTest {
             .setSmsConfiguration(
                 SmsConfiguration.builder().setServicePlanId("").setCampaignId("").build())
             .setVoiceConfiguration(VoiceConfigurationRTC.builder().setAppId("").build())
-            .setCallbackUrl("foo")
+            .setEventDestinationTarget("foo")
             .build();
 
     HttpRequest httpRequest =

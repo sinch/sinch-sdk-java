@@ -8,20 +8,18 @@ import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numbers.api.v1.AvailableRegionsService;
-import com.sinch.sdk.domains.numbers.api.v1.CallbackConfigurationService;
+import com.sinch.sdk.domains.numbers.api.v1.EventDestinationsService;
 import com.sinch.sdk.domains.numbers.models.v1.ActiveNumber;
 import com.sinch.sdk.domains.numbers.models.v1.EmergencyAddress;
-import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
-import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.request.EmergencyAddressRequest;
-import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumbersListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
-import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumbersListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.ValidateAddressResponse;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.UnifiedCredentials;
@@ -48,8 +46,8 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
   private volatile AvailableNumberServiceFacade available;
   private volatile ActiveNumberServiceFacade active;
   private volatile AvailableRegionsService regions;
-  private volatile CallbackConfigurationService callback;
-  private volatile WebHooksService webhooks;
+  private volatile EventDestinationsService eventDestinations;
+  private volatile SinchEventsService sinchEvents;
 
   static {
     LocalLazyInit.init();
@@ -68,124 +66,150 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
 
   AvailableNumberServiceFacade available() {
     if (null == this.available) {
-      instanceLazyInit();
-      this.available =
-          new AvailableNumberServiceFacade(uriUUID, context, httpClientSupplier, authManagers);
+      synchronized (this) {
+        if (null == this.available) {
+          instanceLazyInit();
+          this.available =
+              new AvailableNumberServiceFacade(uriUUID, context, httpClientSupplier, authManagers);
+        }
+      }
     }
     return this.available;
   }
 
   public AvailableRegionsService regions() {
     if (null == this.regions) {
-      instanceLazyInit();
-      this.regions =
-          new AvailableRegionsServiceImpl(
-              httpClientSupplier.get(),
-              context.getNumbersServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+      synchronized (this) {
+        if (null == this.regions) {
+          instanceLazyInit();
+          this.regions =
+              new AvailableRegionsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getNumbersServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
     return this.regions;
   }
 
   ActiveNumberServiceFacade active() {
     if (null == this.active) {
-      instanceLazyInit();
-      this.active =
-          new ActiveNumberServiceFacade(uriUUID, this, context, httpClientSupplier, authManagers);
+      synchronized (this) {
+        if (null == this.active) {
+          instanceLazyInit();
+          this.active =
+              new ActiveNumberServiceFacade(
+                  uriUUID, this, context, httpClientSupplier, authManagers);
+        }
+      }
     }
     return this.active;
   }
 
-  public CallbackConfigurationService callback() {
-    if (null == this.callback) {
-      instanceLazyInit();
-      this.callback =
-          new CallbackConfigurationServiceImpl(
-              httpClientSupplier.get(),
-              context.getNumbersServer(),
-              authManagers,
-              HttpMapper.getInstance(),
-              uriUUID);
+  public EventDestinationsService eventDestinations() {
+    if (null == this.eventDestinations) {
+      synchronized (this) {
+        if (null == this.eventDestinations) {
+          instanceLazyInit();
+          this.eventDestinations =
+              new EventDestinationsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getNumbersServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
     }
-    return this.callback;
+    return this.eventDestinations;
   }
 
-  public WebHooksService webhooks() {
-
-    if (null == this.webhooks) {
-      this.webhooks = new WebHooksService(new NumbersWebhooksAuthenticationValidation());
+  public SinchEventsService sinchEvents() {
+    if (null == this.sinchEvents) {
+      synchronized (this) {
+        if (null == this.sinchEvents) {
+          this.sinchEvents = new SinchEventsService(new SinchEventsAuthenticationValidation());
+        }
+      }
     }
-    return this.webhooks;
+    return this.sinchEvents;
   }
 
-  public AvailableNumberListResponse searchForAvailableNumbers(
+  @Override
+  public AvailableNumbersListResponse searchForAvailableNumbers(
       AvailableNumbersListQueryParameters parameters) throws ApiException {
     return available().searchForAvailableNumbers(parameters);
   }
 
-  @Deprecated
-  public AvailableNumberListResponse searchForAvailableNumbers(
-      AvailableNumberListRequest parameters) throws ApiException {
-    return available().searchForAvailableNumbers(parameters);
-  }
-
+  @Override
   public AvailableNumber checkAvailability(String phoneNumber) throws ApiException {
     return available().checkAvailability(phoneNumber);
   }
 
+  @Override
   public ActiveNumber rent(String phoneNumber) throws ApiException {
     return available().rent(phoneNumber);
   }
 
+  @Override
   public ActiveNumber rent(String phoneNumber, AvailableNumberRentRequest parameters)
       throws ApiException {
     return available().rent(phoneNumber, parameters);
   }
 
+  @Override
   public ActiveNumber rentAny(AvailableNumberRentAnyRequest parameters) throws ApiException {
     return available().rentAny(parameters);
   }
 
-  @Deprecated
-  public ActiveNumberListResponse list(ActiveNumberListRequest parameters) throws ApiException {
-    return active().list(parameters);
+  @Override
+  public ActiveNumbersListResponse list() throws ApiException {
+    return active().list();
   }
 
   @Override
-  public ActiveNumberListResponse list(ActiveNumbersListQueryParameters queryParameter)
+  public ActiveNumbersListResponse list(ActiveNumbersListQueryParameters queryParameter)
       throws ApiException {
     return active().list(queryParameter);
   }
 
+  @Override
   public ActiveNumber get(String phoneNumber) throws ApiException {
     return active().get(phoneNumber);
   }
 
+  @Override
   public ActiveNumber update(String phoneNumber, ActiveNumberUpdateRequest parameters)
       throws ApiException {
     return active().update(phoneNumber, parameters);
   }
 
+  @Override
   public ActiveNumber release(String phoneNumber) throws ApiException {
     return active().release(phoneNumber);
   }
 
+  @Override
   public ValidateAddressResponse validateEmergencyAddress(
       String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException {
     return active().validateEmergencyAddress(phoneNumber, emergencyAddressRequest);
   }
 
+  @Override
   public EmergencyAddress provisionEmergencyAddress(
       String phoneNumber, EmergencyAddressRequest emergencyAddressRequest) throws ApiException {
     return active().provisionEmergencyAddress(phoneNumber, emergencyAddressRequest);
   }
 
+  @Override
   public void deprovisionEmergencyAddress(String phoneNumber) throws ApiException {
     active().deprovisionEmergencyAddress(phoneNumber);
   }
 
+  @Override
   public EmergencyAddress getEmergencyAddress(String phoneNumber) throws ApiException {
     return active().getEmergencyAddress(phoneNumber);
   }

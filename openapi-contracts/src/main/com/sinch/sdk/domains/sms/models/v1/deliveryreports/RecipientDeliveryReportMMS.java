@@ -56,14 +56,14 @@ public interface RecipientDeliveryReportMMS extends RecipientDeliveryReport {
 
   /**
    * The detailed <a
-   * href="https://developers.sinch.com/docs/sms/api-reference/sms/tag/Delivery-reports/#tag/Delivery-reports/section/Delivery-report-error-codes">status
+   * href="https://developers.sinch.com/docs/sms/api-reference/sms/delivery-reports/delivery-report-error-codes">status
    * code</a>.
    *
    * <p>Field is required
    *
    * @return code
    */
-  DeliveryReceiptErrorCode getCode();
+  DeliveryReceiptStatusCode getCode();
 
   /**
    * Get encoding
@@ -171,7 +171,7 @@ public interface RecipientDeliveryReportMMS extends RecipientDeliveryReport {
      * @return Current builder
      * @see #getCode
      */
-    Builder setCode(DeliveryReceiptErrorCode code);
+    Builder setCode(DeliveryReceiptStatusCode code);
 
     /**
      * see getter

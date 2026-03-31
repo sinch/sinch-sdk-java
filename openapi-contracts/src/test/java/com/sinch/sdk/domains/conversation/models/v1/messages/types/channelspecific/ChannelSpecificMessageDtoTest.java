@@ -5,6 +5,8 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.kakaotalk.carousel.KakaoTalkCarouselCommerceChannelSpecificMessageDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.kakaotalk.commerce.KakaoTalkCommerceChannelSpecificMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.flows.FlowChannelSpecificMessageDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment.OrderDetailsDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.channelspecific.whatsapp.payment.OrderStatusDtoTest;
@@ -24,6 +26,14 @@ public class ChannelSpecificMessageDtoTest extends ConversationBaseTest {
   @GivenTextResource(
       "/domains/conversation/v1/messages/types/channelspecific/ChannelSpecificMessageOrderDetailsDto.json")
   static String jsonChannelSpecificMessageOrderDetailsDto;
+
+  @GivenTextResource(
+      "/domains/conversation/v1/messages/types/channelspecific/ChannelSpecificMessageKakaoTalkCommerceDto.json")
+  static String jsonKakaoTalkCommerceChannelSpecificMessageDto;
+
+  @GivenTextResource(
+      "/domains/conversation/v1/messages/types/channelspecific/ChannelSpecificMessageKakaoTalkCarouselCommerceDto.json")
+  static String jsonKakaoTalkCarouselCommerceChannelSpecificMessageDto;
 
   @Test
   void deserializeChannelSpecificMessageFlowsDto() throws JsonProcessingException {
@@ -50,5 +60,29 @@ public class ChannelSpecificMessageDtoTest extends ConversationBaseTest {
             jsonChannelSpecificMessageOrderDetailsDto, ChannelSpecificMessage.class);
 
     TestHelpers.recursiveEquals(deserialized, OrderDetailsDtoTest.ORDER_DETAILS_DTO);
+  }
+
+  @Test
+  void deserializeKakaoTalkCommerceChannelSpecificMessageDto() throws JsonProcessingException {
+    Object deserialized =
+        objectMapper.readValue(
+            jsonKakaoTalkCommerceChannelSpecificMessageDto, ChannelSpecificMessage.class);
+
+    TestHelpers.recursiveEquals(
+        deserialized,
+        KakaoTalkCommerceChannelSpecificMessageDtoTest.kakaoTalkCommerceChannelSpecificMessageDto);
+  }
+
+  @Test
+  void deserializeKakaoTalkCarouselCommerceChannelSpecificMessageDto()
+      throws JsonProcessingException {
+    Object deserialized =
+        objectMapper.readValue(
+            jsonKakaoTalkCarouselCommerceChannelSpecificMessageDto, ChannelSpecificMessage.class);
+
+    TestHelpers.recursiveEquals(
+        deserialized,
+        KakaoTalkCarouselCommerceChannelSpecificMessageDtoTest
+            .kakaoTalkCarouselCommerceChannelSpecificMessageDto);
   }
 }

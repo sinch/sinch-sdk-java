@@ -24,10 +24,10 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.request.AvailableRegionListRequest;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.AvailableRegionListResponse;
-import com.sinch.sdk.domains.numbers.models.v1.regions.available.response.internal.AvailableRegionListResponseInternal;
+import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.domains.numbers.models.v1.regions.request.AvailableRegionsListQueryParameters;
+import com.sinch.sdk.domains.numbers.models.v1.regions.response.AvailableRegionsListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.regions.response.internal.AvailableRegionsListResponseInternal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -62,28 +62,35 @@ public class AvailableRegionsServiceImpl
   }
 
   @Override
-  public AvailableRegionListResponse list() throws ApiException {
+  public AvailableRegionsListResponse list() throws ApiException {
 
     return list((AvailableRegionsListQueryParameters) null);
   }
 
   @Override
-  public AvailableRegionListResponse list(AvailableRegionsListQueryParameters queryParameter)
+  public AvailableRegionsListResponse list(AvailableRegionsListQueryParameters queryParameter)
       throws ApiException {
 
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
+    return _fetchListPage(queryParameter, httpRequest);
+  }
+
+  private AvailableRegionsListResponse _fetchListPage(
+      AvailableRegionsListQueryParameters queryParameter, HttpRequest httpRequest)
+      throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
 
     if (HttpStatus.isSuccessfulStatus(response.getCode())) {
 
-      AvailableRegionListResponseInternal deserialized =
-          mapper.deserialize(response, new TypeReference<AvailableRegionListResponseInternal>() {});
+      AvailableRegionsListResponseInternal deserialized =
+          mapper.deserialize(
+              response, new TypeReference<AvailableRegionsListResponseInternal>() {});
 
-      return new AvailableRegionListResponse(deserialized.getAvailableRegions());
+      return new AvailableRegionsListResponse(new Page<>(deserialized.getAvailableRegions(), null));
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
@@ -133,19 +140,5 @@ public class AvailableRegionsServiceImpl
         localVarAccepts,
         localVarContentTypes,
         localVarAuthNames);
-  }
-
-  @Override
-  public AvailableRegionListResponse list(AvailableRegionListRequest parameters)
-      throws ApiException {
-
-    AvailableRegionsListQueryParameters queryParameters = null;
-    if (null != parameters) {
-      AvailableRegionsListQueryParameters.Builder builder =
-          AvailableRegionsListQueryParameters.builder();
-      parameters.getTypes().ifPresent(t -> builder.setTypes(new ArrayList<>(t)));
-      queryParameters = builder.build();
-    }
-    return list(queryParameters);
   }
 }

@@ -80,6 +80,15 @@ public class SvamlInstructionStopRecordingImpl
   static class Builder implements SvamlInstructionStopRecording.Builder {
     OptionalValue<NameEnum> name = OptionalValue.of(NameEnum.STOP_RECORDING);
 
+    @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+    Builder setName(NameEnum name) {
+      if (!Objects.equals(name, NameEnum.STOP_RECORDING)) {
+        throw new IllegalArgumentException(
+            String.format("'name' must be '%s' (is '%s')", NameEnum.STOP_RECORDING, name));
+      }
+      return this;
+    }
+
     public SvamlInstructionStopRecording build() {
       return new SvamlInstructionStopRecordingImpl(name);
     }

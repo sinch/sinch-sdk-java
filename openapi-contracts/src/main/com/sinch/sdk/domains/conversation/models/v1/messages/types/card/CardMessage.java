@@ -57,6 +57,13 @@ public interface CardMessage
   MediaMessage getMedia();
 
   /**
+   * Get messageProperties
+   *
+   * @return messageProperties
+   */
+  MessageProperties getMessageProperties();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -112,6 +119,15 @@ public interface CardMessage
      * @see #getMedia
      */
     Builder setMedia(MediaMessage media);
+
+    /**
+     * see getter
+     *
+     * @param messageProperties see getter
+     * @return Current builder
+     * @see #getMessageProperties
+     */
+    Builder setMessageProperties(MessageProperties messageProperties);
 
     /**
      * Create instance

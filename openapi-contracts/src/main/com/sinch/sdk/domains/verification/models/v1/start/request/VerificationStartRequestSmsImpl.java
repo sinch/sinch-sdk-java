@@ -14,7 +14,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
-import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
+import com.sinch.sdk.domains.verification.models.v1.start.internal.VerificationMethodStart;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartSmsOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartSmsOptionsImpl;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class VerificationStartRequestSmsImpl
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
-  private OptionalValue<VerificationMethod> method;
+  private OptionalValue<VerificationMethodStart> method;
 
   public static final String JSON_PROPERTY_REFERENCE = "reference";
 
@@ -59,7 +60,7 @@ public class VerificationStartRequestSmsImpl
 
   protected VerificationStartRequestSmsImpl(
       OptionalValue<Identity> identity,
-      OptionalValue<VerificationMethod> method,
+      OptionalValue<VerificationMethodStart> method,
       OptionalValue<String> reference,
       OptionalValue<String> custom,
       OptionalValue<VerificationStartSmsOptions> smsOptions) {
@@ -82,13 +83,13 @@ public class VerificationStartRequestSmsImpl
   }
 
   @JsonIgnore
-  public VerificationMethod getMethod() {
+  public VerificationMethodStart getMethod() {
     return method.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationMethod> method() {
+  public OptionalValue<VerificationMethodStart> method() {
     return method;
   }
 
@@ -126,6 +127,22 @@ public class VerificationStartRequestSmsImpl
   }
 
   @JsonIgnore
+  public SmsCodeType getCodeType() {
+    if (null == smsOptions || !smsOptions.isPresent() || null == smsOptions.get().getCodeType()) {
+      return null;
+    }
+    return smsOptions.get().getCodeType();
+  }
+
+  public OptionalValue<SmsCodeType> codeType() {
+    return null != smsOptions && smsOptions.isPresent()
+        ? smsOptions
+            .map(f -> ((VerificationStartSmsOptionsImpl) f).codeType())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
   public String getExpiry() {
     if (null == smsOptions || !smsOptions.isPresent() || null == smsOptions.get().getExpiry()) {
       return null;
@@ -137,36 +154,6 @@ public class VerificationStartRequestSmsImpl
     return null != smsOptions && smsOptions.isPresent()
         ? smsOptions
             .map(f -> ((VerificationStartSmsOptionsImpl) f).expiry())
-            .orElse(OptionalValue.empty())
-        : OptionalValue.empty();
-  }
-
-  @JsonIgnore
-  public CodeTypeEnum getCodeType() {
-    if (null == smsOptions || !smsOptions.isPresent() || null == smsOptions.get().getCodeType()) {
-      return null;
-    }
-    return CodeTypeEnum.from(smsOptions.get().getCodeType().value());
-  }
-
-  public OptionalValue<CodeTypeEnum> codeType() {
-    return null != smsOptions && smsOptions.isPresent()
-        ? smsOptions.map(f -> CodeTypeEnum.from(smsOptions.get().getCodeType().value()))
-        : OptionalValue.empty();
-  }
-
-  @JsonIgnore
-  public String getTemplate() {
-    if (null == smsOptions || !smsOptions.isPresent() || null == smsOptions.get().getTemplate()) {
-      return null;
-    }
-    return smsOptions.get().getTemplate();
-  }
-
-  public OptionalValue<String> template() {
-    return null != smsOptions && smsOptions.isPresent()
-        ? smsOptions
-            .map(f -> ((VerificationStartSmsOptionsImpl) f).template())
             .orElse(OptionalValue.empty())
         : OptionalValue.empty();
   }
@@ -243,7 +230,7 @@ public class VerificationStartRequestSmsImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VerificationStartRequestSms.Builder {
     OptionalValue<Identity> identity = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.SMS);
+    OptionalValue<VerificationMethodStart> method = OptionalValue.of(VerificationMethodStart.SMS);
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<VerificationStartSmsOptions> smsOptions = OptionalValue.empty();
@@ -253,6 +240,15 @@ public class VerificationStartRequestSmsImpl
     @JsonProperty(value = JSON_PROPERTY_IDENTITY, required = true)
     public Builder setIdentity(Identity identity) {
       this.identity = OptionalValue.of(identity);
+      return this;
+    }
+
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(VerificationMethodStart method) {
+      if (!Objects.equals(method, VerificationMethodStart.SMS)) {
+        throw new IllegalArgumentException(
+            String.format("'method' must be '%s' (is '%s')", VerificationMethodStart.SMS, method));
+      }
       return this;
     }
 
@@ -275,24 +271,14 @@ public class VerificationStartRequestSmsImpl
     }
 
     @JsonIgnore
+    public Builder setCodeType(SmsCodeType codeType) {
+      getDelegatedBuilder().setCodeType(codeType);
+      return this;
+    }
+
+    @JsonIgnore
     public Builder setExpiry(String expiry) {
       getDelegatedBuilder().setExpiry(expiry);
-      return this;
-    }
-
-    @JsonIgnore
-    public Builder setCodeType(CodeTypeEnum codeType) {
-      getDelegatedBuilder()
-          .setCodeType(
-              null != codeType
-                  ? VerificationStartSmsOptionsImpl.CodeTypeEnum.from(codeType.value())
-                  : null);
-      return this;
-    }
-
-    @JsonIgnore
-    public Builder setTemplate(String template) {
-      getDelegatedBuilder().setTemplate(template);
       return this;
     }
 

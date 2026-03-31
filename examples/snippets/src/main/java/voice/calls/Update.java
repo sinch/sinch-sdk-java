@@ -34,7 +34,7 @@ public class Update {
     // The instruction to be performed
     SvamlInstruction instruction = SvamlInstructionSay.builder().setText("Goodbye").build();
     // The instruction to add to the call
-    SvamlAction action = SvamlActionHangup.DEFAULT;
+    SvamlAction action = SvamlActionHangup.SVAML_ACTION_HANGUP;
 
     Configuration configuration =
         Configuration.builder()

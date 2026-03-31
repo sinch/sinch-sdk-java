@@ -22,7 +22,7 @@ public class ReactionEventDtoTest extends ConversationBaseTest {
   public static ReactionEvent expectedReactionEventDto =
       ReactionEvent.builder()
           .setEmoji("\uD83D\uDD25 Java SDK")
-          .setAction(ReactionAction.REACT)
+          .setAction(ReactionAction.REACTION_ACTION_REACT)
           .setMessageId("message id value")
           .setReactionCategory("reaction category")
           .build();

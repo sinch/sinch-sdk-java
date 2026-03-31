@@ -20,21 +20,21 @@ public class SendEventRequestDtoTest extends ConversationBaseTest {
   public static SendEventRequest sendEventDto =
       SendEventRequest.builder()
           .setAppId("an app id")
-          .setEvent(ComposingEndEvent.EMPTY)
+          .setEvent(ComposingEndEvent.COMPOSING_END_EVENT)
           .setRecipient(
               ChannelRecipientIdentities.of(
                   ChannelRecipientIdentity.builder()
                       .setChannel(ConversationChannel.RCS)
                       .setIdentity("+123456789")
                       .build()))
-          .setCallbackUrl("foo URL")
+          .setEventDestinationTarget("foo URL")
           .setChannelPriorityOrder(Arrays.asList(ConversationChannel.RCS))
           .setEventMetadata("event metadata value")
           .setQueue(MessageQueue.NORMAL_PRIORITY)
           .build();
 
   @GivenTextResource("/domains/conversation/v1/events/request/SendEventRequestDto.json")
-  static String jsonSendEventDto;
+  String jsonSendEventDto;
 
   @Test
   void serializeDto() throws JsonProcessingException, JSONException {

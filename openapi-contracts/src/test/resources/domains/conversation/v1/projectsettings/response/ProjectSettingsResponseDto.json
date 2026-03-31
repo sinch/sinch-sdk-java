@@ -1,0 +1,8 @@
+{
+  "project_id": "project-123",
+  "settings": {
+    "contact_settings": {
+      "unified_contact_id_enabled": true
+    }
+  }
+}

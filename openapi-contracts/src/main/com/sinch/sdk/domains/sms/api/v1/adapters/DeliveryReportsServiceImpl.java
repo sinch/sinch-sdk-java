@@ -66,6 +66,152 @@ public class DeliveryReportsServiceImpl
   }
 
   @Override
+  public ListDeliveryReportsResponse list() throws ApiException {
+
+    return list((ListDeliveryReportsQueryParameters) null);
+  }
+
+  @Override
+  public ListDeliveryReportsResponse list(ListDeliveryReportsQueryParameters queryParameter)
+      throws ApiException {
+
+    LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
+
+    HttpRequest httpRequest = listRequestBuilder(queryParameter);
+    return _fetchListPage(queryParameter, httpRequest);
+  }
+
+  private ListDeliveryReportsResponse _fetchListPage(
+      ListDeliveryReportsQueryParameters queryParameter, HttpRequest httpRequest)
+      throws ApiException {
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      DeliveryReportList deserialized =
+          mapper.deserialize(response, new TypeReference<DeliveryReportList>() {});
+
+      // if page size was set we can compute end of list now if returned items count
+      // is less than page size, otherwise we will have to perform an additional request to be sure
+      // if we reached the end of the list or not, this is handled by SMSCursorPageNavigator
+      boolean stopPagination =
+          null != queryParameter
+              && queryParameter.getPageSize().isPresent()
+              && deserialized.getItems().size() < queryParameter.getPageSize().get();
+
+      Page<RecipientDeliveryReport, Integer> page =
+          new Page<>(
+              deserialized.getItems(),
+              new SMSCursorPageNavigator(
+                  deserialized.getPage(), stopPagination ? null : deserialized.getPageSize()));
+
+      Integer nextPage = page.getNextPageToken();
+
+      ListDeliveryReportsQueryParameters nextParameters =
+          ListDeliveryReportsQueryParameters.builder(queryParameter).setPage(nextPage).build();
+
+      final HttpRequest nextHttpRequest =
+          nextPage != null ? listRequestBuilder(nextParameters) : null;
+
+      return new ListDeliveryReportsResponse(
+          () -> _fetchListPage(nextParameters, nextHttpRequest), page);
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest listRequestBuilder(ListDeliveryReportsQueryParameters queryParameter)
+      throws ApiException {
+    // verify the required parameter 'this.servicePlanId' is set
+    if (this.servicePlanId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.servicePlanId' when calling list");
+    }
+
+    String localVarPath =
+        "/xms/v1/{service_plan_id}/delivery_reports"
+            .replaceAll(
+                "\\{" + "service_plan_id" + "\\}",
+                URLPathUtils.encodePathSegment(this.servicePlanId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+    if (null != queryParameter) {
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPageSize(),
+          "page_size",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getStartDate(),
+          "start_date",
+          URLParameter.form,
+          InstantToIso8601Serializer.getInstance(),
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getEndDate(),
+          "end_date",
+          URLParameter.form,
+          InstantToIso8601Serializer.getInstance(),
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getStatus(),
+          "status",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          false);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getCode(), "code", URLParameter.form, null, localVarQueryParams, false);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getClientReference(),
+          "client_reference",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+    }
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts = Arrays.asList("application/json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
   public BatchDeliveryReport get(String batchId) throws ApiException {
 
     return get(batchId, (BatchDeliveryReportQueryParameters) null);
@@ -213,128 +359,6 @@ public class DeliveryReportsServiceImpl
                 URLPathUtils.encodePathSegment(recipientMsisdn.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
-
-    Map<String, String> localVarHeaderParams = new HashMap<>();
-
-    final Collection<String> localVarAccepts = Arrays.asList("application/json");
-
-    final Collection<String> localVarContentTypes = Arrays.asList();
-
-    final Collection<String> localVarAuthNames = Arrays.asList("BearerAuth");
-    final String serializedBody = null;
-
-    return new HttpRequest(
-        localVarPath,
-        HttpMethod.GET,
-        localVarQueryParams,
-        serializedBody,
-        localVarHeaderParams,
-        localVarAccepts,
-        localVarContentTypes,
-        localVarAuthNames);
-  }
-
-  @Override
-  public ListDeliveryReportsResponse list() throws ApiException {
-
-    return list((ListDeliveryReportsQueryParameters) null);
-  }
-
-  @Override
-  public ListDeliveryReportsResponse list(ListDeliveryReportsQueryParameters queryParameter)
-      throws ApiException {
-
-    LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
-
-    HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    HttpResponse response =
-        httpClient.invokeAPI(
-            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
-
-    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
-
-      DeliveryReportList deserialized =
-          mapper.deserialize(response, new TypeReference<DeliveryReportList>() {});
-
-      return new ListDeliveryReportsResponse(
-          this,
-          new Page<>(
-              queryParameter,
-              deserialized.getItems(),
-              new SMSCursorPageNavigator(deserialized.getPage(), deserialized.getPageSize())));
-    }
-    // fallback to default errors handling:
-    // all error cases definition are not required from specs: will try some "hardcoded" content
-    // parsing
-    throw ApiExceptionBuilder.build(
-        response.getMessage(),
-        response.getCode(),
-        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  private HttpRequest listRequestBuilder(ListDeliveryReportsQueryParameters queryParameter)
-      throws ApiException {
-    // verify the required parameter 'this.servicePlanId' is set
-    if (this.servicePlanId == null) {
-      throw new ApiException(
-          400, "Missing the required parameter 'this.servicePlanId' when calling list");
-    }
-
-    String localVarPath =
-        "/xms/v1/{service_plan_id}/delivery_reports"
-            .replaceAll(
-                "\\{" + "service_plan_id" + "\\}",
-                URLPathUtils.encodePathSegment(this.servicePlanId.toString()));
-
-    List<URLParameter> localVarQueryParams = new ArrayList<>();
-    if (null != queryParameter) {
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getPageSize(),
-          "page_size",
-          URLParameter.form,
-          null,
-          localVarQueryParams,
-          true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getStartDate(),
-          "start_date",
-          URLParameter.form,
-          InstantToIso8601Serializer.getInstance(),
-          localVarQueryParams,
-          true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getEndDate(),
-          "end_date",
-          URLParameter.form,
-          InstantToIso8601Serializer.getInstance(),
-          localVarQueryParams,
-          true);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getStatus(),
-          "status",
-          URLParameter.form,
-          null,
-          localVarQueryParams,
-          false);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getCode(), "code", URLParameter.form, null, localVarQueryParams, false);
-
-      URLParameterUtils.addQueryParam(
-          queryParameter.getClientReference(),
-          "client_reference",
-          URLParameter.form,
-          null,
-          localVarQueryParams,
-          true);
-    }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 

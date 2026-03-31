@@ -15,18 +15,16 @@ import com.sinch.sdk.domains.numbers.models.v1.SmsErrorCode;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationEST;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationFAX;
 import com.sinch.sdk.domains.numbers.models.v1.VoiceConfigurationRTC;
-import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumberUpdateRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.ActiveNumbersListQueryParameters;
-import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberListRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentAnyRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumberRentRequest;
 import com.sinch.sdk.domains.numbers.models.v1.request.AvailableNumbersListQueryParameters;
 import com.sinch.sdk.domains.numbers.models.v1.request.SearchPattern;
 import com.sinch.sdk.domains.numbers.models.v1.request.SearchPosition;
-import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.ActiveNumbersListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
-import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumberListResponse;
+import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumbersListResponse;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -40,18 +38,15 @@ public class NumbersSteps {
 
   NumbersService service;
 
-  AvailableNumberListResponse searchForAvailableNumbersResponse;
-  AvailableNumberListResponse searchForAvailableNumbersResponseDeprecated;
+  AvailableNumbersListResponse searchForAvailableNumbersResponse;
 
   AvailableNumber checkAvailabilityResponse;
   ApiException availabilityResponseException;
   ActiveNumber rentAnyResponse;
   ActiveNumber rentResponse;
-  ActiveNumberListResponse activeNumberListResponse;
-  ActiveNumberListResponse activeNumberListResponseDeprecated;
+  ActiveNumbersListResponse activeNumberListResponse;
 
-  ActiveNumberListResponse activeNumberListAllResponse;
-  ActiveNumberListResponse activeNumberListAllResponseDeprecated;
+  ActiveNumbersListResponse activeNumberListAllResponse;
 
   ActiveNumber updateResponse;
   ActiveNumber getResponse;
@@ -66,11 +61,6 @@ public class NumbersSteps {
 
   @When("^I send a request to search for available phone numbers$")
   public void searchForAvailableNumbers() {
-
-    AvailableNumberListRequest parametersDeprecated =
-        AvailableNumberListRequest.builder().setRegionCode("US").setType(NumberType.LOCAL).build();
-    searchForAvailableNumbersResponseDeprecated =
-        service.searchForAvailableNumbers(parametersDeprecated);
 
     AvailableNumbersListQueryParameters parameters =
         AvailableNumbersListQueryParameters.builder()
@@ -150,10 +140,6 @@ public class NumbersSteps {
   @When("I send a request to list the phone numbers")
   public void list() {
 
-    ActiveNumberListRequest requestDeprecated =
-        ActiveNumberListRequest.builder().setRegionCode("US").setType(NumberType.LOCAL).build();
-    activeNumberListResponseDeprecated = service.list(requestDeprecated);
-
     ActiveNumbersListQueryParameters request =
         ActiveNumbersListQueryParameters.builder()
             .setRegionCode("US")
@@ -164,10 +150,6 @@ public class NumbersSteps {
 
   @When("I send a request to list all the phone numbers")
   public void listAll() {
-
-    ActiveNumberListRequest requestDeprecated =
-        ActiveNumberListRequest.builder().setRegionCode("US").setType(NumberType.LOCAL).build();
-    activeNumberListAllResponseDeprecated = service.list(requestDeprecated);
 
     ActiveNumbersListQueryParameters request =
         ActiveNumbersListQueryParameters.builder()
@@ -187,7 +169,7 @@ public class NumbersSteps {
                 SmsConfiguration.builder().setServicePlanId("SingingMooseSociety").build())
             .setVoiceConfiguration(
                 VoiceConfigurationFAX.builder().setServiceId("01W4FFL35P4NC4K35FAXSERVICE").build())
-            .setCallbackUrl("https://my-callback-server.com/numbers")
+            .setEventDestinationTarget("https://my-callback-server.com/numbers")
             .build();
     updateResponse = service.update(phoneNumber, request);
   }
@@ -210,7 +192,6 @@ public class NumbersSteps {
 
   @Then("the response contains \"{int}\" available phone numbers")
   public void searchForAvailableNumbersResponse(int count) {
-    Assertions.assertEquals(count, searchForAvailableNumbersResponseDeprecated.stream().count());
     Assertions.assertEquals(count, searchForAvailableNumbersResponse.stream().count());
   }
 
@@ -227,8 +208,6 @@ public class NumbersSteps {
             .setPaymentIntervalMonths(1)
             .setSupportingDocumentationRequired(true)
             .build();
-    Assertions.assertEquals(
-        expected, searchForAvailableNumbersResponseDeprecated.stream().findFirst().orElse(null));
     Assertions.assertEquals(
         expected, searchForAvailableNumbersResponse.stream().findFirst().orElse(null));
   }
@@ -297,7 +276,7 @@ public class NumbersSteps {
                             .setLastUpdatedTime(Instant.parse("2024-06-06T14:42:42.604092Z"))
                             .build())
                     .build())
-            .setCallbackUrl("")
+            .setEventDestinationTarget("")
             .build();
 
     Assertions.assertEquals(expected, rentAnyResponse);
@@ -342,7 +321,7 @@ public class NumbersSteps {
                             .setLastUpdatedTime(Instant.parse("2024-06-06T14:42:42.604092Z"))
                             .build())
                     .build())
-            .setCallbackUrl("")
+            .setEventDestinationTarget("")
             .build();
 
     Assertions.assertEquals(expected, rentResponse);
@@ -351,14 +330,12 @@ public class NumbersSteps {
   @Then("the response contains \"{int}\" phone numbers")
   public void listResult(int expected) {
 
-    Assertions.assertEquals(expected, activeNumberListResponseDeprecated.getContent().size());
     Assertions.assertEquals(expected, activeNumberListResponse.getContent().size());
   }
 
   @Then("the phone numbers list contains \"{int}\" phone numbers")
   public void listAllResult(int expected) {
 
-    Assertions.assertEquals(expected, activeNumberListAllResponseDeprecated.stream().count());
     Assertions.assertEquals(expected, activeNumberListAllResponse.stream().count());
   }
 
@@ -401,7 +378,7 @@ public class NumbersSteps {
                             .setLastUpdatedTime(Instant.parse("2024-06-06T20:02:20.437509Z"))
                             .build())
                     .build())
-            .setCallbackUrl("https://my-callback-server.com/numbers")
+            .setEventDestinationTarget("https://my-callback-server.com/numbers")
             .build();
 
     Assertions.assertEquals(expected, updateResponse);
@@ -434,7 +411,7 @@ public class NumbersSteps {
                     .setLastUpdatedTime(null)
                     .setScheduledProvisioning(null)
                     .build())
-            .setCallbackUrl("https://my-callback-server.com/numbers")
+            .setEventDestinationTarget("https://my-callback-server.com/numbers")
             .build();
 
     Assertions.assertEquals(expected, getResponse);
@@ -476,7 +453,7 @@ public class NumbersSteps {
                     .setLastUpdatedTime(null)
                     .setScheduledProvisioning(null)
                     .build())
-            .setCallbackUrl("https://my-callback-server.com/numbers")
+            .setEventDestinationTarget("https://my-callback-server.com/numbers")
             .build();
 
     Assertions.assertEquals(expected, getResponse);
@@ -516,7 +493,7 @@ public class NumbersSteps {
                     .setLastUpdatedTime(null)
                     .setScheduledProvisioning(null)
                     .build())
-            .setCallbackUrl("https://my-callback-server.com/numbers")
+            .setEventDestinationTarget("https://my-callback-server.com/numbers")
             .build();
 
     Assertions.assertEquals(expected, releaseResponse);

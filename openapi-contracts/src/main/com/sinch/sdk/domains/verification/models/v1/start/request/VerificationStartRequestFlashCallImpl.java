@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.verification.models.v1.Identity;
-import com.sinch.sdk.domains.verification.models.v1.VerificationMethod;
+import com.sinch.sdk.domains.verification.models.v1.start.internal.VerificationMethodStart;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartFlashCallOptions;
 import com.sinch.sdk.domains.verification.models.v1.start.request.internal.VerificationStartFlashCallOptionsImpl;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class VerificationStartRequestFlashCallImpl
 
   public static final String JSON_PROPERTY_METHOD = "method";
 
-  private OptionalValue<VerificationMethod> method;
+  private OptionalValue<VerificationMethodStart> method;
 
   public static final String JSON_PROPERTY_REFERENCE = "reference";
 
@@ -59,7 +59,7 @@ public class VerificationStartRequestFlashCallImpl
 
   protected VerificationStartRequestFlashCallImpl(
       OptionalValue<Identity> identity,
-      OptionalValue<VerificationMethod> method,
+      OptionalValue<VerificationMethodStart> method,
       OptionalValue<String> reference,
       OptionalValue<String> custom,
       OptionalValue<VerificationStartFlashCallOptions> flashCallOptions) {
@@ -82,13 +82,13 @@ public class VerificationStartRequestFlashCallImpl
   }
 
   @JsonIgnore
-  public VerificationMethod getMethod() {
+  public VerificationMethodStart getMethod() {
     return method.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_METHOD)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VerificationMethod> method() {
+  public OptionalValue<VerificationMethodStart> method() {
     return method;
   }
 
@@ -143,6 +143,31 @@ public class VerificationStartRequestFlashCallImpl
         : OptionalValue.empty();
   }
 
+  @JsonIgnore
+  public Integer getInterceptionTimeout() {
+    if (null == flashCallOptions
+        || !flashCallOptions.isPresent()
+        || null == flashCallOptions.get().getInterceptionTimeout()) {
+      return null;
+    }
+    return flashCallOptions.get().getInterceptionTimeout();
+  }
+
+  public OptionalValue<Integer> interceptionTimeout() {
+    return null != flashCallOptions && flashCallOptions.isPresent()
+        ? flashCallOptions
+            .map(f -> ((VerificationStartFlashCallOptionsImpl) f).interceptionTimeout())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
+  }
+
+  @JsonIgnore
+  public Object getExtraOption(String key) {
+    return null != flashCallOptions && flashCallOptions.isPresent()
+        ? flashCallOptions.get().get(key)
+        : null;
+  }
+
   /** Return true if this VerificationStartRequestFlashCall object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -193,7 +218,8 @@ public class VerificationStartRequestFlashCallImpl
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VerificationStartRequestFlashCall.Builder {
     OptionalValue<Identity> identity = OptionalValue.empty();
-    OptionalValue<VerificationMethod> method = OptionalValue.of(VerificationMethod.FLASH_CALL);
+    OptionalValue<VerificationMethodStart> method =
+        OptionalValue.of(VerificationMethodStart.FLASH_CALL);
     OptionalValue<String> reference = OptionalValue.empty();
     OptionalValue<String> custom = OptionalValue.empty();
     OptionalValue<VerificationStartFlashCallOptions> flashCallOptions = OptionalValue.empty();
@@ -203,6 +229,16 @@ public class VerificationStartRequestFlashCallImpl
     @JsonProperty(value = JSON_PROPERTY_IDENTITY, required = true)
     public Builder setIdentity(Identity identity) {
       this.identity = OptionalValue.of(identity);
+      return this;
+    }
+
+    @JsonProperty(value = JSON_PROPERTY_METHOD, required = true)
+    Builder setMethod(VerificationMethodStart method) {
+      if (!Objects.equals(method, VerificationMethodStart.FLASH_CALL)) {
+        throw new IllegalArgumentException(
+            String.format(
+                "'method' must be '%s' (is '%s')", VerificationMethodStart.FLASH_CALL, method));
+      }
       return this;
     }
 
@@ -227,6 +263,17 @@ public class VerificationStartRequestFlashCallImpl
     @JsonIgnore
     public Builder setDialTimeout(Integer dialTimeout) {
       getDelegatedBuilder().setDialTimeout(dialTimeout);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setInterceptionTimeout(Integer interceptionTimeout) {
+      getDelegatedBuilder().setInterceptionTimeout(interceptionTimeout);
+      return this;
+    }
+
+    public Builder putExtraOption(String key, Object value) {
+      getDelegatedBuilder().put(key, value);
       return this;
     }
 

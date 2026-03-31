@@ -2,7 +2,6 @@ package com.sinch.sdk;
 
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.ConversationService;
-import com.sinch.sdk.domains.mailgun.MailgunService;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
@@ -11,8 +10,6 @@ import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
-import com.sinch.sdk.models.MailgunContext;
-import com.sinch.sdk.models.MailgunRegion;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
@@ -22,7 +19,6 @@ import com.sinch.sdk.models.VoiceRegion;
 import com.sinch.sdk.models.adapters.DualToneMultiFrequencyMapper;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
@@ -53,11 +49,6 @@ public class SinchClient {
   private static final String CONVERSATION_TEMPLATE_SERVER_KEY =
       "template-management-conversation-server";
 
-  private static final String MAILGUN_REGION_KEY = "mailgun-region";
-  private static final String MAILGUN_DEFAULT_SERVER_KEY = "mailgun-default-server";
-  private static final String MAILGUN_REGION_SERVER_KEY = "mailgun-region-server";
-  private static final String MAILGUN_STORAGE_BY_REGION_SERVER_KEY = "mailgun-%s-storage";
-
   // sinch-sdk/{sdk_version} ({language}/{language_version}; {implementation_type};
   // {auxiliary_flag})
   private static final String SDK_USER_AGENT_HEADER = "User-Agent";
@@ -66,13 +57,12 @@ public class SinchClient {
 
   private final Configuration configuration;
 
-  private NumbersService numbers;
-  private SMSService sms;
-  private VerificationService verification;
-  private VoiceService voice;
-  private ConversationService conversation;
-  private MailgunService mailgun;
-  private HttpClientApache httpClient;
+  private volatile NumbersService numbers;
+  private volatile SMSService sms;
+  private volatile VerificationService verification;
+  private volatile VoiceService voice;
+  private volatile ConversationService conversation;
+  private volatile HttpClientApache httpClient;
 
   /**
    * Create a Sinch Client instance based onto configuration
@@ -97,7 +87,6 @@ public class SinchClient {
     handleDefaultVerificationSettings(configurationGuard, props, builder);
     handleDefaultVoiceSettings(configurationGuard, props, builder);
     handleDefaultConversationSettings(configurationGuard, props, builder);
-    handleDefaultMailgunSettings(configurationGuard, props, builder);
 
     Configuration newConfiguration = builder.build();
     checkConfiguration(newConfiguration);
@@ -145,18 +134,9 @@ public class SinchClient {
     }
 
     SMSRegion smsRegion = contextBuilder.getSmsRegion();
-    if (null == smsRegion) {
-
-      if (!StringUtil.isEmpty(props.getProperty(SMS_REGION_KEY))) {
-        smsRegion = SMSRegion.from(props.getProperty(SMS_REGION_KEY).trim());
-      }
-      Boolean regionAsDefault = null == smsRegion;
-
-      // To be deprecated with 2.0: no more defaulting to US region
-      if (null == smsRegion) {
-        smsRegion = SMSRegion.US;
-      }
-      contextBuilder.setSmsRegion(smsRegion).setRegionAsDefault(regionAsDefault);
+    if (null == smsRegion && !StringUtil.isEmpty(props.getProperty(SMS_REGION_KEY))) {
+      smsRegion = SMSRegion.from(props.getProperty(SMS_REGION_KEY).trim());
+      contextBuilder.setSmsRegion(smsRegion);
     }
 
     builder.setSmsContext(contextBuilder.build());
@@ -227,87 +207,24 @@ public class SinchClient {
     ConversationContext.Builder contextBuilder =
         ConversationContext.builder(configuration.getConversationContext().orElse(null));
 
-    if (null == contextBuilder.getRegion()) {
-      ConversationRegion region = null;
-      if (!StringUtil.isEmpty(props.getProperty(CONVERSATION_REGION_KEY))) {
-        region = ConversationRegion.from(props.getProperty(CONVERSATION_REGION_KEY).trim());
-      }
-      Boolean regionAsDefault = null == region;
-      // To be deprecated with 2.0: no more defaulting to US region
-      if (null == region) {
-        region = ConversationRegion.US;
-      }
-      contextBuilder.setRegion(region).setRegionAsDefault(regionAsDefault);
+    if (null == contextBuilder.getRegion()
+        && !StringUtil.isEmpty(props.getProperty(CONVERSATION_REGION_KEY))) {
+      contextBuilder.setRegion(
+          ConversationRegion.from(props.getProperty(CONVERSATION_REGION_KEY).trim()));
     }
 
-    if (StringUtil.isEmpty(contextBuilder.getUrl())) {
+    if (StringUtil.isEmpty(contextBuilder.getUrl()) && null != contextBuilder.getRegion()) {
       contextBuilder.setUrl(
           String.format(props.getProperty(CONVERSATION_SERVER_KEY), contextBuilder.getRegion()));
     }
 
-    if (StringUtil.isEmpty(contextBuilder.getTemplateManagementUrl())) {
+    if (StringUtil.isEmpty(contextBuilder.getTemplateManagementUrl())
+        && null != contextBuilder.getRegion()) {
       contextBuilder.setTemplateManagementUrl(
           String.format(
               props.getProperty(CONVERSATION_TEMPLATE_SERVER_KEY), contextBuilder.getRegion()));
     }
     builder.setConversationContext(contextBuilder.build());
-  }
-
-  private void handleDefaultMailgunSettings(
-      Configuration configuration, Properties props, Configuration.Builder builder) {
-
-    MailgunContext.Builder contextBuilder =
-        MailgunContext.builder(configuration.getMailgunContext().orElse(null));
-
-    if (null == contextBuilder.getRegion()) {
-      MailgunRegion region = null;
-      if (!StringUtil.isEmpty(props.getProperty(MAILGUN_REGION_KEY))) {
-        region = MailgunRegion.from(props.getProperty(MAILGUN_REGION_KEY).trim());
-      }
-      Boolean regionAsDefault = null == region;
-      // To be deprecated with 2.0: no more defaulting to US region
-      if (null == region) {
-        region = MailgunRegion.US;
-      }
-      contextBuilder.setRegion(region).setRegionAsDefault(regionAsDefault);
-    }
-
-    // url is not defined: use the region to set to an existing one and use "global" as a default
-    // fallback
-    // String url = previousContext.map(MailgunContext::getUrl).orElse(null);
-    if (StringUtil.isEmpty(contextBuilder.getUrl())) {
-      String url;
-      boolean useDefaultRegion =
-          null == contextBuilder.getRegion()
-              || MailgunRegion.US.value().equalsIgnoreCase(contextBuilder.getRegion().value());
-      if (useDefaultRegion) {
-        url = props.getProperty(MAILGUN_DEFAULT_SERVER_KEY);
-      } else {
-        url =
-            String.format(
-                props.getProperty(MAILGUN_REGION_SERVER_KEY), contextBuilder.getRegion().value());
-      }
-      contextBuilder.setUrl(url);
-    }
-
-    // storage URls are not defined: set a default set related to region in use
-    Collection<String> storageUrls = contextBuilder.getStorageUrls();
-    if (null == storageUrls || storageUrls.isEmpty()) {
-      String storageKeyRegionAsString =
-          null == contextBuilder.getRegion()
-              ? ""
-              : contextBuilder.getRegion().value().toLowerCase();
-      String storageKey =
-          String.format(MAILGUN_STORAGE_BY_REGION_SERVER_KEY, storageKeyRegionAsString);
-      String value = props.getProperty(storageKey);
-      if (!StringUtil.isEmpty(value)) {
-        storageUrls =
-            Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
-        contextBuilder.setStorageUrls(storageUrls);
-      }
-    }
-
-    builder.setMailgunContext(contextBuilder.build());
   }
 
   /**
@@ -330,7 +247,11 @@ public class SinchClient {
    */
   public NumbersService numbers() {
     if (null == numbers) {
-      numbers = numbersInit();
+      synchronized (this) {
+        if (null == numbers) {
+          numbers = numbersInit();
+        }
+      }
     }
     return numbers;
   }
@@ -345,7 +266,11 @@ public class SinchClient {
    */
   public SMSService sms() {
     if (null == sms) {
-      sms = smsInit();
+      synchronized (this) {
+        if (null == sms) {
+          sms = smsInit();
+        }
+      }
     }
     return sms;
   }
@@ -360,7 +285,11 @@ public class SinchClient {
    */
   public VerificationService verification() {
     if (null == verification) {
-      verification = verificationInit();
+      synchronized (this) {
+        if (null == verification) {
+          verification = verificationInit();
+        }
+      }
     }
     return verification;
   }
@@ -375,7 +304,11 @@ public class SinchClient {
    */
   public VoiceService voice() {
     if (null == voice) {
-      voice = voiceInit();
+      synchronized (this) {
+        if (null == voice) {
+          voice = voiceInit();
+        }
+      }
     }
     return voice;
   }
@@ -390,23 +323,13 @@ public class SinchClient {
    */
   public ConversationService conversation() {
     if (null == conversation) {
-      conversation = conversationInit();
+      synchronized (this) {
+        if (null == conversation) {
+          conversation = conversationInit();
+        }
+      }
     }
     return conversation;
-  }
-
-  /**
-   * Get Mailgun domain service
-   *
-   * @return Return instance onto Mailgun API service
-   * @see <a href="https://documentation.mailgun.com/">https://documentation.mailgun.com/</a>
-   * @since 1.6
-   */
-  public MailgunService mailgun() {
-    if (null == mailgun) {
-      mailgun = mailgunInit();
-    }
-    return mailgun;
   }
 
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
@@ -460,13 +383,6 @@ public class SinchClient {
         this::getHttpClient);
   }
 
-  private MailgunService mailgunInit() {
-    return new com.sinch.sdk.domains.mailgun.adapters.MailgunService(
-        getConfiguration().getMailgunCredentials().orElse(null),
-        getConfiguration().getMailgunContext().orElse(null),
-        getHttpClient());
-  }
-
   private Properties handlePropertiesFile(String fileName) {
 
     Properties prop = new Properties();
@@ -479,21 +395,28 @@ public class SinchClient {
   }
 
   private HttpClientApache getHttpClient() {
-    if (null == httpClient || httpClient.isClosed()) {
-      // TODO: by adding a setter, we could imagine having another HTTP client provided
-      // programmatically or use
-      //  configuration file referencing another class by name
-      this.httpClient = new HttpClientApache();
+    HttpClientApache local = httpClient;
+    if (null == local || local.isClosed()) {
+      synchronized (this) {
+        local = httpClient;
+        if (null == local || local.isClosed()) {
+          // TODO: by adding a setter, we could imagine having another HTTP client provided
+          // programmatically or use configuration file referencing another class by name
+          local = new HttpClientApache();
 
-      // set SDK User-Agent
-      String userAgent = formatSdkUserAgentHeader();
-      this.httpClient.setRequestHeaders(
-          Stream.of(new String[][] {{SDK_USER_AGENT_HEADER, userAgent}})
-              .collect(Collectors.toMap(data -> data[0], data -> data[1])));
+          // set SDK User-Agent
+          String userAgent = formatSdkUserAgentHeader();
+          local.setRequestHeaders(
+              Stream.of(new String[][] {{SDK_USER_AGENT_HEADER, userAgent}})
+                  .collect(Collectors.toMap(data -> data[0], data -> data[1])));
 
-      LOGGER.finest(String.format("HTTP client loaded (%s='%s'", SDK_USER_AGENT_HEADER, userAgent));
+          LOGGER.finest(
+              String.format("HTTP client loaded (%s='%s'", SDK_USER_AGENT_HEADER, userAgent));
+          this.httpClient = local;
+        }
+      }
     }
-    return this.httpClient;
+    return local;
   }
 
   private String formatSdkUserAgentHeader() {

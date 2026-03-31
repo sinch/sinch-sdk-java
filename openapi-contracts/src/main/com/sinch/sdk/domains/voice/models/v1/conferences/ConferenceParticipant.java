@@ -46,9 +46,9 @@ public interface ConferenceParticipant {
   Boolean getMuted();
 
   /**
-   * Get OnHold
+   * Get onHold
    *
-   * @return OnHold
+   * @return onHold
    */
   Boolean getOnHold();
 
@@ -103,11 +103,11 @@ public interface ConferenceParticipant {
     /**
      * see getter
      *
-     * @param OnHold see getter
+     * @param onHold see getter
      * @return Current builder
      * @see #getOnHold
      */
-    Builder setOnHold(Boolean OnHold);
+    Builder setOnHold(Boolean onHold);
 
     /**
      * Create instance

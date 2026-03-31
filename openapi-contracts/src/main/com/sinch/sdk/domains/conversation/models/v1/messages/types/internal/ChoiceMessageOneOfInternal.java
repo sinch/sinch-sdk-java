@@ -48,6 +48,20 @@ public interface ChoiceMessageOneOfInternal {
   UrlMessageInternal getUrlMessage();
 
   /**
+   * Get calendarMessage
+   *
+   * @return calendarMessage
+   */
+  CalendarMessageInternal getCalendarMessage();
+
+  /**
+   * Get shareLocationMessage
+   *
+   * @return shareLocationMessage
+   */
+  ShareLocationMessageInternal getShareLocationMessage();
+
+  /**
    * An optional field. This data will be returned in the ChoiceResponseMessage. The default is
    * message_id_{text, title}.
    *
@@ -102,6 +116,24 @@ public interface ChoiceMessageOneOfInternal {
      * @see #getUrlMessage
      */
     Builder setUrlMessage(UrlMessageInternal urlMessage);
+
+    /**
+     * see getter
+     *
+     * @param calendarMessage see getter
+     * @return Current builder
+     * @see #getCalendarMessage
+     */
+    Builder setCalendarMessage(CalendarMessageInternal calendarMessage);
+
+    /**
+     * see getter
+     *
+     * @param shareLocationMessage see getter
+     * @return Current builder
+     * @see #getShareLocationMessage
+     */
+    Builder setShareLocationMessage(ShareLocationMessageInternal shareLocationMessage);
 
     /**
      * see getter

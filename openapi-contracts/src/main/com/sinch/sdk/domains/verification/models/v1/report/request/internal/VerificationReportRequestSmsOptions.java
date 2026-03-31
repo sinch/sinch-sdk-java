@@ -26,13 +26,6 @@ public interface VerificationReportRequestSmsOptions {
   String getCode();
 
   /**
-   * The sender ID of the SMS.
-   *
-   * @return cli
-   */
-  String getCli();
-
-  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -52,15 +45,6 @@ public interface VerificationReportRequestSmsOptions {
      * @see #getCode
      */
     Builder setCode(String code);
-
-    /**
-     * see getter
-     *
-     * @param cli see getter
-     * @return Current builder
-     * @see #getCli
-     */
-    Builder setCli(String cli);
 
     /**
      * Create instance

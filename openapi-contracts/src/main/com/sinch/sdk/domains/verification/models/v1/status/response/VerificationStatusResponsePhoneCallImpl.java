@@ -355,6 +355,15 @@ public class VerificationStatusResponsePhoneCallImpl
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_METHOD)
+    Builder setMethod(MethodEnum method) {
+      if (!Objects.equals(method, MethodEnum.PHONE_CALL)) {
+        throw new IllegalArgumentException(
+            String.format("'method' must be '%s' (is '%s')", MethodEnum.PHONE_CALL, method));
+      }
+      return this;
+    }
+
     @JsonProperty(JSON_PROPERTY_CALL_COMPLETE)
     public Builder setCallComplete(Boolean callComplete) {
       this.callComplete = OptionalValue.of(callComplete);

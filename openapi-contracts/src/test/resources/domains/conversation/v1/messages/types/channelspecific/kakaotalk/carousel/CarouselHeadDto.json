@@ -1,0 +1,9 @@
+{
+  "header": "header text",
+  "content": "content text",
+  "image_url": "https://example.com/assets/image/image-product-123.jpg",
+  "link_mo": "https://link.sample/mo",
+  "link_pc": "https://link.sample/pc",
+  "scheme_ios": "alimtalk=coupon://ios/...",
+  "scheme_android": "alimtalk=coupon://android/..."
+}

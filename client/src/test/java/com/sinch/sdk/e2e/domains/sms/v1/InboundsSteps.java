@@ -29,6 +29,14 @@ public class InboundsSteps {
     service = Config.getSinchClient().sms().v1().inbounds();
   }
 
+  @Given(
+      "the SMS service \"Inbounds\" is available and is configured for servicePlanId"
+          + " authentication")
+  public void servicePlanIdSAvailable() {
+
+    service = Config.getSinchClientServicePlanId().sms().v1().inbounds();
+  }
+
   @When("^I send a request to retrieve an inbound message")
   public void get() {
 

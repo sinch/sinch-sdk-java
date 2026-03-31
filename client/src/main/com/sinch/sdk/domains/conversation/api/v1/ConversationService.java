@@ -1,5 +1,7 @@
 package com.sinch.sdk.domains.conversation.api.v1;
 
+import com.sinch.sdk.domains.conversation.templates.api.TemplatesService;
+
 /**
  * Conversation Service V1
  *
@@ -15,7 +17,7 @@ public interface ConversationService {
    * @return service instance for project
    * @since 1.3
    */
-  AppService app();
+  AppsService apps();
 
   /**
    * Contact Service instance
@@ -23,7 +25,7 @@ public interface ConversationService {
    * @return service instance for project
    * @since 1.3
    */
-  ContactService contact();
+  ContactsService contacts();
 
   /**
    * Messages Service instance
@@ -66,10 +68,34 @@ public interface ConversationService {
   CapabilityService capability();
 
   /**
-   * WebHooksService Service instance
+   * ProjectSettings Service instance
    *
    * @return service instance for project
-   * @since 1.3
+   * @since 2.0
    */
-  WebHooksService webhooks();
+  ProjectSettingsService projectSettings();
+
+  /**
+   * Event Destinations Management Service instance
+   *
+   * @return service instance for project
+   * @since 2.0
+   */
+  EventDestinationsService eventDestinations();
+
+  /**
+   * Sinch Events helpers instance
+   *
+   * @return service instance for project
+   * @since 2.0
+   */
+  SinchEventsService sinchEvents();
+
+  /**
+   * Templates Service instance
+   *
+   * @return service instance for project
+   * @since 2.0
+   */
+  TemplatesService templates();
 }

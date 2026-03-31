@@ -99,7 +99,7 @@ public class SendMessageDtoTest extends ConversationBaseTest {
     return SendMessageRequest.<T>builder()
         .setAppId("my app ID")
         .setRecipient(ContactId.builder().setContactId("my contact ID").build())
-        .setCallbackUrl("callback URL value")
+        .setEventDestinationTarget("callback URL value")
         .setChannelPriorityOrder(Collections.singletonList(ConversationChannel.LINE))
         .setChannelProperties(map)
         .setMessageMetadata("message metadata value")
@@ -109,7 +109,7 @@ public class SendMessageDtoTest extends ConversationBaseTest {
         .setProcessingStrategy(ProcessingStrategy.DISPATCH_ONLY)
         .setCorrelationId("correlation ID value")
         .setConversationMetadataUpdateStrategy(MetadataUpdateStrategy.REPLACE)
-        .setMessageContentType(MessageContentType.MARKETING);
+        .setMessageContentType(MessageContentType.CONTENT_MARKETING);
   }
 
   @Test

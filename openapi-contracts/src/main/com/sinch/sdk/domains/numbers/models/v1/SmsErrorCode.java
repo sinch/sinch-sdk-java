@@ -28,7 +28,7 @@ public class SmsErrorCode extends EnumDynamic<String, SmsErrorCode> {
       new SmsErrorCode("CAMPAIGN_NOT_AVAILABLE");
 
   /** Exceeded the 10DLC limit. */
-  public static final SmsErrorCode EXCEEDED_10DLC_LIMIT = new SmsErrorCode("EXCEEDED_10DLC_LIMIT");
+  public static final SmsErrorCode EXCEEDED_10_DLC_LIMIT = new SmsErrorCode("EXCEEDED_10DLC_LIMIT");
 
   /** Failed to provision the number. */
   public static final SmsErrorCode NUMBER_PROVISIONING_FAILED =
@@ -82,7 +82,7 @@ public class SmsErrorCode extends EnumDynamic<String, SmsErrorCode> {
               SMS_PROVISIONING_FAILED,
               CAMPAIGN_PROVISIONING_FAILED,
               CAMPAIGN_NOT_AVAILABLE,
-              EXCEEDED_10DLC_LIMIT,
+              EXCEEDED_10_DLC_LIMIT,
               NUMBER_PROVISIONING_FAILED,
               PARTNER_SERVICE_UNAVAILABLE,
               CAMPAIGN_PENDING_ACCEPTANCE,

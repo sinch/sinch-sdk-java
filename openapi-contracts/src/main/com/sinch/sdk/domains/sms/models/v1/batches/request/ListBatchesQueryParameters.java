@@ -81,15 +81,6 @@ public interface ListBatchesQueryParameters {
   interface Builder {
 
     /**
-     * @param from see #setFrom()
-     * @return Current builder
-     * @see #setFrom
-     * @deprecated use {@link #setFrom} instead.
-     */
-    @Deprecated
-    Builder setFrom(String from);
-
-    /**
      * see getter
      *
      * @param page see getter

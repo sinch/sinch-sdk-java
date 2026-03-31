@@ -118,9 +118,9 @@ public interface BinaryRequest extends BatchRequest {
    * set a default callback URL <a
    * href="https://community.sinch.com/t5/SMS/How-do-I-assign-a-callback-URL-to-an-SMS-service-plan/ta-p/8414">here</a>.
    *
-   * @return callbackUrl
+   * @return eventDestinationTarget
    */
-  String getCallbackUrl();
+  String getEventDestinationTarget();
 
   /**
    * The client identifier of a batch message. If set, the identifier will be added in the delivery
@@ -132,7 +132,7 @@ public interface BinaryRequest extends BatchRequest {
 
   /**
    * If set to true then <a
-   * href="/docs/sms/api-reference/sms/tag/Batches/#tag/Batches/operation/deliveryFeedback">feedback</a>
+   * href="https://developers.sinch.com/docs/sms/api-reference/sms/batches/deliveryfeedback">feedback</a>
    * is expected after successful delivery.
    *
    * @return feedbackEnabled
@@ -235,11 +235,11 @@ public interface BinaryRequest extends BatchRequest {
     /**
      * see getter
      *
-     * @param callbackUrl see getter
+     * @param eventDestinationTarget see getter
      * @return Current builder
-     * @see #getCallbackUrl
+     * @see #getEventDestinationTarget
      */
-    Builder setCallbackUrl(String callbackUrl);
+    Builder setEventDestinationTarget(String eventDestinationTarget);
 
     /**
      * see getter

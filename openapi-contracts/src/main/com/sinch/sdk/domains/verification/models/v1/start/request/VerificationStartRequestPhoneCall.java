@@ -28,14 +28,20 @@ public interface VerificationStartRequestPhoneCall
   Identity getIdentity();
 
   /**
-   * Used to pass your own reference in the request for tracking purposes.
+   * Used to pass your own reference in the request for tracking purposes. Must be a unique value
+   * for each started verification request. The value must be encodable in the URL path segment.
+   * This value is passed to all events and returned from the status and report endpoints. The
+   * reference can be used to check the <a
+   * href="https://developers.sinch.com/docs/verification/api-reference/verification/verification-status/verificationstatusbyreference">status
+   * of verifications</a>, like with ID or identity.
    *
    * @return reference
    */
   String getReference();
 
   /**
-   * Can be used to pass custom data in the request.
+   * Can be used to pass custom data in the request. Will be passed to all events. Max length 4096
+   * characters, can be arbitrary text data.
    *
    * @return custom
    */
@@ -47,6 +53,14 @@ public interface VerificationStartRequestPhoneCall
    * @return speech
    */
   PhoneCallSpeech getSpeech();
+
+  /**
+   * Return the additional "calloutOptions" with the specified name.
+   *
+   * @param key the name of the property
+   * @return the additional property with the specified name
+   */
+  Object getExtraOption(String key);
 
   /**
    * Getting builder
@@ -97,6 +111,14 @@ public interface VerificationStartRequestPhoneCall
      * @see #getSpeech
      */
     Builder setSpeech(PhoneCallSpeech speech);
+
+    /**
+     * see getter
+     *
+     * @return Current builder
+     * @see #getExtraOption
+     */
+    Builder putExtraOption(String key, Object value);
 
     /**
      * Create instance

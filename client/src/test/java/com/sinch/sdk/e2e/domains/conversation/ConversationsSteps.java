@@ -1,18 +1,20 @@
 package com.sinch.sdk.e2e.domains.conversation;
 
+import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.api.v1.ConversationsService;
 import com.sinch.sdk.domains.conversation.models.v1.ChannelIdentity;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationDirection;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.Conversation;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRecentRequest;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.ConversationsListRequest;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.CreateConversationRequest;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectEventRequest;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.InjectMessageRequest;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListRecentResponse;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.response.ConversationsListResponse;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.response.InjectEventResponse;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.Conversation;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.ConversationsListQueryParameters;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.ConversationsUpdateQueryParameters;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.CreateConversationRequest;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.InjectEventRequest;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.InjectMessageRequest;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.request.RecentConversationsListQueryParameters;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.response.ConversationsListResponse;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.response.InjectEventResponse;
+import com.sinch.sdk.domains.conversation.models.v1.conversations.response.RecentConversationsListResponse;
 import com.sinch.sdk.domains.conversation.models.v1.events.types.ComposingEvent;
 import com.sinch.sdk.domains.conversation.models.v1.messages.AppMessage;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
@@ -23,6 +25,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.time.Instant;
 import java.util.AbstractMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -37,9 +40,9 @@ public class ConversationsSteps {
   ConversationsListResponse listPageResponse;
   ConversationsListResponse listAllResponse;
   ConversationsListResponse listPageIterateResponse;
-  ConversationsListRecentResponse listRecentPageResponse;
-  ConversationsListRecentResponse listRecentAllResponse;
-  ConversationsListRecentResponse listRecentPageIterateResponse;
+  RecentConversationsListResponse listRecentPageResponse;
+  RecentConversationsListResponse listRecentAllResponse;
+  RecentConversationsListResponse listRecentPageIterateResponse;
   Conversation getResponse;
   Conversation updateResponse;
   boolean deletePassed;
@@ -61,7 +64,6 @@ public class ConversationsSteps {
             .setContactId(ContactsSteps.CONTACT_ID)
             .setActive(true)
             .setActiveChannel(ConversationChannel.MESSENGER)
-            .setMetadata("e2e tests")
             .setMetadataJson(
                 Stream.of(
                         new AbstractMap.SimpleEntry<>("prop1", "value1"),
@@ -75,48 +77,48 @@ public class ConversationsSteps {
   @When("^I send a request to list the existing conversations$")
   public void listPage() {
 
-    ConversationsListRequest request =
-        ConversationsListRequest.builder().setAppId(AppsSteps.APP_ID).build();
+    ConversationsListQueryParameters request =
+        ConversationsListQueryParameters.builder().setAppId(AppsSteps.APP_ID).build();
     listPageResponse = service.list(request);
   }
 
   @When("^I send a request to list all the conversations$")
   public void listAll() {
 
-    ConversationsListRequest request =
-        ConversationsListRequest.builder().setAppId(AppsSteps.APP_ID).build();
+    ConversationsListQueryParameters request =
+        ConversationsListQueryParameters.builder().setAppId(AppsSteps.APP_ID).build();
     listAllResponse = service.list(request);
   }
 
   @When("^I iterate manually over the conversations pages$")
   public void listPageIterate() {
 
-    ConversationsListRequest request =
-        ConversationsListRequest.builder().setAppId(AppsSteps.APP_ID).build();
+    ConversationsListQueryParameters request =
+        ConversationsListQueryParameters.builder().setAppId(AppsSteps.APP_ID).build();
     listPageIterateResponse = service.list(request);
   }
 
   @When("^I send a request to list the recent conversations$")
   public void listRecentPage() {
 
-    ConversationsListRecentRequest request =
-        ConversationsListRecentRequest.builder().setAppId(AppsSteps.APP_ID).build();
+    RecentConversationsListQueryParameters request =
+        RecentConversationsListQueryParameters.builder().setAppId(AppsSteps.APP_ID).build();
     listRecentPageResponse = service.listRecent(request);
   }
 
   @When("^I send a request to list all the recent conversations$")
   public void listRecentAll() {
 
-    ConversationsListRecentRequest request =
-        ConversationsListRecentRequest.builder().setAppId(AppsSteps.APP_ID).build();
+    RecentConversationsListQueryParameters request =
+        RecentConversationsListQueryParameters.builder().setAppId(AppsSteps.APP_ID).build();
     listRecentAllResponse = service.listRecent(request);
   }
 
   @When("^I iterate manually over the recent conversations pages$")
   public void listRecentPageIterate() {
 
-    ConversationsListRecentRequest request =
-        ConversationsListRecentRequest.builder().setAppId(AppsSteps.APP_ID).build();
+    RecentConversationsListQueryParameters request =
+        RecentConversationsListQueryParameters.builder().setAppId(AppsSteps.APP_ID).build();
     listRecentPageIterateResponse = service.listRecent(request);
   }
 
@@ -133,10 +135,15 @@ public class ConversationsSteps {
         Conversation.builder()
             .setAppId("01W4FFL35P4NC4K35CONVAPP002")
             .setActive(false)
-            .setMetadata("Transferred conversation")
             .setCorrelationId("my-correlator")
             .build();
-    updateResponse = service.update(CONVERSATION_ID, MetadataUpdateStrategy.REPLACE, request);
+    updateResponse =
+        service.update(
+            CONVERSATION_ID,
+            ConversationsUpdateQueryParameters.builder()
+                .setMetadataUpdateStrategy(MetadataUpdateStrategy.REPLACE)
+                .build(),
+            request);
   }
 
   @When("^I send a request to delete a conversation$")
@@ -150,7 +157,7 @@ public class ConversationsSteps {
   public void injectEvent() {
     InjectEventRequest request =
         InjectEventRequest.builder()
-            .setAppEvent(ComposingEvent.EMPTY)
+            .setAppEvent(ComposingEvent.COMPOSING_EVENT)
             .setAcceptTime(Instant.now())
             .build();
     injectEventResponse = service.injectEvent(CONVERSATION_ID, request);
@@ -199,9 +206,15 @@ public class ConversationsSteps {
   public void listAllResult(int size) {
 
     // FIXME: to be thread-safe compliant we need to check which variables are set
-    if (null != listAllResponse) Assertions.assertEquals(listAllResponse.stream().count(), size);
-    if (null != listPageIterateResponse)
-      Assertions.assertEquals(listPageIterateResponse.stream().count(), size);
+    Iterator<?> iterator = null;
+    if (null != listAllResponse) {
+      iterator = listAllResponse.iterator();
+    }
+
+    if (null != listPageIterateResponse) {
+      iterator = listPageIterateResponse.iterator();
+    }
+    TestHelpers.checkIteratorItems(iterator, size);
   }
 
   @Then("the conversations iteration result contains the data from \"{int}\" pages")
@@ -231,10 +244,15 @@ public class ConversationsSteps {
   @Then("the recent conversations list contains \"{int}\" recent conversations")
   public void listRecentAllResult(int size) {
 
-    if (null != listRecentAllResponse)
-      Assertions.assertEquals(listRecentAllResponse.stream().count(), size);
-    if (null != listRecentPageIterateResponse)
-      Assertions.assertEquals(listRecentPageIterateResponse.stream().count(), size);
+    Iterator<?> iterator = null;
+    if (null != listRecentAllResponse) {
+      iterator = listRecentAllResponse.iterator();
+    }
+
+    if (null != listRecentPageIterateResponse) {
+      iterator = listRecentPageIterateResponse.iterator();
+    }
+    TestHelpers.checkIteratorItems(iterator, size);
   }
 
   @Then("the recent conversations iteration result contains the data from \"{int}\" pages")
@@ -242,7 +260,7 @@ public class ConversationsSteps {
 
     int pageCount = 0;
 
-    ConversationsListRecentResponse listPageIterateResponseThreadSafety =
+    RecentConversationsListResponse listPageIterateResponseThreadSafety =
         listRecentPageIterateResponse;
     do {
       pageCount++;
@@ -267,7 +285,6 @@ public class ConversationsSteps {
     Assertions.assertEquals(updateResponse.getId(), CONVERSATION_ID);
     Assertions.assertEquals(updateResponse.getAppId(), "01W4FFL35P4NC4K35CONVAPP002");
     Assertions.assertEquals(updateResponse.getContactId(), ContactsSteps.CONTACT_ID);
-    Assertions.assertEquals(updateResponse.getMetadata(), "Transferred conversation");
     Assertions.assertEquals(updateResponse.getCorrelationId(), "my-correlator");
   }
 
@@ -305,7 +322,6 @@ public class ConversationsSteps {
         contactResponse.getLastReceived(), Instant.parse("2024-06-06T14:42:42Z"));
     Assertions.assertEquals(contactResponse.getActiveChannel(), ConversationChannel.MESSENGER);
     Assertions.assertEquals(contactResponse.getActive(), true);
-    Assertions.assertEquals(contactResponse.getMetadata(), "e2e tests");
     Assertions.assertEquals(
         contactResponse.getMetadataJson(),
         Stream.of(

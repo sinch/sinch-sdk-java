@@ -1,0 +1,58 @@
+{
+  "push_alarm": true,
+  "adult": true,
+  "carousel": {
+    "head": {
+      "header": "header text",
+      "content": "content text",
+      "image_url": "https://example.com/assets/image/image-product-123.jpg",
+      "link_mo": "https://link.sample/mo",
+      "link_pc": "https://link.sample/pc",
+      "scheme_ios": "alimtalk=coupon://ios/...",
+      "scheme_android": "alimtalk=coupon://android/..."
+    },
+    "list": [
+      {
+        "buttons": [
+          {
+            "type": "WL",
+            "name": "Web link button",
+            "link_mo": "https://link.sample/mo",
+            "link_pc": "https://link.sample/pc"
+          },
+          {
+            "type": "AL",
+            "name": "Open app link button",
+            "scheme_ios": "tel://+1234567890",
+            "scheme_android": "tel://+198765432"
+          }
+        ],
+        "additional_content": "additional content",
+        "image": {
+          "image_url": "https://example.com/assets/image/image-product-123.jpg",
+          "image_link": "https://example.com/product/123"
+        },
+        "commerce": {
+          "type": "REGULAR_PRICE_COMMERCE",
+          "title": "Special Discounted Product",
+          "regular_price": 1000
+        },
+        "coupon": {
+          "type": "PERCENTAGE_DISCOUNT_COUPON",
+          "discount_rate": 10,
+          "description": "description",
+          "link_mo": "https://example.com/mobile",
+          "link_pc": "https://example.com/desktop",
+          "scheme_ios": "alimtalk=coupon://ios/...",
+          "scheme_android": "alimtalk=coupon://android/..."
+        }
+      }
+    ],
+    "tail": {
+      "link_mo": "https://link.sample/mo",
+      "link_pc": "https://link.sample/pc",
+      "scheme_ios": "alimtalk=coupon://ios/...",
+      "scheme_android": "alimtalk=coupon://android/..."
+    }
+  }
+}

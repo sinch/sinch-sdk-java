@@ -33,7 +33,7 @@ public class VerificationStatusReason extends EnumDynamic<String, VerificationSt
   public static final VerificationStatusReason INTERNAL_ERROR =
       new VerificationStatusReason("Internal error");
 
-  /** Verification destinaton denied. */
+  /** Verification destination denied. */
   public static final VerificationStatusReason DESTINATION_DENIED =
       new VerificationStatusReason("Destination denied");
 

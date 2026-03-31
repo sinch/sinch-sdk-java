@@ -11,6 +11,7 @@
 package com.sinch.sdk.domains.verification.models.v1.start.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.verification.models.v1.SmsCodeType;
 import java.util.List;
 
 /** SMS Response */
@@ -47,6 +48,21 @@ public interface VerificationStartResponseSms
    * @return interceptionTimeout
    */
   Integer getInterceptionTimeout();
+
+  /**
+   * Get codeType
+   *
+   * @return codeType
+   */
+  SmsCodeType getCodeType();
+
+  /**
+   * Return the additional "sms" with the specified name.
+   *
+   * @param key the name of the property
+   * @return the additional property with the specified name
+   */
+  Object getExtraOption(String key);
 
   /**
    * Getting builder
@@ -97,6 +113,23 @@ public interface VerificationStartResponseSms
      * @see #getInterceptionTimeout
      */
     Builder setInterceptionTimeout(Integer interceptionTimeout);
+
+    /**
+     * see getter
+     *
+     * @param codeType see getter
+     * @return Current builder
+     * @see #getCodeType
+     */
+    Builder setCodeType(SmsCodeType codeType);
+
+    /**
+     * see getter
+     *
+     * @return Current builder
+     * @see #getExtraOption
+     */
+    Builder putExtraOption(String key, Object value);
 
     /**
      * Create instance

@@ -5,7 +5,6 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationBaseTest;
 import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
-import com.sinch.sdk.domains.conversation.models.v1.conversation.request.CreateConversationRequest;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMessage;
 import java.util.Collections;
 import org.json.JSONException;
@@ -21,7 +20,6 @@ public class CreateConversationRequestTest extends ConversationBaseTest {
           .setActiveChannel(ConversationChannel.WHATSAPP)
           .setAppId("conversation app Id")
           .setContactId("contact ID")
-          .setMetadata("metadata value")
           .setMetadataJson(Collections.singletonMap("metadata_json_key", "metadata json value"))
           .setCorrelationId("correlation id value")
           .build();

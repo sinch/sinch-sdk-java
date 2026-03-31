@@ -4,7 +4,7 @@
 
     <groupId>com.sinch.sdk</groupId>
     <artifactId>sinch-sdk-java</artifactId>
-    <version>1.8.0-SNAPSHOT</version>
+    <version>2.1.0-SNAPSHOT</version>
 
     <name>Sinch Java SDK</name>
     <description>
@@ -131,18 +131,6 @@
                             **.adapters*;
                             **.internal;
                             com.sinch.sdk.domains.numbers.models.v1.errors;
-                            com.sinch.sdk.domains.sms.models;
-                            com.sinch.sdk.domains.sms.models.requests;
-                            com.sinch.sdk.domains.sms.models.responses;
-                            com.sinch.sdk.domains.sms.models.webhooks;
-                            com.sinch.sdk.domains.verification.models;
-                            com.sinch.sdk.domains.verification.models.requests;
-                            com.sinch.sdk.domains.verification.models.response;
-                            com.sinch.sdk.domains.verification.models.webhooks;
-                            com.sinch.sdk.domains.numbers.models;
-                            com.sinch.sdk.domains.numbers.models.requests;
-                            com.sinch.sdk.domains.numbers.models.responses;
-                            com.sinch.sdk.domains.numbers.models.webhooks;
                         </excludePackageNames>
                         <sourceFileExcludes>
                             <sourceFileExclude>**/pagination/Page*.java</sourceFileExclude>
@@ -150,36 +138,6 @@
                             <sourceFileExclude>**/*Impl.java</sourceFileExclude>
                             <sourceFileExclude>**/BuildersDelegation.java</sourceFileExclude>
                             <sourceFileExclude>**/*Mapper.java</sourceFileExclude>
-
-                            <sourceFileExclude>**/mailgun/models/v1/response/GenericResponse.java</sourceFileExclude>
-
-                            <!-- Transition period -->
-                            <sourceFileExclude>com/sinch/sdk/domains/sms/BatchesService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/sms/DeliveryReportsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/sms/GroupsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/sms/InboundsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/sms/WebHooksService.java</sourceFileExclude>
-
-                            <sourceFileExclude>com/sinch/sdk/domains/verification/models/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/verification/VerificationStatusService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/verification/WebHooksService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/numbers/models/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/numbers/ActiveNumberService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/numbers/AvailableNumberService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/numbers/AvailableRegionService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/numbers/CallbackConfigurationService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/numbers/WebHooksService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/requests/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/response/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/svaml/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/models/webhooks/*.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/ApplicationsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/CalloutsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/CallsService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/ConferencesService.java</sourceFileExclude>
-                            <sourceFileExclude>com/sinch/sdk/domains/voice/WebHooksService.java</sourceFileExclude>
                         </sourceFileExcludes>
                         <tags>
                             <tag>
@@ -212,10 +170,6 @@
                                 <packages>com.sinch.sdk.domains.conversation*</packages>
                             </group>
                             <group>
-                                <title>Mailgun</title>
-                                <packages>com.sinch.sdk.domains.mailgun*</packages>
-                            </group>
-                            <group>
                                 <title>Numbers</title>
                                 <packages>com.sinch.sdk.domains.numbers*</packages>
                             </group>
@@ -242,7 +196,6 @@
         </pluginManagement>
 
         <plugins>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -304,6 +257,9 @@
                                     <directory>client/src/test/resources</directory>
                                 </resource>
                                 <resource>
+                                    <directory>core/src/test/resources</directory>
+                                </resource>
+                                <resource>
                                     <directory>openapi-contracts/src/test/resources</directory>
                                 </resource>
                             </resources>
@@ -336,14 +292,10 @@
                         </goals>
                         <configuration>
                             <includes>
-                                <include>com.sinch.sdk.e2e.domains.mailgun.v1.MailgunIT</include>
                                 <include>com.sinch.sdk.e2e.domains.numbers.v1.NumbersIT</include>
                                 <include>com.sinch.sdk.e2e.domains.conversation.ConversationIT</include>
-                                <include>com.sinch.sdk.e2e.domains.sms.v0.SmsIT</include>
                                 <include>com.sinch.sdk.e2e.domains.sms.v1.SmsIT</include>
-                                <include>com.sinch.sdk.e2e.domains.voice.v0.VoiceIT</include>
                                 <include>com.sinch.sdk.e2e.domains.voice.v1.VoiceIT</include>
-                                <include>com.sinch.sdk.e2e.domains.verification.v0.VerificationIT</include>
                                 <include>com.sinch.sdk.e2e.domains.verification.v1.VerificationIT</include>
                             </includes>
                         </configuration>
@@ -538,9 +490,10 @@
         </dependency>
 
         <dependency>
+            <!-- transient dependency overwrite: https://github.com/sinch/sinch-sdk-java/security/dependabot/8 -->
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-model</artifactId>
-            <version>3.9.5</version>
+            <version>[3.9.14,)</version>
         </dependency>
 
     </dependencies>

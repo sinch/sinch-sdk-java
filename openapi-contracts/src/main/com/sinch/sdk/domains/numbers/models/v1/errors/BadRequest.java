@@ -23,10 +23,10 @@ public interface BadRequest {
 
   /** Gets or Sets type */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
-    public static final TypeEnum BADREQUEST = new TypeEnum("BadRequest");
+    public static final TypeEnum BAD_REQUEST = new TypeEnum("BadRequest");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(BADREQUEST));
+        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(BAD_REQUEST));
 
     private TypeEnum(String value) {
       super(value);

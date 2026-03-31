@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.numbers.api.v1.adapters.NumbersBaseTest;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
-import com.sinch.sdk.domains.numbers.models.v1.response.internal.AvailableNumberListResponseInternal;
+import com.sinch.sdk.domains.numbers.models.v1.response.internal.AvailableNumbersListResponseInternal;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
@@ -31,8 +31,8 @@ public class AvailableNumberDtoTest extends NumbersBaseTest {
           .setMonthlyPrice(Money.builder().setCurrencyCode("EUR").setAmount(0.80).build())
           .build();
 
-  public static AvailableNumberListResponseInternal availableNumberList =
-      AvailableNumberListResponseInternal.builder()
+  public static AvailableNumbersListResponseInternal availableNumberList =
+      AvailableNumbersListResponseInternal.builder()
           .setAvailableNumbers(Collections.singletonList(availableNumber))
           .build();
 
@@ -48,8 +48,8 @@ public class AvailableNumberDtoTest extends NumbersBaseTest {
   @Test
   void deserializeList() throws JsonProcessingException {
 
-    AvailableNumberListResponseInternal deserializedString =
-        objectMapper.readValue(availableListResponse, AvailableNumberListResponseInternal.class);
+    AvailableNumbersListResponseInternal deserializedString =
+        objectMapper.readValue(availableListResponse, AvailableNumbersListResponseInternal.class);
 
     TestHelpers.recursiveEquals(availableNumberList, deserializedString);
   }

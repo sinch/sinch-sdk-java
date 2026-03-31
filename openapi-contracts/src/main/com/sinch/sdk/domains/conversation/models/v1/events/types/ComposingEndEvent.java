@@ -11,6 +11,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.events.types;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Collections;
 
 /** Composing End Event Type */
@@ -20,8 +21,8 @@ public interface ComposingEndEvent
         com.sinch.sdk.domains.conversation.models.v1.events.AppEvent {
 
   /** Default EMPTY message to be used to send a ComposingEndEvent */
-  ComposingEndEvent EMPTY =
-      new ComposingEndEventImpl.Builder().setComposingEndEvent(Collections.EMPTY_MAP).build();
+  ComposingEndEvent COMPOSING_END_EVENT =
+      new ComposingEndEventImpl(OptionalValue.of(Collections.emptyMap()));
 
   /**
    * Getting builder

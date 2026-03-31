@@ -57,8 +57,8 @@ public class OrderStatusPaymentDetailsImpl implements OrderStatusPaymentDetails 
   }
 
   /**
-   * Return true if this Payment_Order_Status_channel_specific_message__payment_order object is
-   * equal to o.
+   * Return true if this WhatsApp_Payment_Order_Status_channel_specific_message__payment_order
+   * object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -68,11 +68,13 @@ public class OrderStatusPaymentDetailsImpl implements OrderStatusPaymentDetails 
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OrderStatusPaymentDetailsImpl paymentOrderStatusChannelSpecificMessagePaymentOrder =
+    OrderStatusPaymentDetailsImpl whatsAppPaymentOrderStatusChannelSpecificMessagePaymentOrder =
         (OrderStatusPaymentDetailsImpl) o;
-    return Objects.equals(this.status, paymentOrderStatusChannelSpecificMessagePaymentOrder.status)
+    return Objects.equals(
+            this.status, whatsAppPaymentOrderStatusChannelSpecificMessagePaymentOrder.status)
         && Objects.equals(
-            this.description, paymentOrderStatusChannelSpecificMessagePaymentOrder.description);
+            this.description,
+            whatsAppPaymentOrderStatusChannelSpecificMessagePaymentOrder.description);
   }
 
   @Override
