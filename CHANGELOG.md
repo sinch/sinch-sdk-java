@@ -16,7 +16,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ---
 
-## v2.0 – Unreleased
+## v2.0 – 2026-03-31
 
 ### Major breaking changes with major release
 - see [MIGRATION-GUIDE](MIGRATION-GUIDE.md#200)
