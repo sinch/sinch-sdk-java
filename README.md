@@ -1,10 +1,10 @@
 # Sinch Java SDK
 
-Here you'll find documentation related to the Sinch Java SDK, including how to install it, initialize it, and start developing <language> code using Sinch services.
+Here you'll find documentation related to the Sinch Java SDK, including how to install it, initialize it, and start developing Java code using Sinch services.
 
 To use Sinch services, you'll need a Sinch account and access keys. You can sign up for an account and create access keys at [dashboard.sinch.com](https://dashboard.sinch.com).
 
-For more information on the Sinch APIs on which this SDK is based, refer to the official [developer documentation portal](https://developers.sinch.com).
+For more information on the SDK, refer to the dedicated [Java SDK documentation section](https://developers.sinch.com/docs/sdks/java) and for the Sinch APIs on which this SDK is based, refer to the official [developer documentation portal](https://developers.sinch.com).
 
 ## Table of contents:
 - [Prerequisites](#prerequisites)
@@ -14,7 +14,7 @@ For more information on the Sinch APIs on which this SDK is based, refer to the 
 - [Logging](#logging)
 - [Onboarding](#onboarding)
 - [Third-party dependencies](#third-party-dependencies)
-- [Migration guide for previous SDK versions](#migration-guides)
+- [Changelog and Migration guides](#changelog--migration)
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ For more information on the Sinch APIs on which this SDK is based, refer to the 
 
 ## Installation
 
-Add to your `pom.xml` file the dependency to SDK:
+Add the SDK dependency to your `pom.xml` file:
 ```xml  
 <dependencies>
     <dependency>
@@ -36,7 +36,7 @@ Add to your `pom.xml` file the dependency to SDK:
     ...
 </dependencies>
 ```
-Note the `${sdk.version}` need to be set according to released version to be used (see available versions from [Maven Repository](https://central.sonatype.com/artifact/com.sinch.sdk/sinch-sdk-java))
+Note: The `${sdk.version}` needs to be set according to the released version to be used (see available versions from [Maven Repository](https://central.sonatype.com/artifact/com.sinch.sdk/sinch-sdk-java))
 
 ## Getting started
 
@@ -81,7 +81,7 @@ Here is the list of the Sinch products and their level of support by the Java SD
 
 The SDK uses the Java 8 logging feature ([java.util.logging](https://docs.oracle.com/javase/8/docs/api/java/util/logging/package-summary.html#package.description))
 
-When using java logging, Loggers and severity can be configured by using a `logging.properties` file like:
+When using Java logging, Loggers and severity can be configured by using a `logging.properties` file like:
 ```
 # java.util.logging configuration sample
 # See https://docs.oracle.com/javase/8/docs/api/java/util/logging/package-summary.html#package.description
@@ -111,28 +111,27 @@ If you are using a different logging framework (such as SLF4J or Spring), please
 
 To enhance the onboarding experience, the following resources are available:
 - Sinch Online Developers Documentation: https://developers.sinch.com 
-- Java SDK Online Javadoc: https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest
-- Java SDK Quickstart Repository: A repository with tutorials and templates to help you quickly start a new project: https://github.com/sinch/sinch-sdk-java-quickstart
-- Java SDK Snippets: A collection of basic code snippets for reference: [snippets](examples/snippets/README.md)
+- Java SDK Online Javadoc: https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java
+- Java SDK examples: A collection of basic code snippets, tutorials and getting started for reference: [examples](examples/README.md)
 
 ## Third-party dependencies
 The SDK relies on the following third-party dependencies:
 - [Jackson's library](https://github.com/FasterXML/jackson-jakarta-rs-providers): Provides JSON serialization/deserialization functionality.
-- [Apache HTTP client](https://hc.apache.org/httpcomponents-client-5.4.x/5.4.1/httpclient5/project-info.html): Manages communication with Sinch products' REST APIs 
+- [Apache HTTP client](https://hc.apache.org/httpcomponents-client-ga/): Manages communication with Sinch products' REST APIs
 
 ### Jackson/Java EE/jaxrs/Jakarta Compatibility Consideration
-The transition from <code>javax</code> to <code>jakarta</code> namespaces with the Java EE to Jakarta EE migration may cause compatibility issues. Refer to [Oracle's note about the transition](https://blogs.oracle.com/javamagazine/post/transition-from-java-ee-to-jakarta-ee) for additional details.
+The transition from `javax` to `jakarta` namespaces with the Java EE to Jakarta EE migration may cause compatibility issues. Refer to [Oracle's note about the transition](https://docslib.org/doc/1185955/transition-from-java-ee-to-jakarta-ee-ee-conclusion-what-happened-and-what-you-need-to-know) for additional details.
 
 Jackson maintainers provide two variants of the library:
 > (*) NOTE: Jakarta-RS is the package under jakarta.ws.rs, replacing older JAX-RS which lived under javax.ws.rs. For JAX-RS variant, see repo jackson-jaxrs-providers
 
 By default, the Sinch Java SDK uses the "new" [jackson-jakarta-rs-providers](https://github.com/FasterXML/jackson-jakarta-rs-providers). However, you can switch to the "older" [jackson-jaxrs-providers](https://github.com/FasterXML/jackson-jaxrs-providers) if required.
 
-#### Switching to <code>jackson-jaxrs-providers</code>
-Depending on your use case, you may need to adjust dependencies to enable <code>jaxrs</code> usage.
+#### Switching to `jackson-jaxrs-providers`
+Depending on your use case, you may need to adjust dependencies to enable `jaxrs` usage.
 
 Add the following dependency to your configuration:
-Note: Replace <code>VERSION-YOU-WANT-TO-BE-USED</code> by a Jackson version of at least `2.15.2`.
+Note: Replace `VERSION-YOU-WANT-TO-BE-USED` with a Jackson version of at least `2.15.2`.
 ```xml
 ...
     <dependency>
@@ -157,6 +156,10 @@ Note: Replace <code>VERSION-YOU-WANT-TO-BE-USED</code> by a Jackson version of a
 ## Changelog & Migration
 For information about the latest changes in the SDK, please refer to the [CHANGELOG](CHANGELOG.md) file
 and the [MIGRATION-GUIDE](MIGRATION-GUIDE.md) for instructions on how to update your code when upgrading to a new major version of the SDK.
+
+## Contact
+
+Developer Experience engineering team: [team-developer-experience@sinch.com](mailto:team-developer-experience@sinch.com)
 
 ## License
 
