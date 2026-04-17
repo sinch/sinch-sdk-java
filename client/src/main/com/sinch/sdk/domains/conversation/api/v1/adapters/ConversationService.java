@@ -9,6 +9,7 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.api.v1.AppsService;
 import com.sinch.sdk.domains.conversation.api.v1.CapabilityService;
+import com.sinch.sdk.domains.conversation.api.v1.ConsentsService;
 import com.sinch.sdk.domains.conversation.api.v1.ContactsService;
 import com.sinch.sdk.domains.conversation.api.v1.ConversationsService;
 import com.sinch.sdk.domains.conversation.api.v1.EventDestinationsService;
@@ -66,6 +67,7 @@ public class ConversationService
 
   private volatile Map<String, AuthManager> authManagers;
   private volatile AppsService apps;
+  private volatile ConsentsService consents;
   private volatile ContactsService contacts;
   private volatile MessagesService messages;
   private volatile ConversationsService conversations;
@@ -110,6 +112,24 @@ public class ConversationService
       }
     }
     return this.apps;
+  }
+
+  public ConsentsService consents() {
+    if (null == this.consents) {
+      synchronized (this) {
+        if (null == this.consents) {
+          instanceLazyInit();
+          this.consents =
+              new ConsentsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
+    }
+    return this.consents;
   }
 
   public ContactsService contacts() {

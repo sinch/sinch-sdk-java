@@ -11,6 +11,9 @@ See main [README.md](../../../../README.md) for how to execute snippets
   - [conversation/applications/Update](./applications/Update.java)
 - Capability
   - [conversation/capability/Capability](./capability/Capability.java) 
+- Consents
+  - [conversation/consents/ListIdentities](./consents/ListIdentities.java)
+  - [conversation/consents/ListAuditRecords](./consents/ListAuditRecords.java)
 - Contacts
   - [conversation/contacts/List](./contacts/List.java)
   - [conversation/contacts/Create](./contacts/Create.java)
