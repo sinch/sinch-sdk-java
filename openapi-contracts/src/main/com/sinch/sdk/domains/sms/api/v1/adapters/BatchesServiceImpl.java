@@ -42,6 +42,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.BatchesService {
@@ -79,11 +80,15 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _fetchListPage(queryParameter, httpRequest);
+    return _fetchListPage(
+        (queryParameters) -> listRequestBuilder(queryParameters), queryParameter, httpRequest);
   }
 
   private ListBatchesResponse _fetchListPage(
-      ListBatchesQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
+      Function<ListBatchesQueryParameters, HttpRequest> requestBuilder,
+      ListBatchesQueryParameters queryParameter,
+      HttpRequest httpRequest)
+      throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -113,9 +118,10 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Batc
           ListBatchesQueryParameters.builder(queryParameter).setPage(nextPage).build();
 
       final HttpRequest nextHttpRequest =
-          nextPage != null ? listRequestBuilder(nextParameters) : null;
+          nextPage != null ? requestBuilder.apply(nextParameters) : null;
 
-      return new ListBatchesResponse(() -> _fetchListPage(nextParameters, nextHttpRequest), page);
+      return new ListBatchesResponse(
+          () -> _fetchListPage(requestBuilder, nextParameters, nextHttpRequest), page);
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

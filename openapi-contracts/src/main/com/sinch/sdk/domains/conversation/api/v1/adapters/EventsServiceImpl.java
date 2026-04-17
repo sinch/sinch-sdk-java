@@ -39,6 +39,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class EventsServiceImpl implements com.sinch.sdk.domains.conversation.api.v1.EventsService {
@@ -76,11 +77,15 @@ public class EventsServiceImpl implements com.sinch.sdk.domains.conversation.api
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _fetchListPage(queryParameter, httpRequest);
+    return _fetchListPage(
+        (queryParameters) -> listRequestBuilder(queryParameters), queryParameter, httpRequest);
   }
 
   private EventsListResponse _fetchListPage(
-      EventsListQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
+      Function<EventsListQueryParameters, HttpRequest> requestBuilder,
+      EventsListQueryParameters queryParameter,
+      HttpRequest httpRequest)
+      throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -96,10 +101,10 @@ public class EventsServiceImpl implements com.sinch.sdk.domains.conversation.api
           EventsListQueryParameters.builder(queryParameter).setPageToken(nextToken).build();
 
       final HttpRequest nextHttpRequest =
-          !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
+          !StringUtil.isEmpty(nextToken) ? requestBuilder.apply(nextParameters) : null;
 
       return new EventsListResponse(
-          () -> _fetchListPage(nextParameters, nextHttpRequest),
+          () -> _fetchListPage(requestBuilder, nextParameters, nextHttpRequest),
           new Page<>(deserialized.getEvents(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:

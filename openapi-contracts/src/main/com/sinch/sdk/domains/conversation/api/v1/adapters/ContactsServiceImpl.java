@@ -46,6 +46,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class ContactsServiceImpl
@@ -84,11 +85,15 @@ public class ContactsServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _fetchListPage(queryParameter, httpRequest);
+    return _fetchListPage(
+        (queryParameters) -> listRequestBuilder(queryParameters), queryParameter, httpRequest);
   }
 
   private ContactsListResponse _fetchListPage(
-      ContactsListQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
+      Function<ContactsListQueryParameters, HttpRequest> requestBuilder,
+      ContactsListQueryParameters queryParameter,
+      HttpRequest httpRequest)
+      throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -104,10 +109,10 @@ public class ContactsServiceImpl
           ContactsListQueryParameters.builder(queryParameter).setPageToken(nextToken).build();
 
       final HttpRequest nextHttpRequest =
-          !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
+          !StringUtil.isEmpty(nextToken) ? requestBuilder.apply(nextParameters) : null;
 
       return new ContactsListResponse(
-          () -> _fetchListPage(nextParameters, nextHttpRequest),
+          () -> _fetchListPage(requestBuilder, nextParameters, nextHttpRequest),
           new Page<>(deserialized.getContacts(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
@@ -480,11 +485,16 @@ public class ContactsServiceImpl
     LOGGER.finest("[listIdentityConflicts]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listIdentityConflictsRequestBuilder(queryParameter);
-    return _fetchListIdentityConflictsPage(queryParameter, httpRequest);
+    return _fetchListIdentityConflictsPage(
+        (queryParameters) -> listIdentityConflictsRequestBuilder(queryParameters),
+        queryParameter,
+        httpRequest);
   }
 
   private IdentityConflictsListResponse _fetchListIdentityConflictsPage(
-      IdentityConflictsListQueryParameters queryParameter, HttpRequest httpRequest)
+      Function<IdentityConflictsListQueryParameters, HttpRequest> requestBuilder,
+      IdentityConflictsListQueryParameters queryParameter,
+      HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -504,12 +514,10 @@ public class ContactsServiceImpl
               .build();
 
       final HttpRequest nextHttpRequest =
-          !StringUtil.isEmpty(nextToken)
-              ? listIdentityConflictsRequestBuilder(nextParameters)
-              : null;
+          !StringUtil.isEmpty(nextToken) ? requestBuilder.apply(nextParameters) : null;
 
       return new IdentityConflictsListResponse(
-          () -> _fetchListIdentityConflictsPage(nextParameters, nextHttpRequest),
+          () -> _fetchListIdentityConflictsPage(requestBuilder, nextParameters, nextHttpRequest),
           new Page<>(deserialized.getConflicts(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
