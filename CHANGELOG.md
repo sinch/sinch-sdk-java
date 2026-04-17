@@ -16,6 +16,13 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ---
 
+## v2.1 – unreleased
+
+### Conversation
+- **[feature]** Support `Consents` API: `listIdentities` and `listAuditRecords` endpoints
+
+---
+
 ## v2.0 – 2026-03-31
 
 ### Major breaking changes with major release
