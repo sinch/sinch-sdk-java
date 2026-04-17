@@ -54,6 +54,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class MessagesServiceImpl
@@ -92,11 +93,15 @@ public class MessagesServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _fetchListPage(queryParameter, httpRequest);
+    return _fetchListPage(
+        (queryParameters) -> listRequestBuilder(queryParameters), queryParameter, httpRequest);
   }
 
   private MessagesListResponse _fetchListPage(
-      MessagesListQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
+      Function<MessagesListQueryParameters, HttpRequest> requestBuilder,
+      MessagesListQueryParameters queryParameter,
+      HttpRequest httpRequest)
+      throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -112,10 +117,10 @@ public class MessagesServiceImpl
           MessagesListQueryParameters.builder(queryParameter).setPageToken(nextToken).build();
 
       final HttpRequest nextHttpRequest =
-          !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
+          !StringUtil.isEmpty(nextToken) ? requestBuilder.apply(nextParameters) : null;
 
       return new MessagesListResponse(
-          () -> _fetchListPage(nextParameters, nextHttpRequest),
+          () -> _fetchListPage(requestBuilder, nextParameters, nextHttpRequest),
           new Page<>(deserialized.getMessages(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
@@ -438,11 +443,16 @@ public class MessagesServiceImpl
         "[listLastMessagesByChannelIdentity]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listLastMessagesByChannelIdentityRequestBuilder(queryParameter);
-    return _fetchListLastMessagesByChannelIdentityPage(queryParameter, httpRequest);
+    return _fetchListLastMessagesByChannelIdentityPage(
+        (queryParameters) -> listLastMessagesByChannelIdentityRequestBuilder(queryParameters),
+        queryParameter,
+        httpRequest);
   }
 
   private MessagesListResponse _fetchListLastMessagesByChannelIdentityPage(
-      LastMessagesByChannelIdentityListQueryParameters queryParameter, HttpRequest httpRequest)
+      Function<LastMessagesByChannelIdentityListQueryParameters, HttpRequest> requestBuilder,
+      LastMessagesByChannelIdentityListQueryParameters queryParameter,
+      HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -461,12 +471,12 @@ public class MessagesServiceImpl
               .build();
 
       final HttpRequest nextHttpRequest =
-          !StringUtil.isEmpty(nextToken)
-              ? listLastMessagesByChannelIdentityRequestBuilder(nextParameters)
-              : null;
+          !StringUtil.isEmpty(nextToken) ? requestBuilder.apply(nextParameters) : null;
 
       return new MessagesListResponse(
-          () -> _fetchListLastMessagesByChannelIdentityPage(nextParameters, nextHttpRequest),
+          () ->
+              _fetchListLastMessagesByChannelIdentityPage(
+                  requestBuilder, nextParameters, nextHttpRequest),
           new Page<>(deserialized.getMessages(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:

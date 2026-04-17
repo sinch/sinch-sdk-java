@@ -45,6 +45,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class ConversationsServiceImpl
@@ -84,11 +85,14 @@ public class ConversationsServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _fetchListPage(queryParameter, httpRequest);
+    return _fetchListPage(
+        (queryParameters) -> listRequestBuilder(queryParameters), queryParameter, httpRequest);
   }
 
   private ConversationsListResponse _fetchListPage(
-      ConversationsListQueryParameters queryParameter, HttpRequest httpRequest)
+      Function<ConversationsListQueryParameters, HttpRequest> requestBuilder,
+      ConversationsListQueryParameters queryParameter,
+      HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -105,10 +109,10 @@ public class ConversationsServiceImpl
           ConversationsListQueryParameters.builder(queryParameter).setPageToken(nextToken).build();
 
       final HttpRequest nextHttpRequest =
-          !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
+          !StringUtil.isEmpty(nextToken) ? requestBuilder.apply(nextParameters) : null;
 
       return new ConversationsListResponse(
-          () -> _fetchListPage(nextParameters, nextHttpRequest),
+          () -> _fetchListPage(requestBuilder, nextParameters, nextHttpRequest),
           new Page<>(deserialized.getConversations(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:
@@ -563,11 +567,16 @@ public class ConversationsServiceImpl
     LOGGER.finest("[listRecent]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRecentRequestBuilder(queryParameter);
-    return _fetchListRecentPage(queryParameter, httpRequest);
+    return _fetchListRecentPage(
+        (queryParameters) -> listRecentRequestBuilder(queryParameters),
+        queryParameter,
+        httpRequest);
   }
 
   private RecentConversationsListResponse _fetchListRecentPage(
-      RecentConversationsListQueryParameters queryParameter, HttpRequest httpRequest)
+      Function<RecentConversationsListQueryParameters, HttpRequest> requestBuilder,
+      RecentConversationsListQueryParameters queryParameter,
+      HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -587,10 +596,10 @@ public class ConversationsServiceImpl
               .build();
 
       final HttpRequest nextHttpRequest =
-          !StringUtil.isEmpty(nextToken) ? listRecentRequestBuilder(nextParameters) : null;
+          !StringUtil.isEmpty(nextToken) ? requestBuilder.apply(nextParameters) : null;
 
       return new RecentConversationsListResponse(
-          () -> _fetchListRecentPage(nextParameters, nextHttpRequest),
+          () -> _fetchListRecentPage(requestBuilder, nextParameters, nextHttpRequest),
           new Page<>(deserialized.getConversations(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:

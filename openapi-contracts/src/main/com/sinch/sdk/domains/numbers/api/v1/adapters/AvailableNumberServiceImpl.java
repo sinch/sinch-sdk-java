@@ -38,6 +38,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class AvailableNumberServiceImpl
@@ -284,11 +285,16 @@ public class AvailableNumberServiceImpl
     LOGGER.finest("[searchForAvailableNumbers]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = searchForAvailableNumbersRequestBuilder(queryParameter);
-    return _fetchSearchForAvailableNumbersPage(queryParameter, httpRequest);
+    return _fetchSearchForAvailableNumbersPage(
+        (queryParameters) -> searchForAvailableNumbersRequestBuilder(queryParameters),
+        queryParameter,
+        httpRequest);
   }
 
   private AvailableNumbersListResponse _fetchSearchForAvailableNumbersPage(
-      AvailableNumbersListQueryParameters queryParameter, HttpRequest httpRequest)
+      Function<AvailableNumbersListQueryParameters, HttpRequest> requestBuilder,
+      AvailableNumbersListQueryParameters queryParameter,
+      HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(

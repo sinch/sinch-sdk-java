@@ -37,6 +37,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.InboundsService {
@@ -75,11 +76,14 @@ public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Inb
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _fetchListPage(queryParameter, httpRequest);
+    return _fetchListPage(
+        (queryParameters) -> listRequestBuilder(queryParameters), queryParameter, httpRequest);
   }
 
   private ListInboundsResponse _fetchListPage(
-      ListInboundMessagesQueryParameters queryParameter, HttpRequest httpRequest)
+      Function<ListInboundMessagesQueryParameters, HttpRequest> requestBuilder,
+      ListInboundMessagesQueryParameters queryParameter,
+      HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -110,9 +114,10 @@ public class InboundsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Inb
           ListInboundMessagesQueryParameters.builder(queryParameter).setPage(nextPage).build();
 
       final HttpRequest nextHttpRequest =
-          nextPage != null ? listRequestBuilder(nextParameters) : null;
+          nextPage != null ? requestBuilder.apply(nextParameters) : null;
 
-      return new ListInboundsResponse(() -> _fetchListPage(nextParameters, nextHttpRequest), page);
+      return new ListInboundsResponse(
+          () -> _fetchListPage(requestBuilder, nextParameters, nextHttpRequest), page);
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content

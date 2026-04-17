@@ -38,6 +38,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.GroupsService {
@@ -75,11 +76,15 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _fetchListPage(queryParameter, httpRequest);
+    return _fetchListPage(
+        (queryParameters) -> listRequestBuilder(queryParameters), queryParameter, httpRequest);
   }
 
   private ListGroupsResponse _fetchListPage(
-      ListGroupsQueryParameters queryParameter, HttpRequest httpRequest) throws ApiException {
+      Function<ListGroupsQueryParameters, HttpRequest> requestBuilder,
+      ListGroupsQueryParameters queryParameter,
+      HttpRequest httpRequest)
+      throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -109,9 +114,10 @@ public class GroupsServiceImpl implements com.sinch.sdk.domains.sms.api.v1.Group
           ListGroupsQueryParameters.builder(queryParameter).setPage(nextPage).build();
 
       final HttpRequest nextHttpRequest =
-          nextPage != null ? listRequestBuilder(nextParameters) : null;
+          nextPage != null ? requestBuilder.apply(nextParameters) : null;
 
-      return new ListGroupsResponse(() -> _fetchListPage(nextParameters, nextHttpRequest), page);
+      return new ListGroupsResponse(
+          () -> _fetchListPage(requestBuilder, nextParameters, nextHttpRequest), page);
     }
     // fallback to default errors handling:
     // all error cases definition are not required from specs: will try some "hardcoded" content
