@@ -110,4 +110,63 @@ class HttpClientApacheTest {
       assertEquals(nonAscii, decoded, "Response body must round-trip through UTF-8 correctly");
     }
   }
+
+  /**
+   * Verifies that a 407 Proxy Authentication Required response returned by {@code processRequest}
+   * (i.e. Apache's internal 407 handling failed) is returned immediately to the caller without
+   * triggering the OAuth token-refresh logic.
+   *
+   * <p>Some enterprise proxies include a {@code www-authenticate: Bearer error="expired"} header on
+   * 407 responses. Without the explicit 407 guard in {@link
+   * HttpClientApache#invokeAPI(com.sinch.sdk.core.models.ServerConfiguration, Map,
+   * com.sinch.sdk.core.http.HttpRequest)}, that header would cause the OAuthManager to reset its
+   * token and retry the request — incorrectly treating a proxy auth failure as an expired API
+   * token.
+   */
+  @Test
+  void testInvokeApi407DoesNotTriggerOAuthRefresh() throws Exception {
+    // GIVEN: a 407 response that also carries www-authenticate: Bearer error="expired"
+    //        (non-standard but seen on some corporate proxies)
+    Map<String, List<String>> proxyHeaders = new HashMap<>();
+    proxyHeaders.put(
+        OAuthManager.BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD,
+        Collections.singletonList("Bearer realm=\"proxy\", error=\"expired\""));
+
+    HttpResponse proxyAuthResponse =
+        new HttpResponse(407, "Proxy Authentication Required", proxyHeaders, null);
+
+    doReturn(proxyAuthResponse).when(client).processRequest(any(), any());
+
+    ServerConfiguration serverConfig = mock(ServerConfiguration.class);
+    when(serverConfig.getUrl()).thenReturn("https://api.example.com");
+
+    HttpRequest request = mock(HttpRequest.class);
+    when(request.getFullUrl()).thenReturn(Optional.of("https://api.example.com/v1/test"));
+    when(request.getMethod()).thenReturn(HttpMethod.GET);
+    when(request.getQueryParameters()).thenReturn(Collections.emptyList());
+    when(request.getBody()).thenReturn(null);
+    when(request.getFormParams()).thenReturn(Collections.emptyMap());
+    when(request.getHeaderParams()).thenReturn(Collections.emptyMap());
+    when(request.getAccept()).thenReturn(Collections.emptyList());
+    when(request.getContentType()).thenReturn(Collections.emptyList());
+    when(request.getAuthNames()).thenReturn(Collections.singletonList("Bearer"));
+
+    Map<String, AuthManager> authManagers = new HashMap<>();
+    authManagers.put(OAuthManager.SCHEMA_KEYWORD_BEARER, mockAuthManager);
+    when(mockAuthManager.getSchema()).thenReturn(OAuthManager.SCHEMA_KEYWORD_BEARER);
+    when(mockAuthManager.getAuthorizationHeaders(any(), any(), any(), any()))
+        .thenReturn(Collections.emptyList());
+
+    // WHEN: invokeAPI is called
+    HttpResponse response = client.invokeAPI(serverConfig, authManagers, request);
+
+    // THEN: the 407 is returned as-is
+    assertEquals(407, response.getCode());
+
+    // AND: OAuth token reset must NOT be triggered by the proxy 407
+    verify(mockAuthManager, never()).resetToken();
+
+    // AND: processRequest is called exactly once — no OAuth retry
+    verify(client, times(1)).processRequest(any(), any());
+  }
 }

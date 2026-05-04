@@ -3,11 +3,15 @@ package com.sinch.sdk;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
+import com.sinch.sdk.models.HttpProxyConfiguration;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.VoiceContext;
 import com.sinch.sdk.models.VoiceRegion;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import org.junit.jupiter.api.Test;
 
 class SinchClientTest {
@@ -277,5 +281,63 @@ class SinchClientTest {
     SinchClient client = new SinchClient();
     client.close();
     assertDoesNotThrow(client::close);
+  }
+
+  /**
+   * Verifies that a proxy configuration set on {@link Configuration} is preserved in the {@link
+   * SinchClient}'s internal configuration after construction.
+   */
+  @Test
+  void proxyConfigurationPreservedInConfiguration() {
+    HttpProxyConfiguration proxy =
+        HttpProxyConfiguration.builder()
+            .setHostname("proxy.corp.example.com")
+            .setPort(3128)
+            .build();
+    Configuration configuration = Configuration.builder().setHttpProxyConfiguration(proxy).build();
+    SinchClient client = new SinchClient(configuration);
+    assertTrue(
+        client.getConfiguration().getHttpProxyConfiguration().isPresent(),
+        "Proxy configuration must be present in the SinchClient's stored configuration");
+    assertEquals(
+        "proxy.corp.example.com",
+        client.getConfiguration().getHttpProxyConfiguration().get().getHostname(),
+        "Proxy hostname must survive SinchClient construction");
+    assertEquals(
+        3128,
+        client.getConfiguration().getHttpProxyConfiguration().get().getPort(),
+        "Proxy port must survive SinchClient construction");
+  }
+
+  /**
+   * Verifies that {@link SinchClient#getHttpClient()} (called via reflection) creates an {@link
+   * HttpClientApache} when proxy configuration is present — i.e. the proxy config is wired from
+   * {@link Configuration} into the HTTP-client factory.
+   */
+  @Test
+  void proxyConfigurationWiredIntoHttpClient() throws Exception {
+    HttpProxyConfiguration proxy =
+        HttpProxyConfiguration.builder()
+            .setHostname("proxy.corp.example.com")
+            .setPort(3128)
+            .build();
+    Configuration configuration = Configuration.builder().setHttpProxyConfiguration(proxy).build();
+    SinchClient sinchClient = new SinchClient(configuration);
+
+    // Trigger lazy initialization of the internal HttpClientApache via reflection
+    Method getHttpClient = SinchClient.class.getDeclaredMethod("getHttpClient");
+    getHttpClient.setAccessible(true);
+    Object httpClient = getHttpClient.invoke(sinchClient);
+
+    assertNotNull(httpClient, "getHttpClient() must return a non-null HttpClientApache");
+    assertInstanceOf(
+        HttpClientApache.class, httpClient, "getHttpClient() must return an HttpClientApache");
+
+    // Verify the stored field in SinchClient was initialised (not null)
+    Field httpClientField = SinchClient.class.getDeclaredField("httpClient");
+    httpClientField.setAccessible(true);
+    assertNotNull(
+        httpClientField.get(sinchClient),
+        "SinchClient.httpClient field must be initialised after getHttpClient()");
   }
 }
