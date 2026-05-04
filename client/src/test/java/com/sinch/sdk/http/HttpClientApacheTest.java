@@ -9,9 +9,16 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.Scanner;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -74,5 +81,33 @@ class HttpClientApacheTest {
 
     // AND: resetToken() is not called (no headers to check)
     verify(mockAuthManager, never()).resetToken();
+  }
+
+  @Test
+  void processResponseDecodesBodyAsUtf8() throws Exception {
+    String nonAscii = "Ünïcödé resülts";
+    byte[] utf8Bytes = nonAscii.getBytes(StandardCharsets.UTF_8);
+
+    HttpEntity entity = mock(HttpEntity.class);
+    when(entity.getContent()).thenReturn(new ByteArrayInputStream(utf8Bytes));
+
+    ClassicHttpResponse httpResponse = mock(ClassicHttpResponse.class);
+    when(httpResponse.getCode()).thenReturn(200);
+    when(httpResponse.getReasonPhrase()).thenReturn("OK");
+    when(httpResponse.getHeaders()).thenReturn(new Header[0]);
+    when(httpResponse.getEntity()).thenReturn(entity);
+
+    Method processResponse =
+        HttpClientApache.class.getDeclaredMethod("processResponse", ClassicHttpResponse.class);
+    processResponse.setAccessible(true);
+
+    HttpResponse result = (HttpResponse) processResponse.invoke(null, httpResponse);
+
+    assertNotNull(result.getContent());
+    try (Scanner s =
+        new Scanner(result.getContent(), StandardCharsets.UTF_8.name()).useDelimiter("\\A")) {
+      String decoded = s.hasNext() ? s.next() : "";
+      assertEquals(nonAscii, decoded, "Response body must round-trip through UTF-8 correctly");
+    }
   }
 }
