@@ -47,7 +47,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
   private static final Logger LOGGER = Logger.getLogger(HttpClientApache.class.getName());
 
-  private Map<String, String> headersToBeAdded;
+  private volatile Map<String, String> headersToBeAdded;
 
   private volatile CloseableHttpClient client;
 
