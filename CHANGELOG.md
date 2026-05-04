@@ -16,6 +16,13 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ---
 
+## v2.1 – unreleased
+
+### SDK
+- **[feature]** `SinchClient` exposes a `close()` method to shut down the underlying HTTP connection pool and release all associated resources deterministically. Idempotent: safe to call more than once.
+
+---
+
 ## v2.0 – 2026-03-31
 
 ### Major breaking changes with major release

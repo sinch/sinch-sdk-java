@@ -254,4 +254,17 @@ class SinchClientTest {
         result.endsWith(",my-wrapper/1.0"),
         "Auxiliary flag must be the last element after the comma");
   }
+
+  @Test
+  void closeBeforeAnyCallIsNoOp() {
+    SinchClient client = new SinchClient();
+    assertDoesNotThrow(client::close);
+  }
+
+  @Test
+  void doubleCloseIsIdempotent() {
+    SinchClient client = new SinchClient();
+    client.close();
+    assertDoesNotThrow(client::close);
+  }
 }

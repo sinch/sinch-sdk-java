@@ -400,8 +400,6 @@ public class SinchClient {
       synchronized (this) {
         local = httpClient;
         if (null == local || local.isClosed()) {
-          // TODO: by adding a setter, we could imagine having another HTTP client provided
-          // programmatically or use configuration file referencing another class by name
           local = new HttpClientApache();
 
           // set SDK User-Agent
@@ -442,6 +440,39 @@ public class SinchClient {
       values.add(auxiliaryFlag);
     }
     return String.join(",", values);
+  }
+
+  /**
+   * Releases the underlying HTTP client and its connection pool, and resets all lazily-initialized
+   * domain services.
+   *
+   * <p>After this call, in-flight requests may be affected by shutdown of the underlying HTTP
+   * client and are not guaranteed to complete normally. The next API call on any domain service
+   * will transparently re-initialize both the service and the HTTP client. Idempotent: safe to call
+   * more than once.
+   *
+   * <p>Any exception thrown by the underlying HTTP client during close is caught and logged at
+   * WARNING level.
+   *
+   * @since 2.1
+   */
+  public void close() {
+    synchronized (this) {
+      HttpClientApache local = httpClient;
+      httpClient = null;
+      numbers = null;
+      sms = null;
+      verification = null;
+      voice = null;
+      conversation = null;
+      if (local != null) {
+        try {
+          local.close();
+        } catch (Exception e) {
+          LOGGER.warning("Exception while closing HTTP client: " + e.getMessage());
+        }
+      }
+    }
   }
 
   static {
