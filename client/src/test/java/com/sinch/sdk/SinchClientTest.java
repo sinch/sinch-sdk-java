@@ -218,4 +218,40 @@ class SinchClientTest {
         client.getConfiguration().getVoiceContext().get().getVoiceApplicationManagementUrl(),
         "my foo url");
   }
+
+  @Test
+  void formatAuxiliaryFlagReturnsVendorWhenFlagIsEmpty() {
+    SinchClient client = new SinchClient();
+    // AUXILIARY_FLAG is "" in SDK — only vendor should be present, no comma separator
+    String result = client.formatAuxiliaryFlag("");
+    assertNotNull(result);
+    assertFalse(result.contains(","), "Should not contain a comma when auxiliaryFlag is empty");
+  }
+
+  @Test
+  void formatAuxiliaryFlagHandlesNullJavaVendor() {
+    String original = System.getProperty("java.vendor");
+    try {
+      System.clearProperty("java.vendor");
+      SinchClient client = new SinchClient();
+      String result = client.formatAuxiliaryFlag("");
+      assertNotNull(result);
+      assertFalse(result.contains("null"), "Null java.vendor must not render as 'null' string");
+    } finally {
+      if (null != original) {
+        System.setProperty("java.vendor", original);
+      }
+    }
+  }
+
+  @Test
+  void formatAuxiliaryFlagAppendsNonEmptyFlag() {
+    SinchClient client = new SinchClient();
+    String result = client.formatAuxiliaryFlag("my-wrapper/1.0");
+    assertNotNull(result);
+    assertTrue(result.contains(","), "A comma must separate vendor from the auxiliary flag");
+    assertTrue(
+        result.endsWith(",my-wrapper/1.0"),
+        "Auxiliary flag must be the last element after the comma");
+  }
 }
