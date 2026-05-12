@@ -33,7 +33,7 @@ public class GetEventDestinations {
 
     ApplicationsService applicationsService = client.voice().v1().applications();
 
-    LOGGER.info(String.format("Get even destinations for application key '%s'", applicationKey));
+    LOGGER.info(String.format("Get event destinations for application key '%s'", applicationKey));
 
     EventDestinations response = applicationsService.getEventDestinations(applicationKey);
 

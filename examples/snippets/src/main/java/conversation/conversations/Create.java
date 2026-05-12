@@ -52,7 +52,7 @@ public class Create {
 
     LOGGER.info(
         String.format(
-            "Create conversation for applicatoin with ID '%s'", conversationApplicationId));
+            "Create conversation for application with ID '%s'", conversationApplicationId));
 
     Conversation response = conversationsService.create(request);
 
