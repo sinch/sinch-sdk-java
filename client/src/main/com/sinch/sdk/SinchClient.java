@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -469,7 +470,7 @@ public class SinchClient {
         try {
           local.close();
         } catch (Exception e) {
-          LOGGER.warning("Exception while closing HTTP client: " + e.getMessage());
+          LOGGER.log(Level.WARNING, "Exception while closing HTTP client", e);
         }
       }
     }
