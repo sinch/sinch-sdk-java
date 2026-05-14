@@ -20,7 +20,7 @@ public class DeliveryStatus extends EnumDynamic<String, DeliveryStatus> {
   /** Message delivery failed. */
   public static final DeliveryStatus FAILED = new DeliveryStatus("FAILED");
 
-  /** The Conversation API app is switch to a different channel to deliver the message. */
+  /** The Conversation API app is switching to a different channel to deliver the message. */
   public static final DeliveryStatus SWITCHING_CHANNEL = new DeliveryStatus("SWITCHING_CHANNEL");
 
   private static final EnumSupportDynamic<String, DeliveryStatus> ENUM_SUPPORT =

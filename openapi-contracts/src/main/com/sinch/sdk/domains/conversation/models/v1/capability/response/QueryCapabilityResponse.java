@@ -14,8 +14,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.conversation.models.v1.Recipient;
 
 /**
- * An CapabilityResponse contains the identity of the recipient for which will be perform a
- * capability lookup.
+ * A CapabilityResponse contains the identity of the recipient for which a capability lookup will be
+ * performed.
  */
 @JsonDeserialize(builder = QueryCapabilityResponseImpl.Builder.class)
 public interface QueryCapabilityResponse {
