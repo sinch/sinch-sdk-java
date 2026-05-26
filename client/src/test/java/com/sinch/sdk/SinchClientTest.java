@@ -259,13 +259,13 @@ class SinchClientTest {
   }
 
   @Test
-  void closeBeforeAnyCallIsNoOp() {
+  void closeBeforeAnyCall() {
     SinchClient client = new SinchClient();
     assertDoesNotThrow(client::close);
   }
 
   @Test
-  void doubleCloseIsIdempotent() {
+  void doubleCloseBeforeAnyCall() {
     SinchClient client = new SinchClient();
     client.close();
     assertDoesNotThrow(client::close);

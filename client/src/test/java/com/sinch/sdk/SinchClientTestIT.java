@@ -52,6 +52,7 @@ class SinchClientTestIT extends BaseTest {
       // noop
     }
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
+    assertThat(recordedRequest).isNotNull();
     String header = recordedRequest.getHeader("User-Agent");
     assertThat(header).matches("^sinch-sdk/.* \\(Java/.*; Apache; .*\\)$");
   }
