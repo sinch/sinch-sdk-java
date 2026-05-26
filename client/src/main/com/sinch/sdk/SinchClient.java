@@ -19,8 +19,8 @@ import com.sinch.sdk.models.VoiceRegion;
 import com.sinch.sdk.models.adapters.DualToneMultiFrequencyMapper;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -430,11 +430,16 @@ public class SinchClient {
   }
 
   private String formatAuxiliaryFlag() {
+    return formatAuxiliaryFlag(SDK.AUXILIARY_FLAG);
+  }
 
-    Collection<String> values = Collections.singletonList(System.getProperty("java.vendor"));
-
-    if (!StringUtil.isEmpty(SDK.AUXILIARY_FLAG)) {
-      values.add(SDK.AUXILIARY_FLAG);
+  // Package-private to allow unit-testing with an arbitrary flag value
+  String formatAuxiliaryFlag(String auxiliaryFlag) {
+    Collection<String> values = new ArrayList<>();
+    String vendor = System.getProperty("java.vendor");
+    values.add(StringUtil.isEmpty(vendor) ? "" : vendor);
+    if (!StringUtil.isEmpty(auxiliaryFlag)) {
+      values.add(auxiliaryFlag);
     }
     return String.join(",", values);
   }

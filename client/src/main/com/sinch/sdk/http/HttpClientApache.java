@@ -47,7 +47,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
   private static final Logger LOGGER = Logger.getLogger(HttpClientApache.class.getName());
 
-  private Map<String, String> headersToBeAdded;
+  private volatile Map<String, String> headersToBeAdded;
 
   private volatile CloseableHttpClient client;
 
@@ -71,10 +71,15 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
     }
 
     HttpEntity entity = response.getEntity();
-    Scanner s = new Scanner(entity.getContent()).useDelimiter("\\A");
-    String content = (s.hasNext() ? s.next() : "");
-
-    return new HttpResponse(statusCode, message, headers, content.getBytes(StandardCharsets.UTF_8));
+    if (null == entity) {
+      return new HttpResponse(statusCode, message, headers, null);
+    }
+    try (Scanner s =
+        new Scanner(entity.getContent(), StandardCharsets.UTF_8.name()).useDelimiter("\\A")) {
+      String content = (s.hasNext() ? s.next() : "");
+      return new HttpResponse(
+          statusCode, message, headers, content.getBytes(StandardCharsets.UTF_8));
+    }
   }
 
   private static Map<String, List<String>> transformResponseHeaders(Header[] headers) {
