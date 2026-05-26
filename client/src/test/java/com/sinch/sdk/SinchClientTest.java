@@ -225,7 +225,10 @@ class SinchClientTest {
     // AUXILIARY_FLAG is "" in SDK — only vendor should be present, no comma separator
     String result = client.formatAuxiliaryFlag("");
     assertNotNull(result);
-    assertFalse(result.contains(","), "Should not contain a comma when auxiliaryFlag is empty");
+    assertEquals(
+        System.getProperty("java.vendor"),
+        result,
+        "When auxiliaryFlag is empty, the result should match java.vendor exactly");
   }
 
   @Test
