@@ -30,5 +30,6 @@ jobs:
           -H "Content-Type: application/json" \
           -H "Authorization: Bearer ${SYNC_TOKEN}" \
           -H "Accept: application/vnd.github.v3+json" \
+          -H "X-GitHub-Api-Version: 2026-03-10" \
           https://api.github.com/repos/sinch/${SDK_NAME}-internal/dispatches \
           -d '{"event_type": "public_push_event"}'
