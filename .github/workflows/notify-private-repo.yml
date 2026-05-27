@@ -20,6 +20,9 @@ jobs:
         with:
           client-id: ${{ vars.SINCH_INTERNAL_REPO_SYNC_APP_CLIENT_ID }}
           private-key: ${{ secrets.SINCH_INTERNAL_REPO_SYNC_APP_PRIVATE_KEY }}
+          # Explicitly request access to the internal repository:
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ env.SDK_NAME }}-internal
 
       # 2. Use that token to send the "ping" to the private repo
       - name: Send Repository Dispatch to Private Repo
