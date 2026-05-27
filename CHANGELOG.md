@@ -18,6 +18,9 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ## v2.1 – unreleased
 
+### Conversation
+- **[feature]** Support `Consents` API: `listIdentities` and `listAuditRecords` endpoints
+
 ### SDK
 - **[fix]** `HttpClientApache`: declare now `headersToBeAdded` as `volatile` to guarantee visibility across threads in concurrent usage
 - **[fix]** `HttpClientApache`: wrap response-body `Scanner` in a try-with-resources block to prevent resource leaks; gracefully handle empty (`null`) response entities

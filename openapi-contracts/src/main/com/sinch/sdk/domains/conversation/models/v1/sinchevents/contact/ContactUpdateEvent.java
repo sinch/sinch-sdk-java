@@ -13,7 +13,7 @@ package com.sinch.sdk.domains.conversation.models.v1.sinchevents.contact;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.Instant;
 
-/** This callback is sent when a new contact is updated. */
+/** This callback is sent when a contact is updated. */
 @JsonDeserialize(builder = ContactUpdateEventImpl.Builder.class)
 public interface ContactUpdateEvent
     extends com.sinch.sdk.domains.conversation.models.v1.sinchevents.ConversationSinchEvent {
