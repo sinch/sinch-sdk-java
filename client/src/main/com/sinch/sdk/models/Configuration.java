@@ -51,8 +51,6 @@ public class Configuration {
         + verificationContext
         + ", voiceContext="
         + voiceContext
-        + ", conversationRegion="
-        + conversationContext
         + ", conversationContext="
         + conversationContext
         + "}";
@@ -153,9 +151,9 @@ public class Configuration {
   }
 
   /**
-   * Get Voice domain related execution context
+   * Get Conversation domain related execution context
    *
-   * @return Current Voice context
+   * @return Current Conversation context
    * @since 1.0
    */
   public Optional<ConversationContext> getConversationContext() {
