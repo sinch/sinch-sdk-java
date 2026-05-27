@@ -28,7 +28,7 @@ jobs:
         run: |
           curl -X POST --fail-with-body \
           -H "Content-Type: application/json" \
-          -H "Authorization: token ${SYNC_TOKEN}" \
+          -H "Authorization: Bearer ${SYNC_TOKEN}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/sinch/${SDK_NAME}-internal/dispatches \
           -d '{"event_type": "public_push_event"}'
