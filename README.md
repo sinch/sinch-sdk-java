@@ -10,6 +10,8 @@ For more information on the SDK, refer to the dedicated [Java SDK documentation 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Getting started](#getting-started)
+  - [Client initialization](#client-initialization)
+  - [Client lifecycle](#client-lifecycle)
 - [Supported APIs](#supported-apis)
 - [Logging](#logging)
 - [Onboarding](#onboarding)
@@ -63,6 +65,24 @@ Configuration configuration = Configuration.builder()
 ...
 SinchClient client = new SinchClient(configuration);
 ```
+
+### Client lifecycle
+
+`SinchClient` exposes a `close()` method to shut down the underlying HTTP connection pool and release all associated resources.
+
+**Explicit close at shutdown:**
+
+```java
+// Create once at startup (e.g. as a Spring bean)
+SinchClient client = new SinchClient(configuration);
+
+// ... use throughout the application lifetime ...
+
+// Release resources at shutdown
+client.close();
+```
+
+Failing to close a `SinchClient` that has made at least one request will leave the HTTP connection pool open until the object is garbage-collected, which may delay JVM shutdown and exhaust file descriptors in long-running processes.
 
 ## Supported APIs
 

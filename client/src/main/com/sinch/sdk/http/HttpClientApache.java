@@ -104,6 +104,11 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
       HttpRequest httpRequest)
       throws ApiException {
 
+    CloseableHttpClient activeClient = this.client;
+    if (activeClient == null) {
+      throw new ApiException("HTTP client has been closed");
+    }
+
     try {
       String path =
           httpRequest
@@ -148,7 +153,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
       ClassicHttpRequest request = requestBuilder.build();
 
-      HttpResponse response = processRequest(client, request);
+      HttpResponse response = processRequest(activeClient, request);
       LOGGER.finest("connection response: " + response);
 
       // UNAUTHORIZED (HTTP 401) error code could imply refreshing the OAuth token
@@ -159,7 +164,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
           // refresh authorization
           addAuth(requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
           request = requestBuilder.build();
-          response = processRequest(client, request);
+          response = processRequest(activeClient, request);
           LOGGER.finest("connection response on retry: " + response);
         }
       }
@@ -364,10 +369,12 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
   @Override
   public void close() throws Exception {
     if (!isClosed()) {
-      try {
-        client.close();
-      } finally {
+      synchronized (this) {
+        CloseableHttpClient local = client;
         client = null;
+        if (local != null) {
+          local.close();
+        }
       }
     }
   }
