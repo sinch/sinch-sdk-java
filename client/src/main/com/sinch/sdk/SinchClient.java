@@ -2,6 +2,7 @@ package com.sinch.sdk;
 
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.ConversationService;
+import com.sinch.sdk.domains.number_lookup.api.v2.adapters.NumberLookupService;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
@@ -10,6 +11,7 @@ import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
+import com.sinch.sdk.models.NumberLookupContext;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
@@ -50,6 +52,8 @@ public class SinchClient {
   private static final String CONVERSATION_TEMPLATE_SERVER_KEY =
       "template-management-conversation-server";
 
+  private static final String NUMBER_LOOKUP_SERVER_KEY = "number-lookup-server";
+
   // sinch-sdk/{sdk_version} ({language}/{language_version}; {implementation_type};
   // {auxiliary_flag})
   private static final String SDK_USER_AGENT_HEADER = "User-Agent";
@@ -63,6 +67,7 @@ public class SinchClient {
   private volatile VerificationService verification;
   private volatile VoiceService voice;
   private volatile ConversationService conversation;
+  private volatile NumberLookupService numberLookup;
   private volatile HttpClientApache httpClient;
 
   /**
@@ -88,6 +93,7 @@ public class SinchClient {
     handleDefaultVerificationSettings(configurationGuard, props, builder);
     handleDefaultVoiceSettings(configurationGuard, props, builder);
     handleDefaultConversationSettings(configurationGuard, props, builder);
+    handleDefaultNumberLookupSettings(configurationGuard, props, builder);
 
     Configuration newConfiguration = builder.build();
     checkConfiguration(newConfiguration);
@@ -228,6 +234,23 @@ public class SinchClient {
     builder.setConversationContext(contextBuilder.build());
   }
 
+  private void handleDefaultNumberLookupSettings(
+      Configuration configuration, Properties props, Configuration.Builder builder) {
+
+    String url =
+        configuration
+            .getNumberLookupContext()
+            .map(NumberLookupContext::getNumberLookupUrl)
+            .orElse(null);
+
+    if (null == url && props.containsKey(NUMBER_LOOKUP_SERVER_KEY)) {
+      builder.setNumberLookupContext(
+          NumberLookupContext.builder()
+              .setNumberLookupUrl(props.getProperty(NUMBER_LOOKUP_SERVER_KEY))
+              .build());
+    }
+  }
+
   /**
    * Get current configuration
    *
@@ -333,6 +356,23 @@ public class SinchClient {
     return conversation;
   }
 
+  /**
+   * Get Number Lookup domain service
+   *
+   * @return Return instance onto Number Lookup API service
+   * @since 2.1
+   */
+  public NumberLookupService numberLookup() {
+    if (null == numberLookup) {
+      synchronized (this) {
+        if (null == numberLookup) {
+          numberLookup = numberLookupInit();
+        }
+      }
+    }
+    return numberLookup;
+  }
+
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
   }
@@ -380,6 +420,14 @@ public class SinchClient {
     return new com.sinch.sdk.domains.conversation.adapters.ConversationService(
         getConfiguration().getUnifiedCredentials().orElse(null),
         getConfiguration().getConversationContext().orElse(null),
+        getConfiguration().getOAuthServer(),
+        this::getHttpClient);
+  }
+
+  private NumberLookupService numberLookupInit() {
+    return new com.sinch.sdk.domains.number_lookup.api.v2.adapters.NumberLookupService(
+        getConfiguration().getUnifiedCredentials().orElse(null),
+        getConfiguration().getNumberLookupContext().orElse(null),
         getConfiguration().getOAuthServer(),
         this::getHttpClient);
   }
@@ -466,6 +514,7 @@ public class SinchClient {
       verification = null;
       voice = null;
       conversation = null;
+      numberLookup = null;
       if (local != null) {
         try {
           local.close();

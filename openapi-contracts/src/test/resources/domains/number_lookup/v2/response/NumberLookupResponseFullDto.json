@@ -1,0 +1,23 @@
+{
+  "line": {
+    "carrier": "T-Mobile USA",
+    "type": "Mobile",
+    "mobileCountryCode": "310",
+    "mobileNetworkCode": "260",
+    "ported": true,
+    "portingDate": "2024-08-20T10:15:30Z"
+  },
+  "simSwap": {
+    "swapped": true,
+    "swapPeriod": "SP24H"
+  },
+  "voIPDetection": {
+    "probability": "High"
+  },
+  "rnd": {
+    "disconnected": true
+  },
+  "countryCode": "US",
+  "traceId": "84c1fd4063c38d9f3900d06e56542d48",
+  "number": "+15557890123"
+}

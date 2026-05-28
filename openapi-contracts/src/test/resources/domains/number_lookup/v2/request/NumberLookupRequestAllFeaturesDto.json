@@ -1,0 +1,9 @@
+{
+  "number": "+15554567890",
+  "features": [
+    "LineType",
+    "SimSwap",
+    "VoIPDetection",
+    "RND"
+  ]
+}

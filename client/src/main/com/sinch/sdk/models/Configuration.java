@@ -15,6 +15,7 @@ public class Configuration {
   private final VerificationContext verificationContext;
   private final VoiceContext voiceContext;
   private final ConversationContext conversationContext;
+  private final NumberLookupContext numberLookupContext;
 
   private Configuration(
       UnifiedCredentials unifiedCredentials,
@@ -25,7 +26,8 @@ public class Configuration {
       SmsContext smsContext,
       VerificationContext verificationContext,
       VoiceContext voiceContext,
-      ConversationContext conversationContext) {
+      ConversationContext conversationContext,
+      NumberLookupContext numberLookupContext) {
     this.unifiedCredentials = unifiedCredentials;
     this.applicationCredentials = applicationCredentials;
     this.smsServicePlanCredentials = smsServicePlanCredentials;
@@ -35,6 +37,7 @@ public class Configuration {
     this.voiceContext = voiceContext;
     this.verificationContext = verificationContext;
     this.conversationContext = conversationContext;
+    this.numberLookupContext = numberLookupContext;
   }
 
   @Override
@@ -53,6 +56,8 @@ public class Configuration {
         + voiceContext
         + ", conversationContext="
         + conversationContext
+        + ", numberLookupContext="
+        + numberLookupContext
         + "}";
   }
 
@@ -161,6 +166,16 @@ public class Configuration {
   }
 
   /**
+   * Get Number Lookup domain related execution context
+   *
+   * @return Current Number Lookup context
+   * @since 2.1
+   */
+  public Optional<NumberLookupContext> getNumberLookupContext() {
+    return Optional.ofNullable(numberLookupContext);
+  }
+
+  /**
    * Getting Builder
    *
    * @return New Builder instance
@@ -197,6 +212,7 @@ public class Configuration {
     VerificationContext.Builder verificationContext;
     VoiceContext.Builder voiceContext;
     ConversationContext.Builder conversationContext;
+    NumberLookupContext.Builder numberLookupContext;
 
     protected Builder() {}
 
@@ -228,6 +244,8 @@ public class Configuration {
       this.voiceContext = configuration.getVoiceContext().map(VoiceContext::builder).orElse(null);
       this.conversationContext =
           configuration.getConversationContext().map(ConversationContext::builder).orElse(null);
+      this.numberLookupContext =
+          configuration.getNumberLookupContext().map(NumberLookupContext::builder).orElse(null);
     }
 
     /**
@@ -487,6 +505,33 @@ public class Configuration {
     }
 
     /**
+     * Set Number Lookup API URL
+     *
+     * @param numberLookupUrl Number Lookup API URL
+     * @return Current builder
+     * @since 2.1
+     */
+    public Builder setNumberLookupUrl(String numberLookupUrl) {
+      if (null == this.numberLookupContext) {
+        this.numberLookupContext = NumberLookupContext.builder();
+      }
+      this.numberLookupContext.setNumberLookupUrl(numberLookupUrl);
+      return this;
+    }
+
+    /**
+     * Set Number Lookup related context
+     *
+     * @param context {@link #getNumberLookupContext() getter}
+     * @return Current builder
+     * @since 2.1
+     */
+    public Builder setNumberLookupContext(NumberLookupContext context) {
+      this.numberLookupContext = null != context ? NumberLookupContext.builder(context) : null;
+      return this;
+    }
+
+    /**
      * Build a Configuration instance from builder current state
      *
      * @return Configuration instance build from current builder state
@@ -503,7 +548,8 @@ public class Configuration {
           null != smsContext ? smsContext.build() : null,
           null != verificationContext ? verificationContext.build() : null,
           null != voiceContext ? voiceContext.build() : null,
-          null != conversationContext ? conversationContext.build() : null);
+          null != conversationContext ? conversationContext.build() : null,
+          null != numberLookupContext ? numberLookupContext.build() : null);
     }
   }
 }

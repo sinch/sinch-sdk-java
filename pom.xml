@@ -262,6 +262,9 @@
                                 <resource>
                                     <directory>openapi-contracts/src/test/resources</directory>
                                 </resource>
+                                <resource>
+                                    <directory>sinch-sdk-mockserver</directory>
+                                </resource>
                             </resources>
                         </configuration>
                     </execution>
@@ -297,6 +300,7 @@
                                 <include>com.sinch.sdk.e2e.domains.sms.v1.SmsIT</include>
                                 <include>com.sinch.sdk.e2e.domains.voice.v1.VoiceIT</include>
                                 <include>com.sinch.sdk.e2e.domains.verification.v1.VerificationIT</include>
+                                <include>com.sinch.sdk.e2e.domains.number_lookup.v2.NumberLookupIT</include>
                             </includes>
                         </configuration>
 
