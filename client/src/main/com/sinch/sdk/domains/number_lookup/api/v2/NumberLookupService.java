@@ -9,5 +9,5 @@ public interface NumberLookupService {
    * @return service instance for project
    * @since 2.1
    */
-  NumberLookupV2Service numberLookup();
+  NumberLookupV2Service lookup();
 }

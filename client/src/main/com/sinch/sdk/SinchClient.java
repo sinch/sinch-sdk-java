@@ -67,7 +67,7 @@ public class SinchClient {
   private volatile VerificationService verification;
   private volatile VoiceService voice;
   private volatile ConversationService conversation;
-  private volatile NumberLookupService numberLookup;
+  private volatile NumberLookupService lookup;
   private volatile HttpClientApache httpClient;
 
   /**
@@ -362,15 +362,15 @@ public class SinchClient {
    * @return Return instance onto Number Lookup API service
    * @since 2.1
    */
-  public NumberLookupService numberLookup() {
-    if (null == numberLookup) {
+  public NumberLookupService lookup() {
+    if (null == lookup) {
       synchronized (this) {
-        if (null == numberLookup) {
-          numberLookup = numberLookupInit();
+        if (null == lookup) {
+          lookup = lookupInit();
         }
       }
     }
-    return numberLookup;
+    return lookup;
   }
 
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
@@ -424,7 +424,7 @@ public class SinchClient {
         this::getHttpClient);
   }
 
-  private NumberLookupService numberLookupInit() {
+  private NumberLookupService lookupInit() {
     return new com.sinch.sdk.domains.number_lookup.api.v2.adapters.NumberLookupService(
         getConfiguration().getUnifiedCredentials().orElse(null),
         getConfiguration().getNumberLookupContext().orElse(null),
@@ -514,7 +514,7 @@ public class SinchClient {
       verification = null;
       voice = null;
       conversation = null;
-      numberLookup = null;
+      lookup = null;
       if (local != null) {
         try {
           local.close();

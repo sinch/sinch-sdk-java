@@ -24,5 +24,5 @@ public interface NumberLookupV2Service {
    * @return NumberLookupResponse
    * @throws ApiException if fails to make API call
    */
-  NumberLookupResponse numberLookup(NumberLookupRequest numberLookupRequest) throws ApiException;
+  NumberLookupResponse lookup(NumberLookupRequest numberLookupRequest) throws ApiException;
 }

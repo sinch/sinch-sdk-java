@@ -58,10 +58,9 @@ public class NumberLookupV2ServiceImpl
   }
 
   @Override
-  public NumberLookupResponse numberLookup(NumberLookupRequest numberLookupRequest)
-      throws ApiException {
+  public NumberLookupResponse lookup(NumberLookupRequest numberLookupRequest) throws ApiException {
 
-    LOGGER.finest("[numberLookup]" + " " + "numberLookupRequest: " + numberLookupRequest);
+    LOGGER.finest("[lookup]" + " " + "numberLookupRequest: " + numberLookupRequest);
 
     HttpRequest httpRequest = numberLookupRequestBuilder(numberLookupRequest);
     HttpResponse response =
@@ -85,7 +84,7 @@ public class NumberLookupV2ServiceImpl
     // verify the required parameter 'this.projectId' is set
     if (this.projectId == null) {
       throw new ApiException(
-          400, "Missing the required parameter 'this.projectId' when calling numberLookup");
+          400, "Missing the required parameter 'this.projectId' when calling lookup");
     }
 
     String localVarPath =

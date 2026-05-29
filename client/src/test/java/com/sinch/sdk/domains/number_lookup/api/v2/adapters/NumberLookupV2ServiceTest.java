@@ -67,7 +67,7 @@ public class NumberLookupV2ServiceTest extends BaseTest {
   }
 
   @Test
-  void numberLookupWithRequiredParameters() throws ApiException {
+  void lookupWithRequiredParameters() throws ApiException {
 
     HttpRequest httpRequest =
         new HttpRequest(
@@ -90,14 +90,14 @@ public class NumberLookupV2ServiceTest extends BaseTest {
         .thenReturn(httpResponse);
 
     NumberLookupResponse response =
-        service.numberLookup(NumberLookupRequestDtoTest.numberLookupRequestMinimalDto);
+        service.lookup(NumberLookupRequestDtoTest.numberLookupRequestMinimalDto);
 
     TestHelpers.recursiveEquals(
         response, NumberLookupResponseDtoTest.numberLookupResponseMinimalDto);
   }
 
   @Test
-  void numberLookupWithFeatures() throws ApiException {
+  void lookupWithFeatures() throws ApiException {
 
     HttpRequest httpRequest =
         new HttpRequest(
@@ -120,13 +120,13 @@ public class NumberLookupV2ServiceTest extends BaseTest {
         .thenReturn(httpResponse);
 
     NumberLookupResponse response =
-        service.numberLookup(NumberLookupRequestDtoTest.numberLookupRequestWithFeaturesDto);
+        service.lookup(NumberLookupRequestDtoTest.numberLookupRequestWithFeaturesDto);
 
     TestHelpers.recursiveEquals(response, NumberLookupResponseDtoTest.numberLookupResponseFullDto);
   }
 
   @Test
-  void numberLookupWithRndOptions() throws ApiException {
+  void lookupWithRndOptions() throws ApiException {
 
     HttpRequest httpRequest =
         new HttpRequest(
@@ -149,13 +149,13 @@ public class NumberLookupV2ServiceTest extends BaseTest {
         .thenReturn(httpResponse);
 
     NumberLookupResponse response =
-        service.numberLookup(NumberLookupRequestDtoTest.numberLookupRequestWithRndOptionsDto);
+        service.lookup(NumberLookupRequestDtoTest.numberLookupRequestWithRndOptionsDto);
 
     TestHelpers.recursiveEquals(response, NumberLookupResponseDtoTest.numberLookupResponseFullDto);
   }
 
   @Test
-  void numberLookupMissingProjectIdThrows() {
+  void lookupMissingProjectIdThrows() {
 
     NumberLookupV2Service serviceWithoutProjectId =
         new NumberLookupV2ServiceImpl(
@@ -165,7 +165,7 @@ public class NumberLookupV2ServiceTest extends BaseTest {
         Assertions.assertThrows(
             ApiException.class,
             () ->
-                serviceWithoutProjectId.numberLookup(
+                serviceWithoutProjectId.lookup(
                     NumberLookupRequestDtoTest.numberLookupRequestMinimalDto));
 
     Assertions.assertEquals(400, thrown.getCode());

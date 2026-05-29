@@ -31,7 +31,7 @@ public class NumberLookupService
   private volatile String uriUUID;
   private volatile Map<String, AuthManager> authManagers;
 
-  private volatile NumberLookupV2Service numberLookup;
+  private volatile NumberLookupV2Service lookup;
 
   public NumberLookupService(
       UnifiedCredentials credentials,
@@ -45,12 +45,12 @@ public class NumberLookupService
   }
 
   @Override
-  public NumberLookupV2Service numberLookup() {
-    if (null == this.numberLookup) {
+  public NumberLookupV2Service lookup() {
+    if (null == this.lookup) {
       synchronized (this) {
-        if (null == this.numberLookup) {
+        if (null == this.lookup) {
           instanceLazyInit();
-          this.numberLookup =
+          this.lookup =
               new NumberLookupV2ServiceImpl(
                   httpClientSupplier.get(),
                   context.getNumberLookupServer(),
@@ -60,7 +60,7 @@ public class NumberLookupService
         }
       }
     }
-    return this.numberLookup;
+    return this.lookup;
   }
 
   private void instanceLazyInit() {

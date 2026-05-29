@@ -28,14 +28,14 @@ public class LookupsSteps {
 
   @Given("the Number Lookup service is available")
   public void serviceAvailable() {
-    service = Config.getSinchClient().numberLookup().numberLookup();
+    service = Config.getSinchClient().lookup().lookup();
     Assertions.assertNotNull(service, "Number Lookup service is not available");
   }
 
   @When("I send a request to lookup for a phone number with no additional features")
   public void lookupNoFeatures() {
     NumberLookupRequest request = NumberLookupRequest.builder().setNumber("+12016666666").build();
-    lookupNoFeaturesResponse = service.numberLookup(request);
+    lookupNoFeaturesResponse = service.lookup(request);
   }
 
   @Then("the response contains the details of the phone number lookup with line details only")
@@ -74,7 +74,7 @@ public class LookupsSteps {
                     .setContactDate(Instant.parse("2025-09-09T00:00:00Z"))
                     .build())
             .build();
-    lookupAllFeaturesResponse = service.numberLookup(request);
+    lookupAllFeaturesResponse = service.lookup(request);
   }
 
   @Then("the response contains the details of the phone number lookup with all the features")
