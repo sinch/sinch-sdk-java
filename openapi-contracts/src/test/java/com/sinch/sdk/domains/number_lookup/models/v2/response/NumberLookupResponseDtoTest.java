@@ -21,7 +21,7 @@ public class NumberLookupResponseDtoTest extends BaseTest {
   public static NumberLookupResponse numberLookupResponseFullDto =
       NumberLookupResponse.builder()
           .setLine(
-              LineResponse.builder()
+              Line.builder()
                   .setCarrier("T-Mobile USA")
                   .setType(LineType.MOBILE)
                   .setMobileCountryCode("310")
@@ -30,13 +30,13 @@ public class NumberLookupResponseDtoTest extends BaseTest {
                   .setPortingDate(Instant.parse("2024-08-20T10:15:30Z"))
                   .build())
           .setSimSwap(
-              SimSwapResponse.builder()
+              SimSwap.builder()
                   .setSwapped(true)
                   .setSwapPeriod(SwapPeriodType.SP24_H)
                   .build())
           .setVoIPDetection(
-              VoIPDetectionResponse.builder().setProbability(VoIPProbabilityType.HIGH).build())
-          .setRnd(RndResponse.builder().setDisconnected(true).build())
+              VoipDetection.builder().setProbability(VoIPProbabilityType.HIGH).build())
+          .setRnd(Rnd.builder().setDisconnected(true).build())
           .setCountryCode("US")
           .setTraceId("84c1fd4063c38d9f3900d06e56542d48")
           .setNumber("+15557890123")

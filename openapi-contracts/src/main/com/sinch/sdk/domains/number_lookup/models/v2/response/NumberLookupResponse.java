@@ -21,28 +21,28 @@ public interface NumberLookupResponse {
    *
    * @return line
    */
-  LineResponse getLine();
+  Line getLine();
 
   /**
    * An object containing information about the SimSwap verification performed on the number.
    *
    * @return simSwap
    */
-  SimSwapResponse getSimSwap();
+  SimSwap getSimSwap();
 
   /**
    * An object containing information about the VoIP detection performed on the number.
    *
    * @return voIPDetection
    */
-  VoIPDetectionResponse getVoIPDetection();
+  VoipDetection getVoIPDetection();
 
   /**
    * An object containing information whether number is disconnected.
    *
    * @return rnd
    */
-  RndResponse getRnd();
+  Rnd getRnd();
 
   /**
    * ISO 3166-1 alpha-2 two-letter country identifier
@@ -84,7 +84,7 @@ public interface NumberLookupResponse {
      * @return Current builder
      * @see #getLine
      */
-    Builder setLine(LineResponse line);
+    Builder setLine(Line line);
 
     /**
      * see getter
@@ -93,7 +93,7 @@ public interface NumberLookupResponse {
      * @return Current builder
      * @see #getSimSwap
      */
-    Builder setSimSwap(SimSwapResponse simSwap);
+    Builder setSimSwap(SimSwap simSwap);
 
     /**
      * see getter
@@ -102,7 +102,7 @@ public interface NumberLookupResponse {
      * @return Current builder
      * @see #getVoIPDetection
      */
-    Builder setVoIPDetection(VoIPDetectionResponse voIPDetection);
+    Builder setVoIPDetection(VoipDetection voIPDetection);
 
     /**
      * see getter
@@ -111,7 +111,7 @@ public interface NumberLookupResponse {
      * @return Current builder
      * @see #getRnd
      */
-    Builder setRnd(RndResponse rnd);
+    Builder setRnd(Rnd rnd);
 
     /**
      * see getter

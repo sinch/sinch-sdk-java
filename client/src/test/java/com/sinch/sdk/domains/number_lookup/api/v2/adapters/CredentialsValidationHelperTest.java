@@ -11,7 +11,7 @@ import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-class CredentialsValidationHelper {
+class CredentialsValidationHelperTest {
 
   static ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
 

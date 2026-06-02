@@ -6,17 +6,18 @@ import com.sinch.sdk.domains.number_lookup.models.v2.errors.LookupError;
 import com.sinch.sdk.domains.number_lookup.models.v2.request.LookupFeatureType;
 import com.sinch.sdk.domains.number_lookup.models.v2.request.NumberLookupRequest;
 import com.sinch.sdk.domains.number_lookup.models.v2.request.RndFeatureOptions;
-import com.sinch.sdk.domains.number_lookup.models.v2.response.LineResponse;
+import com.sinch.sdk.domains.number_lookup.models.v2.response.Line;
 import com.sinch.sdk.domains.number_lookup.models.v2.response.LineType;
 import com.sinch.sdk.domains.number_lookup.models.v2.response.NumberLookupResponse;
-import com.sinch.sdk.domains.number_lookup.models.v2.response.RndResponse;
-import com.sinch.sdk.domains.number_lookup.models.v2.response.SimSwapResponse;
-import com.sinch.sdk.domains.number_lookup.models.v2.response.VoIPDetectionResponse;
+import com.sinch.sdk.domains.number_lookup.models.v2.response.Rnd;
+import com.sinch.sdk.domains.number_lookup.models.v2.response.SimSwap;
+import com.sinch.sdk.domains.number_lookup.models.v2.response.VoipDetection;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 
@@ -47,7 +48,7 @@ public class LookupsSteps {
             .setCountryCode("US")
             .setTraceId("84c1fd4063c38d9f3900d06e56542d48")
             .setLine(
-                LineResponse.builder()
+                Line.builder()
                     .setCarrier("T-Mobile USA")
                     .setType(LineType.MOBILE)
                     .setMobileCountryCode("310")
@@ -71,7 +72,7 @@ public class LookupsSteps {
                     LookupFeatureType.VO_IP_DETECTION))
             .setRndFeatureOptions(
                 RndFeatureOptions.builder()
-                    .setContactDate(Instant.parse("2025-09-09T00:00:00Z"))
+                    .setContactDate(LocalDate.parse("2025-09-09"))
                     .build())
             .build();
     lookupAllFeaturesResponse = service.lookup(request);
@@ -107,7 +108,7 @@ public class LookupsSteps {
             .setCountryCode("US")
             .setTraceId("5c817a6b7351d80a6b1d8007e5c145b8")
             .setLine(
-                LineResponse.builder()
+                Line.builder()
                     .setCarrier("AT&T")
                     .setType(LineType.MOBILE)
                     .setMobileCountryCode("310")
@@ -115,9 +116,9 @@ public class LookupsSteps {
                     .setPorted(true)
                     .setPortingDate(Instant.parse("2010-08-07T23:45:49Z"))
                     .build())
-            .setSimSwap(SimSwapResponse.builder().setError(simSwapError).build())
-            .setVoIPDetection(VoIPDetectionResponse.builder().setError(voIPDetectionError).build())
-            .setRnd(RndResponse.builder().setError(rndError).build())
+            .setSimSwap(SimSwap.builder().setError(simSwapError).build())
+            .setVoIPDetection(VoipDetection.builder().setError(voIPDetectionError).build())
+            .setRnd(Rnd.builder().setError(rndError).build())
             .build();
 
     TestHelpers.recursiveEquals(lookupAllFeaturesResponse, expected);

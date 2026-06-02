@@ -13,23 +13,16 @@ package com.sinch.sdk.domains.number_lookup.models.v2.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.number_lookup.models.v2.errors.LookupError;
 
-/** SimSwapResponse */
-@JsonDeserialize(builder = SimSwapResponseImpl.Builder.class)
-public interface SimSwapResponse {
+/** Rnd */
+@JsonDeserialize(builder = RndImpl.Builder.class)
+public interface Rnd {
 
   /**
-   * Indicates whether SIM was changed.
+   * Provides information whether the number was disconnected after provided last contact date.
    *
-   * @return swapped
+   * @return disconnected
    */
-  Boolean getSwapped();
-
-  /**
-   * Threshold for sim swap check.
-   *
-   * @return swapPeriod
-   */
-  SwapPeriodType getSwapPeriod();
+  Boolean getDisconnected();
 
   /**
    * Get error
@@ -44,7 +37,7 @@ public interface SimSwapResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new SimSwapResponseImpl.Builder();
+    return new RndImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -53,20 +46,11 @@ public interface SimSwapResponse {
     /**
      * see getter
      *
-     * @param swapped see getter
+     * @param disconnected see getter
      * @return Current builder
-     * @see #getSwapped
+     * @see #getDisconnected
      */
-    Builder setSwapped(Boolean swapped);
-
-    /**
-     * see getter
-     *
-     * @param swapPeriod see getter
-     * @return Current builder
-     * @see #getSwapPeriod
-     */
-    Builder setSwapPeriod(SwapPeriodType swapPeriod);
+    Builder setDisconnected(Boolean disconnected);
 
     /**
      * see getter
@@ -82,6 +66,6 @@ public interface SimSwapResponse {
      *
      * @return The instance build with current builder values
      */
-    SimSwapResponse build();
+    Rnd build();
   }
 }

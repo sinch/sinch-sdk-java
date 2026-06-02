@@ -25,19 +25,19 @@ public class NumberLookupResponseImpl implements NumberLookupResponse {
 
   public static final String JSON_PROPERTY_LINE = "line";
 
-  private OptionalValue<LineResponse> line;
+  private OptionalValue<Line> line;
 
   public static final String JSON_PROPERTY_SIM_SWAP = "simSwap";
 
-  private OptionalValue<SimSwapResponse> simSwap;
+  private OptionalValue<SimSwap> simSwap;
 
   public static final String JSON_PROPERTY_VO_I_P_DETECTION = "voIPDetection";
 
-  private OptionalValue<VoIPDetectionResponse> voIPDetection;
+  private OptionalValue<VoipDetection> voIPDetection;
 
   public static final String JSON_PROPERTY_RND = "rnd";
 
-  private OptionalValue<RndResponse> rnd;
+  private OptionalValue<Rnd> rnd;
 
   public static final String JSON_PROPERTY_COUNTRY_CODE = "countryCode";
 
@@ -54,10 +54,10 @@ public class NumberLookupResponseImpl implements NumberLookupResponse {
   public NumberLookupResponseImpl() {}
 
   protected NumberLookupResponseImpl(
-      OptionalValue<LineResponse> line,
-      OptionalValue<SimSwapResponse> simSwap,
-      OptionalValue<VoIPDetectionResponse> voIPDetection,
-      OptionalValue<RndResponse> rnd,
+      OptionalValue<Line> line,
+      OptionalValue<SimSwap> simSwap,
+      OptionalValue<VoipDetection> voIPDetection,
+      OptionalValue<Rnd> rnd,
       OptionalValue<String> countryCode,
       OptionalValue<String> traceId,
       OptionalValue<String> number) {
@@ -71,46 +71,46 @@ public class NumberLookupResponseImpl implements NumberLookupResponse {
   }
 
   @JsonIgnore
-  public LineResponse getLine() {
+  public Line getLine() {
     return line.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_LINE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<LineResponse> line() {
+  public OptionalValue<Line> line() {
     return line;
   }
 
   @JsonIgnore
-  public SimSwapResponse getSimSwap() {
+  public SimSwap getSimSwap() {
     return simSwap.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SIM_SWAP)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<SimSwapResponse> simSwap() {
+  public OptionalValue<SimSwap> simSwap() {
     return simSwap;
   }
 
   @JsonIgnore
-  public VoIPDetectionResponse getVoIPDetection() {
+  public VoipDetection getVoIPDetection() {
     return voIPDetection.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_VO_I_P_DETECTION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<VoIPDetectionResponse> voIPDetection() {
+  public OptionalValue<VoipDetection> voIPDetection() {
     return voIPDetection;
   }
 
   @JsonIgnore
-  public RndResponse getRnd() {
+  public Rnd getRnd() {
     return rnd.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_RND)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<RndResponse> rnd() {
+  public OptionalValue<Rnd> rnd() {
     return rnd;
   }
 
@@ -198,34 +198,34 @@ public class NumberLookupResponseImpl implements NumberLookupResponse {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements NumberLookupResponse.Builder {
-    OptionalValue<LineResponse> line = OptionalValue.empty();
-    OptionalValue<SimSwapResponse> simSwap = OptionalValue.empty();
-    OptionalValue<VoIPDetectionResponse> voIPDetection = OptionalValue.empty();
-    OptionalValue<RndResponse> rnd = OptionalValue.empty();
+    OptionalValue<Line> line = OptionalValue.empty();
+    OptionalValue<SimSwap> simSwap = OptionalValue.empty();
+    OptionalValue<VoipDetection> voIPDetection = OptionalValue.empty();
+    OptionalValue<Rnd> rnd = OptionalValue.empty();
     OptionalValue<String> countryCode = OptionalValue.empty();
     OptionalValue<String> traceId = OptionalValue.empty();
     OptionalValue<String> number = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_LINE)
-    public Builder setLine(LineResponse line) {
+    public Builder setLine(Line line) {
       this.line = OptionalValue.of(line);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_SIM_SWAP)
-    public Builder setSimSwap(SimSwapResponse simSwap) {
+    public Builder setSimSwap(SimSwap simSwap) {
       this.simSwap = OptionalValue.of(simSwap);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_VO_I_P_DETECTION)
-    public Builder setVoIPDetection(VoIPDetectionResponse voIPDetection) {
+    public Builder setVoIPDetection(VoipDetection voIPDetection) {
       this.voIPDetection = OptionalValue.of(voIPDetection);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_RND)
-    public Builder setRnd(RndResponse rnd) {
+    public Builder setRnd(Rnd rnd) {
       this.rnd = OptionalValue.of(rnd);
       return this;
     }

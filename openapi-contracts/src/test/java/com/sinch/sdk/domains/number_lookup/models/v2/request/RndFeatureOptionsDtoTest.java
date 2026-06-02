@@ -5,7 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
-import java.time.Instant;
+import java.time.LocalDate;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -14,7 +14,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 public class RndFeatureOptionsDtoTest extends BaseTest {
 
   public static RndFeatureOptions rndFeatureOptionsDto =
-      RndFeatureOptions.builder().setContactDate(Instant.parse("2025-01-15T00:00:00Z")).build();
+      RndFeatureOptions.builder().setContactDate(LocalDate.parse("2025-01-15")).build();
 
   @GivenTextResource("/domains/number_lookup/v2/request/RndFeatureOptionsDto.json")
   String jsonRndFeatureOptionsDto;

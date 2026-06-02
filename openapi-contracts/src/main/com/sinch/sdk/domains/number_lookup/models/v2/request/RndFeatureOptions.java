@@ -11,7 +11,7 @@
 package com.sinch.sdk.domains.number_lookup.models.v2.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.time.Instant;
+import java.time.LocalDate;
 
 /** RndFeatureOptions */
 @JsonDeserialize(builder = RndFeatureOptionsImpl.Builder.class)
@@ -22,7 +22,7 @@ public interface RndFeatureOptions {
    *
    * @return contactDate
    */
-  Instant getContactDate();
+  LocalDate getContactDate();
 
   /**
    * Getting builder
@@ -43,7 +43,7 @@ public interface RndFeatureOptions {
      * @return Current builder
      * @see #getContactDate
      */
-    Builder setContactDate(Instant contactDate);
+    Builder setContactDate(LocalDate contactDate);
 
     /**
      * Create instance

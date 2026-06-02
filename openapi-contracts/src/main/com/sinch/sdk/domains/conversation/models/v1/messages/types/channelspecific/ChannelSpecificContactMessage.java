@@ -54,7 +54,7 @@ public interface ChannelSpecificContactMessage
   MessageTypeEnum getMessageType();
 
   /**
-   * Get message
+   * The message content.
    *
    * @return message
    */

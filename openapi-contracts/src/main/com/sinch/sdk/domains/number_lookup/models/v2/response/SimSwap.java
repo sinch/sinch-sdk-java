@@ -13,16 +13,23 @@ package com.sinch.sdk.domains.number_lookup.models.v2.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.number_lookup.models.v2.errors.LookupError;
 
-/** VoIPDetectionResponse */
-@JsonDeserialize(builder = VoIPDetectionResponseImpl.Builder.class)
-public interface VoIPDetectionResponse {
+/** SimSwap */
+@JsonDeserialize(builder = SimSwapImpl.Builder.class)
+public interface SimSwap {
 
   /**
-   * Probability of number being VoIP based on the AI analysis.
+   * Indicates whether SIM was changed.
    *
-   * @return probability
+   * @return swapped
    */
-  VoIPProbabilityType getProbability();
+  Boolean getSwapped();
+
+  /**
+   * Threshold for sim swap check.
+   *
+   * @return swapPeriod
+   */
+  SwapPeriodType getSwapPeriod();
 
   /**
    * Get error
@@ -37,7 +44,7 @@ public interface VoIPDetectionResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VoIPDetectionResponseImpl.Builder();
+    return new SimSwapImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -46,11 +53,20 @@ public interface VoIPDetectionResponse {
     /**
      * see getter
      *
-     * @param probability see getter
+     * @param swapped see getter
      * @return Current builder
-     * @see #getProbability
+     * @see #getSwapped
      */
-    Builder setProbability(VoIPProbabilityType probability);
+    Builder setSwapped(Boolean swapped);
+
+    /**
+     * see getter
+     *
+     * @param swapPeriod see getter
+     * @return Current builder
+     * @see #getSwapPeriod
+     */
+    Builder setSwapPeriod(SwapPeriodType swapPeriod);
 
     /**
      * see getter
@@ -66,6 +82,6 @@ public interface VoIPDetectionResponse {
      *
      * @return The instance build with current builder values
      */
-    VoIPDetectionResponse build();
+    SimSwap build();
   }
 }

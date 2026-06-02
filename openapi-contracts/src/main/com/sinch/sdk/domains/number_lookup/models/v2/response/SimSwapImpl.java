@@ -11,13 +11,13 @@ import com.sinch.sdk.domains.number_lookup.models.v2.errors.LookupError;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  SimSwapResponseImpl.JSON_PROPERTY_SWAPPED,
-  SimSwapResponseImpl.JSON_PROPERTY_SWAP_PERIOD,
-  SimSwapResponseImpl.JSON_PROPERTY_ERROR
+  SimSwapImpl.JSON_PROPERTY_SWAPPED,
+  SimSwapImpl.JSON_PROPERTY_SWAP_PERIOD,
+  SimSwapImpl.JSON_PROPERTY_ERROR
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class SimSwapResponseImpl implements SimSwapResponse {
+public class SimSwapImpl implements SimSwap {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_SWAPPED = "swapped";
@@ -32,9 +32,9 @@ public class SimSwapResponseImpl implements SimSwapResponse {
 
   private OptionalValue<LookupError> error;
 
-  public SimSwapResponseImpl() {}
+  public SimSwapImpl() {}
 
-  protected SimSwapResponseImpl(
+  protected SimSwapImpl(
       OptionalValue<Boolean> swapped,
       OptionalValue<SwapPeriodType> swapPeriod,
       OptionalValue<LookupError> error) {
@@ -85,7 +85,7 @@ public class SimSwapResponseImpl implements SimSwapResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SimSwapResponseImpl simSwapResponse = (SimSwapResponseImpl) o;
+    SimSwapImpl simSwapResponse = (SimSwapImpl) o;
     return Objects.equals(this.swapped, simSwapResponse.swapped)
         && Objects.equals(this.swapPeriod, simSwapResponse.swapPeriod)
         && Objects.equals(this.error, simSwapResponse.error);
@@ -99,7 +99,7 @@ public class SimSwapResponseImpl implements SimSwapResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SimSwapResponseImpl {\n");
+    sb.append("class SimSwapImpl {\n");
     sb.append("    swapped: ").append(toIndentedString(swapped)).append("\n");
     sb.append("    swapPeriod: ").append(toIndentedString(swapPeriod)).append("\n");
     sb.append("    error: ").append(toIndentedString(error)).append("\n");
@@ -118,7 +118,7 @@ public class SimSwapResponseImpl implements SimSwapResponse {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements SimSwapResponse.Builder {
+  static class Builder implements SimSwap.Builder {
     OptionalValue<Boolean> swapped = OptionalValue.empty();
     OptionalValue<SwapPeriodType> swapPeriod = OptionalValue.empty();
     OptionalValue<LookupError> error = OptionalValue.empty();
@@ -141,8 +141,8 @@ public class SimSwapResponseImpl implements SimSwapResponse {
       return this;
     }
 
-    public SimSwapResponse build() {
-      return new SimSwapResponseImpl(swapped, swapPeriod, error);
+    public SimSwap build() {
+      return new SimSwapImpl(swapped, swapPeriod, error);
     }
   }
 }

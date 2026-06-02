@@ -13,8 +13,8 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class LineResponseDtoTest extends BaseTest {
 
-  public static LineResponse lineResponseDto =
-      LineResponse.builder()
+  public static Line lineResponseDto =
+      Line.builder()
           .setCarrier("T-Mobile USA")
           .setType(LineType.MOBILE)
           .setMobileCountryCode("310")
@@ -23,7 +23,7 @@ public class LineResponseDtoTest extends BaseTest {
           .setPortingDate(Instant.parse("2024-06-15T14:30:00Z"))
           .build();
 
-  public static LineResponse lineResponseEmptyDto = LineResponse.builder().build();
+  public static Line lineResponseEmptyDto = Line.builder().build();
 
   @GivenTextResource("/domains/number_lookup/v2/response/LineResponseDto.json")
   String jsonLineResponseDto;
@@ -40,15 +40,14 @@ public class LineResponseDtoTest extends BaseTest {
 
   @Test
   void deserializeDto() throws JsonProcessingException {
-    LineResponse deserialized = objectMapper.readValue(jsonLineResponseDto, LineResponse.class);
+    Line deserialized = objectMapper.readValue(jsonLineResponseDto, Line.class);
 
     TestHelpers.recursiveEquals(deserialized, lineResponseDto);
   }
 
   @Test
   void deserializeEmptyDto() throws JsonProcessingException {
-    LineResponse deserialized =
-        objectMapper.readValue(jsonLineResponseEmptyDto, LineResponse.class);
+    Line deserialized = objectMapper.readValue(jsonLineResponseEmptyDto, Line.class);
 
     TestHelpers.recursiveEquals(deserialized, lineResponseEmptyDto);
   }

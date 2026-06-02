@@ -13,16 +13,16 @@ package com.sinch.sdk.domains.number_lookup.models.v2.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.number_lookup.models.v2.errors.LookupError;
 
-/** RndResponse */
-@JsonDeserialize(builder = RndResponseImpl.Builder.class)
-public interface RndResponse {
+/** VoipDetection */
+@JsonDeserialize(builder = VoipDetectionImpl.Builder.class)
+public interface VoipDetection {
 
   /**
-   * Provides information whether the number was disconnected after provided last contact date.
+   * Probability of number being VoIP based on the AI analysis.
    *
-   * @return disconnected
+   * @return probability
    */
-  Boolean getDisconnected();
+  VoIPProbabilityType getProbability();
 
   /**
    * Get error
@@ -37,7 +37,7 @@ public interface RndResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new RndResponseImpl.Builder();
+    return new VoipDetectionImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -46,11 +46,11 @@ public interface RndResponse {
     /**
      * see getter
      *
-     * @param disconnected see getter
+     * @param probability see getter
      * @return Current builder
-     * @see #getDisconnected
+     * @see #getProbability
      */
-    Builder setDisconnected(Boolean disconnected);
+    Builder setProbability(VoIPProbabilityType probability);
 
     /**
      * see getter
@@ -66,6 +66,6 @@ public interface RndResponse {
      *
      * @return The instance build with current builder values
      */
-    RndResponse build();
+    VoipDetection build();
   }
 }

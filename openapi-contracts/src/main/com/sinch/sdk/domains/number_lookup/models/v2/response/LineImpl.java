@@ -12,17 +12,17 @@ import java.time.Instant;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  LineResponseImpl.JSON_PROPERTY_CARRIER,
-  LineResponseImpl.JSON_PROPERTY_TYPE,
-  LineResponseImpl.JSON_PROPERTY_MOBILE_COUNTRY_CODE,
-  LineResponseImpl.JSON_PROPERTY_MOBILE_NETWORK_CODE,
-  LineResponseImpl.JSON_PROPERTY_PORTED,
-  LineResponseImpl.JSON_PROPERTY_PORTING_DATE,
-  LineResponseImpl.JSON_PROPERTY_ERROR
+  LineImpl.JSON_PROPERTY_CARRIER,
+  LineImpl.JSON_PROPERTY_TYPE,
+  LineImpl.JSON_PROPERTY_MOBILE_COUNTRY_CODE,
+  LineImpl.JSON_PROPERTY_MOBILE_NETWORK_CODE,
+  LineImpl.JSON_PROPERTY_PORTED,
+  LineImpl.JSON_PROPERTY_PORTING_DATE,
+  LineImpl.JSON_PROPERTY_ERROR
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class LineResponseImpl implements LineResponse {
+public class LineImpl implements Line {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_CARRIER = "carrier";
@@ -53,9 +53,9 @@ public class LineResponseImpl implements LineResponse {
 
   private OptionalValue<LookupError> error;
 
-  public LineResponseImpl() {}
+  public LineImpl() {}
 
-  protected LineResponseImpl(
+  protected LineImpl(
       OptionalValue<String> carrier,
       OptionalValue<LineType> type,
       OptionalValue<String> mobileCountryCode,
@@ -158,7 +158,7 @@ public class LineResponseImpl implements LineResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LineResponseImpl lineResponse = (LineResponseImpl) o;
+    LineImpl lineResponse = (LineImpl) o;
     return Objects.equals(this.carrier, lineResponse.carrier)
         && Objects.equals(this.type, lineResponse.type)
         && Objects.equals(this.mobileCountryCode, lineResponse.mobileCountryCode)
@@ -177,7 +177,7 @@ public class LineResponseImpl implements LineResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LineResponseImpl {\n");
+    sb.append("class LineImpl {\n");
     sb.append("    carrier: ").append(toIndentedString(carrier)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    mobileCountryCode: ").append(toIndentedString(mobileCountryCode)).append("\n");
@@ -200,7 +200,7 @@ public class LineResponseImpl implements LineResponse {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements LineResponse.Builder {
+  static class Builder implements Line.Builder {
     OptionalValue<String> carrier = OptionalValue.empty();
     OptionalValue<LineType> type = OptionalValue.empty();
     OptionalValue<String> mobileCountryCode = OptionalValue.empty();
@@ -251,8 +251,8 @@ public class LineResponseImpl implements LineResponse {
       return this;
     }
 
-    public LineResponse build() {
-      return new LineResponseImpl(
+    public Line build() {
+      return new LineImpl(
           carrier, type, mobileCountryCode, mobileNetworkCode, ported, portingDate, error);
     }
   }

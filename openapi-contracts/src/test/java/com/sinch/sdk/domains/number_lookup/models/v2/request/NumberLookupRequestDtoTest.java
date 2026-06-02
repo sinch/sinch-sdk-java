@@ -5,7 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Arrays;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ public class NumberLookupRequestDtoTest extends BaseTest {
           .setFeatures(Arrays.asList(LookupFeatureType.RND))
           .setRndFeatureOptions(
               RndFeatureOptions.builder()
-                  .setContactDate(Instant.parse("2025-01-01T00:00:00Z"))
+                  .setContactDate(LocalDate.parse("2025-01-01"))
                   .build())
           .build();
 

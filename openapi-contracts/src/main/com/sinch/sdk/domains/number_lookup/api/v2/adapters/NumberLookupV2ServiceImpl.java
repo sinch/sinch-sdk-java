@@ -62,7 +62,7 @@ public class NumberLookupV2ServiceImpl
 
     LOGGER.finest("[lookup]" + " " + "numberLookupRequest: " + numberLookupRequest);
 
-    HttpRequest httpRequest = numberLookupRequestBuilder(numberLookupRequest);
+    HttpRequest httpRequest = lookupRequestBuilder(numberLookupRequest);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -79,7 +79,7 @@ public class NumberLookupV2ServiceImpl
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest numberLookupRequestBuilder(NumberLookupRequest numberLookupRequest)
+  private HttpRequest lookupRequestBuilder(NumberLookupRequest numberLookupRequest)
       throws ApiException {
     // verify the required parameter 'this.projectId' is set
     if (this.projectId == null) {

@@ -12,37 +12,37 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class VoIPDetectionResponseDtoTest extends BaseTest {
 
-  public static VoIPDetectionResponse voIPDetectionResponseDto =
-      VoIPDetectionResponse.builder().setProbability(VoIPProbabilityType.HIGH).build();
+  public static VoipDetection voIPDetectionResponseDto =
+      VoipDetection.builder().setProbability(VoIPProbabilityType.HIGH).build();
 
-  public static VoIPDetectionResponse voIPDetectionResponseEmptyDto =
-      VoIPDetectionResponse.builder().build();
+  public static VoipDetection voIPDetectionResponseEmptyDto =
+      VoipDetection.builder().build();
 
   @GivenTextResource("/domains/number_lookup/v2/response/VoIPDetectionResponseDto.json")
-  String jsonVoIPDetectionResponseDto;
+  String jsonVoipDetectionDto;
 
   @GivenTextResource("/domains/number_lookup/v2/response/VoIPDetectionResponseEmptyDto.json")
-  String jsonVoIPDetectionResponseEmptyDto;
+  String jsonVoipDetectionEmptyDto;
 
   @Test
   void serializeDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(voIPDetectionResponseDto);
 
-    JSONAssert.assertEquals(jsonVoIPDetectionResponseDto, serializedString, true);
+    JSONAssert.assertEquals(jsonVoipDetectionDto, serializedString, true);
   }
 
   @Test
   void deserializeDto() throws JsonProcessingException {
-    VoIPDetectionResponse deserialized =
-        objectMapper.readValue(jsonVoIPDetectionResponseDto, VoIPDetectionResponse.class);
+    VoipDetection deserialized =
+        objectMapper.readValue(jsonVoipDetectionDto, VoipDetection.class);
 
     TestHelpers.recursiveEquals(deserialized, voIPDetectionResponseDto);
   }
 
   @Test
   void deserializeEmptyDto() throws JsonProcessingException {
-    VoIPDetectionResponse deserialized =
-        objectMapper.readValue(jsonVoIPDetectionResponseEmptyDto, VoIPDetectionResponse.class);
+    VoipDetection deserialized =
+        objectMapper.readValue(jsonVoipDetectionEmptyDto, VoipDetection.class);
 
     TestHelpers.recursiveEquals(deserialized, voIPDetectionResponseEmptyDto);
   }

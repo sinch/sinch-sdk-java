@@ -10,13 +10,10 @@ import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.number_lookup.models.v2.errors.LookupError;
 import java.util.Objects;
 
-@JsonPropertyOrder({
-  RndResponseImpl.JSON_PROPERTY_DISCONNECTED,
-  RndResponseImpl.JSON_PROPERTY_ERROR
-})
+@JsonPropertyOrder({RndImpl.JSON_PROPERTY_DISCONNECTED, RndImpl.JSON_PROPERTY_ERROR})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class RndResponseImpl implements RndResponse {
+public class RndImpl implements Rnd {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_DISCONNECTED = "disconnected";
@@ -27,9 +24,9 @@ public class RndResponseImpl implements RndResponse {
 
   private OptionalValue<LookupError> error;
 
-  public RndResponseImpl() {}
+  public RndImpl() {}
 
-  protected RndResponseImpl(OptionalValue<Boolean> disconnected, OptionalValue<LookupError> error) {
+  protected RndImpl(OptionalValue<Boolean> disconnected, OptionalValue<LookupError> error) {
     this.disconnected = disconnected;
     this.error = error;
   }
@@ -65,7 +62,7 @@ public class RndResponseImpl implements RndResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RndResponseImpl rndResponse = (RndResponseImpl) o;
+    RndImpl rndResponse = (RndImpl) o;
     return Objects.equals(this.disconnected, rndResponse.disconnected)
         && Objects.equals(this.error, rndResponse.error);
   }
@@ -78,7 +75,7 @@ public class RndResponseImpl implements RndResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class RndResponseImpl {\n");
+    sb.append("class RndImpl {\n");
     sb.append("    disconnected: ").append(toIndentedString(disconnected)).append("\n");
     sb.append("    error: ").append(toIndentedString(error)).append("\n");
     sb.append("}");
@@ -96,7 +93,7 @@ public class RndResponseImpl implements RndResponse {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements RndResponse.Builder {
+  static class Builder implements Rnd.Builder {
     OptionalValue<Boolean> disconnected = OptionalValue.empty();
     OptionalValue<LookupError> error = OptionalValue.empty();
 
@@ -112,8 +109,8 @@ public class RndResponseImpl implements RndResponse {
       return this;
     }
 
-    public RndResponse build() {
-      return new RndResponseImpl(disconnected, error);
+    public Rnd build() {
+      return new RndImpl(disconnected, error);
     }
   }
 }

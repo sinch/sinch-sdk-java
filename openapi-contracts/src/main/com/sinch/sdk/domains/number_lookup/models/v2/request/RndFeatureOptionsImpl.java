@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @JsonPropertyOrder({RndFeatureOptionsImpl.JSON_PROPERTY_CONTACT_DATE})
@@ -18,22 +18,22 @@ public class RndFeatureOptionsImpl implements RndFeatureOptions {
 
   public static final String JSON_PROPERTY_CONTACT_DATE = "contactDate";
 
-  private OptionalValue<Instant> contactDate;
+  private OptionalValue<LocalDate> contactDate;
 
   public RndFeatureOptionsImpl() {}
 
-  protected RndFeatureOptionsImpl(OptionalValue<Instant> contactDate) {
+  protected RndFeatureOptionsImpl(OptionalValue<LocalDate> contactDate) {
     this.contactDate = contactDate;
   }
 
   @JsonIgnore
-  public Instant getContactDate() {
+  public LocalDate getContactDate() {
     return contactDate.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CONTACT_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<Instant> contactDate() {
+  public OptionalValue<LocalDate> contactDate() {
     return contactDate;
   }
 
@@ -76,10 +76,10 @@ public class RndFeatureOptionsImpl implements RndFeatureOptions {
 
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements RndFeatureOptions.Builder {
-    OptionalValue<Instant> contactDate = OptionalValue.empty();
+    OptionalValue<LocalDate> contactDate = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CONTACT_DATE)
-    public Builder setContactDate(Instant contactDate) {
+    public Builder setContactDate(LocalDate contactDate) {
       this.contactDate = OptionalValue.of(contactDate);
       return this;
     }

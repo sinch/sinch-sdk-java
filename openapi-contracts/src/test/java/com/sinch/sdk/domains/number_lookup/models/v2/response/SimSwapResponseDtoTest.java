@@ -13,11 +13,11 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class SimSwapResponseDtoTest extends BaseTest {
 
-  public static SimSwapResponse simSwapResponseDto =
-      SimSwapResponse.builder().setSwapped(true).setSwapPeriod(SwapPeriodType.SP24_H).build();
+  public static SimSwap simSwapResponseDto =
+      SimSwap.builder().setSwapped(true).setSwapPeriod(SwapPeriodType.SP24_H).build();
 
-  public static SimSwapResponse simSwapResponseWithErrorDto =
-      SimSwapResponse.builder()
+  public static SimSwap simSwapResponseWithErrorDto =
+      SimSwap.builder()
           .setError(
               LookupError.builder()
                   .setStatus(100)
@@ -27,22 +27,22 @@ public class SimSwapResponseDtoTest extends BaseTest {
           .build();
 
   @GivenTextResource("/domains/number_lookup/v2/response/SimSwapResponseDto.json")
-  String jsonSimSwapResponseDto;
+  String jsonSimSwapDto;
 
   @GivenTextResource("/domains/number_lookup/v2/response/SimSwapResponseWithErrorDto.json")
-  String jsonSimSwapResponseWithErrorDto;
+  String jsonSimSwapWithErrorDto;
 
   @Test
   void serializeDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(simSwapResponseDto);
 
-    JSONAssert.assertEquals(jsonSimSwapResponseDto, serializedString, true);
+    JSONAssert.assertEquals(jsonSimSwapDto, serializedString, true);
   }
 
   @Test
   void deserializeDto() throws JsonProcessingException {
-    SimSwapResponse deserialized =
-        objectMapper.readValue(jsonSimSwapResponseDto, SimSwapResponse.class);
+    SimSwap deserialized =
+        objectMapper.readValue(jsonSimSwapDto, SimSwap.class);
 
     TestHelpers.recursiveEquals(deserialized, simSwapResponseDto);
   }
@@ -51,13 +51,13 @@ public class SimSwapResponseDtoTest extends BaseTest {
   void serializeWithErrorDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(simSwapResponseWithErrorDto);
 
-    JSONAssert.assertEquals(jsonSimSwapResponseWithErrorDto, serializedString, true);
+    JSONAssert.assertEquals(jsonSimSwapWithErrorDto, serializedString, true);
   }
 
   @Test
   void deserializeWithErrorDto() throws JsonProcessingException {
-    SimSwapResponse deserialized =
-        objectMapper.readValue(jsonSimSwapResponseWithErrorDto, SimSwapResponse.class);
+    SimSwap deserialized =
+        objectMapper.readValue(jsonSimSwapWithErrorDto, SimSwap.class);
 
     TestHelpers.recursiveEquals(deserialized, simSwapResponseWithErrorDto);
   }

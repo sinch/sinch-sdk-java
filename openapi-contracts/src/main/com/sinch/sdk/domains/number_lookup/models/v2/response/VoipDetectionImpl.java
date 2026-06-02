@@ -11,12 +11,12 @@ import com.sinch.sdk.domains.number_lookup.models.v2.errors.LookupError;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VoIPDetectionResponseImpl.JSON_PROPERTY_PROBABILITY,
-  VoIPDetectionResponseImpl.JSON_PROPERTY_ERROR
+  VoipDetectionImpl.JSON_PROPERTY_PROBABILITY,
+  VoipDetectionImpl.JSON_PROPERTY_ERROR
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VoIPDetectionResponseImpl implements VoIPDetectionResponse {
+public class VoipDetectionImpl implements VoipDetection {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_PROBABILITY = "probability";
@@ -27,9 +27,9 @@ public class VoIPDetectionResponseImpl implements VoIPDetectionResponse {
 
   private OptionalValue<LookupError> error;
 
-  public VoIPDetectionResponseImpl() {}
+  public VoipDetectionImpl() {}
 
-  protected VoIPDetectionResponseImpl(
+  protected VoipDetectionImpl(
       OptionalValue<VoIPProbabilityType> probability, OptionalValue<LookupError> error) {
     this.probability = probability;
     this.error = error;
@@ -66,7 +66,7 @@ public class VoIPDetectionResponseImpl implements VoIPDetectionResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VoIPDetectionResponseImpl voIPDetectionResponse = (VoIPDetectionResponseImpl) o;
+    VoipDetectionImpl voIPDetectionResponse = (VoipDetectionImpl) o;
     return Objects.equals(this.probability, voIPDetectionResponse.probability)
         && Objects.equals(this.error, voIPDetectionResponse.error);
   }
@@ -79,7 +79,7 @@ public class VoIPDetectionResponseImpl implements VoIPDetectionResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VoIPDetectionResponseImpl {\n");
+    sb.append("class VoipDetectionImpl {\n");
     sb.append("    probability: ").append(toIndentedString(probability)).append("\n");
     sb.append("    error: ").append(toIndentedString(error)).append("\n");
     sb.append("}");
@@ -97,7 +97,7 @@ public class VoIPDetectionResponseImpl implements VoIPDetectionResponse {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VoIPDetectionResponse.Builder {
+  static class Builder implements VoipDetection.Builder {
     OptionalValue<VoIPProbabilityType> probability = OptionalValue.empty();
     OptionalValue<LookupError> error = OptionalValue.empty();
 
@@ -113,8 +113,8 @@ public class VoIPDetectionResponseImpl implements VoIPDetectionResponse {
       return this;
     }
 
-    public VoIPDetectionResponse build() {
-      return new VoIPDetectionResponseImpl(probability, error);
+    public VoipDetection build() {
+      return new VoipDetectionImpl(probability, error);
     }
   }
 }

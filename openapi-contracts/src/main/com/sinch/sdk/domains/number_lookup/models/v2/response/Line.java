@@ -14,9 +14,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.number_lookup.models.v2.errors.LookupError;
 import java.time.Instant;
 
-/** LineResponse */
-@JsonDeserialize(builder = LineResponseImpl.Builder.class)
-public interface LineResponse {
+/** Line */
+@JsonDeserialize(builder = LineImpl.Builder.class)
+public interface Line {
 
   /**
    * Name of the carrier.
@@ -77,7 +77,7 @@ public interface LineResponse {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new LineResponseImpl.Builder();
+    return new LineImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -151,6 +151,6 @@ public interface LineResponse {
      *
      * @return The instance build with current builder values
      */
-    LineResponse build();
+    Line build();
   }
 }

@@ -12,9 +12,9 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class RndResponseDtoTest extends BaseTest {
 
-  public static RndResponse rndResponseDto = RndResponse.builder().setDisconnected(true).build();
+  public static Rnd rndResponseDto = Rnd.builder().setDisconnected(true).build();
 
-  public static RndResponse rndResponseEmptyDto = RndResponse.builder().build();
+  public static Rnd rndResponseEmptyDto = Rnd.builder().build();
 
   @GivenTextResource("/domains/number_lookup/v2/response/RndResponseDto.json")
   String jsonRndResponseDto;
@@ -31,14 +31,14 @@ public class RndResponseDtoTest extends BaseTest {
 
   @Test
   void deserializeDto() throws JsonProcessingException {
-    RndResponse deserialized = objectMapper.readValue(jsonRndResponseDto, RndResponse.class);
+    Rnd deserialized = objectMapper.readValue(jsonRndResponseDto, Rnd.class);
 
     TestHelpers.recursiveEquals(deserialized, rndResponseDto);
   }
 
   @Test
   void deserializeEmptyDto() throws JsonProcessingException {
-    RndResponse deserialized = objectMapper.readValue(jsonRndResponseEmptyDto, RndResponse.class);
+    Rnd deserialized = objectMapper.readValue(jsonRndResponseEmptyDto, Rnd.class);
 
     TestHelpers.recursiveEquals(deserialized, rndResponseEmptyDto);
   }
