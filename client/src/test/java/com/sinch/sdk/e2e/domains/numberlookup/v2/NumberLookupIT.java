@@ -1,4 +1,4 @@
-package com.sinch.sdk.e2e.domains.number_lookup.v2;
+package com.sinch.sdk.e2e.domains.numberlookup.v2;
 
 import static io.cucumber.junit.platform.engine.Constants.GLUE_PROPERTY_NAME;
 
@@ -14,5 +14,5 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @SelectClasspathResource("features/number-lookup")
 @ConfigurationParameter(
     key = GLUE_PROPERTY_NAME,
-    value = "com.sinch.sdk.e2e.domains.number_lookup.v2")
+    value = "com.sinch.sdk.e2e.domains.numberlookup.v2")
 public class NumberLookupIT {}

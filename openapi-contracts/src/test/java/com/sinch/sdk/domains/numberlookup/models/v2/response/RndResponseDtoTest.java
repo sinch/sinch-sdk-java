@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.number_lookup.models.v2.response;
+package com.sinch.sdk.domains.numberlookup.models.v2.response;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
@@ -16,10 +16,10 @@ public class RndResponseDtoTest extends BaseTest {
 
   public static Rnd rndResponseEmptyDto = Rnd.builder().build();
 
-  @GivenTextResource("/domains/number_lookup/v2/response/RndResponseDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/response/RndResponseDto.json")
   String jsonRndResponseDto;
 
-  @GivenTextResource("/domains/number_lookup/v2/response/RndResponseEmptyDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/response/RndResponseEmptyDto.json")
   String jsonRndResponseEmptyDto;
 
   @Test

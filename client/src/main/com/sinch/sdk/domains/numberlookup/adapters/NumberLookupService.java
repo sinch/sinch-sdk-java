@@ -6,8 +6,7 @@ import com.sinch.sdk.models.NumberLookupContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.function.Supplier;
 
-public class NumberLookupService
-    implements com.sinch.sdk.domains.numberlookup.NumberLookupService {
+public class NumberLookupService implements com.sinch.sdk.domains.numberlookup.NumberLookupService {
 
   private final UnifiedCredentials credentials;
   private final NumberLookupContext context;

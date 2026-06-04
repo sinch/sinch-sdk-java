@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.number_lookup.models.v2.response;
+package com.sinch.sdk.domains.numberlookup.models.v2.response;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
@@ -12,37 +12,35 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class VoIPDetectionResponseDtoTest extends BaseTest {
 
-  public static VoipDetection voIPDetectionResponseDto =
-      VoipDetection.builder().setProbability(VoIPProbabilityType.HIGH).build();
+  public static VoIPDetection voIPDetectionResponseDto =
+      VoIPDetection.builder().setProbability(VoIPProbabilityType.HIGH).build();
 
-  public static VoipDetection voIPDetectionResponseEmptyDto =
-      VoipDetection.builder().build();
+  public static VoIPDetection voIPDetectionResponseEmptyDto = VoIPDetection.builder().build();
 
-  @GivenTextResource("/domains/number_lookup/v2/response/VoIPDetectionResponseDto.json")
-  String jsonVoipDetectionDto;
+  @GivenTextResource("/domains/numberlookup/v2/response/VoIPDetectionResponseDto.json")
+  String jsonVoIPDetectionDto;
 
-  @GivenTextResource("/domains/number_lookup/v2/response/VoIPDetectionResponseEmptyDto.json")
-  String jsonVoipDetectionEmptyDto;
+  @GivenTextResource("/domains/numberlookup/v2/response/VoIPDetectionResponseEmptyDto.json")
+  String jsonVoIPDetectionEmptyDto;
 
   @Test
   void serializeDto() throws JsonProcessingException, JSONException {
     String serializedString = objectMapper.writeValueAsString(voIPDetectionResponseDto);
 
-    JSONAssert.assertEquals(jsonVoipDetectionDto, serializedString, true);
+    JSONAssert.assertEquals(jsonVoIPDetectionDto, serializedString, true);
   }
 
   @Test
   void deserializeDto() throws JsonProcessingException {
-    VoipDetection deserialized =
-        objectMapper.readValue(jsonVoipDetectionDto, VoipDetection.class);
+    VoIPDetection deserialized = objectMapper.readValue(jsonVoIPDetectionDto, VoIPDetection.class);
 
     TestHelpers.recursiveEquals(deserialized, voIPDetectionResponseDto);
   }
 
   @Test
   void deserializeEmptyDto() throws JsonProcessingException {
-    VoipDetection deserialized =
-        objectMapper.readValue(jsonVoipDetectionEmptyDto, VoipDetection.class);
+    VoIPDetection deserialized =
+        objectMapper.readValue(jsonVoIPDetectionEmptyDto, VoIPDetection.class);
 
     TestHelpers.recursiveEquals(deserialized, voIPDetectionResponseEmptyDto);
   }

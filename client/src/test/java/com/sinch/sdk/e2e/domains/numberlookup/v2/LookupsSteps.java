@@ -1,17 +1,17 @@
-package com.sinch.sdk.e2e.domains.number_lookup.v2;
+package com.sinch.sdk.e2e.domains.numberlookup.v2;
 
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.number_lookup.api.v2.NumberLookupV2Service;
-import com.sinch.sdk.domains.number_lookup.models.v2.errors.LookupError;
-import com.sinch.sdk.domains.number_lookup.models.v2.request.LookupFeatureType;
-import com.sinch.sdk.domains.number_lookup.models.v2.request.NumberLookupRequest;
-import com.sinch.sdk.domains.number_lookup.models.v2.request.RndFeatureOptions;
-import com.sinch.sdk.domains.number_lookup.models.v2.response.Line;
-import com.sinch.sdk.domains.number_lookup.models.v2.response.LineType;
-import com.sinch.sdk.domains.number_lookup.models.v2.response.NumberLookupResponse;
-import com.sinch.sdk.domains.number_lookup.models.v2.response.Rnd;
-import com.sinch.sdk.domains.number_lookup.models.v2.response.SimSwap;
-import com.sinch.sdk.domains.number_lookup.models.v2.response.VoipDetection;
+import com.sinch.sdk.domains.numberlookup.api.v2.NumberLookupV2Service;
+import com.sinch.sdk.domains.numberlookup.models.v2.errors.LookupError;
+import com.sinch.sdk.domains.numberlookup.models.v2.request.LookupFeatureType;
+import com.sinch.sdk.domains.numberlookup.models.v2.request.NumberLookupRequest;
+import com.sinch.sdk.domains.numberlookup.models.v2.request.RndFeatureOptions;
+import com.sinch.sdk.domains.numberlookup.models.v2.response.Line;
+import com.sinch.sdk.domains.numberlookup.models.v2.response.LineType;
+import com.sinch.sdk.domains.numberlookup.models.v2.response.NumberLookupResponse;
+import com.sinch.sdk.domains.numberlookup.models.v2.response.Rnd;
+import com.sinch.sdk.domains.numberlookup.models.v2.response.SimSwap;
+import com.sinch.sdk.domains.numberlookup.models.v2.response.VoIPDetection;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -71,9 +71,7 @@ public class LookupsSteps {
                     LookupFeatureType.SIM_SWAP,
                     LookupFeatureType.VO_IP_DETECTION))
             .setRndFeatureOptions(
-                RndFeatureOptions.builder()
-                    .setContactDate(LocalDate.parse("2025-09-09"))
-                    .build())
+                RndFeatureOptions.builder().setContactDate(LocalDate.parse("2025-09-09")).build())
             .build();
     lookupAllFeaturesResponse = service.lookup(request);
   }
@@ -117,7 +115,7 @@ public class LookupsSteps {
                     .setPortingDate(Instant.parse("2010-08-07T23:45:49Z"))
                     .build())
             .setSimSwap(SimSwap.builder().setError(simSwapError).build())
-            .setVoIPDetection(VoipDetection.builder().setError(voIPDetectionError).build())
+            .setVoIPDetection(VoIPDetection.builder().setError(voIPDetectionError).build())
             .setRnd(Rnd.builder().setError(rndError).build())
             .build();
 

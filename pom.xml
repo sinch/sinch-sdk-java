@@ -300,7 +300,7 @@
                                 <include>com.sinch.sdk.e2e.domains.sms.v1.SmsIT</include>
                                 <include>com.sinch.sdk.e2e.domains.voice.v1.VoiceIT</include>
                                 <include>com.sinch.sdk.e2e.domains.verification.v1.VerificationIT</include>
-                                <include>com.sinch.sdk.e2e.domains.number_lookup.v2.NumberLookupIT</include>
+                                <include>com.sinch.sdk.e2e.domains.numberlookup.v2.NumberLookupIT</include>
                             </includes>
                         </configuration>
 

@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.number_lookup.models.v2.response;
+package com.sinch.sdk.domains.numberlookup.models.v2.response;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
@@ -30,22 +30,19 @@ public class NumberLookupResponseDtoTest extends BaseTest {
                   .setPortingDate(Instant.parse("2024-08-20T10:15:30Z"))
                   .build())
           .setSimSwap(
-              SimSwap.builder()
-                  .setSwapped(true)
-                  .setSwapPeriod(SwapPeriodType.SP24_H)
-                  .build())
+              SimSwap.builder().setSwapped(true).setSwapPeriod(SwapPeriodType.SP24_H).build())
           .setVoIPDetection(
-              VoipDetection.builder().setProbability(VoIPProbabilityType.HIGH).build())
+              VoIPDetection.builder().setProbability(VoIPProbabilityType.HIGH).build())
           .setRnd(Rnd.builder().setDisconnected(true).build())
           .setCountryCode("US")
           .setTraceId("84c1fd4063c38d9f3900d06e56542d48")
           .setNumber("+15557890123")
           .build();
 
-  @GivenTextResource("/domains/number_lookup/v2/response/NumberLookupResponseMinimalDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/response/NumberLookupResponseMinimalDto.json")
   String jsonNumberLookupResponseMinimalDto;
 
-  @GivenTextResource("/domains/number_lookup/v2/response/NumberLookupResponseFullDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/response/NumberLookupResponseFullDto.json")
   String jsonNumberLookupResponseFullDto;
 
   @Test

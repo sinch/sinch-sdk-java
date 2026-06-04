@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.number_lookup.models.v2.errors;
+package com.sinch.sdk.domains.numberlookup.models.v2.errors;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
@@ -20,7 +20,7 @@ public class ProblemDetailsDtoTest extends BaseTest {
           .setTraceId("84c1fd4063c38d9f3900d06e56542d48")
           .build();
 
-  @GivenTextResource("/domains/number_lookup/v2/errors/ProblemDetailsDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/errors/ProblemDetailsDto.json")
   String jsonProblemDetailsDto;
 
   @Test

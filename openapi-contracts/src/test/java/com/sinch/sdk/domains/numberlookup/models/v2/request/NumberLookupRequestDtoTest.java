@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.number_lookup.models.v2.request;
+package com.sinch.sdk.domains.numberlookup.models.v2.request;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
@@ -32,9 +32,7 @@ public class NumberLookupRequestDtoTest extends BaseTest {
           .setNumber("+15553456789")
           .setFeatures(Arrays.asList(LookupFeatureType.RND))
           .setRndFeatureOptions(
-              RndFeatureOptions.builder()
-                  .setContactDate(LocalDate.parse("2025-01-01"))
-                  .build())
+              RndFeatureOptions.builder().setContactDate(LocalDate.parse("2025-01-01")).build())
           .build();
 
   public static NumberLookupRequest numberLookupRequestAllFeaturesDto =
@@ -48,16 +46,16 @@ public class NumberLookupRequestDtoTest extends BaseTest {
                   LookupFeatureType.RND))
           .build();
 
-  @GivenTextResource("/domains/number_lookup/v2/request/NumberLookupRequestMinimalDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/request/NumberLookupRequestMinimalDto.json")
   String jsonNumberLookupRequestMinimalDto;
 
-  @GivenTextResource("/domains/number_lookup/v2/request/NumberLookupRequestWithFeaturesDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/request/NumberLookupRequestWithFeaturesDto.json")
   String jsonNumberLookupRequestWithFeaturesDto;
 
-  @GivenTextResource("/domains/number_lookup/v2/request/NumberLookupRequestWithRndOptionsDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/request/NumberLookupRequestWithRndOptionsDto.json")
   String jsonNumberLookupRequestWithRndOptionsDto;
 
-  @GivenTextResource("/domains/number_lookup/v2/request/NumberLookupRequestAllFeaturesDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/request/NumberLookupRequestAllFeaturesDto.json")
   String jsonNumberLookupRequestAllFeaturesDto;
 
   @Test

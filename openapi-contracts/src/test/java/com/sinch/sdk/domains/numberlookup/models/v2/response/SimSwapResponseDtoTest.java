@@ -1,11 +1,11 @@
-package com.sinch.sdk.domains.number_lookup.models.v2.response;
+package com.sinch.sdk.domains.numberlookup.models.v2.response;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
-import com.sinch.sdk.domains.number_lookup.models.v2.errors.LookupError;
+import com.sinch.sdk.domains.numberlookup.models.v2.errors.LookupError;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -26,10 +26,10 @@ public class SimSwapResponseDtoTest extends BaseTest {
                   .build())
           .build();
 
-  @GivenTextResource("/domains/number_lookup/v2/response/SimSwapResponseDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/response/SimSwapResponseDto.json")
   String jsonSimSwapDto;
 
-  @GivenTextResource("/domains/number_lookup/v2/response/SimSwapResponseWithErrorDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/response/SimSwapResponseWithErrorDto.json")
   String jsonSimSwapWithErrorDto;
 
   @Test
@@ -41,8 +41,7 @@ public class SimSwapResponseDtoTest extends BaseTest {
 
   @Test
   void deserializeDto() throws JsonProcessingException {
-    SimSwap deserialized =
-        objectMapper.readValue(jsonSimSwapDto, SimSwap.class);
+    SimSwap deserialized = objectMapper.readValue(jsonSimSwapDto, SimSwap.class);
 
     TestHelpers.recursiveEquals(deserialized, simSwapResponseDto);
   }
@@ -56,8 +55,7 @@ public class SimSwapResponseDtoTest extends BaseTest {
 
   @Test
   void deserializeWithErrorDto() throws JsonProcessingException {
-    SimSwap deserialized =
-        objectMapper.readValue(jsonSimSwapWithErrorDto, SimSwap.class);
+    SimSwap deserialized = objectMapper.readValue(jsonSimSwapWithErrorDto, SimSwap.class);
 
     TestHelpers.recursiveEquals(deserialized, simSwapResponseWithErrorDto);
   }

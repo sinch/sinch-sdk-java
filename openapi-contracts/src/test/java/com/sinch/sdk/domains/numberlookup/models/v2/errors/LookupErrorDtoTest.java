@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.number_lookup.models.v2.errors;
+package com.sinch.sdk.domains.numberlookup.models.v2.errors;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
@@ -22,10 +22,10 @@ public class LookupErrorDtoTest extends BaseTest {
 
   public static LookupError lookupErrorEmptyDto = LookupError.builder().build();
 
-  @GivenTextResource("/domains/number_lookup/v2/errors/LookupErrorDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/errors/LookupErrorDto.json")
   String jsonLookupErrorDto;
 
-  @GivenTextResource("/domains/number_lookup/v2/errors/LookupErrorEmptyDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/errors/LookupErrorEmptyDto.json")
   String jsonLookupErrorEmptyDto;
 
   @Test

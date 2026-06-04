@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.number_lookup.models.v2.response;
+package com.sinch.sdk.domains.numberlookup.models.v2.response;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
@@ -25,10 +25,10 @@ public class LineResponseDtoTest extends BaseTest {
 
   public static Line lineResponseEmptyDto = Line.builder().build();
 
-  @GivenTextResource("/domains/number_lookup/v2/response/LineResponseDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/response/LineResponseDto.json")
   String jsonLineResponseDto;
 
-  @GivenTextResource("/domains/number_lookup/v2/response/LineResponseEmptyDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/response/LineResponseEmptyDto.json")
   String jsonLineResponseEmptyDto;
 
   @Test

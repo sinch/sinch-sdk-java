@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.number_lookup.api.v2.adapters;
+package com.sinch.sdk.domains.numberlookup.api.v2.adapters;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;

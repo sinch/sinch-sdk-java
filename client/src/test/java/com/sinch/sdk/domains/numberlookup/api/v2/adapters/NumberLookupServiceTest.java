@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.number_lookup.api.v2.adapters;
+package com.sinch.sdk.domains.numberlookup.api.v2.adapters;
 
 import com.sinch.sdk.core.http.HttpClient;
 import org.junit.jupiter.api.Test;

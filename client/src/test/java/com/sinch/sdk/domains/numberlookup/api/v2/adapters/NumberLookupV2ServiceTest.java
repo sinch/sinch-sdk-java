@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.number_lookup.api.v2.adapters;
+package com.sinch.sdk.domains.numberlookup.api.v2.adapters;
 
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
@@ -19,10 +19,10 @@ import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.domains.number_lookup.api.v2.NumberLookupV2Service;
-import com.sinch.sdk.domains.number_lookup.models.v2.request.NumberLookupRequestDtoTest;
-import com.sinch.sdk.domains.number_lookup.models.v2.response.NumberLookupResponse;
-import com.sinch.sdk.domains.number_lookup.models.v2.response.NumberLookupResponseDtoTest;
+import com.sinch.sdk.domains.numberlookup.api.v2.NumberLookupV2Service;
+import com.sinch.sdk.domains.numberlookup.models.v2.request.NumberLookupRequestDtoTest;
+import com.sinch.sdk.domains.numberlookup.models.v2.response.NumberLookupResponse;
+import com.sinch.sdk.domains.numberlookup.models.v2.response.NumberLookupResponseDtoTest;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -44,19 +44,19 @@ public class NumberLookupV2ServiceTest extends BaseTest {
 
   NumberLookupV2Service service;
 
-  @GivenTextResource("/domains/number_lookup/v2/request/NumberLookupRequestMinimalDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/request/NumberLookupRequestMinimalDto.json")
   String jsonNumberLookupRequestMinimalDto;
 
-  @GivenTextResource("/domains/number_lookup/v2/request/NumberLookupRequestWithFeaturesDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/request/NumberLookupRequestWithFeaturesDto.json")
   String jsonNumberLookupRequestWithFeaturesDto;
 
-  @GivenTextResource("/domains/number_lookup/v2/request/NumberLookupRequestWithRndOptionsDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/request/NumberLookupRequestWithRndOptionsDto.json")
   String jsonNumberLookupRequestWithRndOptionsDto;
 
-  @GivenTextResource("/domains/number_lookup/v2/response/NumberLookupResponseMinimalDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/response/NumberLookupResponseMinimalDto.json")
   String jsonNumberLookupResponseMinimalDto;
 
-  @GivenTextResource("/domains/number_lookup/v2/response/NumberLookupResponseFullDto.json")
+  @GivenTextResource("/domains/numberlookup/v2/response/NumberLookupResponseFullDto.json")
   String jsonNumberLookupResponseFullDto;
 
   @BeforeEach
