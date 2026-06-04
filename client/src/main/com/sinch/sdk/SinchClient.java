@@ -2,7 +2,7 @@ package com.sinch.sdk;
 
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.ConversationService;
-import com.sinch.sdk.domains.number_lookup.api.v2.adapters.NumberLookupService;
+import com.sinch.sdk.domains.numberlookup.api.v2.adapters.NumberLookupService;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
@@ -425,7 +425,7 @@ public class SinchClient {
   }
 
   private NumberLookupService lookupInit() {
-    return new com.sinch.sdk.domains.number_lookup.api.v2.adapters.NumberLookupService(
+    return new com.sinch.sdk.domains.numberlookup.api.v2.adapters.NumberLookupService(
         getConfiguration().getUnifiedCredentials().orElse(null),
         getConfiguration().getNumberLookupContext().orElse(null),
         getConfiguration().getOAuthServer(),
