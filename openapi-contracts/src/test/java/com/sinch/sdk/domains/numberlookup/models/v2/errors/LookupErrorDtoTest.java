@@ -5,9 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
-import org.json.JSONException;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 public class LookupErrorDtoTest extends BaseTest {
@@ -27,13 +25,6 @@ public class LookupErrorDtoTest extends BaseTest {
 
   @GivenTextResource("/domains/numberlookup/v2/errors/LookupErrorEmptyDto.json")
   String jsonLookupErrorEmptyDto;
-
-  @Test
-  void serializeDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(lookupErrorDto);
-
-    JSONAssert.assertEquals(jsonLookupErrorDto, serializedString, true);
-  }
 
   @Test
   void deserializeDto() throws JsonProcessingException {

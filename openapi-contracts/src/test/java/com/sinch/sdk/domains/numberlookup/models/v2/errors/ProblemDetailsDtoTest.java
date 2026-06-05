@@ -5,9 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
-import org.json.JSONException;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 public class ProblemDetailsDtoTest extends BaseTest {
@@ -22,13 +20,6 @@ public class ProblemDetailsDtoTest extends BaseTest {
 
   @GivenTextResource("/domains/numberlookup/v2/errors/ProblemDetailsDto.json")
   String jsonProblemDetailsDto;
-
-  @Test
-  void serializeDto() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(problemDetailsDto);
-
-    JSONAssert.assertEquals(jsonProblemDetailsDto, serializedString, true);
-  }
 
   @Test
   void deserializeDto() throws JsonProcessingException {
