@@ -71,6 +71,11 @@ class HttpClientApacheProxyTest {
     RecordedRequest request = mockProxy.takeRequest(5, TimeUnit.SECONDS);
     assertNotNull(request, "Proxy should have received the request");
     assertNotNull(request.getPath(), "Recorded request must have a path");
+    assertTrue(
+        request.getPath().startsWith("http://"),
+        "When using an HTTP proxy, the request-target should be absolute-form (starts with"
+            + " http://); actual: "
+            + request.getPath());
   }
 
   /**
