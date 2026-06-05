@@ -35,16 +35,14 @@ class HttpClientApacheProxyE2ETest {
 
   @BeforeAll
   static void requireDocker() throws Exception {
-    Process p =
-        new ProcessBuilder("docker", "info").redirectErrorStream(true).start();
+    Process p = new ProcessBuilder("docker", "info").redirectErrorStream(true).start();
     boolean finished = p.waitFor(5, TimeUnit.SECONDS);
     Assumptions.assumeTrue(
         finished && p.exitValue() == 0, "Docker is not available, skipping proxy E2E tests");
   }
 
   private static HttpRequest simpleGetRequest() {
-    return new HttpRequest(
-        "api/test", HttpMethod.GET, null, (String) null, null, null, null, null);
+    return new HttpRequest("api/test", HttpMethod.GET, null, (String) null, null, null, null, null);
   }
 
   /** Start a plain (unauthenticated) Squid container, return the container ID. */
@@ -149,20 +147,17 @@ class HttpClientApacheProxyE2ETest {
                 .setBody("{\"status\":\"ok\"}")
                 .addHeader("Content-Type", "application/json"));
 
-        String targetUrl =
-            String.format("http://host.docker.internal:%d/", targetServer.getPort());
+        String targetUrl = String.format("http://host.docker.internal:%d/", targetServer.getPort());
 
         HttpProxyConfiguration proxyConfig =
-            HttpProxyConfiguration.builder()
-                .setHostname("localhost")
-                .setPort(proxyPort)
-                .build();
+            HttpProxyConfiguration.builder().setHostname("localhost").setPort(proxyPort).build();
 
         try (HttpClientApache client = new HttpClientApache(proxyConfig)) {
           HttpResponse response =
               client.invokeAPI(new ServerConfiguration(targetUrl), null, simpleGetRequest());
 
-          assertEquals(200, response.getCode(), "Request through unauthenticated proxy must succeed");
+          assertEquals(
+              200, response.getCode(), "Request through unauthenticated proxy must succeed");
         }
 
         RecordedRequest request = targetServer.takeRequest(5, TimeUnit.SECONDS);
@@ -188,8 +183,7 @@ class HttpClientApacheProxyE2ETest {
                 .setBody("{\"status\":\"ok\"}")
                 .addHeader("Content-Type", "application/json"));
 
-        String targetUrl =
-            String.format("http://host.docker.internal:%d/", targetServer.getPort());
+        String targetUrl = String.format("http://host.docker.internal:%d/", targetServer.getPort());
 
         HttpProxyConfiguration proxyConfig =
             HttpProxyConfiguration.builder()
