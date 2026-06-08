@@ -143,6 +143,14 @@ class SinchClientTest {
   }
 
   @Test
+  void defaultNumberLookupUrlAvailable() {
+    Configuration configuration =
+        Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
+    SinchClient client = new SinchClient(configuration);
+    assertNotNull(client.getConfiguration().getNumberLookupContext().get().getNumberLookupUrl());
+  }
+
+  @Test
   void defaultVoiceRegion() {
     Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);

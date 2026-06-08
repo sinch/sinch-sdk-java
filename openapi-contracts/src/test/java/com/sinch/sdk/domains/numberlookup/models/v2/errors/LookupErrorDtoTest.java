@@ -1,0 +1,42 @@
+package com.sinch.sdk.domains.numberlookup.models.v2.errors;
+
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
+import com.adelean.inject.resources.junit.jupiter.TestWithResources;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.core.TestHelpers;
+import org.junit.jupiter.api.Test;
+
+@TestWithResources
+public class LookupErrorDtoTest extends BaseTest {
+
+  public static LookupError lookupErrorDto =
+      LookupError.builder()
+          .setStatus(100)
+          .setTitle("Feature Disabled")
+          .setDetail("VoIPDetection feature is currently disabled.")
+          .setType("validation_error")
+          .build();
+
+  public static LookupError lookupErrorEmptyDto = LookupError.builder().build();
+
+  @GivenTextResource("/domains/numberlookup/v2/errors/LookupErrorDto.json")
+  String jsonLookupErrorDto;
+
+  @GivenTextResource("/domains/numberlookup/v2/errors/LookupErrorEmptyDto.json")
+  String jsonLookupErrorEmptyDto;
+
+  @Test
+  void deserializeDto() throws JsonProcessingException {
+    LookupError deserialized = objectMapper.readValue(jsonLookupErrorDto, LookupError.class);
+
+    TestHelpers.recursiveEquals(deserialized, lookupErrorDto);
+  }
+
+  @Test
+  void deserializeEmptyDto() throws JsonProcessingException {
+    LookupError deserialized = objectMapper.readValue(jsonLookupErrorEmptyDto, LookupError.class);
+
+    TestHelpers.recursiveEquals(deserialized, lookupErrorEmptyDto);
+  }
+}

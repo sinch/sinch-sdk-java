@@ -4,6 +4,7 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
+import com.sinch.sdk.models.NumberLookupContext;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
@@ -34,6 +35,8 @@ public class Config {
 
   public static final String VERIFICATION_HOST_NAME = "http://localhost:3018";
 
+  public static final String NUMBER_LOOKUP_HOST_NAME = "http://localhost:3022";
+
   private final SinchClient client;
   private final SinchClient clientServicePlanId;
 
@@ -63,6 +66,8 @@ public class Config {
                 SmsContext.builder().setSmsUrl(SMS_HOST_NAME).setSmsRegion(SMSRegion.EU).build())
             .setVerificationContext(
                 VerificationContext.builder().setVerificationUrl(VERIFICATION_HOST_NAME).build())
+            .setNumberLookupContext(
+                NumberLookupContext.builder().setNumberLookupUrl(NUMBER_LOOKUP_HOST_NAME).build())
             .build();
 
     client = new SinchClient(configuration);

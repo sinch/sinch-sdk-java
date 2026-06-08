@@ -1,0 +1,6 @@
+{
+  "type": "https://developers.sinch.com/docs/lookup/api/errors/validation",
+  "title": "Validation error",
+  "status": 400,
+  "traceId": "84c1fd4063c38d9f3900d06e56542d48"
+}
