@@ -42,18 +42,13 @@ class HttpClientApacheProxyIT {
     return new HttpRequest("api/test", HttpMethod.GET, null, (String) null, null, null, null, null);
   }
 
-  /** Start a plain (unauthenticated) Squid container, return the container ID. */
-  private static String startSquidContainer(int hostPort) throws Exception {
+  /**
+   * Start a plain (unauthenticated) Squid container with host networking. Returns the container ID.
+   */
+  private static String startSquidContainer() throws Exception {
     ProcessBuilder pb =
         new ProcessBuilder(
-            "docker",
-            "run",
-            "-d",
-            "--rm",
-            "--add-host=host.docker.internal:host-gateway",
-            "-p",
-            hostPort + ":" + SQUID_PORT,
-            "ubuntu/squid:latest");
+            "docker", "run", "-d", "--rm", "--network", "host", "ubuntu/squid:latest");
     pb.redirectErrorStream(true);
     Process p = pb.start();
     String containerId;
@@ -69,10 +64,10 @@ class HttpClientApacheProxyIT {
   }
 
   /**
-   * Start an authenticated Squid container using config and password files from test resources.
-   * Returns the container ID.
+   * Start an authenticated Squid container with host networking using config and password files
+   * from test resources. Returns the container ID.
    */
-  private static String startAuthSquidContainer(int hostPort) throws Exception {
+  private static String startAuthSquidContainer() throws Exception {
     // Resolve resource files from classpath
     Path squidConf =
         java.nio.file.Paths.get(
@@ -96,9 +91,8 @@ class HttpClientApacheProxyIT {
             "run",
             "-d",
             "--rm",
-            "--add-host=host.docker.internal:host-gateway",
-            "-p",
-            hostPort + ":" + SQUID_PORT,
+            "--network",
+            "host",
             "-v",
             squidConf.toAbsolutePath() + ":/etc/squid/squid.conf:ro",
             "-v",
@@ -135,8 +129,7 @@ class HttpClientApacheProxyIT {
 
   @Test
   void unauthenticatedProxyRoutesTraffic() throws Exception {
-    int proxyPort = findFreePort();
-    String containerId = startSquidContainer(proxyPort);
+    String containerId = startSquidContainer();
     try {
       MockWebServer targetServer = new MockWebServer();
       targetServer.start();
@@ -146,10 +139,10 @@ class HttpClientApacheProxyIT {
                 .setBody("{\"status\":\"ok\"}")
                 .addHeader("Content-Type", "application/json"));
 
-        String targetUrl = String.format("http://host.docker.internal:%d/", targetServer.getPort());
+        String targetUrl = String.format("http://localhost:%d/", targetServer.getPort());
 
         HttpProxyConfiguration proxyConfig =
-            HttpProxyConfiguration.builder().setHostname("localhost").setPort(proxyPort).build();
+            HttpProxyConfiguration.builder().setHostname("localhost").setPort(SQUID_PORT).build();
 
         try (HttpClientApache client = new HttpClientApache(proxyConfig)) {
           HttpResponse response =
@@ -171,8 +164,7 @@ class HttpClientApacheProxyIT {
 
   @Test
   void authenticatedProxyRoutesTrafficAfterChallenge() throws Exception {
-    int proxyPort = findFreePort();
-    String containerId = startAuthSquidContainer(proxyPort);
+    String containerId = startAuthSquidContainer();
     try {
       MockWebServer targetServer = new MockWebServer();
       targetServer.start();
@@ -182,12 +174,12 @@ class HttpClientApacheProxyIT {
                 .setBody("{\"status\":\"ok\"}")
                 .addHeader("Content-Type", "application/json"));
 
-        String targetUrl = String.format("http://host.docker.internal:%d/", targetServer.getPort());
+        String targetUrl = String.format("http://localhost:%d/", targetServer.getPort());
 
         HttpProxyConfiguration proxyConfig =
             HttpProxyConfiguration.builder()
                 .setHostname("localhost")
-                .setPort(proxyPort)
+                .setPort(SQUID_PORT)
                 .setUsername("proxyuser")
                 .setPassword("proxypass")
                 .build();
@@ -214,18 +206,17 @@ class HttpClientApacheProxyIT {
 
   @Test
   void authenticatedProxyRejectsWrongCredentials() throws Exception {
-    int proxyPort = findFreePort();
-    String containerId = startAuthSquidContainer(proxyPort);
+    String containerId = startAuthSquidContainer();
     try {
       MockWebServer targetServer = new MockWebServer();
       targetServer.start();
       try {
-        String targetUrl = String.format("http://host.docker.internal:%d/", targetServer.getPort());
+        String targetUrl = String.format("http://localhost:%d/", targetServer.getPort());
 
         HttpProxyConfiguration proxyConfig =
             HttpProxyConfiguration.builder()
                 .setHostname("localhost")
-                .setPort(proxyPort)
+                .setPort(SQUID_PORT)
                 .setUsername("wrong-user")
                 .setPassword("wrong-pass")
                 .build();
