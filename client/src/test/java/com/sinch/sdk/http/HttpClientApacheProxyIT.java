@@ -50,6 +50,7 @@ class HttpClientApacheProxyIT {
             "run",
             "-d",
             "--rm",
+            "--add-host=host.docker.internal:host-gateway",
             "-p",
             hostPort + ":" + SQUID_PORT,
             "ubuntu/squid:latest");
@@ -95,6 +96,7 @@ class HttpClientApacheProxyIT {
             "run",
             "-d",
             "--rm",
+            "--add-host=host.docker.internal:host-gateway",
             "-p",
             hostPort + ":" + SQUID_PORT,
             "-v",
@@ -215,23 +217,30 @@ class HttpClientApacheProxyIT {
     int proxyPort = findFreePort();
     String containerId = startAuthSquidContainer(proxyPort);
     try {
-      HttpProxyConfiguration proxyConfig =
-          HttpProxyConfiguration.builder()
-              .setHostname("localhost")
-              .setPort(proxyPort)
-              .setUsername("wrong-user")
-              .setPassword("wrong-pass")
-              .build();
+      MockWebServer targetServer = new MockWebServer();
+      targetServer.start();
+      try {
+        String targetUrl = String.format("http://host.docker.internal:%d/", targetServer.getPort());
 
-      try (HttpClientApache client = new HttpClientApache(proxyConfig)) {
-        HttpResponse response =
-            client.invokeAPI(
-                new ServerConfiguration("http://httpbin.org/get"), null, simpleGetRequest());
+        HttpProxyConfiguration proxyConfig =
+            HttpProxyConfiguration.builder()
+                .setHostname("localhost")
+                .setPort(proxyPort)
+                .setUsername("wrong-user")
+                .setPassword("wrong-pass")
+                .build();
 
-        assertEquals(
-            407,
-            response.getCode(),
-            "Wrong credentials must result in 407 Proxy Authentication Required");
+        try (HttpClientApache client = new HttpClientApache(proxyConfig)) {
+          HttpResponse response =
+              client.invokeAPI(new ServerConfiguration(targetUrl), null, simpleGetRequest());
+
+          assertEquals(
+              407,
+              response.getCode(),
+              "Wrong credentials must result in 407 Proxy Authentication Required");
+        }
+      } finally {
+        targetServer.shutdown();
       }
     } finally {
       stopContainer(containerId);
