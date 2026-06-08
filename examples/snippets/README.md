@@ -31,7 +31,7 @@ e.g.:
 ```shell
 launcher numbers/SearchForAvailableNumbers
 ...
-launcher regions/List
+launcher numbers/regions/List
 
 ```
 
