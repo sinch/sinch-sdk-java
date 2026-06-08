@@ -297,6 +297,7 @@
                                 <include>com.sinch.sdk.e2e.domains.voice.v1.VoiceIT</include>
                                 <include>com.sinch.sdk.e2e.domains.verification.v1.VerificationIT</include>
                                 <include>com.sinch.sdk.e2e.domains.numberlookup.v2.NumberLookupIT</include>
+                                <include>com.sinch.sdk.http.HttpClientApacheProxyIT</include>
                             </includes>
                         </configuration>
 
@@ -311,7 +312,6 @@
                 <configuration>
                     <skipTests>${skipUTs}</skipTests>
                     <parallel>all</parallel>
-                    <excludedGroups>proxy-e2e</excludedGroups>
                 </configuration>
             </plugin>
 

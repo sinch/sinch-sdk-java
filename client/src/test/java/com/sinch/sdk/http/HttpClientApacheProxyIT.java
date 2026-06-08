@@ -18,18 +18,15 @@ import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 /**
  * E2E proxy tests using Docker directly with a real Squid proxy.
  *
- * <p>Requires Docker to be running. Tests are tagged so they can be included/excluded in CI:
- *
- * <pre>{@code mvn test -Dgroups=proxy-e2e}</pre>
+ * <p>Requires Docker to be running. Included in the failsafe integration-test phase alongside other
+ * {@code *IT} tests.
  */
-@Tag("proxy-e2e")
-class HttpClientApacheProxyE2ETest {
+class HttpClientApacheProxyIT {
 
   private static final int SQUID_PORT = 3128;
 
@@ -78,13 +75,13 @@ class HttpClientApacheProxyE2ETest {
     // Resolve resource files from classpath
     Path squidConf =
         java.nio.file.Paths.get(
-            HttpClientApacheProxyE2ETest.class
+            HttpClientApacheProxyIT.class
                 .getClassLoader()
                 .getResource("squid-auth/squid.conf")
                 .toURI());
     Path passwords =
         java.nio.file.Paths.get(
-            HttpClientApacheProxyE2ETest.class
+            HttpClientApacheProxyIT.class
                 .getClassLoader()
                 .getResource("squid-auth/passwords")
                 .toURI());
