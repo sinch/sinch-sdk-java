@@ -39,7 +39,7 @@ public class Lookup {
 
     SinchClient client = new SinchClient(configuration);
 
-    NumberLookupV2Service numberLookupService = client.lookup().lookup();
+    NumberLookupV2Service numberLookupService = client.lookup().v2();
 
     NumberLookupRequest request =
         NumberLookupRequest.builder()
