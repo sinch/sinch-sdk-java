@@ -28,7 +28,7 @@ public class Lookup {
     String keySecret = Settings.getKeySecret().orElse("MY_KEY_SECRET");
 
     // The phone number you want to lookup in E.164 format
-    String phoneNumber = Settings.getPhoneNumber().orElse("PHONE_NUMBER");
+    String phoneNumber = "PHONE_NUMBER";
 
     Configuration configuration =
         Configuration.builder()
