@@ -29,7 +29,7 @@ public class LookupsSteps {
 
   @Given("the Number Lookup service is available")
   public void serviceAvailable() {
-    service = Config.getSinchClient().lookup().lookup();
+    service = Config.getSinchClient().lookup().v2();
     Assertions.assertNotNull(service, "Number Lookup service is not available");
   }
 

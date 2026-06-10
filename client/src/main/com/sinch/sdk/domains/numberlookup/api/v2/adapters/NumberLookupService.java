@@ -1,12 +1,14 @@
 package com.sinch.sdk.domains.numberlookup.api.v2.adapters;
 
 import com.sinch.sdk.auth.adapters.OAuthManager;
+import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
-import com.sinch.sdk.domains.numberlookup.api.v2.NumberLookupV2Service;
+import com.sinch.sdk.domains.numberlookup.models.v2.request.NumberLookupRequest;
+import com.sinch.sdk.domains.numberlookup.models.v2.response.NumberLookupResponse;
 import com.sinch.sdk.models.NumberLookupContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
@@ -31,7 +33,7 @@ public class NumberLookupService
   private volatile String uriUUID;
   private volatile Map<String, AuthManager> authManagers;
 
-  private volatile NumberLookupV2Service lookup;
+  private volatile NumberLookupServiceFacade lookup;
 
   public NumberLookupService(
       UnifiedCredentials credentials,
@@ -44,23 +46,22 @@ public class NumberLookupService
     this.httpClientSupplier = httpClientSupplier;
   }
 
-  @Override
-  public NumberLookupV2Service lookup() {
+  NumberLookupServiceFacade getLookupFacade() {
     if (null == this.lookup) {
       synchronized (this) {
         if (null == this.lookup) {
           instanceLazyInit();
           this.lookup =
-              new NumberLookupV2ServiceImpl(
-                  httpClientSupplier.get(),
-                  context.getNumberLookupServer(),
-                  authManagers,
-                  HttpMapper.getInstance(),
-                  uriUUID);
+              new NumberLookupServiceFacade(uriUUID, context, httpClientSupplier, authManagers);
         }
       }
     }
     return this.lookup;
+  }
+
+  @Override
+  public NumberLookupResponse lookup(NumberLookupRequest numberLookupRequest) throws ApiException {
+    return getLookupFacade().lookup(numberLookupRequest);
   }
 
   private void instanceLazyInit() {

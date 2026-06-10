@@ -10,6 +10,7 @@ class NumberLookupServiceTest {
 
   @Test
   void checkCredentialsNumberLookup() {
-    CredentialsValidationHelper.checkCredentials(() -> httpClient, NumberLookupService::lookup);
+    CredentialsValidationHelper.checkCredentials(
+        () -> httpClient, NumberLookupService::getLookupFacade);
   }
 }
