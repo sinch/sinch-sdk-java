@@ -38,9 +38,9 @@ launcher numbers/regions/List
 ## Available Snippets
 
 - Conversation: [README.md](src/main/java/conversation/README.md)
+- Number Lookup: [README.md](src/main/java/numberlookup/README.md)
 - Numbers: [README.md](src/main/java/numbers/README.md)
 - SMS: [README.md](src/main/java/sms/README.md)
 - Verification: [README.md](src/main/java/verification/README.md)
-- Number Lookup: [README.md](src/main/java/numberlookup/README.md)
 - Voice: [README.md](src/main/java/voice/README.md)
 
