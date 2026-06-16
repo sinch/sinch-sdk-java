@@ -30,16 +30,12 @@ public class ContactsSteps {
   ContactsService service;
   Contact createResponse;
   ContactsListResponse listPageResponse;
-  ContactsListResponse listAllResponse;
-  ContactsListResponse listPageIterateResponse;
   Contact getResponse;
   Contact updateResponse;
   Contact mergeResponse;
   boolean deletePassed;
   GetChannelProfileResponse channelProfileByContactIdResponse;
   IdentityConflictsListResponse listIdentityConflictsResponse;
-  IdentityConflictsListResponse listAllIdentityConflictsResponse;
-  IdentityConflictsListResponse listPageIterateIdentityConflictsResponse;
 
   @Given("^the Conversation service \"Contacts\" is available$")
   public void serviceAvailable() {
@@ -78,7 +74,7 @@ public class ContactsSteps {
 
     ContactsListQueryParameters request =
         ContactsListQueryParameters.builder().setPageSize(2).build();
-    listAllResponse = service.list(request);
+    listPageResponse = service.list(request);
   }
 
   @When("^I iterate manually over the contacts pages$")
@@ -86,7 +82,7 @@ public class ContactsSteps {
 
     ContactsListQueryParameters request =
         ContactsListQueryParameters.builder().setPageSize(2).build();
-    listPageIterateResponse = service.list(request);
+    listPageResponse = service.list(request);
   }
 
   @When("^I send a request to retrieve a contact$")
@@ -156,7 +152,7 @@ public class ContactsSteps {
 
     IdentityConflictsListQueryParameters request =
         IdentityConflictsListQueryParameters.builder().setPageSize(2).build();
-    listAllIdentityConflictsResponse = service.listIdentityConflicts(request);
+    listIdentityConflictsResponse = service.listIdentityConflicts(request);
   }
 
   @When("^I iterate manually over the identity conflicts pages$")
@@ -164,7 +160,7 @@ public class ContactsSteps {
 
     IdentityConflictsListQueryParameters request =
         IdentityConflictsListQueryParameters.builder().setPageSize(2).build();
-    listPageIterateIdentityConflictsResponse = service.listIdentityConflicts(request);
+    listIdentityConflictsResponse = service.listIdentityConflicts(request);
   }
 
   @Then("the contact is created")
@@ -181,15 +177,7 @@ public class ContactsSteps {
   @Then("the contacts list contains \"{int}\" contacts")
   public void listAllResult(int size) {
 
-    // FIXME: to be thread-safe compliant we need to check which variables are set
-    Iterator<?> iterator = null;
-    if (null != listAllResponse) {
-      iterator = listAllResponse.iterator();
-    }
-
-    if (null != listPageIterateResponse) {
-      iterator = listPageIterateResponse.iterator();
-    }
+    Iterator<?> iterator = listPageResponse.iterator();
     TestHelpers.checkIteratorItems(iterator, size);
   }
 
@@ -197,15 +185,13 @@ public class ContactsSteps {
   public void listPageIterateResult(int size) {
 
     int pageCount = 0;
-
-    ContactsListResponse listPageIterateResponseThreadSafety = listPageIterateResponse;
+    ContactsListResponse currentPage = listPageResponse;
     do {
       pageCount++;
-      if (!listPageIterateResponseThreadSafety.hasNextPage()) {
+      if (!currentPage.hasNextPage()) {
         break;
       }
-      listPageIterateResponseThreadSafety = listPageIterateResponseThreadSafety.nextPage();
-
+      currentPage = currentPage.nextPage();
     } while (true);
 
     Assertions.assertEquals(pageCount, size);
@@ -281,15 +267,8 @@ public class ContactsSteps {
 
   @Then("the identity conflicts list contains \"{int}\" identity conflicts")
   public void listIdentityConflictsAllResults(int count) {
-    // FIXME: to be thread-safe compliant we need to check which variables are set
-    Iterator<?> iterator = null;
-    if (null != listAllIdentityConflictsResponse) {
-      iterator = listAllIdentityConflictsResponse.iterator();
-    }
 
-    if (null != listPageIterateIdentityConflictsResponse) {
-      iterator = listPageIterateIdentityConflictsResponse.iterator();
-    }
+    Iterator<?> iterator = listIdentityConflictsResponse.iterator();
     TestHelpers.checkIteratorItems(iterator, count);
   }
 
@@ -297,15 +276,13 @@ public class ContactsSteps {
   public void listAllIdentityConflictsPageIterateResults(int count) {
 
     int pageCount = 0;
-    IdentityConflictsListResponse listPageIterateResponseThreadSafety =
-        listPageIterateIdentityConflictsResponse;
+    IdentityConflictsListResponse currentPage = listIdentityConflictsResponse;
     do {
       pageCount++;
-      if (!listPageIterateResponseThreadSafety.hasNextPage()) {
+      if (!currentPage.hasNextPage()) {
         break;
       }
-      listPageIterateResponseThreadSafety = listPageIterateResponseThreadSafety.nextPage();
-
+      currentPage = currentPage.nextPage();
     } while (true);
 
     Assertions.assertEquals(pageCount, count);
