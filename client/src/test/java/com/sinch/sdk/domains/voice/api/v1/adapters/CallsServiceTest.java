@@ -23,7 +23,7 @@ import com.sinch.sdk.domains.voice.api.v1.CallsService;
 import com.sinch.sdk.domains.voice.models.v1.calls.CallInformationTest;
 import com.sinch.sdk.domains.voice.models.v1.calls.request.CallLeg;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation;
-import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControlTest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControlPatchTest;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,7 +38,7 @@ public class CallsServiceTest extends BaseTest {
   @GivenTextResource("/domains/voice/v1/calls/GetCallInformationResponseDto.json")
   String getCallInformationResponseDto;
 
-  @GivenTextResource("/domains/voice/v1/svaml/SvamlControlDto.json")
+  @GivenTextResource("/domains/voice/v1/svaml/SvamlControlPatchDto.json")
   String svamlControlDto;
 
   static final Collection<String> AUTH_NAMES = Arrays.asList("Basic", "Signed");
@@ -108,7 +108,7 @@ public class CallsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    service.update("call/id", SvamlControlTest.expectedSvamlControl);
+    service.update("call/id", SvamlControlPatchTest.expectedSvamlControlPatch);
   }
 
   @Test
@@ -132,6 +132,7 @@ public class CallsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    service.manageWithCallLeg("call/id", CallLeg.BOTH, SvamlControlTest.expectedSvamlControl);
+    service.manageWithCallLeg(
+        "call/id", CallLeg.BOTH, SvamlControlPatchTest.expectedSvamlControlPatch);
   }
 }

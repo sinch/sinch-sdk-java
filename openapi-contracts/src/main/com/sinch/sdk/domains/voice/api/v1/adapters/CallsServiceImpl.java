@@ -24,8 +24,8 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.voice.models.v1.calls.request.CallLeg;
+import com.sinch.sdk.domains.voice.models.v1.calls.request.SvamlControlPatch;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation;
-import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -109,7 +109,7 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v1.Call
   }
 
   @Override
-  public void manageWithCallLeg(String callId, CallLeg callLeg, SvamlControl svamlControl)
+  public void manageWithCallLeg(String callId, CallLeg callLeg, SvamlControlPatch svamlControlPatch)
       throws ApiException {
 
     LOGGER.finest(
@@ -121,10 +121,10 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v1.Call
             + "callLeg: "
             + callLeg
             + ", "
-            + "svamlControl: "
-            + svamlControl);
+            + "svamlControlPatch: "
+            + svamlControlPatch);
 
-    HttpRequest httpRequest = manageWithCallLegRequestBuilder(callId, callLeg, svamlControl);
+    HttpRequest httpRequest = manageWithCallLegRequestBuilder(callId, callLeg, svamlControlPatch);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -142,7 +142,7 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v1.Call
   }
 
   private HttpRequest manageWithCallLegRequestBuilder(
-      String callId, CallLeg callLeg, SvamlControl svamlControl) throws ApiException {
+      String callId, CallLeg callLeg, SvamlControlPatch svamlControlPatch) throws ApiException {
     // verify the required parameter 'callId' is set
     if (callId == null) {
       throw new ApiException(
@@ -169,7 +169,7 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v1.Call
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "Signed");
-    final String serializedBody = mapper.serialize(localVarContentTypes, svamlControl);
+    final String serializedBody = mapper.serialize(localVarContentTypes, svamlControlPatch);
 
     return new HttpRequest(
         localVarPath,
@@ -183,11 +183,12 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v1.Call
   }
 
   @Override
-  public void update(String callId, SvamlControl svamlControl) throws ApiException {
+  public void update(String callId, SvamlControlPatch svamlControlPatch) throws ApiException {
 
-    LOGGER.finest("[update]" + " " + "callId: " + callId + ", " + "svamlControl: " + svamlControl);
+    LOGGER.finest(
+        "[update]" + " " + "callId: " + callId + ", " + "svamlControlPatch: " + svamlControlPatch);
 
-    HttpRequest httpRequest = updateRequestBuilder(callId, svamlControl);
+    HttpRequest httpRequest = updateRequestBuilder(callId, svamlControlPatch);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -204,7 +205,7 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v1.Call
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest updateRequestBuilder(String callId, SvamlControl svamlControl)
+  private HttpRequest updateRequestBuilder(String callId, SvamlControlPatch svamlControlPatch)
       throws ApiException {
     // verify the required parameter 'callId' is set
     if (callId == null) {
@@ -225,7 +226,7 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v1.Call
     final Collection<String> localVarContentTypes = Arrays.asList("application/json");
 
     final Collection<String> localVarAuthNames = Arrays.asList("Basic", "Signed");
-    final String serializedBody = mapper.serialize(localVarContentTypes, svamlControl);
+    final String serializedBody = mapper.serialize(localVarContentTypes, svamlControlPatch);
 
     return new HttpRequest(
         localVarPath,

@@ -25,7 +25,8 @@ import java.util.stream.Stream;
  */
 @JsonDeserialize(builder = SvamlActionHangupImpl.Builder.class)
 public interface SvamlActionHangup
-    extends com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction {
+    extends com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction,
+        com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionPatch {
 
   /** ready to use action to send a `hangup` */
   SvamlActionHangup SVAML_ACTION_HANGUP = SvamlActionHangup.builder().build();
