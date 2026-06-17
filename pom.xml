@@ -283,10 +283,6 @@
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven.failsafe.plugin.version}</version>
-                <configuration>
-                    <parallel>all</parallel>
-                    <useUnlimitedThreads>true</useUnlimitedThreads>
-                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -314,7 +310,6 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <skipTests>${skipUTs}</skipTests>
-                    <parallel>all</parallel>
                 </configuration>
             </plugin>
 
