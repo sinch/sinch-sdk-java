@@ -20,8 +20,6 @@ public class InboundsSteps {
   InboundsService service;
   InboundMessage getResponse;
   ListInboundsResponse listOnePageResponse;
-  ListInboundsResponse listAllResponse;
-  ListInboundsResponse listAllByPageResponse;
 
   @Given("^the SMS service \"Inbounds\" is available")
   public void serviceAvailable() {
@@ -62,7 +60,7 @@ public class InboundsSteps {
             .setPageSize(2)
             .build();
 
-    listAllResponse = service.list(request);
+    listOnePageResponse = service.list(request);
   }
 
   @When("^I iterate manually over the inbound messages pages$")
@@ -73,7 +71,7 @@ public class InboundsSteps {
             .setPageSize(2)
             .build();
 
-    listAllByPageResponse = service.list(request);
+    listOnePageResponse = service.list(request);
   }
 
   @Then("the response contains the inbound message details")
@@ -99,11 +97,9 @@ public class InboundsSteps {
 
   @Then("the inbound messages list contains \"{int}\" inbound messages")
   public void listAllResult(int expected) {
-    ListInboundsResponse response =
-        null != listAllResponse ? listAllResponse : listAllByPageResponse;
 
     AtomicInteger count = new AtomicInteger();
-    response.iterator().forEachRemaining(_unused -> count.getAndIncrement());
+    listOnePageResponse.iterator().forEachRemaining(_unused -> count.getAndIncrement());
 
     Assertions.assertEquals(count.get(), expected);
   }
@@ -111,10 +107,11 @@ public class InboundsSteps {
   @Then("the inbound messages iteration result contains the data from \"{int}\" pages")
   public void listAllByPageResult(int expected) {
 
-    int count = listAllByPageResponse.getContent().isEmpty() ? 0 : 1;
-    while (listAllByPageResponse.hasNextPage()) {
+    int count = listOnePageResponse.getContent().isEmpty() ? 0 : 1;
+    ListInboundsResponse currentPage = listOnePageResponse;
+    while (currentPage.hasNextPage()) {
       count++;
-      listAllByPageResponse = listAllByPageResponse.nextPage();
+      currentPage = currentPage.nextPage();
     }
     Assertions.assertEquals(count, expected);
   }

@@ -46,8 +46,6 @@ public class NumbersSteps {
   ActiveNumber rentResponse;
   ActiveNumbersListResponse activeNumberListResponse;
 
-  ActiveNumbersListResponse activeNumberListAllResponse;
-
   ActiveNumber updateResponse;
   ActiveNumber getResponse;
   ApiException getResponseException;
@@ -156,7 +154,7 @@ public class NumbersSteps {
             .setRegionCode("US")
             .setType(NumberType.LOCAL)
             .build();
-    activeNumberListAllResponse = service.list(request);
+    activeNumberListResponse = service.list(request);
   }
 
   @When("I send a request to update the phone number {string}")
@@ -336,7 +334,7 @@ public class NumbersSteps {
   @Then("the phone numbers list contains \"{int}\" phone numbers")
   public void listAllResult(int expected) {
 
-    Assertions.assertEquals(expected, activeNumberListAllResponse.stream().count());
+    Assertions.assertEquals(expected, activeNumberListResponse.stream().count());
   }
 
   @Then("the response contains a phone number with updated parameters")

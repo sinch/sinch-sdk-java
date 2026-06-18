@@ -36,8 +36,6 @@ public class BatchesSteps {
   BatchResponse sendTextWithParametersResponse;
   DryRunResponse dryRunResponse;
   ListBatchesResponse listOnePageResponse;
-  ListBatchesResponse listAllResponse;
-  ListBatchesResponse listAllByPageResponse;
   BatchResponse getBatchResponse;
   BatchResponse updateResponse;
   BatchResponse replaceResponse;
@@ -144,7 +142,7 @@ public class BatchesSteps {
     ListBatchesQueryParameters request =
         ListBatchesQueryParameters.builder().setPageSize(2).build();
 
-    listAllResponse = service.list(request);
+    listOnePageResponse = service.list(request);
   }
 
   @When("^I iterate manually over the SMS batches pages$")
@@ -152,7 +150,7 @@ public class BatchesSteps {
     ListBatchesQueryParameters request =
         ListBatchesQueryParameters.builder().setPageSize(2).build();
 
-    listAllByPageResponse = service.list(request);
+    listOnePageResponse = service.list(request);
   }
 
   @When("^I send a request to retrieve an SMS batch$")
@@ -304,11 +302,8 @@ public class BatchesSteps {
   @Then("the SMS batches list contains \"{int}\" SMS batches")
   public void listAllResult(int expected) {
 
-    ListBatchesResponse response =
-        null != listAllResponse ? listAllResponse : listAllByPageResponse;
-
     AtomicInteger count = new AtomicInteger();
-    response.iterator().forEachRemaining(_unused -> count.getAndIncrement());
+    listOnePageResponse.iterator().forEachRemaining(_unused -> count.getAndIncrement());
 
     Assertions.assertEquals(count.get(), expected);
   }
@@ -316,10 +311,11 @@ public class BatchesSteps {
   @Then("the SMS batches iteration result contains the data from \"{int}\" pages")
   public void listAllByPageResult(int expected) {
 
-    int count = listAllByPageResponse.getContent().isEmpty() ? 0 : 1;
-    while (listAllByPageResponse.hasNextPage()) {
+    int count = listOnePageResponse.getContent().isEmpty() ? 0 : 1;
+    ListBatchesResponse currentPage = listOnePageResponse;
+    while (currentPage.hasNextPage()) {
       count++;
-      listAllByPageResponse = listAllByPageResponse.nextPage();
+      currentPage = currentPage.nextPage();
     }
     Assertions.assertEquals(count, expected);
   }

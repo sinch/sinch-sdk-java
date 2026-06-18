@@ -29,13 +29,9 @@ public class MessagesSteps {
   MessagesService service;
   SendMessageResponse sendResponse;
   MessagesListResponse listPageResponse;
-  MessagesListResponse listAllResponse;
-  MessagesListResponse listPageIterateResponse;
   ConversationMessage getResponse;
   ConversationMessage updateResponse;
   MessagesListResponse listLastMessagesByChannelIdentityResponse;
-  MessagesListResponse listAllLastMessagesByChannelIdentityResponse;
-  MessagesListResponse listPageIteratorLastMessagesByChannelIdentityResponse;
 
   boolean deletePassed;
 
@@ -73,7 +69,7 @@ public class MessagesSteps {
 
     MessagesListQueryParameters request =
         MessagesListQueryParameters.builder().setPageSize(2).build();
-    listAllResponse = service.list(request);
+    listPageResponse = service.list(request);
   }
 
   @When("^I iterate manually over the messages pages$")
@@ -81,7 +77,7 @@ public class MessagesSteps {
 
     MessagesListQueryParameters request =
         MessagesListQueryParameters.builder().setPageSize(2).build();
-    listPageIterateResponse = service.list(request);
+    listPageResponse = service.list(request);
   }
 
   @When("^I send a request to retrieve a message$")
@@ -126,8 +122,7 @@ public class MessagesSteps {
             .setMessagesSource(MessageSource.CONVERSATION_SOURCE)
             .setPageSize(2)
             .build();
-    listAllLastMessagesByChannelIdentityResponse =
-        service.listLastMessagesByChannelIdentity(request);
+    listLastMessagesByChannelIdentityResponse = service.listLastMessagesByChannelIdentity(request);
   }
 
   @When("^I iterate manually over the last messages sent to specified channel identities pages$")
@@ -139,8 +134,7 @@ public class MessagesSteps {
             .setMessagesSource(MessageSource.CONVERSATION_SOURCE)
             .setPageSize(2)
             .build();
-    listPageIteratorLastMessagesByChannelIdentityResponse =
-        service.listLastMessagesByChannelIdentity(request);
+    listLastMessagesByChannelIdentityResponse = service.listLastMessagesByChannelIdentity(request);
   }
 
   @Then("the response contains the id of the message")
@@ -160,15 +154,7 @@ public class MessagesSteps {
   @Then("the messages list contains \"{int}\" messages")
   public void listAllResult(int size) {
 
-    // FIXME: to be thread-safe compliant we need to check which variables are set
-    Iterator<?> iterator = null;
-    if (null != listAllResponse) {
-      iterator = listAllResponse.iterator();
-    }
-
-    if (null != listPageIterateResponse) {
-      iterator = listPageIterateResponse.iterator();
-    }
+    Iterator<?> iterator = listPageResponse.iterator();
     TestHelpers.checkIteratorItems(iterator, size);
   }
 
@@ -176,15 +162,13 @@ public class MessagesSteps {
   public void listPageIterateResult(int size) {
 
     int pageCount = 0;
-
-    MessagesListResponse listPageIterateResponseThreadSafety = listPageIterateResponse;
+    MessagesListResponse currentPage = listPageResponse;
     do {
       pageCount++;
-      if (!listPageIterateResponseThreadSafety.hasNextPage()) {
+      if (!currentPage.hasNextPage()) {
         break;
       }
-      listPageIterateResponseThreadSafety = listPageIterateResponseThreadSafety.nextPage();
-
+      currentPage = currentPage.nextPage();
     } while (true);
 
     Assertions.assertEquals(pageCount, size);
@@ -215,16 +199,8 @@ public class MessagesSteps {
 
   @Then("the response list contains \"{int}\" last messages sent to specified channel identities")
   public void listAllLastMessagesByChannelIdentity(int size) {
-    Iterator<?> iterator = null;
 
-    if (null != listAllLastMessagesByChannelIdentityResponse) {
-      iterator = listAllLastMessagesByChannelIdentityResponse.iterator();
-    }
-
-    if (null != listPageIteratorLastMessagesByChannelIdentityResponse) {
-      iterator = listPageIteratorLastMessagesByChannelIdentityResponse.iterator();
-    }
-
+    Iterator<?> iterator = listLastMessagesByChannelIdentityResponse.iterator();
     TestHelpers.checkIteratorItems(iterator, size);
   }
 
@@ -234,16 +210,13 @@ public class MessagesSteps {
   public void listAllLastMessagesByChannelIdentityPageIterator(int size) {
 
     int pageCount = 0;
-
-    MessagesListResponse listPageIterateResponseThreadSafety =
-        listPageIteratorLastMessagesByChannelIdentityResponse;
+    MessagesListResponse currentPage = listLastMessagesByChannelIdentityResponse;
     do {
       pageCount++;
-      if (!listPageIterateResponseThreadSafety.hasNextPage()) {
+      if (!currentPage.hasNextPage()) {
         break;
       }
-      listPageIterateResponseThreadSafety = listPageIterateResponseThreadSafety.nextPage();
-
+      currentPage = currentPage.nextPage();
     } while (true);
 
     Assertions.assertEquals(pageCount, size);

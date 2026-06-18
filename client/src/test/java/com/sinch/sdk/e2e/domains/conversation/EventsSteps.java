@@ -23,8 +23,6 @@ public class EventsSteps {
   EventsService service;
   SendEventResponse sendResponse;
   EventsListResponse listPageResponse;
-  EventsListResponse listAllResponse;
-  EventsListResponse listPageIterateResponse;
   ConversationEvent getResponse;
   boolean deletePassed;
 
@@ -57,14 +55,14 @@ public class EventsSteps {
   public void listAll() {
 
     EventsListQueryParameters request = EventsListQueryParameters.builder().setPageSize(2).build();
-    listAllResponse = service.list(request);
+    listPageResponse = service.list(request);
   }
 
   @When("^I iterate manually over the conversation events pages$")
   public void listPageIterate() {
 
     EventsListQueryParameters request = EventsListQueryParameters.builder().setPageSize(2).build();
-    listPageIterateResponse = service.list(request);
+    listPageResponse = service.list(request);
   }
 
   @When("^I send a request to retrieve a conversation event$")
@@ -94,15 +92,7 @@ public class EventsSteps {
   @Then("the conversation events list contains \"{int}\" conversation events")
   public void listAllResult(int size) {
 
-    // FIXME: to be thread-safe compliant we need to check which variables are set
-    Iterator<?> iterator = null;
-    if (null != listAllResponse) {
-      iterator = listAllResponse.iterator();
-    }
-
-    if (null != listPageIterateResponse) {
-      iterator = listPageIterateResponse.iterator();
-    }
+    Iterator<?> iterator = listPageResponse.iterator();
     TestHelpers.checkIteratorItems(iterator, size);
   }
 
@@ -110,15 +100,13 @@ public class EventsSteps {
   public void listPageIterateResult(int size) {
 
     int pageCount = 0;
-
-    EventsListResponse listPageIterateResponseThreadSafety = listPageIterateResponse;
+    EventsListResponse currentPage = listPageResponse;
     do {
       pageCount++;
-      if (!listPageIterateResponseThreadSafety.hasNextPage()) {
+      if (!currentPage.hasNextPage()) {
         break;
       }
-      listPageIterateResponseThreadSafety = listPageIterateResponseThreadSafety.nextPage();
-
+      currentPage = currentPage.nextPage();
     } while (true);
 
     Assertions.assertEquals(pageCount, size);

@@ -38,11 +38,7 @@ public class ConversationsSteps {
   ConversationsService service;
   Conversation createResponse;
   ConversationsListResponse listPageResponse;
-  ConversationsListResponse listAllResponse;
-  ConversationsListResponse listPageIterateResponse;
   RecentConversationsListResponse listRecentPageResponse;
-  RecentConversationsListResponse listRecentAllResponse;
-  RecentConversationsListResponse listRecentPageIterateResponse;
   Conversation getResponse;
   Conversation updateResponse;
   boolean deletePassed;
@@ -87,7 +83,7 @@ public class ConversationsSteps {
 
     ConversationsListQueryParameters request =
         ConversationsListQueryParameters.builder().setAppId(AppsSteps.APP_ID).build();
-    listAllResponse = service.list(request);
+    listPageResponse = service.list(request);
   }
 
   @When("^I iterate manually over the conversations pages$")
@@ -95,7 +91,7 @@ public class ConversationsSteps {
 
     ConversationsListQueryParameters request =
         ConversationsListQueryParameters.builder().setAppId(AppsSteps.APP_ID).build();
-    listPageIterateResponse = service.list(request);
+    listPageResponse = service.list(request);
   }
 
   @When("^I send a request to list the recent conversations$")
@@ -111,7 +107,7 @@ public class ConversationsSteps {
 
     RecentConversationsListQueryParameters request =
         RecentConversationsListQueryParameters.builder().setAppId(AppsSteps.APP_ID).build();
-    listRecentAllResponse = service.listRecent(request);
+    listRecentPageResponse = service.listRecent(request);
   }
 
   @When("^I iterate manually over the recent conversations pages$")
@@ -119,7 +115,7 @@ public class ConversationsSteps {
 
     RecentConversationsListQueryParameters request =
         RecentConversationsListQueryParameters.builder().setAppId(AppsSteps.APP_ID).build();
-    listRecentPageIterateResponse = service.listRecent(request);
+    listRecentPageResponse = service.listRecent(request);
   }
 
   @When("^I send a request to retrieve a conversation$")
@@ -205,15 +201,7 @@ public class ConversationsSteps {
   @Then("the conversations list contains \"{int}\" conversations")
   public void listAllResult(int size) {
 
-    // FIXME: to be thread-safe compliant we need to check which variables are set
-    Iterator<?> iterator = null;
-    if (null != listAllResponse) {
-      iterator = listAllResponse.iterator();
-    }
-
-    if (null != listPageIterateResponse) {
-      iterator = listPageIterateResponse.iterator();
-    }
+    Iterator<?> iterator = listPageResponse.iterator();
     TestHelpers.checkIteratorItems(iterator, size);
   }
 
@@ -221,15 +209,13 @@ public class ConversationsSteps {
   public void listPageIterateResult(int size) {
 
     int pageCount = 0;
-
-    ConversationsListResponse listPageIterateResponseThreadSafety = listPageIterateResponse;
+    ConversationsListResponse currentPage = listPageResponse;
     do {
       pageCount++;
-      if (!listPageIterateResponseThreadSafety.hasNextPage()) {
+      if (!currentPage.hasNextPage()) {
         break;
       }
-      listPageIterateResponseThreadSafety = listPageIterateResponseThreadSafety.nextPage();
-
+      currentPage = currentPage.nextPage();
     } while (true);
 
     Assertions.assertEquals(pageCount, size);
@@ -244,14 +230,7 @@ public class ConversationsSteps {
   @Then("the recent conversations list contains \"{int}\" recent conversations")
   public void listRecentAllResult(int size) {
 
-    Iterator<?> iterator = null;
-    if (null != listRecentAllResponse) {
-      iterator = listRecentAllResponse.iterator();
-    }
-
-    if (null != listRecentPageIterateResponse) {
-      iterator = listRecentPageIterateResponse.iterator();
-    }
+    Iterator<?> iterator = listRecentPageResponse.iterator();
     TestHelpers.checkIteratorItems(iterator, size);
   }
 
@@ -259,16 +238,13 @@ public class ConversationsSteps {
   public void listRecentPageIterateResult(int size) {
 
     int pageCount = 0;
-
-    RecentConversationsListResponse listPageIterateResponseThreadSafety =
-        listRecentPageIterateResponse;
+    RecentConversationsListResponse currentPage = listRecentPageResponse;
     do {
       pageCount++;
-      if (!listPageIterateResponseThreadSafety.hasNextPage()) {
+      if (!currentPage.hasNextPage()) {
         break;
       }
-      listPageIterateResponseThreadSafety = listPageIterateResponseThreadSafety.nextPage();
-
+      currentPage = currentPage.nextPage();
     } while (true);
 
     Assertions.assertEquals(pageCount, size);
