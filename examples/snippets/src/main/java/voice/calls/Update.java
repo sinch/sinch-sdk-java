@@ -9,7 +9,7 @@ package voice.calls;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.voice.api.v1.CallsService;
-import com.sinch.sdk.domains.voice.models.v1.calls.request.SvamlControlPatch;
+import com.sinch.sdk.domains.voice.models.v1.calls.request.CallUpdateRequest;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangup;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionPatch;
 import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstruction;
@@ -50,8 +50,8 @@ public class Update {
 
     Collection<SvamlInstruction> instructions = Collections.singletonList(instruction);
 
-    SvamlControlPatch request =
-        SvamlControlPatch.builder().setInstructions(instructions).setAction(action).build();
+    CallUpdateRequest request =
+        CallUpdateRequest.builder().setInstructions(instructions).setAction(action).build();
 
     callsService.update(callId, request);
 

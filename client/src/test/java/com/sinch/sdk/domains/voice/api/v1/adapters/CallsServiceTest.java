@@ -22,8 +22,8 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.voice.api.v1.CallsService;
 import com.sinch.sdk.domains.voice.models.v1.calls.CallInformationTest;
 import com.sinch.sdk.domains.voice.models.v1.calls.request.CallLeg;
+import com.sinch.sdk.domains.voice.models.v1.calls.request.CallUpdateRequestTest;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation;
-import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControlPatchTest;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,8 +38,8 @@ public class CallsServiceTest extends BaseTest {
   @GivenTextResource("/domains/voice/v1/calls/GetCallInformationResponseDto.json")
   String getCallInformationResponseDto;
 
-  @GivenTextResource("/domains/voice/v1/svaml/SvamlControlPatchDto.json")
-  String svamlControlDto;
+  @GivenTextResource("/domains/voice/v1/calls/request/CallUpdateRequestDto.json")
+  String callUpdateRequestDto;
 
   static final Collection<String> AUTH_NAMES = Arrays.asList("Basic", "Signed");
 
@@ -95,7 +95,7 @@ public class CallsServiceTest extends BaseTest {
             "/calling/v1/calls/id/" + URLPathUtils.encodePathSegment("call/id"),
             HttpMethod.PATCH,
             Collections.emptyList(),
-            svamlControlDto,
+            callUpdateRequestDto,
             Collections.emptyMap(),
             Collections.emptyList(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
@@ -108,7 +108,7 @@ public class CallsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    service.update("call/id", SvamlControlPatchTest.expectedSvamlControlPatch);
+    service.update("call/id", CallUpdateRequestTest.expectedCallUpdateRequest);
   }
 
   @Test
@@ -119,7 +119,7 @@ public class CallsServiceTest extends BaseTest {
             "/calling/v1/calls/id/" + URLPathUtils.encodePathSegment("call/id") + "/leg/both",
             HttpMethod.PATCH,
             Collections.emptyList(),
-            svamlControlDto,
+            callUpdateRequestDto,
             Collections.emptyMap(),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
@@ -133,6 +133,6 @@ public class CallsServiceTest extends BaseTest {
         .thenReturn(httpResponse);
 
     service.manageWithCallLeg(
-        "call/id", CallLeg.BOTH, SvamlControlPatchTest.expectedSvamlControlPatch);
+        "call/id", CallLeg.BOTH, CallUpdateRequestTest.expectedCallUpdateRequest);
   }
 }

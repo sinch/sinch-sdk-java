@@ -5,7 +5,7 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.voice.api.v1.CallsService;
 import com.sinch.sdk.domains.voice.models.v1.Price;
 import com.sinch.sdk.domains.voice.models.v1.calls.request.CallLeg;
-import com.sinch.sdk.domains.voice.models.v1.calls.request.SvamlControlPatch;
+import com.sinch.sdk.domains.voice.models.v1.calls.request.CallUpdateRequest;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation.DomainEnum;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation.ReasonEnum;
@@ -46,8 +46,8 @@ public class CallsSteps {
   @When("^I send a request to update a call$")
   public void updateCall() {
 
-    SvamlControlPatch request =
-        SvamlControlPatch.builder()
+    CallUpdateRequest request =
+        CallUpdateRequest.builder()
             .setInstructions(
                 Arrays.asList(
                     SvamlInstructionSay.builder()
@@ -63,8 +63,8 @@ public class CallsSteps {
   @When("^I send a request to update a call that doesn't exist$")
   public void updateCallNotExits() {
 
-    SvamlControlPatch request =
-        SvamlControlPatch.builder()
+    CallUpdateRequest request =
+        CallUpdateRequest.builder()
             .setInstructions(
                 Arrays.asList(
                     SvamlInstructionSay.builder()
@@ -83,8 +83,8 @@ public class CallsSteps {
   @When("^I send a request to manage a call with callLeg$")
   public void manageCallWithCallLeg() {
 
-    SvamlControlPatch request =
-        SvamlControlPatch.builder()
+    CallUpdateRequest request =
+        CallUpdateRequest.builder()
             .setInstructions(
                 Arrays.asList(
                     SvamlInstructionPlayFiles.builder()
