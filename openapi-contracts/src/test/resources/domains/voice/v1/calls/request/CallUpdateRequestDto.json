@@ -1,0 +1,12 @@
+{
+  "instructions": [
+    {
+      "name": "say",
+      "text": "Sorry, the conference has been cancelled. The call will end now.",
+      "locale": "en-US"
+    }
+  ],
+  "action": {
+    "name": "hangup"
+  }
+}

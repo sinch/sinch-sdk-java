@@ -10,8 +10,8 @@ package voice.calls;
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.voice.api.v1.CallsService;
 import com.sinch.sdk.domains.voice.models.v1.calls.request.CallLeg;
-import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction;
+import com.sinch.sdk.domains.voice.models.v1.calls.request.CallUpdateRequest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.ManagedCallSvamlAction;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangup;
 import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstruction;
 import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSay;
@@ -47,7 +47,7 @@ public class ManageWithCallLeg {
 
     LOGGER.info(String.format("Manage call with ID '%s'", callId));
 
-    SvamlAction action = SvamlActionHangup.SVAML_ACTION_HANGUP;
+    ManagedCallSvamlAction action = SvamlActionHangup.SVAML_ACTION_HANGUP;
 
     Collection<SvamlInstruction> instructions =
         Collections.singletonList(
@@ -55,8 +55,8 @@ public class ManageWithCallLeg {
                 .setText("Hello, the call is over, hanging up now. Goodbye")
                 .build());
 
-    SvamlControl request =
-        SvamlControl.builder().setInstructions(instructions).setAction(action).build();
+    CallUpdateRequest request =
+        CallUpdateRequest.builder().setInstructions(instructions).setAction(action).build();
 
     callsService.manageWithCallLeg(callId, callLeg, request);
 
