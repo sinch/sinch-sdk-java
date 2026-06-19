@@ -11,7 +11,7 @@
 package com.sinch.sdk.domains.voice.models.v1.calls.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionPatch;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.ManagedCallSvamlAction;
 import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstruction;
 import java.util.Collection;
 
@@ -36,7 +36,7 @@ public interface CallUpdateRequest {
    *
    * @return action
    */
-  SvamlActionPatch getAction();
+  ManagedCallSvamlAction getAction();
 
   /**
    * Getting builder
@@ -66,7 +66,7 @@ public interface CallUpdateRequest {
      * @return Current builder
      * @see #getAction
      */
-    Builder setAction(SvamlActionPatch action);
+    Builder setAction(ManagedCallSvamlAction action);
 
     /**
      * Create instance

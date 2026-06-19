@@ -24,7 +24,7 @@ import java.util.stream.Stream;
 @JsonDeserialize(builder = SvamlActionContinueImpl.Builder.class)
 public interface SvamlActionContinue
     extends com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction,
-        com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionPatch {
+        com.sinch.sdk.domains.voice.models.v1.svaml.action.ManagedCallSvamlAction {
 
   /** ready to use action to send a `continue` */
   SvamlActionContinue SVAML_ACTION_CONTINUE = SvamlActionContinue.builder().build();

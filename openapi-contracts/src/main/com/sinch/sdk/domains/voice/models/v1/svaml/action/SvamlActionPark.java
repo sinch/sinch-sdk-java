@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 @JsonDeserialize(builder = SvamlActionParkImpl.Builder.class)
 public interface SvamlActionPark
     extends com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction,
-        com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionPatch {
+        com.sinch.sdk.domains.voice.models.v1.svaml.action.ManagedCallSvamlAction {
 
   /** The name property. Must have the value <code>park</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {

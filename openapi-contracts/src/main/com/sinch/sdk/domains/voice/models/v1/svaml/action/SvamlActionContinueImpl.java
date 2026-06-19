@@ -15,7 +15,7 @@ import java.util.Objects;
 public class SvamlActionContinueImpl
     implements SvamlActionContinue,
         com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction,
-        com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionPatch {
+        com.sinch.sdk.domains.voice.models.v1.svaml.action.ManagedCallSvamlAction {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_NAME = "name";

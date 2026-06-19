@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionPatch;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.ManagedCallSvamlAction;
 import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstruction;
 import java.util.Collection;
 import java.util.Objects;
@@ -27,13 +27,13 @@ public class CallUpdateRequestImpl implements CallUpdateRequest {
 
   public static final String JSON_PROPERTY_ACTION = "action";
 
-  private OptionalValue<SvamlActionPatch> action;
+  private OptionalValue<ManagedCallSvamlAction> action;
 
   public CallUpdateRequestImpl() {}
 
   protected CallUpdateRequestImpl(
       OptionalValue<Collection<SvamlInstruction>> instructions,
-      OptionalValue<SvamlActionPatch> action) {
+      OptionalValue<ManagedCallSvamlAction> action) {
     this.instructions = instructions;
     this.action = action;
   }
@@ -50,13 +50,13 @@ public class CallUpdateRequestImpl implements CallUpdateRequest {
   }
 
   @JsonIgnore
-  public SvamlActionPatch getAction() {
+  public ManagedCallSvamlAction getAction() {
     return action.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_ACTION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<SvamlActionPatch> action() {
+  public OptionalValue<ManagedCallSvamlAction> action() {
     return action;
   }
 
@@ -102,7 +102,7 @@ public class CallUpdateRequestImpl implements CallUpdateRequest {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements CallUpdateRequest.Builder {
     OptionalValue<Collection<SvamlInstruction>> instructions = OptionalValue.empty();
-    OptionalValue<SvamlActionPatch> action = OptionalValue.empty();
+    OptionalValue<ManagedCallSvamlAction> action = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_INSTRUCTIONS)
     public Builder setInstructions(Collection<SvamlInstruction> instructions) {
@@ -111,7 +111,7 @@ public class CallUpdateRequestImpl implements CallUpdateRequest {
     }
 
     @JsonProperty(JSON_PROPERTY_ACTION)
-    public Builder setAction(SvamlActionPatch action) {
+    public Builder setAction(ManagedCallSvamlAction action) {
       this.action = OptionalValue.of(action);
       return this;
     }
