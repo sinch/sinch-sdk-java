@@ -27,6 +27,8 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[fix]** `HttpClientApache`: wrap response-body `Scanner` in a try-with-resources block to prevent resource leaks; gracefully handle empty (`null`) response entities
 - **[fix]** `SinchClient`: guard against a `NullPointerException` when `java.vendor` system property is absent while building the `User-Agent` auxiliary flag
 - **[fix]** `Configuration`: correct copy-paste error in `toString()` and Javadoc — `conversationContext` label was incorrectly attributed to the Voice domain
+- **[doc]** Improve README structure and content.
+
 
 ### Examples / Snippets
 - **[doc]** Fix typos in `conversation/conversations/Create` and `voice/applications/GetEventDestinations` snippets
