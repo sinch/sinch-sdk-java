@@ -61,6 +61,7 @@ Note: The `${sdk.version}` needs to be set according to the released version to 
 | Voice and Video | [Voice API](https://developers.sinch.com/docs/voice/)               |
 | Numbers         | [Numbers API](https://developers.sinch.com/docs/numbers/)           |
 | Verification    | [Verification API](https://developers.sinch.com/docs/verification/) |
+|                 | [Number Lookup API](https://developers.sinch.com/docs/number-lookup/) |
 
 > **Note:** The SMS API is end-of-sale. New integrations should use the [Conversation API](https://developers.sinch.com/docs/conversation/) instead, which supports SMS and many other channels.
 
@@ -225,6 +226,10 @@ NumberSinchEvent event = sinchEvents.parseEvent(body);
 `sinchEventsSecret` is the `HmacSecret` value configured on the Event Destination. `parseEvent` works without validating the request, but then its origin can't be verified, so validating is recommended in production.
 
 You can find a complete example in [examples/sinch-events](examples/sinch-events).
+
+### Number Lookup API
+
+The Number Lookup API needs no extra parameters, use the [common client](#client-initialization) shown above.
 
 ### Verification API
 
