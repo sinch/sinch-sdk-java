@@ -8,7 +8,7 @@ Here you'll find documentation related to the Sinch Java SDK, including how to i
 
 To use Sinch services, you'll need a Sinch account and access keys. You can sign up for an account and create access keys at [dashboard.sinch.com](https://dashboard.sinch.com).
 
-For more information on the SDK, refer to the dedicated [Java SDK documentation section](https://developers.sinch.com/docs/sdks/java) and for the Sinch APIs on which this SDK is based, refer to the official [developer documentation portal](https://developers.sinch.com).
+For more information on the SDK, refer to the dedicated [Java SDK documentation section](https://developers.sinch.com/docs/sdks/java) and the [Javadoc](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/index.html). For the Sinch APIs on which this SDK is based, refer to the official [developer documentation portal](https://developers.sinch.com).
 
 
 ## Table of contents:

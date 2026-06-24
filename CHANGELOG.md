@@ -16,14 +16,6 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ---
 
-## v2.1.0 – 2026-06-24
-
-### SDK
-
-- **[doc]** Improve README structure and content 
-
----
-
 ## v2.0 – 2026-03-31
 
 ### Major breaking changes with major release
