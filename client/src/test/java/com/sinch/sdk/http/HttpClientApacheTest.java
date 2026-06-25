@@ -53,19 +53,18 @@ class HttpClientApacheTest {
     doReturn(unauthorizedResponse).when(client).processRequest(any(), any());
 
     // Mock ServerConfiguration and HttpRequest
-    ServerConfiguration serverConfig = mock(ServerConfiguration.class);
-    when(serverConfig.getUrl()).thenReturn("https://api.example.com");
+    ServerConfiguration serverConfig = new ServerConfiguration("https://api.example.com");
 
-    HttpRequest request = mock(HttpRequest.class);
-    when(request.getFullUrl()).thenReturn(Optional.of("https://api.example.com/v1/test"));
-    when(request.getMethod()).thenReturn(HttpMethod.GET);
-    when(request.getQueryParameters()).thenReturn(Collections.emptyList());
-    when(request.getBody()).thenReturn(null);
-    when(request.getFormParams()).thenReturn(Collections.emptyMap());
-    when(request.getHeaderParams()).thenReturn(Collections.emptyMap());
-    when(request.getAccept()).thenReturn(Collections.emptyList());
-    when(request.getContentType()).thenReturn(Collections.emptyList());
-    when(request.getAuthNames()).thenReturn(Collections.singletonList("Bearer"));
+    HttpRequest request =
+        new HttpRequest(
+            "https://api.example.com/v1/test",
+            HttpMethod.GET,
+            Collections.emptyList(),
+            Collections.emptyMap(),
+            Collections.emptyMap(),
+            Collections.emptyList(),
+            Collections.emptyList(),
+            Collections.singletonList("Bearer"));
 
     // Mock AuthManagers map (bearer)
     Map<String, AuthManager> authManagers = new HashMap<>();
@@ -137,19 +136,18 @@ class HttpClientApacheTest {
 
     doReturn(proxyAuthResponse).when(client).processRequest(any(), any());
 
-    ServerConfiguration serverConfig = mock(ServerConfiguration.class);
-    when(serverConfig.getUrl()).thenReturn("https://api.example.com");
+    ServerConfiguration serverConfig = new ServerConfiguration("https://api.example.com");
 
-    HttpRequest request = mock(HttpRequest.class);
-    when(request.getFullUrl()).thenReturn(Optional.of("https://api.example.com/v1/test"));
-    when(request.getMethod()).thenReturn(HttpMethod.GET);
-    when(request.getQueryParameters()).thenReturn(Collections.emptyList());
-    when(request.getBody()).thenReturn(null);
-    when(request.getFormParams()).thenReturn(Collections.emptyMap());
-    when(request.getHeaderParams()).thenReturn(Collections.emptyMap());
-    when(request.getAccept()).thenReturn(Collections.emptyList());
-    when(request.getContentType()).thenReturn(Collections.emptyList());
-    when(request.getAuthNames()).thenReturn(Collections.singletonList("Bearer"));
+    HttpRequest request =
+        new HttpRequest(
+            "https://api.example.com/v1/test",
+            HttpMethod.GET,
+            Collections.emptyList(),
+            Collections.emptyMap(),
+            Collections.emptyMap(),
+            Collections.emptyList(),
+            Collections.emptyList(),
+            Collections.singletonList("Bearer"));
 
     Map<String, AuthManager> authManagers = new HashMap<>();
     authManagers.put(OAuthManager.SCHEMA_KEYWORD_BEARER, mockAuthManager);

@@ -309,11 +309,6 @@ class SinchClientTest {
         "Proxy port must survive SinchClient construction");
   }
 
-  /**
-   * Verifies that {@link SinchClient#getHttpClient()} (called via reflection) creates an {@link
-   * HttpClientApache} when proxy configuration is present — i.e. the proxy config is wired from
-   * {@link Configuration} into the HTTP-client factory.
-   */
   @Test
   void proxyConfigurationWiredIntoHttpClient() throws Exception {
     HttpProxyConfiguration proxy =
@@ -324,20 +319,22 @@ class SinchClientTest {
     Configuration configuration = Configuration.builder().setHttpProxyConfiguration(proxy).build();
     SinchClient sinchClient = new SinchClient(configuration);
 
-    // Trigger lazy initialization of the internal HttpClientApache via reflection
     Method getHttpClient = SinchClient.class.getDeclaredMethod("getHttpClient");
     getHttpClient.setAccessible(true);
-    Object httpClient = getHttpClient.invoke(sinchClient);
+    Object httpClientApache = getHttpClient.invoke(sinchClient);
+    assertInstanceOf(HttpClientApache.class, httpClientApache);
 
-    assertNotNull(httpClient, "getHttpClient() must return a non-null HttpClientApache");
+    Field clientField = HttpClientApache.class.getDeclaredField("client");
+    clientField.setAccessible(true);
+    Object apacheClient = clientField.get(httpClientApache);
+
+    Field routePlannerField = apacheClient.getClass().getDeclaredField("routePlanner");
+    routePlannerField.setAccessible(true);
+    Object routePlanner = routePlannerField.get(apacheClient);
+
     assertInstanceOf(
-        HttpClientApache.class, httpClient, "getHttpClient() must return an HttpClientApache");
-
-    // Verify the stored field in SinchClient was initialised (not null)
-    Field httpClientField = SinchClient.class.getDeclaredField("httpClient");
-    httpClientField.setAccessible(true);
-    assertNotNull(
-        httpClientField.get(sinchClient),
-        "SinchClient.httpClient field must be initialised after getHttpClient()");
+        org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner.class,
+        routePlanner,
+        "HttpClient must use a DefaultProxyRoutePlanner when proxy is configured");
   }
 }

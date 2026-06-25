@@ -17,23 +17,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/**
- * Integration tests verifying that {@link HttpClientApache} routes traffic through a configured
- * HTTP proxy and handles proxy authentication challenges.
- *
- * <p>Each test spins up its own {@link MockWebServer} that plays the role of the proxy, so tests
- * are fully isolated and safe to run in parallel.
- */
 class HttpClientApacheProxyTest {
 
   MockWebServer mockProxy;
-  String proxyBaseUrl;
 
   @BeforeEach
   void setUp() throws IOException {
     mockProxy = new MockWebServer();
     mockProxy.start();
-    proxyBaseUrl = String.format("http://localhost:%s/", mockProxy.getPort());
   }
 
   @AfterEach
@@ -41,14 +32,6 @@ class HttpClientApacheProxyTest {
     mockProxy.shutdown();
   }
 
-  /**
-   * Verifies that when a proxy is configured, the HTTP connection is established with the proxy
-   * host rather than the target host. Using the proxy server's address as both proxy and target
-   * keeps the test self-contained — if the proxy setting were ignored, Apache would still connect
-   * to the same MockWebServer directly and the request would be received anyway. The real proof is
-   * in {@link #authenticatedProxyCredentialsSentAfterChallenge()} where Apache must handle the
-   * 407/retry cycle correctly.
-   */
   @Test
   void unauthenticatedProxyRequestRoutedThroughProxy() throws Exception {
     HttpProxyConfiguration proxySettings =
@@ -61,27 +44,35 @@ class HttpClientApacheProxyTest {
         new MockResponse().setBody("{}").addHeader("Content-Type", "application/json"));
 
     try (HttpClientApache proxyClient = new HttpClientApache(proxySettings)) {
-
       proxyClient.invokeAPI(
-          new ServerConfiguration(proxyBaseUrl),
+          new ServerConfiguration("http://foo.com"),
           null,
-          new HttpRequest("api/path", HttpMethod.GET, null, (String) null, null, null, null, null));
+          new HttpRequest(
+              "/api/path", HttpMethod.GET, null, (String) null, null, null, null, null));
     }
 
     RecordedRequest request = mockProxy.takeRequest(5, TimeUnit.SECONDS);
     assertNotNull(request, "Proxy should have received the request");
-    assertNotNull(request.getPath(), "Recorded request must have a path");
+    assertTrue(
+        request.getRequestLine().startsWith("GET http://foo.com/api/path"),
+        "Initial request should be a full URL as per RFC 7230 when sent to a proxy; actual: "
+            + request.getRequestLine());
+    assertNotNull(request.getRequestUrl(), "Recorded request must have an URL");
+    assertEquals(
+        "localhost",
+        request.getRequestUrl().host(),
+        "Proxy request should be sent to the proxy host");
+    assertEquals(
+        mockProxy.getPort(),
+        request.getRequestUrl().port(),
+        "Proxy request should be sent to the proxy port");
+    assertEquals(
+        "/", request.getRequestUrl().encodedPath(), "Initial request should have the proxy path");
+
+    RecordedRequest noMoreRequest = mockProxy.takeRequest(5, TimeUnit.SECONDS);
+    assertNull(noMoreRequest, "Proxy should not receive more than 1 request for the same call");
   }
 
-  /**
-   * Verifies that when the proxy returns a 407 challenge, Apache retries with the correct {@code
-   * Proxy-Authorization} credentials and the call ultimately succeeds.
-   *
-   * <p>MockWebServer plays the role of an authenticating proxy: it first returns 407 with a {@code
-   * Proxy-Authenticate: Basic} challenge, then accepts the retry and returns 200. The test asserts
-   * that exactly two requests were received and that the retry carries the expected Basic
-   * credentials.
-   */
   @Test
   void authenticatedProxyCredentialsSentAfterChallenge() throws Exception {
     HttpProxyConfiguration proxySettings =
@@ -101,13 +92,29 @@ class HttpClientApacheProxyTest {
 
     try (HttpClientApache proxyClient = new HttpClientApache(proxySettings)) {
       proxyClient.invokeAPI(
-          new ServerConfiguration(proxyBaseUrl),
+          new ServerConfiguration("http://foo.com"),
           null,
-          new HttpRequest("api/path", HttpMethod.GET, null, (String) null, null, null, null, null));
+          new HttpRequest(
+              "/api/path", HttpMethod.GET, null, (String) null, null, null, null, null));
     }
 
     RecordedRequest initial = mockProxy.takeRequest(5, TimeUnit.SECONDS);
-    assertNotNull(initial, "Proxy should receive the initial request");
+    assertNotNull(initial, "Proxy should have received the request");
+    assertTrue(
+        initial.getRequestLine().startsWith("GET http://foo.com/api/path"),
+        "Initial request should be a full URL as per RFC 7230 when sent to a proxy; actual: "
+            + initial.getRequestLine());
+    assertNotNull(initial.getRequestUrl(), "Recorded request must have an URL");
+    assertEquals(
+        "localhost",
+        initial.getRequestUrl().host(),
+        "Proxy request should be sent to the proxy host");
+    assertEquals(
+        mockProxy.getPort(),
+        initial.getRequestUrl().port(),
+        "Proxy request should be sent to the proxy port");
+    assertEquals(
+        "/", initial.getRequestUrl().encodedPath(), "Initial request should have the proxy path");
 
     RecordedRequest retry = mockProxy.takeRequest(5, TimeUnit.SECONDS);
     assertNotNull(retry, "Proxy should receive the retry request after 407 challenge");
@@ -125,9 +132,13 @@ class HttpClientApacheProxyTest {
         "proxy-user:proxy-pass",
         decoded,
         "Proxy-Authorization must encode the exact configured credentials");
+
+    RecordedRequest noMoreRequest = mockProxy.takeRequest(5, TimeUnit.SECONDS);
+    assertNull(
+        noMoreRequest,
+        "Proxy should not receive more than 2 requests for the same call (initial + retry)");
   }
 
-  /** A proxy with credentials but no 407 challenge should work fine (no retry needed). */
   @Test
   void authenticatedProxyNoChallengeSucceedsDirectly() throws Exception {
     HttpProxyConfiguration proxySettings =
@@ -142,14 +153,32 @@ class HttpClientApacheProxyTest {
         new MockResponse().setBody("{}").addHeader("Content-Type", "application/json"));
 
     try (HttpClientApache proxyClient = new HttpClientApache(proxySettings)) {
-
       proxyClient.invokeAPI(
-          new ServerConfiguration(proxyBaseUrl),
+          new ServerConfiguration("http://foo.com"),
           null,
-          new HttpRequest("api/path", HttpMethod.GET, null, (String) null, null, null, null, null));
+          new HttpRequest(
+              "/api/path", HttpMethod.GET, null, (String) null, null, null, null, null));
     }
 
     RecordedRequest request = mockProxy.takeRequest(5, TimeUnit.SECONDS);
-    assertNotNull(request, "Proxy should receive the request");
+    assertNotNull(request, "Proxy should have received the request");
+    assertTrue(
+        request.getRequestLine().startsWith("GET http://foo.com/api/path"),
+        "Initial request should be a full URL as per RFC 7230 when sent to a proxy; actual: "
+            + request.getRequestLine());
+    assertNotNull(request.getRequestUrl(), "Recorded request must have an URL");
+    assertEquals(
+        "localhost",
+        request.getRequestUrl().host(),
+        "Proxy request should be sent to the proxy host");
+    assertEquals(
+        mockProxy.getPort(),
+        request.getRequestUrl().port(),
+        "Proxy request should be sent to the proxy port");
+    assertEquals(
+        "/", request.getRequestUrl().encodedPath(), "Initial request should have the proxy path");
+
+    RecordedRequest noMoreRequest = mockProxy.takeRequest(5, TimeUnit.SECONDS);
+    assertNull(noMoreRequest, "Proxy should not receive more than 1 request for the same call");
   }
 }

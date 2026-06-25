@@ -37,6 +37,9 @@ public class Config {
 
   public static final String NUMBER_LOOKUP_HOST_NAME = "http://localhost:3022";
 
+  public static final int PROXY_UNAUTHENTICATED_PORT = 3128;
+  public static final int PROXY_AUTHENTICATED_PORT = 3129;
+
   private final SinchClient client;
   private final SinchClient clientServicePlanId;
 
