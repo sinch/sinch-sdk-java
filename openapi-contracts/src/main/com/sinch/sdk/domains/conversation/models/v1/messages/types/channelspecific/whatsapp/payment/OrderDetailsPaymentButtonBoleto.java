@@ -24,6 +24,7 @@ public interface OrderDetailsPaymentButtonBoleto
 
   /** Gets or Sets type */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** The Boleto button identifier */
     public static final TypeEnum BOLETO = new TypeEnum("boleto");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =

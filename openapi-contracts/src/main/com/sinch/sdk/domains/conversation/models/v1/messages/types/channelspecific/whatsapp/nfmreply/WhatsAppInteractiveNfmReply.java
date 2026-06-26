@@ -22,7 +22,10 @@ public interface WhatsAppInteractiveNfmReply {
 
   /** The nfm reply message type. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The WhatsApp flow nfm reply message type. */
     public static final NameEnum FLOW = new NameEnum("flow");
+
+    /** The address nfm reply message type. */
     public static final NameEnum ADDRESS_MESSAGE = new NameEnum("address_message");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =

@@ -24,6 +24,7 @@ public interface WhatsAppInteractiveHeaderImage
 
   /** Gets or Sets type */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** The image associated with the header. */
     public static final TypeEnum IMAGE = new TypeEnum("image");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =

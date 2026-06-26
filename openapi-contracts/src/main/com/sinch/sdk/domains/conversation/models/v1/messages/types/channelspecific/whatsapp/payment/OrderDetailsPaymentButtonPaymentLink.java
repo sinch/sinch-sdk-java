@@ -24,6 +24,7 @@ public interface OrderDetailsPaymentButtonPaymentLink
 
   /** Gets or Sets type */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** The payment link button identifier */
     public static final TypeEnum PAYMENT_LINK = new TypeEnum("payment_link");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =

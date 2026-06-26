@@ -39,7 +39,10 @@ public interface CommentEvent
 
   /** Either LIVE or FEED. Indicates the type of media on which the comment was made. */
   public class CommentTypeEnum extends EnumDynamic<String, CommentTypeEnum> {
+    /** A comment was made on a Feed post. */
     public static final CommentTypeEnum FEED = new CommentTypeEnum("FEED");
+
+    /** A comment was made during a Live. */
     public static final CommentTypeEnum LIVE = new CommentTypeEnum("LIVE");
 
     private static final EnumSupportDynamic<String, CommentTypeEnum> ENUM_SUPPORT =

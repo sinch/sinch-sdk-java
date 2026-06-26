@@ -36,7 +36,10 @@ public interface OffensiveAnalysis {
 
   /** A label, either SAFE or UNSAFE, that classifies the analyzed content. */
   public class EvaluationEnum extends EnumDynamic<String, EvaluationEnum> {
+    /** The analysis of the content indicates that it is most likely safe. */
     public static final EvaluationEnum SAFE = new EvaluationEnum("SAFE");
+
+    /** The analysis of the content indicates that it is most likely unsafe. */
     public static final EvaluationEnum UNSAFE = new EvaluationEnum("UNSAFE");
 
     private static final EnumSupportDynamic<String, EvaluationEnum> ENUM_SUPPORT =

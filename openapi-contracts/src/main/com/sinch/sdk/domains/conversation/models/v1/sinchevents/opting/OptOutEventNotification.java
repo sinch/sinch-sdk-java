@@ -53,8 +53,13 @@ public interface OptOutEventNotification {
 
   /** Status of the opt-out registration. */
   public class StatusEnum extends EnumDynamic<String, StatusEnum> {
+    /** The opt-out registration succeeded. */
     public static final StatusEnum OPT_OUT_SUCCEEDED = new StatusEnum("OPT_OUT_SUCCEEDED");
+
+    /** The opt-out registration failed. */
     public static final StatusEnum OPT_OUT_FAILED = new StatusEnum("OPT_OUT_FAILED");
+
+    /** The status of the opt-out registration is unknown. */
     public static final StatusEnum OPT_OUT_STATUS_UNSPECIFIED =
         new StatusEnum("OPT_OUT_STATUS_UNSPECIFIED");
 
