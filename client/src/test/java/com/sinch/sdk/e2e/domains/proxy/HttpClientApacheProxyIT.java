@@ -1,4 +1,4 @@
-package com.sinch.sdk.http;
+package com.sinch.sdk.e2e.domains.proxy;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,13 +7,14 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.e2e.Config;
+import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.HttpProxyConfiguration;
 import org.junit.jupiter.api.Test;
 
 class HttpClientApacheProxyIT {
 
   private static final String PROXY_HOST = "localhost";
-  private static final String TARGET_URL = "http://proxy-target-server:1080/";
+  private static final String TARGET_URL = "http://proxy-reachable-server:1080/";
 
   private static HttpRequest simpleGetRequest() {
     return new HttpRequest("health", HttpMethod.GET, null, (String) null, null, null, null, null);
