@@ -5,7 +5,6 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesBaseTest;
-import java.time.Instant;
 import java.util.Arrays;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -27,8 +26,6 @@ public class TemplateV2DtoTest extends TemplatesBaseTest {
           .setDefaultTranslation("fr-FR")
           .setDescription("template description value")
           .setVersion(1)
-          .setCreateTime(Instant.parse("2024-08-26T06:00:00Z"))
-          .setUpdateTime(Instant.parse("2024-08-26T06:07:44Z"))
           .build();
 
   @Test

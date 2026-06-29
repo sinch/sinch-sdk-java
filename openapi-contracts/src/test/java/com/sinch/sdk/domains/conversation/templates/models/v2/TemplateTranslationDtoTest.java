@@ -8,7 +8,6 @@ import com.sinch.sdk.domains.conversation.models.v1.ConversationChannel;
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessageDtoTest;
 import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesBaseTest;
 import com.sinch.sdk.domains.conversation.templates.models.TemplateVariableDtoTest;
-import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
 import org.json.JSONException;
@@ -28,8 +27,6 @@ public class TemplateTranslationDtoTest extends TemplatesBaseTest {
                   ConversationChannel.KAKAOTALK,
                   ChannelTemplateOverrideDtoTest.expectedWithVersionDto))
           .setVariables(Arrays.asList(TemplateVariableDtoTest.expectedDto))
-          .setCreateTime(Instant.parse("2024-07-07T02:59:59Z"))
-          .setUpdateTime(Instant.parse("2024-07-07T06:07:44Z"))
           .build();
 
   @GivenTextResource("/domains/conversation/templates/v2/TemplateTranslationDto.json")
