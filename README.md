@@ -20,7 +20,6 @@ For more information on the SDK, refer to the dedicated [Java SDK documentation 
   - [Client lifecycle](#client-lifecycle)
   - [Proxy configuration](#proxy-configuration)
 - [Supported APIs](#supported-apis)
-- [Getting started](#getting-started)
 - [Logging](#logging)
 - [Handling Exceptions](#handling-exceptions)
 - [Third-party dependencies](#third-party-dependencies)
