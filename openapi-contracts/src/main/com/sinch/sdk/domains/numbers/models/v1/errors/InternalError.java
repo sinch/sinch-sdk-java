@@ -23,6 +23,7 @@ public interface InternalError {
 
   /** Gets or Sets code */
   public class CodeEnum extends EnumDynamic<Integer, CodeEnum> {
+    /** The HTTP status code for an internal server error. */
     public static final CodeEnum NUMBER_500 = new CodeEnum(500);
 
     private static final EnumSupportDynamic<Integer, CodeEnum> ENUM_SUPPORT =
@@ -61,7 +62,10 @@ public interface InternalError {
 
   /** Gets or Sets status */
   public class StatusEnum extends EnumDynamic<String, StatusEnum> {
+    /** An internal server error. */
     public static final StatusEnum INTERNAL = new StatusEnum("INTERNAL");
+
+    /** Some unknown error. */
     public static final StatusEnum UNKNOWN = new StatusEnum("UNKNOWN");
 
     private static final EnumSupportDynamic<String, StatusEnum> ENUM_SUPPORT =
