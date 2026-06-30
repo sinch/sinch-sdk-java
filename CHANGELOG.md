@@ -18,6 +18,9 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ## v2.1 – unreleased
 
+### Numbers
+- **[feature]** `internalFailureCode` field added
+
 ### Conversation
 - **[feature]** Support `Consents` API: `listIdentities` and `listAuditRecords` endpoints
 
