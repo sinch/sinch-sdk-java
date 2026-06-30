@@ -15,7 +15,7 @@ public class TemplatesV2ListResponseDtoTest extends TemplatesBaseTest {
 
   public static ListTemplatesResponseInternal expectedDto =
       ListTemplatesResponseInternal.builder()
-          .setTemplates(Arrays.asList(TemplateV2DtoTest.expectedDto))
+          .setTemplates(Arrays.asList(TemplateV2DtoTest.expectedResponseDto))
           .build();
 
   @GivenTextResource("/domains/conversation/templates/v2/response/TemplatesV2ListResponseDto.json")
