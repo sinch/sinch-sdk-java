@@ -64,6 +64,6 @@ public class ProxySteps {
 
   private static NumberLookupResponse lookup(SinchClient client) {
     NumberLookupRequest request = NumberLookupRequest.builder().setNumber("+12016666666").build();
-    return client.lookup().lookup().lookup(request);
+    return client.lookup().v2().lookup(request);
   }
 }
