@@ -216,8 +216,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
       }
 
       // UNAUTHORIZED (HTTP 401) error code could imply refreshing the OAuth token
-      if (response.getCode() == HttpStatus.UNAUTHORIZED
-          && authManagersByOasSecuritySchemes != null) {
+      if (response.getCode() == HttpStatus.UNAUTHORIZED) {
         boolean couldRetryRequest =
             processUnauthorizedResponse(httpRequest, response, authManagersByOasSecuritySchemes);
         if (couldRetryRequest) {
@@ -249,6 +248,9 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
       HttpResponse response,
       Map<String, AuthManager> authManagersByOasSecuritySchemes) {
 
+    if (null == authManagersByOasSecuritySchemes) {
+      return false;
+    }
     Map<String, AuthManager> authManagersByAuthSchemes =
         authManagersByOasSecuritySchemes.values().stream()
             .map(authManager -> new AbstractMap.SimpleEntry<>(authManager.getSchema(), authManager))
