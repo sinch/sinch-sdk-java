@@ -29,6 +29,7 @@ public class SinchEventsDtoTest extends NumbersBaseTest {
           .setEventType(EventTypeEnum.PROVISIONING_TO_CAMPAIGN)
           .setStatus(StatusEnum.FAILED)
           .setFailureCode(FailureCodeEnum.CAMPAIGN_NOT_AVAILABLE)
+          .setInternalFailureCode("CRS0018")
           .build();
 
   @Test

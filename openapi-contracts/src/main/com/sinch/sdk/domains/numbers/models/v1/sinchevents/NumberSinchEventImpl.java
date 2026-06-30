@@ -18,7 +18,8 @@ import java.util.Objects;
   NumberSinchEventImpl.JSON_PROPERTY_RESOURCE_TYPE,
   NumberSinchEventImpl.JSON_PROPERTY_EVENT_TYPE,
   NumberSinchEventImpl.JSON_PROPERTY_STATUS,
-  NumberSinchEventImpl.JSON_PROPERTY_FAILURE_CODE
+  NumberSinchEventImpl.JSON_PROPERTY_FAILURE_CODE,
+  NumberSinchEventImpl.JSON_PROPERTY_INTERNAL_FAILURE_CODE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -57,6 +58,10 @@ public class NumberSinchEventImpl implements NumberSinchEvent {
 
   private OptionalValue<FailureCodeEnum> failureCode;
 
+  public static final String JSON_PROPERTY_INTERNAL_FAILURE_CODE = "internalFailureCode";
+
+  private OptionalValue<String> internalFailureCode;
+
   public NumberSinchEventImpl() {}
 
   protected NumberSinchEventImpl(
@@ -67,7 +72,8 @@ public class NumberSinchEventImpl implements NumberSinchEvent {
       OptionalValue<ResourceType> resourceType,
       OptionalValue<EventTypeEnum> eventType,
       OptionalValue<StatusEnum> status,
-      OptionalValue<FailureCodeEnum> failureCode) {
+      OptionalValue<FailureCodeEnum> failureCode,
+      OptionalValue<String> internalFailureCode) {
     this.eventId = eventId;
     this.timestamp = timestamp;
     this.projectId = projectId;
@@ -76,6 +82,7 @@ public class NumberSinchEventImpl implements NumberSinchEvent {
     this.eventType = eventType;
     this.status = status;
     this.failureCode = failureCode;
+    this.internalFailureCode = internalFailureCode;
   }
 
   @JsonIgnore
@@ -166,6 +173,17 @@ public class NumberSinchEventImpl implements NumberSinchEvent {
     return failureCode;
   }
 
+  @JsonIgnore
+  public String getInternalFailureCode() {
+    return internalFailureCode.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_INTERNAL_FAILURE_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> internalFailureCode() {
+    return internalFailureCode;
+  }
+
   /** Return true if this CallbackPayload object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -183,13 +201,22 @@ public class NumberSinchEventImpl implements NumberSinchEvent {
         && Objects.equals(this.resourceType, callbackPayload.resourceType)
         && Objects.equals(this.eventType, callbackPayload.eventType)
         && Objects.equals(this.status, callbackPayload.status)
-        && Objects.equals(this.failureCode, callbackPayload.failureCode);
+        && Objects.equals(this.failureCode, callbackPayload.failureCode)
+        && Objects.equals(this.internalFailureCode, callbackPayload.internalFailureCode);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-        eventId, timestamp, projectId, resourceId, resourceType, eventType, status, failureCode);
+        eventId,
+        timestamp,
+        projectId,
+        resourceId,
+        resourceType,
+        eventType,
+        status,
+        failureCode,
+        internalFailureCode);
   }
 
   @Override
@@ -204,6 +231,9 @@ public class NumberSinchEventImpl implements NumberSinchEvent {
     sb.append("    eventType: ").append(toIndentedString(eventType)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    failureCode: ").append(toIndentedString(failureCode)).append("\n");
+    sb.append("    internalFailureCode: ")
+        .append(toIndentedString(internalFailureCode))
+        .append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -228,6 +258,7 @@ public class NumberSinchEventImpl implements NumberSinchEvent {
     OptionalValue<EventTypeEnum> eventType = OptionalValue.empty();
     OptionalValue<StatusEnum> status = OptionalValue.empty();
     OptionalValue<FailureCodeEnum> failureCode = OptionalValue.empty();
+    OptionalValue<String> internalFailureCode = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_EVENT_ID)
     public Builder setEventId(String eventId) {
@@ -277,9 +308,23 @@ public class NumberSinchEventImpl implements NumberSinchEvent {
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_INTERNAL_FAILURE_CODE)
+    public Builder setInternalFailureCode(String internalFailureCode) {
+      this.internalFailureCode = OptionalValue.of(internalFailureCode);
+      return this;
+    }
+
     public NumberSinchEvent build() {
       return new NumberSinchEventImpl(
-          eventId, timestamp, projectId, resourceId, resourceType, eventType, status, failureCode);
+          eventId,
+          timestamp,
+          projectId,
+          resourceId,
+          resourceType,
+          eventType,
+          status,
+          failureCode,
+          internalFailureCode);
     }
   }
 }

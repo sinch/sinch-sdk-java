@@ -24,6 +24,7 @@ public interface NotFoundError {
 
   /** Gets or Sets code */
   public class CodeEnum extends EnumDynamic<Integer, CodeEnum> {
+    /** The HTTP status code for a resource not found. */
     public static final CodeEnum NUMBER_404 = new CodeEnum(404);
 
     private static final EnumSupportDynamic<Integer, CodeEnum> ENUM_SUPPORT =
@@ -62,6 +63,7 @@ public interface NotFoundError {
 
   /** Gets or Sets status */
   public class StatusEnum extends EnumDynamic<String, StatusEnum> {
+    /** The request resource could not be found. */
     public static final StatusEnum NOT_FOUND = new StatusEnum("NOT_FOUND");
 
     private static final EnumSupportDynamic<String, StatusEnum> ENUM_SUPPORT =

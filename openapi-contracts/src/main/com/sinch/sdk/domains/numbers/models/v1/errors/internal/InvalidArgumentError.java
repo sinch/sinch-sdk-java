@@ -24,6 +24,7 @@ public interface InvalidArgumentError {
 
   /** Gets or Sets code */
   public class CodeEnum extends EnumDynamic<Integer, CodeEnum> {
+    /** The HTTP status code for invalid arguments. */
     public static final CodeEnum NUMBER_400 = new CodeEnum(400);
 
     private static final EnumSupportDynamic<Integer, CodeEnum> ENUM_SUPPORT =
@@ -62,6 +63,7 @@ public interface InvalidArgumentError {
 
   /** Gets or Sets status */
   public class StatusEnum extends EnumDynamic<String, StatusEnum> {
+    /** The request contained invalid arguments. */
     public static final StatusEnum INVALID_ARGUMENT = new StatusEnum("INVALID_ARGUMENT");
 
     private static final EnumSupportDynamic<String, StatusEnum> ENUM_SUPPORT =

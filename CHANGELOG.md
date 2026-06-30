@@ -18,6 +18,13 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ## v2.1 – unreleased
 
+### Numbers
+- Extend `NumberSinchEvents` class.
+  - **[fix]** `EventTypeEnum`: `DEPROVISIONING_FROM_VOICE_PLATFORM` is deprecated and has to be replaced by `VOICE_PLATFORM_DEPROVISIONING`.
+  - **[feature]** Support new `internalFailureCode` field.
+  - **[feature]** Support new `StatusEnum` values: `IN_REVIEW`, `BLOCKED`, `COMPLETED`, `REJECTED`, `EXPIRED`.
+  - **[feature]** Support new `EventTypeEnum` value: `NUMBER_ORDER_PROCESSING`.
+
 ### Conversation
 - **[feature]** Support `Consents` API: `listIdentities` and `listAuditRecords` endpoints
 

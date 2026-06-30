@@ -23,6 +23,7 @@ public interface BadRequest {
 
   /** Gets or Sets type */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** The request was malformed in some way. */
     public static final TypeEnum BAD_REQUEST = new TypeEnum("BadRequest");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
