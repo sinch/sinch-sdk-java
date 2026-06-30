@@ -23,13 +23,13 @@ public class Configuration {
       ApplicationCredentials applicationCredentials,
       SmsServicePlanCredentials smsServicePlanCredentials,
       String oauthUrl,
+      HttpProxyConfiguration httpProxyConfiguration,
       NumbersContext numbersContext,
       SmsContext smsContext,
       VerificationContext verificationContext,
       VoiceContext voiceContext,
       ConversationContext conversationContext,
-      NumberLookupContext numberLookupContext,
-      HttpProxyConfiguration httpProxyConfiguration) {
+      NumberLookupContext numberLookupContext) {
     this.unifiedCredentials = unifiedCredentials;
     this.applicationCredentials = applicationCredentials;
     this.smsServicePlanCredentials = smsServicePlanCredentials;
@@ -574,13 +574,13 @@ public class Configuration {
           null != applicationCredentials ? applicationCredentials.build() : null,
           null != smsServicePlanCredentials ? smsServicePlanCredentials.build() : null,
           oauthUrl,
+          httpProxyConfiguration,
           null != numbersContext ? numbersContext.build() : null,
           null != smsContext ? smsContext.build() : null,
           null != verificationContext ? verificationContext.build() : null,
           null != voiceContext ? voiceContext.build() : null,
           null != conversationContext ? conversationContext.build() : null,
-          null != numberLookupContext ? numberLookupContext.build() : null,
-          httpProxyConfiguration);
+          null != numberLookupContext ? numberLookupContext.build() : null);
     }
   }
 }
