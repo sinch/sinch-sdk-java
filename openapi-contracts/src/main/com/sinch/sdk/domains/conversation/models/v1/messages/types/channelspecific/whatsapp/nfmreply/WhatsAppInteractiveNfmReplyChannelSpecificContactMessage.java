@@ -25,6 +25,7 @@ public interface WhatsAppInteractiveNfmReplyChannelSpecificContactMessage
 
   /** The interactive message type. */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** The interactive nfm reply type. */
     public static final TypeEnum NFM_REPLY = new TypeEnum("nfm_reply");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =

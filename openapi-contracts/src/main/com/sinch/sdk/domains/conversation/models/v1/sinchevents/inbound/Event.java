@@ -34,6 +34,7 @@ public interface Event {
 
   /** The direction of the event. It's always TO_APP for contact events. */
   public class DirectionEnum extends EnumDynamic<String, DirectionEnum> {
+    /** An event sent to a Conversation API app. */
     public static final DirectionEnum TO_APP = new DirectionEnum("TO_APP");
 
     private static final EnumSupportDynamic<String, DirectionEnum> ENUM_SUPPORT =

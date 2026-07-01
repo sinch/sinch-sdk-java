@@ -24,6 +24,7 @@ public interface DiscountFixedCommerce
 
   /** Gets or Sets type */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** Commerce with fixed discount */
     public static final TypeEnum FIXED_DISCOUNT_COMMERCE = new TypeEnum("FIXED_DISCOUNT_COMMERCE");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
@@ -59,9 +60,9 @@ public interface DiscountFixedCommerce
   /**
    * Regular price of the product
    *
-   * <p>minimum: 0 maximum: 99999999
+   * <p><b>Minimum</b>: 0
    *
-   * <p>Field is required
+   * <p><b>Maximum</b>: 99999999 Field is required
    *
    * @return regularPrice
    */
@@ -70,9 +71,9 @@ public interface DiscountFixedCommerce
   /**
    * Discounted price of the product
    *
-   * <p>minimum: 0 maximum: 99999999
+   * <p><b>Minimum</b>: 0
    *
-   * <p>Field is required
+   * <p><b>Maximum</b>: 99999999 Field is required
    *
    * @return discountPrice
    */
@@ -81,9 +82,9 @@ public interface DiscountFixedCommerce
   /**
    * Fixed discount
    *
-   * <p>minimum: 0 maximum: 999999
+   * <p><b>Minimum</b>: 0
    *
-   * <p>Field is required
+   * <p><b>Maximum</b>: 999999 Field is required
    *
    * @return discountFixed
    */

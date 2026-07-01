@@ -18,7 +18,19 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class TemplateTranslationDtoTest extends TemplatesBaseTest {
 
-  public static TemplateTranslation expectedDto =
+  public static TemplateTranslation expectedRequestDto =
+      TemplateTranslation.builder()
+          .setMessage(TemplateMessageDtoTest.templateMessageDto)
+          .setLanguageCode("fr-FR")
+          .setVersion("1")
+          .setChannelTemplateOverrides(
+              Collections.singletonMap(
+                  ConversationChannel.KAKAOTALK,
+                  ChannelTemplateOverrideDtoTest.expectedWithVersionDto))
+          .setVariables(Arrays.asList(TemplateVariableDtoTest.expectedDto))
+          .build();
+
+  public static TemplateTranslation expectedResponseDto =
       TemplateTranslation.builder()
           .setMessage(TemplateMessageDtoTest.templateMessageDto)
           .setLanguageCode("fr-FR")
@@ -32,20 +44,25 @@ public class TemplateTranslationDtoTest extends TemplatesBaseTest {
           .setUpdateTime(Instant.parse("2024-07-07T06:07:44Z"))
           .build();
 
-  @GivenTextResource("/domains/conversation/templates/v2/TemplateTranslationDto.json")
-  String json;
+  @GivenTextResource(
+      "/domains/conversation/templates/v2/request/TemplateTranslationV2RequestDto.json")
+  String jsonRequest;
+
+  @GivenTextResource(
+      "/domains/conversation/templates/v2/response/TemplateTranslationV2ResponseDto.json")
+  String jsonResponse;
 
   @Test
   void serialize() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(expectedDto);
+    String serializedString = objectMapper.writeValueAsString(expectedRequestDto);
 
-    JSONAssert.assertEquals(json, serializedString, true);
+    JSONAssert.assertEquals(jsonRequest, serializedString, true);
   }
 
   @Test
   void deserialize() throws JsonProcessingException {
-    Object deserialized = objectMapper.readValue(json, TemplateTranslation.class);
+    Object deserialized = objectMapper.readValue(jsonResponse, TemplateTranslation.class);
 
-    TestHelpers.recursiveEquals(deserialized, expectedDto);
+    TestHelpers.recursiveEquals(deserialized, expectedResponseDto);
   }
 }

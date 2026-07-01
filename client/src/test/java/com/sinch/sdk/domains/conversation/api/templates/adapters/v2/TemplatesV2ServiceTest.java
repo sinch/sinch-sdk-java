@@ -57,7 +57,7 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
   @GivenTextResource("/domains/conversation/templates/v2/request/TemplateV2RequestDto.json")
   String jsonTemplateV2RequestDto;
 
-  @GivenTextResource("/domains/conversation/templates/v2/TemplateV2Dto.json")
+  @GivenTextResource("/domains/conversation/templates/v2/response/TemplateV2ResponseDto.json")
   String jsonTemplateV2Dto;
 
   @GivenTextResource("/domains/conversation/templates/v2/response/TemplatesV2ListResponseDto.json")
@@ -96,9 +96,9 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    TemplateV2 response = service.create(TemplateV2DtoTest.expectedDto);
+    TemplateV2 response = service.create(TemplateV2DtoTest.expectedRequestDto);
 
-    TestHelpers.recursiveEquals(response, TemplateV2DtoTest.expectedDto);
+    TestHelpers.recursiveEquals(response, TemplateV2DtoTest.expectedResponseDto);
   }
 
   @Test
@@ -109,7 +109,7 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
             String.format(
                 "/v2/projects/%s/templates/%s",
                 URLPathUtils.encodePathSegment(uriPartID),
-                URLPathUtils.encodePathSegment(TemplateV2DtoTest.expectedDto.getId())),
+                URLPathUtils.encodePathSegment(TemplateV2DtoTest.expectedRequestDto.getId())),
             HttpMethod.GET,
             Collections.emptyList(),
             (String) null,
@@ -126,9 +126,9 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    TemplateV2 response = service.get(TemplateV2DtoTest.expectedDto.getId());
+    TemplateV2 response = service.get(TemplateV2DtoTest.expectedRequestDto.getId());
 
-    TestHelpers.recursiveEquals(response, TemplateV2DtoTest.expectedDto);
+    TestHelpers.recursiveEquals(response, TemplateV2DtoTest.expectedResponseDto);
   }
 
   @Test
@@ -178,7 +178,7 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
             String.format(
                 "/v2/projects/%s/templates/%s/translations",
                 URLPathUtils.encodePathSegment(uriPartID),
-                URLPathUtils.encodePathSegment(TemplateV2DtoTest.expectedDto.getId())),
+                URLPathUtils.encodePathSegment(TemplateV2DtoTest.expectedRequestDto.getId())),
             HttpMethod.GET,
             Collections.emptyList(),
             (String) null,
@@ -197,7 +197,7 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
         .thenReturn(httpResponse);
 
     TranslationsV2ListResponse response =
-        service.listTranslations(TemplateV2DtoTest.expectedDto.getId());
+        service.listTranslations(TemplateV2DtoTest.expectedRequestDto.getId());
     Iterator<TemplateTranslation> iterator = response.iterator();
 
     TranslationsV2ListResponse expectedListResponse =
@@ -221,7 +221,7 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
             String.format(
                 "/v2/projects/%s/templates/%s/translations",
                 URLPathUtils.encodePathSegment(uriPartID),
-                URLPathUtils.encodePathSegment(TemplateV2DtoTest.expectedDto.getId())),
+                URLPathUtils.encodePathSegment(TemplateV2DtoTest.expectedRequestDto.getId())),
             HttpMethod.GET,
             Arrays.asList(
                 new URLParameter("language_code", "language code", STYLE.FORM, true),
@@ -243,7 +243,7 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
 
     TranslationsV2ListResponse response =
         service.listTranslations(
-            TemplateV2DtoTest.expectedDto.getId(),
+            TemplateV2DtoTest.expectedRequestDto.getId(),
             ListTranslationsQueryParameters.builder()
                 .setLanguageCode("language code")
                 .setTranslationVersion("translation version")
@@ -271,7 +271,7 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
             String.format(
                 "/v2/projects/%s/templates/%s",
                 URLPathUtils.encodePathSegment(uriPartID),
-                URLPathUtils.encodePathSegment(TemplateV2DtoTest.expectedDto.getId())),
+                URLPathUtils.encodePathSegment(TemplateV2DtoTest.expectedRequestDto.getId())),
             HttpMethod.PUT,
             Collections.emptyList(),
             jsonTemplateV2RequestDto,
@@ -289,9 +289,10 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
         .thenReturn(httpResponse);
 
     TemplateV2 response =
-        service.update(TemplateV2DtoTest.expectedDto.getId(), TemplateV2DtoTest.expectedDto);
+        service.update(
+            TemplateV2DtoTest.expectedRequestDto.getId(), TemplateV2DtoTest.expectedRequestDto);
 
-    TestHelpers.recursiveEquals(response, TemplateV2DtoTest.expectedDto);
+    TestHelpers.recursiveEquals(response, TemplateV2DtoTest.expectedResponseDto);
   }
 
   @Test
@@ -302,7 +303,7 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
             String.format(
                 "/v2/projects/%s/templates/%s",
                 URLPathUtils.encodePathSegment(uriPartID),
-                URLPathUtils.encodePathSegment(TemplateV2DtoTest.expectedDto.getId())),
+                URLPathUtils.encodePathSegment(TemplateV2DtoTest.expectedRequestDto.getId())),
             HttpMethod.DELETE,
             Collections.emptyList(),
             (String) null,
@@ -318,6 +319,6 @@ public class TemplatesV2ServiceTest extends TemplatesBaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    service.delete(TemplateV2DtoTest.expectedDto.getId());
+    service.delete(TemplateV2DtoTest.expectedResponseDto.getId());
   }
 }

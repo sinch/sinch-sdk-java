@@ -61,7 +61,10 @@ public interface FlowChannelSpecificMessage
 
   /** The mode in which the flow is. */
   public class FlowModeEnum extends EnumDynamic<String, FlowModeEnum> {
+    /** The flow is in draft mode. */
     public static final FlowModeEnum DRAFT = new FlowModeEnum("draft");
+
+    /** The flow is published. */
     public static final FlowModeEnum PUBLISHED = new FlowModeEnum("published");
 
     private static final EnumSupportDynamic<String, FlowModeEnum> ENUM_SUPPORT =
@@ -104,7 +107,10 @@ public interface FlowChannelSpecificMessage
 
   /** Gets or Sets flowAction */
   public class FlowActionEnum extends EnumDynamic<String, FlowActionEnum> {
+    /** The navigate flow action. */
     public static final FlowActionEnum NAVIGATE = new FlowActionEnum("navigate");
+
+    /** The data exchange flow action. */
     public static final FlowActionEnum DATA_EXCHANGE = new FlowActionEnum("data_exchange");
 
     private static final EnumSupportDynamic<String, FlowActionEnum> ENUM_SUPPORT =

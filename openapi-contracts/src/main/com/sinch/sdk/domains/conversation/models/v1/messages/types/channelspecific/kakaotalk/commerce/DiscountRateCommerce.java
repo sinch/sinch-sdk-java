@@ -24,6 +24,7 @@ public interface DiscountRateCommerce
 
   /** Gets or Sets type */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** Commerce with percentage discount */
     public static final TypeEnum PERCENTAGE_DISCOUNT_COMMERCE =
         new TypeEnum("PERCENTAGE_DISCOUNT_COMMERCE");
 
@@ -60,9 +61,9 @@ public interface DiscountRateCommerce
   /**
    * Regular price of the product
    *
-   * <p>minimum: 0 maximum: 99999999
+   * <p><b>Minimum</b>: 0
    *
-   * <p>Field is required
+   * <p><b>Maximum</b>: 99999999 Field is required
    *
    * @return regularPrice
    */
@@ -71,9 +72,9 @@ public interface DiscountRateCommerce
   /**
    * Discounted price of the product
    *
-   * <p>minimum: 0 maximum: 99999999
+   * <p><b>Minimum</b>: 0
    *
-   * <p>Field is required
+   * <p><b>Maximum</b>: 99999999 Field is required
    *
    * @return discountPrice
    */
@@ -82,9 +83,9 @@ public interface DiscountRateCommerce
   /**
    * Discount rate (%)
    *
-   * <p>minimum: 0 maximum: 100
+   * <p><b>Minimum</b>: 0
    *
-   * <p>Field is required
+   * <p><b>Maximum</b>: 100 Field is required
    *
    * @return discountRate
    */

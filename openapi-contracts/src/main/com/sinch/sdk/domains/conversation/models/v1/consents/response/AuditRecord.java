@@ -27,7 +27,10 @@ public interface AuditRecord {
    * an end-user MO).
    */
   public class OriginEnum extends EnumDynamic<String, OriginEnum> {
+    /** The opt-in or opt-out came from the API. */
     public static final OriginEnum ORIGIN_API = new OriginEnum("ORIGIN_API");
+
+    /** The opt-in or optout came from an MO. */
     public static final OriginEnum ORIGIN_MO = new OriginEnum("ORIGIN_MO");
 
     private static final EnumSupportDynamic<String, OriginEnum> ENUM_SUPPORT =
@@ -63,8 +66,13 @@ public interface AuditRecord {
 
   /** The operation that the audit record refers to. Can be INSERT, UPDATE or DELETE. */
   public class OperationEnum extends EnumDynamic<String, OperationEnum> {
+    /** The Insert operation */
     public static final OperationEnum OPERATION_INSERT = new OperationEnum("OPERATION_INSERT");
+
+    /** The Update operation */
     public static final OperationEnum OPERATION_UPDATE = new OperationEnum("OPERATION_UPDATE");
+
+    /** The Delete operation */
     public static final OperationEnum OPERATION_DELETE = new OperationEnum("OPERATION_DELETE");
 
     private static final EnumSupportDynamic<String, OperationEnum> ENUM_SUPPORT =

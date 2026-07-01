@@ -15,8 +15,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 /**
  * This object contains additional settings related to <a
  * href="https://developers.sinch.com/docs/conversation/keyconcepts/#delivery-report-base-message-fallback">delivery
- * report based fallback</a>. Note that this <strong>paid</strong> functionality is available for
- * open beta testing.
+ * report based fallback</a>. Note that this is <strong>paid</strong> functionality.
  */
 @JsonDeserialize(builder = DeliveryReportBasedFallbackImpl.Builder.class)
 public interface DeliveryReportBasedFallback {
@@ -34,7 +33,11 @@ public interface DeliveryReportBasedFallback {
 
   /**
    * Optional. The time, in seconds, after which a message without a positive delivery report will
-   * fallback to the next channel. The valid values for this field are [60 - 259200].
+   * fallback to the next channel.
+   *
+   * <p><b>Minimum</b>: 10
+   *
+   * <p><b>Maximum</b>: 259200
    *
    * @return deliveryReportWaitingTime
    */

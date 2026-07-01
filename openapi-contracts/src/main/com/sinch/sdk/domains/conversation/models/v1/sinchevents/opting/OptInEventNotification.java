@@ -53,8 +53,13 @@ public interface OptInEventNotification {
 
   /** Status of the opt-in registration. */
   public class StatusEnum extends EnumDynamic<String, StatusEnum> {
+    /** The opt-in registration succeeded. */
     public static final StatusEnum OPT_IN_SUCCEEDED = new StatusEnum("OPT_IN_SUCCEEDED");
+
+    /** The opt-in registration failed. */
     public static final StatusEnum OPT_IN_FAILED = new StatusEnum("OPT_IN_FAILED");
+
+    /** The status of the opt-in registration is unknown. */
     public static final StatusEnum OPT_IN_STATUS_UNSPECIFIED =
         new StatusEnum("OPT_IN_STATUS_UNSPECIFIED");
 

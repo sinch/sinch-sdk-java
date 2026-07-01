@@ -74,7 +74,9 @@ public interface ConversationChannelCredentials {
    * case in which there are multiple credential integrations per channel on a single app, this
    * field must have a unique value for each multi-credential channel entry.
    *
-   * <p>minimum: 0 maximum: 255
+   * <p><b>Minimum</b>: 0
+   *
+   * <p><b>Maximum</b>: 255
    *
    * @return credentialOrdinalNumber
    */

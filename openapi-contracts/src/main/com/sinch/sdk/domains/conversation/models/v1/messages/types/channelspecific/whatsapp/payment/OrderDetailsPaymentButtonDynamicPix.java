@@ -24,6 +24,7 @@ public interface OrderDetailsPaymentButtonDynamicPix
 
   /** Gets or Sets type */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** The dynamic Pix code button identifier */
     public static final TypeEnum PIX_DYNAMIC_CODE = new TypeEnum("pix_dynamic_code");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
@@ -75,10 +76,19 @@ public interface OrderDetailsPaymentButtonDynamicPix
 
   /** Pix key type. */
   public class KeyTypeEnum extends EnumDynamic<String, KeyTypeEnum> {
+    /** The CPF key type. */
     public static final KeyTypeEnum CPF = new KeyTypeEnum("CPF");
+
+    /** The CNPJ key type. */
     public static final KeyTypeEnum CNPJ = new KeyTypeEnum("CNPJ");
+
+    /** The EMAIL key type. */
     public static final KeyTypeEnum EMAIL = new KeyTypeEnum("EMAIL");
+
+    /** The PHONE key type. */
     public static final KeyTypeEnum PHONE = new KeyTypeEnum("PHONE");
+
+    /** The EVP key type. */
     public static final KeyTypeEnum EVP = new KeyTypeEnum("EVP");
 
     private static final EnumSupportDynamic<String, KeyTypeEnum> ENUM_SUPPORT =

@@ -24,6 +24,7 @@ public interface WhatsAppInteractiveHeaderVideo
 
   /** Gets or Sets type */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** The video associated with the header. */
     public static final TypeEnum VIDEO = new TypeEnum("video");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =

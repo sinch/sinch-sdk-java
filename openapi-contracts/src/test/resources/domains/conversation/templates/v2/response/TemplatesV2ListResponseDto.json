@@ -5,6 +5,8 @@
       "description": "template description value",
       "version": 1,
       "default_translation": "fr-FR",
+      "create_time": "2024-08-26T06:00:00Z",
+      "update_time": "2024-08-26T06:07:44Z",
       "translations": [
         {
           "language_code": "fr-FR",
@@ -50,9 +52,7 @@
             }
           }
         }
-      ],
-      "create_time": "2024-08-26T06:00:00Z",
-      "update_time": "2024-08-26T06:07:44Z"
+      ]
     }
   ]
 }

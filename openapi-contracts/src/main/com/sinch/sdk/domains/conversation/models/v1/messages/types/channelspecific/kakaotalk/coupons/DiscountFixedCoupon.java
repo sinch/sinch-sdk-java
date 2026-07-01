@@ -91,9 +91,9 @@ public interface DiscountFixedCoupon
   /**
    * Fixed discount
    *
-   * <p>minimum: 0 maximum: 999999
+   * <p><b>Minimum</b>: 0
    *
-   * <p>Field is required
+   * <p><b>Maximum</b>: 999999 Field is required
    *
    * @return discountFixed
    */

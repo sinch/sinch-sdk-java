@@ -53,12 +53,22 @@ public interface CapabilityEventNotification {
 
   /** Status indicating the recipient's capability on the channel. */
   public class CapabilityStatusEnum extends EnumDynamic<String, CapabilityStatusEnum> {
+    /**
+     * The channel capability for the contact is unknown due to the underlying channel not making
+     * this information available.
+     */
     public static final CapabilityStatusEnum CAPABILITY_UNKNOWN =
         new CapabilityStatusEnum("CAPABILITY_UNKNOWN");
+
+    /** The specified contact supports all the features of the channel. */
     public static final CapabilityStatusEnum CAPABILITY_FULL =
         new CapabilityStatusEnum("CAPABILITY_FULL");
+
+    /** The specified contact supports a subset of the channel features. */
     public static final CapabilityStatusEnum CAPABILITY_PARTIAL =
         new CapabilityStatusEnum("CAPABILITY_PARTIAL");
+
+    /** The specified contact has no capability on the channel. */
     public static final CapabilityStatusEnum NO_CAPABILITY =
         new CapabilityStatusEnum("NO_CAPABILITY");
 
