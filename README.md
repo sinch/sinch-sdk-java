@@ -15,13 +15,11 @@ For more information on the SDK, refer to the dedicated [Java SDK documentation 
 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Getting started](#getting-started)
-  - [Client initialization](#client-initialization)
-  - [Client lifecycle](#client-lifecycle)
-  - [Proxy configuration](#proxy-configuration)
 - [Supported APIs](#supported-apis)
+- [Getting started](#getting-started)
 - [Logging](#logging)
 - [Handling Exceptions](#handling-exceptions)
+- [Proxy configuration](#proxy-configuration)
 - [Third-party dependencies](#third-party-dependencies)
 - [Examples](#examples)
 - [Changelog and Migration](#changelog--migration)
@@ -171,50 +169,6 @@ SinchClient client = new SinchClient(configuration);
 > 2. Use the Conversation API, which works with project access keys.
 > 3. Contact your account manager
 
-### Proxy configuration
-
-If your network environment routes outbound traffic through an HTTP proxy, provide proxy configuration via `HttpProxyConfiguration` on the `Configuration` builder.
-
-**Unauthenticated proxy:**
-
-```java
-import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.models.Configuration;
-import com.sinch.sdk.models.HttpProxyConfiguration;
-
-...
-Configuration configuration = Configuration.builder()
-        .setKeyId(PARAM_KEY_ID)
-        .setKeySecret(PARAM_KEY_SECRET)
-        .setProjectId(PARAM_PROJECT_ID)
-        .setHttpProxyConfiguration(
-                HttpProxyConfiguration.builder()
-                        .setHostname(PARAM_PROXY_HOSTNAME)
-                        .setPort(PARAM_PROXY_PORT)
-                        .build())
-        .build();
-SinchClient client = new SinchClient(configuration);
-```
-
-**Authenticated proxy:**
-
-```java
-Configuration configuration = Configuration.builder()
-        .setKeyId(PARAM_KEY_ID)
-        .setKeySecret(PARAM_KEY_SECRET)
-        .setProjectId(PARAM_PROJECT_ID)
-        .setHttpProxyConfiguration(
-              HttpProxyConfiguration.builder()
-                  .setHostname(PARAM_PROXY_HOSTNAME)
-                  .setPort(PARAM_PROXY_PORT)
-                  .setUsername(PARAM_PROXY_USERNAME)
-                  .setPassword(PARAM_PROXY_PASSWORD)
-                  .build())
-        .build();
-SinchClient client = new SinchClient(configuration);
-```
-
-## Supported APIs
 - **Service plan** — available in all regions (`US`, `EU`, `AU`, `BR`, `CA`). Use a `smsServicePlanId` and `smsApiToken`, both available on the [Service APIs dashboard](https://dashboard.sinch.com/sms/api/services):
 
 ```java
@@ -443,6 +397,54 @@ try {
 
 - `ApiAuthException`: authentication/authorization failures.
 - `ApiMappingException`: the response payload could not be deserialized into the expected type.
+
+## Proxy configuration
+
+If your network environment routes outbound traffic through an HTTP proxy, provide proxy
+configuration via [HttpProxyConfiguration](client/src/main/com/sinch/sdk/models/HttpProxyConfiguration.java) on the [Configuration](client/src/main/com/sinch/sdk/models/Configuration.java) builder.
+
+When used, all connections will go through the proxy (including OAuth).
+
+**Unauthenticated proxy:**
+
+```java
+import com.sinch.sdk.SinchClient;
+import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.HttpProxyConfiguration;
+
+...
+Configuration configuration = Configuration.builder()
+        .setKeyId(PARAM_KEY_ID)
+        .setKeySecret(PARAM_KEY_SECRET)
+        .setProjectId(PARAM_PROJECT_ID)
+        .setHttpProxyConfiguration(
+                HttpProxyConfiguration.builder()
+                        .setHostname(PARAM_PROXY_HOSTNAME)
+                        .setPort(PARAM_PROXY_PORT)
+                        .build())
+        .build();
+SinchClient client = new SinchClient(configuration);
+```
+
+**Authenticated proxy:**
+
+
+```java
+Configuration configuration = Configuration.builder()
+        .setKeyId(PARAM_KEY_ID)
+        .setKeySecret(PARAM_KEY_SECRET)
+        .setProjectId(PARAM_PROJECT_ID)
+        .setHttpProxyConfiguration(
+              HttpProxyConfiguration.builder()
+                  .setHostname(PARAM_PROXY_HOSTNAME)
+                  .setPort(PARAM_PROXY_PORT)
+                  .setUsername(PARAM_PROXY_USERNAME)
+                  // prefer char[] over String to reduce password exposure in heap memory    
+                  .setPassword(PARAM_PROXY_PASSWORD_AS_CHAR_ARRAY)
+                  .build())
+        .build();
+SinchClient client = new SinchClient(configuration);
+```
 
 
 ## Third-party dependencies
