@@ -15,6 +15,7 @@ public class Configuration {
   private final VerificationContext verificationContext;
   private final VoiceContext voiceContext;
   private final ConversationContext conversationContext;
+  private final HttpProxyConfiguration httpProxyConfiguration;
   private final NumberLookupContext numberLookupContext;
 
   private Configuration(
@@ -22,6 +23,7 @@ public class Configuration {
       ApplicationCredentials applicationCredentials,
       SmsServicePlanCredentials smsServicePlanCredentials,
       String oauthUrl,
+      HttpProxyConfiguration httpProxyConfiguration,
       NumbersContext numbersContext,
       SmsContext smsContext,
       VerificationContext verificationContext,
@@ -38,6 +40,7 @@ public class Configuration {
     this.verificationContext = verificationContext;
     this.conversationContext = conversationContext;
     this.numberLookupContext = numberLookupContext;
+    this.httpProxyConfiguration = httpProxyConfiguration;
   }
 
   @Override
@@ -58,6 +61,8 @@ public class Configuration {
         + conversationContext
         + ", numberLookupContext="
         + numberLookupContext
+        + ", httpProxyConfiguration="
+        + httpProxyConfiguration
         + "}";
   }
 
@@ -176,6 +181,16 @@ public class Configuration {
   }
 
   /**
+   * Get HTTP proxy configuration
+   *
+   * @return HTTP proxy configuration
+   * @since 2.1
+   */
+  public Optional<HttpProxyConfiguration> getHttpProxyConfiguration() {
+    return Optional.ofNullable(httpProxyConfiguration);
+  }
+
+  /**
    * Getting Builder
    *
    * @return New Builder instance
@@ -213,6 +228,7 @@ public class Configuration {
     VoiceContext.Builder voiceContext;
     ConversationContext.Builder conversationContext;
     NumberLookupContext.Builder numberLookupContext;
+    HttpProxyConfiguration httpProxyConfiguration;
 
     protected Builder() {}
 
@@ -246,6 +262,7 @@ public class Configuration {
           configuration.getConversationContext().map(ConversationContext::builder).orElse(null);
       this.numberLookupContext =
           configuration.getNumberLookupContext().map(NumberLookupContext::builder).orElse(null);
+      this.httpProxyConfiguration = configuration.getHttpProxyConfiguration().orElse(null);
     }
 
     /**
@@ -532,6 +549,19 @@ public class Configuration {
     }
 
     /**
+     * Set HTTP proxy configuration
+     *
+     * @param httpProxyConfiguration proxy configuration, or {@code null} to disable proxy
+     * @return Current builder
+     * @see Configuration#getHttpProxyConfiguration() getter
+     * @since 2.1
+     */
+    public Builder setHttpProxyConfiguration(HttpProxyConfiguration httpProxyConfiguration) {
+      this.httpProxyConfiguration = httpProxyConfiguration;
+      return this;
+    }
+
+    /**
      * Build a Configuration instance from builder current state
      *
      * @return Configuration instance build from current builder state
@@ -544,6 +574,7 @@ public class Configuration {
           null != applicationCredentials ? applicationCredentials.build() : null,
           null != smsServicePlanCredentials ? smsServicePlanCredentials.build() : null,
           oauthUrl,
+          httpProxyConfiguration,
           null != numbersContext ? numbersContext.build() : null,
           null != smsContext ? smsContext.build() : null,
           null != verificationContext ? verificationContext.build() : null,

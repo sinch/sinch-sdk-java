@@ -16,6 +16,7 @@ import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.Pair;
+import com.sinch.sdk.models.HttpProxyConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -31,14 +32,22 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import org.apache.hc.client5.http.ClientProtocolException;
+import org.apache.hc.client5.http.HttpResponseException;
+import org.apache.hc.client5.http.auth.AuthScope;
+import org.apache.hc.client5.http.auth.CredentialsProvider;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
+import org.apache.hc.client5.http.impl.auth.CredentialsProviderBuilder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
 import org.apache.hc.core5.http.support.AbstractMessageBuilder;
@@ -47,12 +56,48 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
   private static final Logger LOGGER = Logger.getLogger(HttpClientApache.class.getName());
 
+  /**
+   * HTTP 407 Proxy Authentication Required. Kept as a local constant to make the guard in {@link
+   * #invokeAPI} self-documenting and independent of any external enum.
+   */
+  private static final int HTTP_PROXY_AUTHENTICATION_REQUIRED = 407;
+
   private volatile Map<String, String> headersToBeAdded;
 
   private volatile CloseableHttpClient client;
 
   public HttpClientApache() {
-    this.client = HttpClients.createDefault();
+    this(null);
+  }
+
+  public HttpClientApache(HttpProxyConfiguration proxyConfiguration) {
+    this.client = buildHttpClient(proxyConfiguration);
+  }
+
+  private static CloseableHttpClient buildHttpClient(HttpProxyConfiguration proxyConfiguration) {
+    if (proxyConfiguration == null) {
+      return HttpClients.createDefault();
+    }
+
+    HttpHost proxyHost =
+        new HttpHost(proxyConfiguration.getHostname(), proxyConfiguration.getPort());
+    HttpClientBuilder builder =
+        HttpClients.custom().setRoutePlanner(new DefaultProxyRoutePlanner(proxyHost));
+
+    if (proxyConfiguration.getUsername().isPresent()) {
+      // getPassword() returns a defensive copy of the internal array; HC5 receives that copy and
+      // owns it for the lifetime of the client. The caller does not need to keep the original
+      // alive.
+      CredentialsProvider credentialsProvider =
+          CredentialsProviderBuilder.create()
+              .add(
+                  new AuthScope(proxyHost),
+                  proxyConfiguration.getUsername().orElse(""),
+                  proxyConfiguration.getPassword().orElse(new char[0]))
+              .build();
+      builder.setDefaultCredentialsProvider(credentialsProvider);
+    }
+    return builder.build();
   }
 
   public void setRequestHeaders(Map<String, String> headers) {
@@ -156,6 +201,20 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
       HttpResponse response = processRequest(activeClient, request);
       LOGGER.finest("connection response: " + response);
 
+      // HTTP 407 (Proxy Authentication Required) is normally handled transparently by Apache
+      // HttpClient via DefaultProxyRoutePlanner + CredentialsProvider (the 407→retry cycle
+      // happens inside processRequest and is invisible to this method).
+      // If 407 surfaces here it means proxy credentials are absent, wrong, or the proxy uses an
+      // unsupported auth scheme. Guard explicitly so that the OAuth-refresh block below does NOT
+      // misfire: some enterprise proxies include a `www-authenticate: Bearer error="expired"`
+      // header on 407 responses, which would incorrectly trigger an OAuth token reset.
+      if (response.getCode() == HTTP_PROXY_AUTHENTICATION_REQUIRED) {
+        LOGGER.warning(
+            "Proxy authentication required (HTTP 407). "
+                + "Verify HttpProxyConfiguration hostname, port and credentials.");
+        return response;
+      }
+
       // UNAUTHORIZED (HTTP 401) error code could imply refreshing the OAuth token
       if (response.getCode() == HttpStatus.UNAUTHORIZED) {
         boolean couldRetryRequest =
@@ -169,6 +228,15 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
         }
       }
       return response;
+    } catch (ClientProtocolException cpe) {
+      int code = extractHttpStatusCode(cpe);
+      if (code > 0) {
+        LOGGER.severe("HTTP protocol error with status code " + code + ": " + cpe.getMessage());
+        throw new ApiException(
+            "HTTP protocol error (status code " + code + "): " + cpe.getMessage(), cpe, code);
+      }
+      LOGGER.severe("HTTP protocol error: " + cpe.getMessage());
+      throw new ApiException("HTTP protocol error: " + cpe.getMessage(), cpe);
     } catch (Exception e) {
       LOGGER.severe("Error:" + e);
       throw new ApiException(e);
@@ -180,6 +248,9 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
       HttpResponse response,
       Map<String, AuthManager> authManagersByOasSecuritySchemes) {
 
+    if (null == authManagersByOasSecuritySchemes) {
+      return false;
+    }
     Map<String, AuthManager> authManagersByAuthSchemes =
         authManagersByOasSecuritySchemes.values().stream()
             .map(authManager -> new AbstractMap.SimpleEntry<>(authManager.getSchema(), authManager))
@@ -346,6 +417,42 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
   HttpResponse processRequest(CloseableHttpClient client, ClassicHttpRequest request)
       throws IOException {
     return client.execute(request, HttpClientApache::processResponse);
+  }
+
+  /**
+   * Extracts the HTTP status code from a {@link ClientProtocolException}.
+   *
+   * <p>Handles two cases:
+   *
+   * <ul>
+   *   <li>{@link HttpResponseException} — carries the code directly via {@code getStatusCode()}.
+   *   <li>Plain {@link ClientProtocolException} — Apache embeds the status line in the message
+   *       (e.g. {@code "CONNECT refused by proxy: HTTP/1.1 407 Proxy Authentication Required"}).
+   * </ul>
+   *
+   * @return the HTTP status code, or {@code -1} if it cannot be determined
+   */
+  private static int extractHttpStatusCode(ClientProtocolException e) {
+    if (e instanceof HttpResponseException) {
+      return ((HttpResponseException) e).getStatusCode();
+    }
+    String message = e.getMessage();
+    if (message == null) {
+      return -1;
+    }
+    int idx = message.indexOf("HTTP/");
+    if (idx < 0) {
+      return -1;
+    }
+    String[] parts = message.substring(idx).split(" ", 3);
+    if (parts.length < 2) {
+      return -1;
+    }
+    try {
+      return Integer.parseInt(parts[1]);
+    } catch (NumberFormatException ignored) {
+      return -1;
+    }
   }
 
   private Optional<Charset> extractCharset(AbstractMessageBuilder<?> messageBuilder) {

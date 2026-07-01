@@ -20,7 +20,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ### Numbers
 - Extend `NumberSinchEvents` class.
-  - **[fix]** `EventTypeEnum`: `DEPROVISIONING_FROM_VOICE_PLATFORM` is deprecated and has to be replaced by `VOICE_PLATFORM_DEPROVISIONING`.
+  - **[fix]** `EventTypeEnum`: `DEPROVISIONING_TO_VOICE_PLATFORM` is deprecated and has to be replaced by `DEPROVISIONING_FROM_VOICE_PLATFORM`.
   - **[feature]** Support new `internalFailureCode` field.
   - **[feature]** Support new `StatusEnum` values: `IN_REVIEW`, `BLOCKED`, `COMPLETED`, `REJECTED`, `EXPIRED`.
   - **[feature]** Support new `EventTypeEnum` value: `NUMBER_ORDER_PROCESSING`.
@@ -29,6 +29,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[feature]** Support `Consents` API: `listIdentities` and `listAuditRecords` endpoints
 
 ### SDK
+- **[feature]** HTTP proxy support: configure an unauthenticated or authenticated (Basic) proxy via `HttpProxyConfiguration`
 - **[feature]** `SinchClient` exposes a `close()` method to shut down the underlying HTTP connection pool and release all associated resources deterministically
 - **[fix]** `HttpClientApache`: declare now `headersToBeAdded` as `volatile` to guarantee visibility across threads in concurrent usage
 - **[fix]** `HttpClientApache`: wrap response-body `Scanner` in a try-with-resources block to prevent resource leaks; gracefully handle empty (`null`) response entities

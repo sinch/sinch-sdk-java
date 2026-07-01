@@ -4,6 +4,7 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
+import com.sinch.sdk.models.HttpProxyConfiguration;
 import com.sinch.sdk.models.NumberLookupContext;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
@@ -37,8 +38,20 @@ public class Config {
 
   public static final String NUMBER_LOOKUP_HOST_NAME = "http://localhost:3022";
 
+  public static final int PROXY_UNAUTHENTICATED_PORT = 3128;
+  public static final int PROXY_AUTHENTICATED_PORT = 3129;
+  public static final String PROXY_HOST = "localhost";
+  public static final String PROXY_USERNAME = "user";
+  public static final String PROXY_PASSWORD = "password";
+
+  public static final String PROXY_VISIBLE_AUTH_URL =
+      "http://authentication-server:1080/oauth2/token";
+  public static final String PROXY_VISIBLE_NUMBER_LOOKUP_URL = "http://proxy-reachable-server:1080";
+
   private final SinchClient client;
   private final SinchClient clientServicePlanId;
+  private final SinchClient clientProxyUnauthenticated;
+  private final SinchClient clientProxyAuthenticated;
 
   private Config() {
 
@@ -81,6 +94,24 @@ public class Config {
             .build();
 
     clientServicePlanId = new SinchClient(configurationServicePlanId);
+
+    clientProxyUnauthenticated =
+        new SinchClient(
+            createConfigurationWithProxyUsage(
+                HttpProxyConfiguration.builder()
+                    .setHostname(PROXY_HOST)
+                    .setPort(Config.PROXY_UNAUTHENTICATED_PORT)
+                    .build()));
+
+    clientProxyAuthenticated =
+        new SinchClient(
+            createConfigurationWithProxyUsage(
+                HttpProxyConfiguration.builder()
+                    .setHostname(PROXY_HOST)
+                    .setPort(Config.PROXY_AUTHENTICATED_PORT)
+                    .setUsername(PROXY_USERNAME)
+                    .setPassword(PROXY_PASSWORD)
+                    .build()));
   }
 
   private static class LazyHolder {
@@ -93,5 +124,27 @@ public class Config {
 
   public static SinchClient getSinchClientServicePlanId() {
     return LazyHolder.INSTANCE.clientServicePlanId;
+  }
+
+  public static SinchClient getSinchClientProxyUnauthenticated() {
+    return LazyHolder.INSTANCE.clientProxyUnauthenticated;
+  }
+
+  public static SinchClient getSinchClientProxyAuthenticated() {
+    return LazyHolder.INSTANCE.clientProxyAuthenticated;
+  }
+
+  private static Configuration createConfigurationWithProxyUsage(HttpProxyConfiguration proxy) {
+    return Configuration.builder()
+        .setOAuthUrl(PROXY_VISIBLE_AUTH_URL)
+        .setProjectId(Config.PROJECT_ID)
+        .setKeyId(Config.KEY_ID)
+        .setKeySecret(Config.KEY_SECRET)
+        .setNumberLookupContext(
+            NumberLookupContext.builder()
+                .setNumberLookupUrl(PROXY_VISIBLE_NUMBER_LOOKUP_URL)
+                .build())
+        .setHttpProxyConfiguration(proxy)
+        .build();
   }
 }

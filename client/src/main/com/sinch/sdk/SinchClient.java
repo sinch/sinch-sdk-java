@@ -449,7 +449,7 @@ public class SinchClient {
       synchronized (this) {
         local = httpClient;
         if (null == local || local.isClosed()) {
-          local = new HttpClientApache();
+          local = new HttpClientApache(configuration.getHttpProxyConfiguration().orElse(null));
 
           // set SDK User-Agent
           String userAgent = formatSdkUserAgentHeader();
