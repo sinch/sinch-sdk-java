@@ -33,7 +33,6 @@ import java.util.Optional;
  * @since 2.1
  */
 public class HttpProxyConfiguration {
-
   private final String hostname;
   private final int port;
   private final String username;

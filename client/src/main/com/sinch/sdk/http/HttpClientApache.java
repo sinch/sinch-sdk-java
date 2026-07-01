@@ -202,7 +202,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
       LOGGER.finest("connection response: " + response);
 
       // HTTP 407 (Proxy Authentication Required) is normally handled transparently by Apache
-      // HttpClient via DefaultProxyRoutePlanner + BasicCredentialsProvider (the 407→retry cycle
+      // HttpClient via DefaultProxyRoutePlanner + CredentialsProvider (the 407→retry cycle
       // happens inside processRequest and is invisible to this method).
       // If 407 surfaces here it means proxy credentials are absent, wrong, or the proxy uses an
       // unsupported auth scheme. Guard explicitly so that the OAuth-refresh block below does NOT
