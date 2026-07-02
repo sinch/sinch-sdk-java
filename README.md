@@ -489,11 +489,11 @@ Note: Replace `VERSION-YOU-WANT-TO-BE-USED` with a Jackson version of at least `
 ## Examples
 
 You can find:
- - self-contained code snippets covering every API operation in the [examples/snippets](./examples/snippets) folder.
- - getting started guides for specific use cases in the [examples/getting-started](./examples/getting-started) folder.
- - a Spring Boot server template to process received Sinch Events in the [examples/sinch-events](./examples/sinch-events) folder.
- - an SDK client template application in the [examples/client](./examples/client) folder.
- - step-by-step tutorials combining multiple SDK features in the [examples/tutorials](./examples/tutorials) folder.
+- self-contained code snippets covering every API operation in the [examples/snippets](./examples/snippets) folder.
+- getting started guides for specific use cases in the [examples/getting-started](./examples/getting-started) folder.
+- a Spring Boot server template to process received Sinch Events in the [examples/sinch-events](./examples/sinch-events) folder.
+- an SDK client template application in the [examples/client](./examples/client) folder.
+- step-by-step tutorials combining multiple SDK features in the [examples/tutorials](./examples/tutorials) folder.
 
 
 ## Changelog & Migration
