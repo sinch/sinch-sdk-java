@@ -19,7 +19,9 @@ import java.util.Objects;
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SvamlActionParkImpl
-    implements SvamlActionPark, com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction {
+    implements SvamlActionPark,
+        com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction,
+        com.sinch.sdk.domains.voice.models.v1.svaml.action.ManagedCallSvamlAction {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_NAME = "name";

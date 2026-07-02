@@ -23,6 +23,7 @@ public interface ChannelSpecificContactMessage
 
   /** The message type. */
   public class MessageTypeEnum extends EnumDynamic<String, MessageTypeEnum> {
+    /** The <code>nfm_reply</code> message type. */
     public static final MessageTypeEnum NFM_REPLY = new MessageTypeEnum("nfm_reply");
 
     private static final EnumSupportDynamic<String, MessageTypeEnum> ENUM_SUPPORT =
@@ -54,7 +55,7 @@ public interface ChannelSpecificContactMessage
   MessageTypeEnum getMessageType();
 
   /**
-   * Get message
+   * The message content.
    *
    * @return message
    */

@@ -24,6 +24,7 @@ public interface RegularPriceCommerce
 
   /** Gets or Sets type */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** Commerce with regular price */
     public static final TypeEnum REGULAR_PRICE_COMMERCE = new TypeEnum("REGULAR_PRICE_COMMERCE");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
@@ -59,9 +60,9 @@ public interface RegularPriceCommerce
   /**
    * Regular price of the product
    *
-   * <p>minimum: 0 maximum: 99999999
+   * <p><b>Minimum</b>: 0
    *
-   * <p>Field is required
+   * <p><b>Maximum</b>: 99999999 Field is required
    *
    * @return regularPrice
    */

@@ -59,7 +59,7 @@ public class ReasonCode extends EnumDynamic<String, ReasonCode> {
       new ReasonCode("CHANNEL_CONFIGURATION_MISSING");
 
   /**
-   * Some of the referenced media files is of a unsupported media type. Please read the <a
+   * Some of the referenced media files are of an unsupported media type. Please read the <a
    * href="https://developers.sinch.com/docs/conversation/channel-support/">channel support
    * documentation</a> page to find out the limitations on media that the different channels impose.
    */

@@ -72,7 +72,16 @@ public interface ClientCredentials {
    * <code>BASIC</code> is used by default.
    */
   public class TokenRequestTypeEnum extends EnumDynamic<String, TokenRequestTypeEnum> {
+    /**
+     * Sent using the HTTP Authorization header (Basic auth). In this case, <code>client_id</code>
+     * and <code>client_secret</code> are NOT included in the form body.
+     */
     public static final TokenRequestTypeEnum BASIC = new TokenRequestTypeEnum("BASIC");
+
+    /**
+     * Sent in the form body as <code>client_id</code> and <code>client_secret</code>. No
+     * Authorization header is added.
+     */
     public static final TokenRequestTypeEnum FORM = new TokenRequestTypeEnum("FORM");
 
     private static final EnumSupportDynamic<String, TokenRequestTypeEnum> ENUM_SUPPORT =

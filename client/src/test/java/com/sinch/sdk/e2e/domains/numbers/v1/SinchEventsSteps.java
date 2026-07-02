@@ -81,6 +81,7 @@ public class SinchEventsSteps {
             .setEventType(EventTypeEnum.PROVISIONING_TO_VOICE_PLATFORM)
             .setStatus(StatusEnum.SUCCEEDED)
             .setFailureCode(null)
+            .setInternalFailureCode(null)
             .build();
 
     NumberSinchEvent expectedFailure =
@@ -93,6 +94,7 @@ public class SinchEventsSteps {
             .setEventType(EventTypeEnum.PROVISIONING_TO_VOICE_PLATFORM)
             .setStatus(StatusEnum.FAILED)
             .setFailureCode(FailureCodeEnum.from("PROVISIONING_TO_VOICE_PLATFORM_FAILED"))
+            .setInternalFailureCode(null)
             .build();
 
     NumberSinchEvent expected =

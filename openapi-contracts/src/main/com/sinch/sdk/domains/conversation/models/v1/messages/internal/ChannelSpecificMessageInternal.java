@@ -22,12 +22,23 @@ public interface ChannelSpecificMessageInternal {
 
   /** The type of the channel specific message. */
   public class MessageTypeEnum extends EnumDynamic<String, MessageTypeEnum> {
+    /** The WhatsApp Flows message type. */
     public static final MessageTypeEnum FLOWS = new MessageTypeEnum("FLOWS");
+
+    /** The WhatsApp order details message type. */
     public static final MessageTypeEnum ORDER_DETAILS = new MessageTypeEnum("ORDER_DETAILS");
+
+    /** The WhatsApp order status message type. */
     public static final MessageTypeEnum ORDER_STATUS = new MessageTypeEnum("ORDER_STATUS");
+
+    /** KakaoTalk commerce channel specific message type */
     public static final MessageTypeEnum COMMERCE = new MessageTypeEnum("COMMERCE");
+
+    /** KakaoTalk carousel commerce channel specific message type */
     public static final MessageTypeEnum CAROUSEL_COMMERCE =
         new MessageTypeEnum("CAROUSEL_COMMERCE");
+
+    /** LINE notification message template type */
     public static final MessageTypeEnum NOTIFICATION_MESSAGE_TEMPLATE =
         new MessageTypeEnum("NOTIFICATION_MESSAGE_TEMPLATE");
 

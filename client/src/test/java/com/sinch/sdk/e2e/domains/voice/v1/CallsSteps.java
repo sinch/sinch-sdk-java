@@ -5,13 +5,13 @@ import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.voice.api.v1.CallsService;
 import com.sinch.sdk.domains.voice.models.v1.Price;
 import com.sinch.sdk.domains.voice.models.v1.calls.request.CallLeg;
+import com.sinch.sdk.domains.voice.models.v1.calls.request.CallUpdateRequest;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation.DomainEnum;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation.ReasonEnum;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallInformation.StatusEnum;
 import com.sinch.sdk.domains.voice.models.v1.calls.response.CallResult;
 import com.sinch.sdk.domains.voice.models.v1.destination.DestinationPstn;
-import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionContinue;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangup;
 import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionPlayFiles;
@@ -46,8 +46,8 @@ public class CallsSteps {
   @When("^I send a request to update a call$")
   public void updateCall() {
 
-    SvamlControl request =
-        SvamlControl.builder()
+    CallUpdateRequest request =
+        CallUpdateRequest.builder()
             .setInstructions(
                 Arrays.asList(
                     SvamlInstructionSay.builder()
@@ -63,8 +63,8 @@ public class CallsSteps {
   @When("^I send a request to update a call that doesn't exist$")
   public void updateCallNotExits() {
 
-    SvamlControl request =
-        SvamlControl.builder()
+    CallUpdateRequest request =
+        CallUpdateRequest.builder()
             .setInstructions(
                 Arrays.asList(
                     SvamlInstructionSay.builder()
@@ -83,8 +83,8 @@ public class CallsSteps {
   @When("^I send a request to manage a call with callLeg$")
   public void manageCallWithCallLeg() {
 
-    SvamlControl request =
-        SvamlControl.builder()
+    CallUpdateRequest request =
+        CallUpdateRequest.builder()
             .setInstructions(
                 Arrays.asList(
                     SvamlInstructionPlayFiles.builder()

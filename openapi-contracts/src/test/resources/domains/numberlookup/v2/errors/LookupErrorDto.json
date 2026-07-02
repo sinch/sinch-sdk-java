@@ -1,0 +1,6 @@
+{
+  "status": 100,
+  "title": "Feature Disabled",
+  "detail": "VoIPDetection feature is currently disabled.",
+  "type": "validation_error"
+}

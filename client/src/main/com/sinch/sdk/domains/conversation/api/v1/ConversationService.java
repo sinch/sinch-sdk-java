@@ -98,4 +98,12 @@ public interface ConversationService {
    * @since 2.0
    */
   TemplatesService templates();
+
+  /**
+   * Consents Service instance
+   *
+   * @return service instance for project
+   * @since 2.1
+   */
+  ConsentsService consents();
 }

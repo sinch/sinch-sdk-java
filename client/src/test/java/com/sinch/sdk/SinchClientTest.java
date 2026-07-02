@@ -3,11 +3,15 @@ package com.sinch.sdk;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
+import com.sinch.sdk.models.HttpProxyConfiguration;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.VoiceContext;
 import com.sinch.sdk.models.VoiceRegion;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import org.junit.jupiter.api.Test;
 
 class SinchClientTest {
@@ -143,6 +147,14 @@ class SinchClientTest {
   }
 
   @Test
+  void defaultNumberLookupUrlAvailable() {
+    Configuration configuration =
+        Configuration.builder().setKeyId("foo").setKeySecret("foo").setProjectId("foo").build();
+    SinchClient client = new SinchClient(configuration);
+    assertNotNull(client.getConfiguration().getNumberLookupContext().get().getNumberLookupUrl());
+  }
+
+  @Test
   void defaultVoiceRegion() {
     Configuration configuration = Configuration.builder().build();
     SinchClient client = new SinchClient(configuration);
@@ -217,5 +229,112 @@ class SinchClientTest {
     assertEquals(
         client.getConfiguration().getVoiceContext().get().getVoiceApplicationManagementUrl(),
         "my foo url");
+  }
+
+  @Test
+  void formatAuxiliaryFlagReturnsVendorWhenFlagIsEmpty() {
+    SinchClient client = new SinchClient();
+    // AUXILIARY_FLAG is "" in SDK — only vendor should be present, no comma separator
+    String result = client.formatAuxiliaryFlag("");
+    assertNotNull(result);
+    assertEquals(
+        System.getProperty("java.vendor"),
+        result,
+        "When auxiliaryFlag is empty, the result should match java.vendor exactly");
+  }
+
+  @Test
+  void formatAuxiliaryFlagHandlesNullJavaVendor() {
+    String original = System.getProperty("java.vendor");
+    try {
+      System.clearProperty("java.vendor");
+      SinchClient client = new SinchClient();
+      String result = client.formatAuxiliaryFlag("");
+      assertNotNull(result);
+      assertFalse(result.contains("null"), "Null java.vendor must not render as 'null' string");
+    } finally {
+      if (null != original) {
+        System.setProperty("java.vendor", original);
+      }
+    }
+  }
+
+  @Test
+  void formatAuxiliaryFlagAppendsNonEmptyFlag() {
+    SinchClient client = new SinchClient();
+    String result = client.formatAuxiliaryFlag("my-wrapper/1.0");
+    assertNotNull(result);
+    assertTrue(result.contains(","), "A comma must separate vendor from the auxiliary flag");
+    assertTrue(
+        result.endsWith(",my-wrapper/1.0"),
+        "Auxiliary flag must be the last element after the comma");
+  }
+
+  @Test
+  void closeBeforeAnyCall() {
+    SinchClient client = new SinchClient();
+    assertDoesNotThrow(client::close);
+  }
+
+  @Test
+  void doubleCloseBeforeAnyCall() {
+    SinchClient client = new SinchClient();
+    client.close();
+    assertDoesNotThrow(client::close);
+  }
+
+  /**
+   * Verifies that a proxy configuration set on {@link Configuration} is preserved in the {@link
+   * SinchClient}'s internal configuration after construction.
+   */
+  @Test
+  void proxyConfigurationPreservedInConfiguration() {
+    HttpProxyConfiguration proxy =
+        HttpProxyConfiguration.builder()
+            .setHostname("proxy.corp.example.com")
+            .setPort(3128)
+            .build();
+    Configuration configuration = Configuration.builder().setHttpProxyConfiguration(proxy).build();
+    SinchClient client = new SinchClient(configuration);
+    assertTrue(
+        client.getConfiguration().getHttpProxyConfiguration().isPresent(),
+        "Proxy configuration must be present in the SinchClient's stored configuration");
+    assertEquals(
+        "proxy.corp.example.com",
+        client.getConfiguration().getHttpProxyConfiguration().get().getHostname(),
+        "Proxy hostname must survive SinchClient construction");
+    assertEquals(
+        3128,
+        client.getConfiguration().getHttpProxyConfiguration().get().getPort(),
+        "Proxy port must survive SinchClient construction");
+  }
+
+  @Test
+  void proxyConfigurationWiredIntoHttpClient() throws Exception {
+    HttpProxyConfiguration proxy =
+        HttpProxyConfiguration.builder()
+            .setHostname("proxy.corp.example.com")
+            .setPort(3128)
+            .build();
+    Configuration configuration = Configuration.builder().setHttpProxyConfiguration(proxy).build();
+    SinchClient sinchClient = new SinchClient(configuration);
+
+    Method getHttpClient = SinchClient.class.getDeclaredMethod("getHttpClient");
+    getHttpClient.setAccessible(true);
+    Object httpClientApache = getHttpClient.invoke(sinchClient);
+    assertInstanceOf(HttpClientApache.class, httpClientApache);
+
+    Field clientField = HttpClientApache.class.getDeclaredField("client");
+    clientField.setAccessible(true);
+    Object apacheClient = clientField.get(httpClientApache);
+
+    Field routePlannerField = apacheClient.getClass().getDeclaredField("routePlanner");
+    routePlannerField.setAccessible(true);
+    Object routePlanner = routePlannerField.get(apacheClient);
+
+    assertInstanceOf(
+        org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner.class,
+        routePlanner,
+        "HttpClient must use a DefaultProxyRoutePlanner when proxy is configured");
   }
 }

@@ -13,7 +13,7 @@ package com.sinch.sdk.domains.conversation.models.v1.sinchevents.contact;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.Instant;
 
-/** This callback is sent when a new contact is deleted. */
+/** This callback is sent when a contact is deleted. */
 @JsonDeserialize(builder = ContactDeleteEventImpl.Builder.class)
 public interface ContactDeleteEvent
     extends com.sinch.sdk.domains.conversation.models.v1.sinchevents.ConversationSinchEvent {

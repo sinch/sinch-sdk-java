@@ -23,7 +23,10 @@ public interface OrderDetailsPayment {
 
   /** The country/currency associated with the payment message. */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** Brazil */
     public static final TypeEnum BR = new TypeEnum("br");
+
+    /** Singapore */
     public static final TypeEnum SG = new TypeEnum("sg");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
@@ -66,7 +69,10 @@ public interface OrderDetailsPayment {
 
   /** The type of good associated with this order. */
   public class TypeOfGoodsEnum extends EnumDynamic<String, TypeOfGoodsEnum> {
+    /** Digital goods. */
     public static final TypeOfGoodsEnum DIGITAL_GOODS = new TypeOfGoodsEnum("digital-goods");
+
+    /** Physical goods. */
     public static final TypeOfGoodsEnum PHYSICAL_GOODS = new TypeOfGoodsEnum("physical-goods");
 
     private static final EnumSupportDynamic<String, TypeOfGoodsEnum> ENUM_SUPPORT =

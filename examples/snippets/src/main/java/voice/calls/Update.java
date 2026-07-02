@@ -9,8 +9,8 @@ package voice.calls;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.voice.api.v1.CallsService;
-import com.sinch.sdk.domains.voice.models.v1.svaml.SvamlControl;
-import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlAction;
+import com.sinch.sdk.domains.voice.models.v1.calls.request.CallUpdateRequest;
+import com.sinch.sdk.domains.voice.models.v1.svaml.action.ManagedCallSvamlAction;
 import com.sinch.sdk.domains.voice.models.v1.svaml.action.SvamlActionHangup;
 import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstruction;
 import com.sinch.sdk.domains.voice.models.v1.svaml.instruction.SvamlInstructionSay;
@@ -34,7 +34,7 @@ public class Update {
     // The instruction to be performed
     SvamlInstruction instruction = SvamlInstructionSay.builder().setText("Goodbye").build();
     // The instruction to add to the call
-    SvamlAction action = SvamlActionHangup.SVAML_ACTION_HANGUP;
+    ManagedCallSvamlAction action = SvamlActionHangup.SVAML_ACTION_HANGUP;
 
     Configuration configuration =
         Configuration.builder()
@@ -50,8 +50,8 @@ public class Update {
 
     Collection<SvamlInstruction> instructions = Collections.singletonList(instruction);
 
-    SvamlControl request =
-        SvamlControl.builder().setInstructions(instructions).setAction(action).build();
+    CallUpdateRequest request =
+        CallUpdateRequest.builder().setInstructions(instructions).setAction(action).build();
 
     callsService.update(callId, request);
 

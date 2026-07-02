@@ -1,0 +1,15 @@
+{
+  "identity": {
+    "identity": "an identity value"
+  },
+  "audit_records": [
+    {
+      "origin": "ORIGIN_API",
+      "operation": "OPERATION_INSERT",
+      "list_type": "OPT_OUT_ALL",
+      "project_id": "a project id",
+      "app_id": "an app id",
+      "datetime": "2025-06-06T14:42:56.031323Z"
+    }
+  ]
+}

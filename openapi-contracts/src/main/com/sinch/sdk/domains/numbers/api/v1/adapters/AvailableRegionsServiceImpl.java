@@ -34,6 +34,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class AvailableRegionsServiceImpl
@@ -74,11 +75,14 @@ public class AvailableRegionsServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _fetchListPage(queryParameter, httpRequest);
+    return _fetchListPage(
+        (queryParameters) -> listRequestBuilder(queryParameters), queryParameter, httpRequest);
   }
 
   private AvailableRegionsListResponse _fetchListPage(
-      AvailableRegionsListQueryParameters queryParameter, HttpRequest httpRequest)
+      Function<AvailableRegionsListQueryParameters, HttpRequest> requestBuilder,
+      AvailableRegionsListQueryParameters queryParameter,
+      HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(

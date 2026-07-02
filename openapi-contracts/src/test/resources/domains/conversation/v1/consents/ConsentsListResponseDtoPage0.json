@@ -1,0 +1,11 @@
+{
+  "identities": [
+    {
+      "identity": "an identity value"
+    },
+    {
+      "identity": "a 2nd identity value"
+    }
+  ],
+  "next_page_token": "the next page token value"
+}

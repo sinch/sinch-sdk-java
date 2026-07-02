@@ -41,6 +41,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class ActiveNumberServiceImpl
@@ -84,11 +85,14 @@ public class ActiveNumberServiceImpl
     LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
 
     HttpRequest httpRequest = listRequestBuilder(queryParameter);
-    return _fetchListPage(queryParameter, httpRequest);
+    return _fetchListPage(
+        (queryParameters) -> listRequestBuilder(queryParameters), queryParameter, httpRequest);
   }
 
   private ActiveNumbersListResponse _fetchListPage(
-      ActiveNumbersListQueryParameters queryParameter, HttpRequest httpRequest)
+      Function<ActiveNumbersListQueryParameters, HttpRequest> requestBuilder,
+      ActiveNumbersListQueryParameters queryParameter,
+      HttpRequest httpRequest)
       throws ApiException {
     HttpResponse response =
         httpClient.invokeAPI(
@@ -105,10 +109,10 @@ public class ActiveNumberServiceImpl
           ActiveNumbersListQueryParameters.builder(queryParameter).setPageToken(nextToken).build();
 
       final HttpRequest nextHttpRequest =
-          !StringUtil.isEmpty(nextToken) ? listRequestBuilder(nextParameters) : null;
+          !StringUtil.isEmpty(nextToken) ? requestBuilder.apply(nextParameters) : null;
 
       return new ActiveNumbersListResponse(
-          () -> _fetchListPage(nextParameters, nextHttpRequest),
+          () -> _fetchListPage(requestBuilder, nextParameters, nextHttpRequest),
           new Page<>(deserialized.getActiveNumbers(), new PageNavigator<>(nextHttpRequest)));
     }
     // fallback to default errors handling:

@@ -33,6 +33,7 @@ public interface MessageInboundEventMessage {
 
   /** The direction of the message, it's always TO_APP for contact messages. */
   public class DirectionEnum extends EnumDynamic<String, DirectionEnum> {
+    /** A message sent to a Conversation API app. */
     public static final DirectionEnum TO_APP = new DirectionEnum("TO_APP");
 
     private static final EnumSupportDynamic<String, DirectionEnum> ENUM_SUPPORT =

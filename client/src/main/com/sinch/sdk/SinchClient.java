@@ -2,6 +2,7 @@ package com.sinch.sdk;
 
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.ConversationService;
+import com.sinch.sdk.domains.numberlookup.NumberLookupService;
 import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
@@ -10,6 +11,7 @@ import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
+import com.sinch.sdk.models.NumberLookupContext;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
@@ -19,10 +21,11 @@ import com.sinch.sdk.models.VoiceRegion;
 import com.sinch.sdk.models.adapters.DualToneMultiFrequencyMapper;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -49,6 +52,8 @@ public class SinchClient {
   private static final String CONVERSATION_TEMPLATE_SERVER_KEY =
       "template-management-conversation-server";
 
+  private static final String NUMBER_LOOKUP_SERVER_KEY = "number-lookup-server";
+
   // sinch-sdk/{sdk_version} ({language}/{language_version}; {implementation_type};
   // {auxiliary_flag})
   private static final String SDK_USER_AGENT_HEADER = "User-Agent";
@@ -62,6 +67,7 @@ public class SinchClient {
   private volatile VerificationService verification;
   private volatile VoiceService voice;
   private volatile ConversationService conversation;
+  private volatile NumberLookupService lookup;
   private volatile HttpClientApache httpClient;
 
   /**
@@ -87,6 +93,7 @@ public class SinchClient {
     handleDefaultVerificationSettings(configurationGuard, props, builder);
     handleDefaultVoiceSettings(configurationGuard, props, builder);
     handleDefaultConversationSettings(configurationGuard, props, builder);
+    handleDefaultNumberLookupSettings(configurationGuard, props, builder);
 
     Configuration newConfiguration = builder.build();
     checkConfiguration(newConfiguration);
@@ -227,6 +234,23 @@ public class SinchClient {
     builder.setConversationContext(contextBuilder.build());
   }
 
+  private void handleDefaultNumberLookupSettings(
+      Configuration configuration, Properties props, Configuration.Builder builder) {
+
+    String url =
+        configuration
+            .getNumberLookupContext()
+            .map(NumberLookupContext::getNumberLookupUrl)
+            .orElse(null);
+
+    if (null == url && props.containsKey(NUMBER_LOOKUP_SERVER_KEY)) {
+      builder.setNumberLookupContext(
+          NumberLookupContext.builder()
+              .setNumberLookupUrl(props.getProperty(NUMBER_LOOKUP_SERVER_KEY))
+              .build());
+    }
+  }
+
   /**
    * Get current configuration
    *
@@ -332,6 +356,23 @@ public class SinchClient {
     return conversation;
   }
 
+  /**
+   * Get Number Lookup domain service
+   *
+   * @return Return instance onto Number Lookup API service
+   * @since 2.1
+   */
+  public NumberLookupService lookup() {
+    if (null == lookup) {
+      synchronized (this) {
+        if (null == lookup) {
+          lookup = lookupInit();
+        }
+      }
+    }
+    return lookup;
+  }
+
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
   }
@@ -383,6 +424,14 @@ public class SinchClient {
         this::getHttpClient);
   }
 
+  private NumberLookupService lookupInit() {
+    return new com.sinch.sdk.domains.numberlookup.adapters.NumberLookupService(
+        getConfiguration().getUnifiedCredentials().orElse(null),
+        getConfiguration().getNumberLookupContext().orElse(null),
+        getConfiguration().getOAuthServer(),
+        this::getHttpClient);
+  }
+
   private Properties handlePropertiesFile(String fileName) {
 
     Properties prop = new Properties();
@@ -400,9 +449,7 @@ public class SinchClient {
       synchronized (this) {
         local = httpClient;
         if (null == local || local.isClosed()) {
-          // TODO: by adding a setter, we could imagine having another HTTP client provided
-          // programmatically or use configuration file referencing another class by name
-          local = new HttpClientApache();
+          local = new HttpClientApache(configuration.getHttpProxyConfiguration().orElse(null));
 
           // set SDK User-Agent
           String userAgent = formatSdkUserAgentHeader();
@@ -430,13 +477,52 @@ public class SinchClient {
   }
 
   private String formatAuxiliaryFlag() {
+    return formatAuxiliaryFlag(SDK.AUXILIARY_FLAG);
+  }
 
-    Collection<String> values = Collections.singletonList(System.getProperty("java.vendor"));
-
-    if (!StringUtil.isEmpty(SDK.AUXILIARY_FLAG)) {
-      values.add(SDK.AUXILIARY_FLAG);
+  // Package-private to allow unit-testing with an arbitrary flag value
+  String formatAuxiliaryFlag(String auxiliaryFlag) {
+    Collection<String> values = new ArrayList<>();
+    String vendor = System.getProperty("java.vendor");
+    values.add(StringUtil.isEmpty(vendor) ? "" : vendor);
+    if (!StringUtil.isEmpty(auxiliaryFlag)) {
+      values.add(auxiliaryFlag);
     }
     return String.join(",", values);
+  }
+
+  /**
+   * Releases the underlying HTTP client and its connection pool, and resets all lazily-initialized
+   * domain services.
+   *
+   * <p>After this call, in-flight requests may be affected by shutdown of the underlying HTTP
+   * client and are not guaranteed to complete normally. The next API call on any domain service
+   * will transparently re-initialize both the service and the HTTP client. Idempotent: safe to call
+   * more than once.
+   *
+   * <p>Any exception thrown by the underlying HTTP client during close is caught and logged at
+   * WARNING level.
+   *
+   * @since 2.1
+   */
+  public void close() {
+    synchronized (this) {
+      HttpClientApache local = httpClient;
+      httpClient = null;
+      numbers = null;
+      sms = null;
+      verification = null;
+      voice = null;
+      conversation = null;
+      lookup = null;
+      if (local != null) {
+        try {
+          local.close();
+        } catch (Exception e) {
+          LOGGER.log(Level.WARNING, "Exception while closing HTTP client", e);
+        }
+      }
+    }
   }
 
   static {

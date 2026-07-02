@@ -22,11 +22,22 @@ public interface OrderStatusPaymentDetails {
 
   /** The new payment message status. */
   public class StatusEnum extends EnumDynamic<String, StatusEnum> {
+    /** The order is pending. */
     public static final StatusEnum PENDING = new StatusEnum("pending");
+
+    /** The order is processing. */
     public static final StatusEnum PROCESSING = new StatusEnum("processing");
+
+    /** A portion of the order has been shipped. */
     public static final StatusEnum PARTIALLY_SHIPPED = new StatusEnum("partially-shipped");
+
+    /** The order has been shipped. */
     public static final StatusEnum SHIPPED = new StatusEnum("shipped");
+
+    /** The order is complete. */
     public static final StatusEnum COMPLETED = new StatusEnum("completed");
+
+    /** The order was canceled. */
     public static final StatusEnum CANCELED = new StatusEnum("canceled");
 
     private static final EnumSupportDynamic<String, StatusEnum> ENUM_SUPPORT =

@@ -15,17 +15,21 @@ public class Configuration {
   private final VerificationContext verificationContext;
   private final VoiceContext voiceContext;
   private final ConversationContext conversationContext;
+  private final HttpProxyConfiguration httpProxyConfiguration;
+  private final NumberLookupContext numberLookupContext;
 
   private Configuration(
       UnifiedCredentials unifiedCredentials,
       ApplicationCredentials applicationCredentials,
       SmsServicePlanCredentials smsServicePlanCredentials,
       String oauthUrl,
+      HttpProxyConfiguration httpProxyConfiguration,
       NumbersContext numbersContext,
       SmsContext smsContext,
       VerificationContext verificationContext,
       VoiceContext voiceContext,
-      ConversationContext conversationContext) {
+      ConversationContext conversationContext,
+      NumberLookupContext numberLookupContext) {
     this.unifiedCredentials = unifiedCredentials;
     this.applicationCredentials = applicationCredentials;
     this.smsServicePlanCredentials = smsServicePlanCredentials;
@@ -35,6 +39,8 @@ public class Configuration {
     this.voiceContext = voiceContext;
     this.verificationContext = verificationContext;
     this.conversationContext = conversationContext;
+    this.numberLookupContext = numberLookupContext;
+    this.httpProxyConfiguration = httpProxyConfiguration;
   }
 
   @Override
@@ -51,10 +57,12 @@ public class Configuration {
         + verificationContext
         + ", voiceContext="
         + voiceContext
-        + ", conversationRegion="
-        + conversationContext
         + ", conversationContext="
         + conversationContext
+        + ", numberLookupContext="
+        + numberLookupContext
+        + ", httpProxyConfiguration="
+        + httpProxyConfiguration
         + "}";
   }
 
@@ -153,13 +161,33 @@ public class Configuration {
   }
 
   /**
-   * Get Voice domain related execution context
+   * Get Conversation domain related execution context
    *
-   * @return Current Voice context
+   * @return Current Conversation context
    * @since 1.0
    */
   public Optional<ConversationContext> getConversationContext() {
     return Optional.ofNullable(conversationContext);
+  }
+
+  /**
+   * Get Number Lookup domain related execution context
+   *
+   * @return Current Number Lookup context
+   * @since 2.1
+   */
+  public Optional<NumberLookupContext> getNumberLookupContext() {
+    return Optional.ofNullable(numberLookupContext);
+  }
+
+  /**
+   * Get HTTP proxy configuration
+   *
+   * @return HTTP proxy configuration
+   * @since 2.1
+   */
+  public Optional<HttpProxyConfiguration> getHttpProxyConfiguration() {
+    return Optional.ofNullable(httpProxyConfiguration);
   }
 
   /**
@@ -199,6 +227,8 @@ public class Configuration {
     VerificationContext.Builder verificationContext;
     VoiceContext.Builder voiceContext;
     ConversationContext.Builder conversationContext;
+    NumberLookupContext.Builder numberLookupContext;
+    HttpProxyConfiguration httpProxyConfiguration;
 
     protected Builder() {}
 
@@ -230,6 +260,9 @@ public class Configuration {
       this.voiceContext = configuration.getVoiceContext().map(VoiceContext::builder).orElse(null);
       this.conversationContext =
           configuration.getConversationContext().map(ConversationContext::builder).orElse(null);
+      this.numberLookupContext =
+          configuration.getNumberLookupContext().map(NumberLookupContext::builder).orElse(null);
+      this.httpProxyConfiguration = configuration.getHttpProxyConfiguration().orElse(null);
     }
 
     /**
@@ -489,6 +522,46 @@ public class Configuration {
     }
 
     /**
+     * Set Number Lookup API URL
+     *
+     * @param numberLookupUrl Number Lookup API URL
+     * @return Current builder
+     * @since 2.1
+     */
+    public Builder setNumberLookupUrl(String numberLookupUrl) {
+      if (null == this.numberLookupContext) {
+        this.numberLookupContext = NumberLookupContext.builder();
+      }
+      this.numberLookupContext.setNumberLookupUrl(numberLookupUrl);
+      return this;
+    }
+
+    /**
+     * Set Number Lookup related context
+     *
+     * @param context {@link #getNumberLookupContext() getter}
+     * @return Current builder
+     * @since 2.1
+     */
+    public Builder setNumberLookupContext(NumberLookupContext context) {
+      this.numberLookupContext = null != context ? NumberLookupContext.builder(context) : null;
+      return this;
+    }
+
+    /**
+     * Set HTTP proxy configuration
+     *
+     * @param httpProxyConfiguration proxy configuration, or {@code null} to disable proxy
+     * @return Current builder
+     * @see Configuration#getHttpProxyConfiguration() getter
+     * @since 2.1
+     */
+    public Builder setHttpProxyConfiguration(HttpProxyConfiguration httpProxyConfiguration) {
+      this.httpProxyConfiguration = httpProxyConfiguration;
+      return this;
+    }
+
+    /**
      * Build a Configuration instance from builder current state
      *
      * @return Configuration instance build from current builder state
@@ -501,11 +574,13 @@ public class Configuration {
           null != applicationCredentials ? applicationCredentials.build() : null,
           null != smsServicePlanCredentials ? smsServicePlanCredentials.build() : null,
           oauthUrl,
+          httpProxyConfiguration,
           null != numbersContext ? numbersContext.build() : null,
           null != smsContext ? smsContext.build() : null,
           null != verificationContext ? verificationContext.build() : null,
           null != voiceContext ? voiceContext.build() : null,
-          null != conversationContext ? conversationContext.build() : null);
+          null != conversationContext ? conversationContext.build() : null,
+          null != numberLookupContext ? numberLookupContext.build() : null);
     }
   }
 }

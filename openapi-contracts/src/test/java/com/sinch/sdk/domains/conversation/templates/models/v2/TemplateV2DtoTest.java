@@ -17,13 +17,22 @@ public class TemplateV2DtoTest extends TemplatesBaseTest {
   @GivenTextResource("/domains/conversation/templates/v2/request/TemplateV2RequestDto.json")
   String requestJSON;
 
-  @GivenTextResource("/domains/conversation/templates/v2/TemplateV2Dto.json")
-  String responseSON;
+  @GivenTextResource("/domains/conversation/templates/v2/response/TemplateV2ResponseDto.json")
+  String responseJSON;
 
-  public static TemplateV2 expectedDto =
+  public static TemplateV2 expectedRequestDto =
       TemplateV2.builder()
           .setId("template ID")
-          .setTranslations(Arrays.asList(TemplateTranslationDtoTest.expectedDto))
+          .setTranslations(Arrays.asList(TemplateTranslationDtoTest.expectedRequestDto))
+          .setDefaultTranslation("fr-FR")
+          .setDescription("template description value")
+          .setVersion(1)
+          .build();
+
+  public static TemplateV2 expectedResponseDto =
+      TemplateV2.builder()
+          .setId("template ID")
+          .setTranslations(Arrays.asList(TemplateTranslationDtoTest.expectedResponseDto))
           .setDefaultTranslation("fr-FR")
           .setDescription("template description value")
           .setVersion(1)
@@ -33,15 +42,15 @@ public class TemplateV2DtoTest extends TemplatesBaseTest {
 
   @Test
   void serialize() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(expectedDto);
+    String serializedString = objectMapper.writeValueAsString(expectedRequestDto);
 
     JSONAssert.assertEquals(requestJSON, serializedString, true);
   }
 
   @Test
   void deserialize() throws JsonProcessingException {
-    Object deserialized = objectMapper.readValue(responseSON, TemplateV2.class);
+    Object deserialized = objectMapper.readValue(responseJSON, TemplateV2.class);
 
-    TestHelpers.recursiveEquals(deserialized, expectedDto);
+    TestHelpers.recursiveEquals(deserialized, expectedResponseDto);
   }
 }

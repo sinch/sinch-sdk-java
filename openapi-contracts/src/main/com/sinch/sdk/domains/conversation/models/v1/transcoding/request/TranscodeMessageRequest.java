@@ -38,7 +38,7 @@ public interface TranscodeMessageRequest {
   AppMessage<?> getAppMessage();
 
   /**
-   * The list of channels for which the message shall be transcoded to.
+   * The list of channels for which the message shall be transcoded.
    *
    * <p>Field is required
    *

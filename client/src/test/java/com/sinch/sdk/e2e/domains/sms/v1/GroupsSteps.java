@@ -26,8 +26,6 @@ public class GroupsSteps {
   Group createResponse;
   Group getResponse;
   ListGroupsResponse listOnePageResponse;
-  ListGroupsResponse listAllResponse;
-  ListGroupsResponse listAllByPageResponse;
   Group updateResponse;
   Group updateRemoveNameResponse;
   Group replaceResponse;
@@ -76,14 +74,14 @@ public class GroupsSteps {
   public void listAll() {
     ListGroupsQueryParameters request = ListGroupsQueryParameters.builder().setPageSize(2).build();
 
-    listAllResponse = service.list(request);
+    listOnePageResponse = service.list(request);
   }
 
   @When("^I iterate manually over the SMS groups pages$")
   public void listAllByPage() {
     ListGroupsQueryParameters request = ListGroupsQueryParameters.builder().setPageSize(2).build();
 
-    listAllByPageResponse = service.list(request);
+    listOnePageResponse = service.list(request);
   }
 
   @When("^I send a request to update an SMS group$")
@@ -157,10 +155,9 @@ public class GroupsSteps {
 
   @Then("the SMS groups list contains \"{int}\" SMS groups")
   public void listAllResult(int expected) {
-    ListGroupsResponse response = null != listAllResponse ? listAllResponse : listAllByPageResponse;
 
     AtomicInteger count = new AtomicInteger();
-    response.iterator().forEachRemaining(_unused -> count.getAndIncrement());
+    listOnePageResponse.iterator().forEachRemaining(_unused -> count.getAndIncrement());
 
     Assertions.assertEquals(count.get(), expected);
   }
@@ -168,10 +165,11 @@ public class GroupsSteps {
   @Then("the SMS groups iteration result contains the data from \"{int}\" pages")
   public void listAllByPageResult(int expected) {
 
-    int count = listAllByPageResponse.getContent().isEmpty() ? 0 : 1;
-    while (listAllByPageResponse.hasNextPage()) {
+    int count = listOnePageResponse.getContent().isEmpty() ? 0 : 1;
+    ListGroupsResponse currentPage = listOnePageResponse;
+    while (currentPage.hasNextPage()) {
       count++;
-      listAllByPageResponse = listAllByPageResponse.nextPage();
+      currentPage = currentPage.nextPage();
     }
     Assertions.assertEquals(count, expected);
   }

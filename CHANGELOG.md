@@ -16,6 +16,36 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ---
 
+## v2.1 – 2026-07-02
+
+### Numbers
+- Extend `NumberSinchEvents` class.
+  - **[fix]** `EventTypeEnum`: `DEPROVISIONING_TO_VOICE_PLATFORM` is deprecated and has to be replaced by `DEPROVISIONING_FROM_VOICE_PLATFORM`.
+  - **[feature]** Support new `internalFailureCode` field.
+  - **[feature]** Support new `StatusEnum` values: `IN_REVIEW`, `BLOCKED`, `COMPLETED`, `REJECTED`, `EXPIRED`.
+  - **[feature]** Support new `EventTypeEnum` value: `NUMBER_ORDER_PROCESSING`.
+
+### Conversation
+- **[feature]** Support `Consents` API: `listIdentities` and `listAuditRecords` endpoints
+
+### Number Lookup
+- **[feature]** Support `Number Lookup` API V2
+
+### SDK
+- **[feature]** HTTP proxy support: configure an unauthenticated or authenticated (Basic) proxy via `HttpProxyConfiguration`
+- **[feature]** `SinchClient` exposes a `close()` method to shut down the underlying HTTP connection pool and release all associated resources deterministically
+- **[fix]** `HttpClientApache`: declare now `headersToBeAdded` as `volatile` to guarantee visibility across threads in concurrent usage
+- **[fix]** `HttpClientApache`: wrap response-body `Scanner` in a try-with-resources block to prevent resource leaks; gracefully handle empty (`null`) response entities
+- **[fix]** `SinchClient`: guard against a `NullPointerException` when `java.vendor` system property is absent while building the `User-Agent` auxiliary flag
+- **[fix]** `Configuration`: correct copy-paste error in `toString()` and Javadoc — `conversationContext` label was incorrectly attributed to the Voice domain
+- **[doc]** Improve README structure and content.
+
+
+### Examples / Snippets
+- **[doc]** Fix typos in `conversation/conversations/Create` and `voice/applications/GetEventDestinations` snippets
+
+---
+
 ## v2.0 – 2026-03-31
 
 ### Major breaking changes with major release

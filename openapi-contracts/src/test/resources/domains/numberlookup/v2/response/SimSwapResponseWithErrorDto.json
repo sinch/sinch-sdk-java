@@ -1,0 +1,7 @@
+{
+  "error": {
+    "status": 100,
+    "title": "Feature Disabled",
+    "detail": "SimSwap feature is currently disabled."
+  }
+}

@@ -32,8 +32,11 @@ public interface RecordNotificationEventNotification {
 
   /** Record status for a specific entity */
   public class RecordStatusEnum extends EnumDynamic<String, RecordStatusEnum> {
+    /** The record status is unknown. */
     public static final RecordStatusEnum RECORD_STATUS_UNSPECIFIED =
         new RecordStatusEnum("RECORD_STATUS_UNSPECIFIED");
+
+    /** The record for the entity has been stored. */
     public static final RecordStatusEnum EVENT_RECORD_STORED =
         new RecordStatusEnum("EVENT_RECORD_STORED");
 

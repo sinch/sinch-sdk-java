@@ -49,7 +49,10 @@ public interface RecentConversationsListQueryParameters {
 
   /** Gets or Sets order */
   public class OrderEnum extends EnumDynamic<String, OrderEnum> {
+    /** Ascending order. Oldest first. */
     public static final OrderEnum ASC = new OrderEnum("ASC");
+
+    /** Descending order. Newest first. */
     public static final OrderEnum DESC = new OrderEnum("DESC");
 
     private static final EnumSupportDynamic<String, OrderEnum> ENUM_SUPPORT =

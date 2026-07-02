@@ -92,9 +92,9 @@ public interface DiscountRateCoupon
   /**
    * Discount rate (%)
    *
-   * <p>minimum: 0 maximum: 100
+   * <p><b>Minimum</b>: 0
    *
-   * <p>Field is required
+   * <p><b>Maximum</b>: 100 Field is required
    *
    * @return discountRate
    */

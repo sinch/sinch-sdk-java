@@ -6,5 +6,6 @@
   "resourceType": "ACTIVE_NUMBER",
   "eventType": "PROVISIONING_TO_CAMPAIGN",
   "status": "FAILED",
-  "failureCode": "CAMPAIGN_NOT_AVAILABLE"
+  "failureCode": "CAMPAIGN_NOT_AVAILABLE",
+  "internalFailureCode": "CRS0018"
 }
