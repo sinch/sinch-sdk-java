@@ -7,7 +7,7 @@ env:
 concurrency:
   group: sync-repo-${{ github.repository }}
   cancel-in-progress: true
-  
+
 on:
   schedule:
     # Runs only once a day at midnight to catch any missed updates
