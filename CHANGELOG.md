@@ -16,7 +16,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ---
 
-## v2.1 – unreleased
+## v2.1 – 2026-07-02
 
 ### Numbers
 - Extend `NumberSinchEvents` class.
