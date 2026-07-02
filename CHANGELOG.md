@@ -28,6 +28,9 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 ### Conversation
 - **[feature]** Support `Consents` API: `listIdentities` and `listAuditRecords` endpoints
 
+### Number Lookup
+- **[feature]** Support `Number Lookup` API V2
+
 ### SDK
 - **[feature]** HTTP proxy support: configure an unauthenticated or authenticated (Basic) proxy via `HttpProxyConfiguration`
 - **[feature]** `SinchClient` exposes a `close()` method to shut down the underlying HTTP connection pool and release all associated resources deterministically
