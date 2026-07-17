@@ -320,7 +320,8 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
     }
 
     MultipartEntityBuilder multiPartBuilder = MultipartEntityBuilder.create();
-    if (contentType.stream().noneMatch(cType -> cType.toLowerCase().contains("charset="))) {
+    if (null == contentType
+        || contentType.stream().noneMatch(cType -> cType.toLowerCase().contains("charset="))) {
       multiPartBuilder.setCharset(StandardCharsets.UTF_8);
     }
     formParams.forEach((key, value) -> addMultiPart(requestBuilder, multiPartBuilder, key, value));

@@ -4,33 +4,53 @@ on: [push]
 
 jobs:
   build:
+    name: Build Java ${{ matrix.java-version }}
 
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        java-version: ['8', '11', '17', '21', '25']
+        include:
+          - java-version: '8'
+            maven-args: '-Dmaven.test.skip=true -Dspotless.check.skip=true clean package'
+          - java-version: '11'
+            maven-args: '-Dspotless.check.skip=true clean package javadoc:javadoc'
+          - java-version: '17'
+            maven-args: 'clean package javadoc:javadoc'
+          - java-version: '21'
+            maven-args: 'clean package javadoc:javadoc'
+          - java-version: '25'
+            maven-args: 'clean package javadoc:javadoc'
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK
+      - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v3
         with:
-          java-version: '21'
+          java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven
-        run: mvn -B -DskipITs clean package javadoc:javadoc --file pom.xml
+        run: mvn -B -DskipITs ${{ matrix.maven-args }} --file pom.xml
 
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
 
   e2e-tests:
+    name: E2E Java ${{ matrix.java-version }}
     needs: build
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java-version: ['8', '11', '17', '21', '25']
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK
+      - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v3
         with:
-          java-version: '21'
+          java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
           cache: maven
       - name: Checkout sinch-sdk-mockserver repository

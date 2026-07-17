@@ -37,7 +37,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-class HttpClientTestIT extends BaseTest {
+class HttpClientTest extends BaseTest {
 
   static final String regExpBoundaryMarker = "--";
   static final String regExpBoundaryItem =
