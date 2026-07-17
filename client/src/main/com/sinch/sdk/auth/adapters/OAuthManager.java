@@ -9,6 +9,7 @@ import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.models.UnifiedCredentials;
@@ -17,6 +18,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -28,12 +30,17 @@ public class OAuthManager implements AuthManager {
   public static final String BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD = "www-authenticate";
   private static final Logger LOGGER = Logger.getLogger(OAuthManager.class.getName());
   private static final String AUTH_KEYWORD = "Bearer";
-  private static final int maxRefreshAttempt = 5;
+  // Total refresh attempts for 429 and other failures; sufficient given the backoff.
+  protected static final int MAX_REFRESH_ATTEMPT = 3;
+
+  private static final double BACKOFF_BASE_SECONDS = 1.0;
+  private static final int BACKOFF_GROWTH = 4;
+
   private final ServerConfiguration oAuthServer;
   private final HttpMapper mapper;
   private final Supplier<HttpClient> httpClientSupplier;
   private final Map<String, AuthManager> authManagers;
-  private String token;
+  private volatile String token;
 
   public OAuthManager(
       UnifiedCredentials credentials,
@@ -77,17 +84,25 @@ public class OAuthManager implements AuthManager {
   public Collection<Pair<String, String>> getAuthorizationHeaders(
       String timestamp, String method, String httpContentType, String path, String body) {
 
-    if (token == null) {
-      refreshToken();
+    String currentToken = token;
+    if (currentToken == null) {
+      synchronized (this) {
+        currentToken = token;
+        if (currentToken == null) {
+          refreshToken();
+          currentToken = token;
+        }
+      }
     }
-    return Collections.singletonList(new Pair<>("Authorization", AUTH_KEYWORD + " " + token));
+    return Collections.singletonList(
+        new Pair<>("Authorization", AUTH_KEYWORD + " " + currentToken));
   }
 
   private void refreshToken() {
 
     int attempt = 0;
-    while (attempt < maxRefreshAttempt) {
-      Optional<String> newValue = getNewToken();
+    while (attempt < MAX_REFRESH_ATTEMPT) {
+      Optional<String> newValue = getNewToken(attempt);
       if (newValue.isPresent()) {
         token = newValue.get();
         return;
@@ -97,7 +112,7 @@ public class OAuthManager implements AuthManager {
     throw new ApiAuthException("Unable to get new token");
   }
 
-  private Optional<String> getNewToken() {
+  private Optional<String> getNewToken(int attempt) {
 
     LOGGER.fine("Refreshing OAuth token");
     HttpRequest request =
@@ -110,15 +125,56 @@ public class OAuthManager implements AuthManager {
             null,
             Collections.singletonList("application/x-www-form-urlencoded"),
             Collections.singletonList(SCHEMA_KEYWORD_BASIC));
+    HttpResponse httpResponse;
     try {
-      HttpResponse httpResponse =
-          httpClientSupplier.get().invokeAPI(oAuthServer, authManagers, request);
+      httpResponse = httpClientSupplier.get().invokeAPI(oAuthServer, authManagers, request);
+    } catch (Exception e) {
+      throw new ApiAuthException(
+          "Token refresh failed: network or client error: " + e.getMessage());
+    }
+    if (httpResponse == null) {
+      throw new ApiAuthException("Token refresh failed: no response received");
+    }
+
+    if (httpResponse.getCode() == HttpStatus.TOO_MANY_REQUESTS) {
+      // Only back off if another attempt will follow; on the last attempt we give up immediately.
+      if (attempt < MAX_REFRESH_ATTEMPT - 1) {
+        long sleepMillis = computeBackoffMillis(attempt);
+        LOGGER.fine(
+            "Rate limited (HTTP 429) during token refresh, attempt "
+                + (attempt + 1)
+                + "/"
+                + MAX_REFRESH_ATTEMPT
+                + ", waiting "
+                + sleepMillis
+                + "ms before next attempt");
+        try {
+          Thread.sleep(sleepMillis);
+        } catch (InterruptedException e) {
+          Thread.currentThread().interrupt();
+          throw new ApiAuthException("Token refresh interrupted");
+        }
+      }
+      return Optional.empty();
+    }
+
+    if (!HttpStatus.isSuccessfulStatus(httpResponse.getCode())) {
+      throw new ApiAuthException("Token refresh failed with HTTP " + httpResponse.getCode());
+    }
+
+    try {
       BearerAuthResponse authResponse =
           mapper.deserialize(httpResponse, new TypeReference<BearerAuthResponse>() {});
       return Optional.ofNullable(authResponse.getAccessToken());
     } catch (Exception e) {
-      return Optional.empty();
+      throw new ApiAuthException(
+          "Token refresh failed: could not deserialize response: " + e.getMessage());
     }
+  }
+
+  long computeBackoffMillis(int attempt) {
+    double maxDelay = BACKOFF_BASE_SECONDS * Math.pow(BACKOFF_GROWTH, attempt);
+    return (long) (ThreadLocalRandom.current().nextDouble(maxDelay) * 1000);
   }
 
   public boolean validateAuthenticatedRequest(
