@@ -13,7 +13,6 @@ import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
-import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.UnifiedCredentials;
@@ -21,6 +20,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.AbstractMap;
 import java.util.Arrays;
@@ -135,7 +135,7 @@ class HttpClientTest extends BaseTest {
     // return unauthorized
     mockBackEnd.enqueue(
         new MockResponse()
-            .setResponseCode(HttpStatus.UNAUTHORIZED)
+            .setResponseCode(HttpURLConnection.HTTP_UNAUTHORIZED)
             .setBody("foo2")
             .addHeader("www-authenticate", "token invalid: expired")
             .addHeader("Content-Type", "application/json"));
