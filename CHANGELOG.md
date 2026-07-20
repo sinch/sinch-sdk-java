@@ -25,6 +25,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[tech]** Apply Spotless / Google Java Format per JDK via version-activated Maven profiles (`spotless-jdk8`, `spotless-jdk11`, `spotless-jdk17`, `spotless-jdk21-plus`), keeping formatting working across the whole matrix.
 - **[tech]** Enable `-Dnet.bytebuddy.experimental=true` for Surefire so Mockito/ByteBuddy run on Java 25.
 - **[dependency]** Bump `maven-compiler-plugin` to `3.13.0`, Surefire and Failsafe to `3.5.6`, and Mockito to `5.23.0`.
+- **[dependency]** Remove unused dependency on `org.apache.maven:maven-model`.
 
 ### Documentation
 - **[doc]** README: document the supported Java versions (`8`, `11`, `17`, `21`, `25`) with per-version badges and download links, replacing the generic "Java 8+" badge.
