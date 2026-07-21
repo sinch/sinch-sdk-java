@@ -12,12 +12,10 @@ Here you'll find documentation related to the Sinch Java SDK, including how to i
 
 To use Sinch services, you'll need a Sinch account and access keys. You can sign up for an account and create access keys at [dashboard.sinch.com](https://dashboard.sinch.com).
 
-For more information on the SDK, refer to the dedicated [Java SDK documentation section](https://developers.sinch.com/docs/sdks/java) and the [Javadoc](https://www.javadoc.io/doc/com.sinch.sdk/sinch-sdk-java/latest/index.html). For the Sinch APIs on which this SDK is based, refer to the official [developer documentation portal](https://developers.sinch.com).
-
-
 ## Table of contents:
 
 - [Prerequisites](#prerequisites)
+- [Documentation](#documentation)
 - [Installation](#installation)
 - [Supported APIs](#supported-apis)
 - [Getting started](#getting-started)
@@ -39,6 +37,13 @@ For more information on the SDK, refer to the dedicated [Java SDK documentation 
 > **Warning**:
 > This SDK is intended for server-side (backend) use only. Do not use it in front-end or client-side applications (web, mobile, or desktop), regardless of language or framework. Doing so can expose your Sinch credentials to end-users.
 
+## Documentation
+
+For more information on the SDK, refer to the dedicated [Java SDK documentation](https://developers.sinch.com/docs/sdks/java).
+
+For the SDK's programmatic API surface, see the online [SDK reference](https://developers.sinch.com/sdk/sinch-sdk-java/latest).
+
+For broader Sinch product documentation, including the underlying REST APIs, visit the official [Sinch developer portal](https://developers.sinch.com/).
 
 ## Installation
 
@@ -136,7 +141,7 @@ ConversationSinchEvent event = sinchEvents.parseEvent(body);
 
 `sinchEventsSecret` is set per app in the [Conversation dashboard](https://dashboard.sinch.com/convapi/apps). `parseEvent` works without validating the request, but then its origin can't be verified, so validating is recommended in production.
 
-You can find a complete example in [examples/sinch-events](examples/sinch-events).
+You can find a complete example in [examples/sinch-events](https://github.com/sinch/sinch-sdk-java/tree/main/examples/sinch-events).
 
 ### SMS API
 
@@ -207,7 +212,7 @@ SmsSinchEvent event = sinchEvents.parseEvent(body);
 
 Signature authentication for SMS events must be enabled for your account by your account manager. Until it is activated, signature headers will not be present and `parseEvent` can be called directly without signature validation. See the [SMS events documentation](https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/section/Callbacks).
 
-You can find a complete example in [examples/sinch-events](examples/sinch-events).
+You can find a complete example in [examples/sinch-events](https://github.com/sinch/sinch-sdk-java/tree/main/examples/sinch-events).
 
 ### Numbers API
 
@@ -230,7 +235,7 @@ NumberSinchEvent event = sinchEvents.parseEvent(body);
 
 `sinchEventsSecret` is the `HmacSecret` value configured on the Event Destination. `parseEvent` works without validating the request, but then its origin can't be verified, so validating is recommended in production.
 
-You can find a complete example in [examples/sinch-events](examples/sinch-events).
+You can find a complete example in [examples/sinch-events](https://github.com/sinch/sinch-sdk-java/tree/main/examples/sinch-events).
 
 ### Number Lookup API
 
@@ -269,7 +274,7 @@ var event = sinchEvents.parseEvent(body);
 
 Some events expect a response: build it from the business layer and serialize it with `sinchEvents.serializeResponse(response)` before returning it to Sinch.
 
-You can find a complete example in [examples/sinch-events](examples/sinch-events).
+You can find a complete example in [examples/sinch-events](https://github.com/sinch/sinch-sdk-java/tree/main/examples/sinch-events).
 
 ### Voice API
 
@@ -306,7 +311,7 @@ var event = sinchEvents.parseEvent(body);
 
 Some events (for example an incoming call) expect a SVAML response: build it from the business layer and serialize it with `sinchEvents.serializeResponse(response)` before returning it to Sinch.
 
-You can find a complete example in [examples/sinch-events](examples/sinch-events).
+You can find a complete example in [examples/sinch-events](https://github.com/sinch/sinch-sdk-java/tree/main/examples/sinch-events).
 
 
 ### Your first request
@@ -405,7 +410,7 @@ try {
 ## Proxy configuration
 
 If your network environment routes outbound traffic through an HTTP proxy, provide proxy
-configuration via [HttpProxyConfiguration](client/src/main/com/sinch/sdk/models/HttpProxyConfiguration.java) on the [Configuration](client/src/main/com/sinch/sdk/models/Configuration.java) builder.
+configuration via [HttpProxyConfiguration](https://github.com/sinch/sinch-sdk-java/blob/main/client/src/main/com/sinch/sdk/models/HttpProxyConfiguration.java) on the [Configuration](https://github.com/sinch/sinch-sdk-java/blob/main/client/src/main/com/sinch/sdk/models/Configuration.java) builder.
 
 When used, all connections will go through the proxy (including OAuth).
 
@@ -493,20 +498,20 @@ Note: Replace `VERSION-YOU-WANT-TO-BE-USED` with a Jackson version of at least `
 ## Examples
 
 You can find:
-- self-contained code snippets covering every API operation in the [examples/snippets](./examples/snippets) folder.
-- getting started guides for specific use cases in the [examples/getting-started](./examples/getting-started) folder.
-- a Spring Boot server template to process received Sinch Events in the [examples/sinch-events](./examples/sinch-events) folder.
-- an SDK client template application in the [examples/client](./examples/client) folder.
-- step-by-step tutorials combining multiple SDK features in the [examples/tutorials](./examples/tutorials) folder.
+- self-contained code snippets covering every API operation in the [examples/snippets](https://github.com/sinch/sinch-sdk-java/tree/main/examples/snippets) folder.
+- getting started guides for specific use cases in the [examples/getting-started](https://github.com/sinch/sinch-sdk-java/tree/main/examples/getting-started) folder.
+- a Spring Boot server template to process received Sinch Events in the [examples/sinch-events](https://github.com/sinch/sinch-sdk-java/tree/main/examples/sinch-events) folder.
+- an SDK client template application in the [examples/client](https://github.com/sinch/sinch-sdk-java/tree/main/examples/client) folder.
+- step-by-step tutorials combining multiple SDK features in the [examples/tutorials](https://github.com/sinch/sinch-sdk-java/tree/main/examples/tutorials) folder.
 
 
 ## Changelog & Migration
-For information about the latest changes in the SDK, please refer to the [CHANGELOG](CHANGELOG.md) file
-and the [MIGRATION-GUIDE](MIGRATION-GUIDE.md) for instructions on how to update your code when upgrading to a new major version of the SDK.
+For information about the latest changes in the SDK, please refer to the [CHANGELOG](https://github.com/sinch/sinch-sdk-java/blob/main/CHANGELOG.md) file
+and the [MIGRATION-GUIDE](https://github.com/sinch/sinch-sdk-java/blob/main/MIGRATION-GUIDE.md) for instructions on how to update your code when upgrading to a new major version of the SDK.
 
 ## License
 
-This project is licensed under the Apache License. See the [LICENSE](LICENSE) file for the license text.
+This project is licensed under the Apache License. See the [LICENSE](https://github.com/sinch/sinch-sdk-java/blob/main/LICENSE) file for the license text.
 
 ## Contact
 
