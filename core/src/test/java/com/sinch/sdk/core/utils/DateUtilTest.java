@@ -88,14 +88,8 @@ class DateUtilTest {
 
   @Test
   void RFC822FromStringWithBlanks() {
-    Instant instant = DateUtil.RFC822StringToInstant("  Mon, 2 Jan 2006 15:04:05 MST  ");
-    assertEquals("2006-01-02T22:04:05Z", instant.toString());
-  }
-
-  @Test
-  void RFC822WithUnsupportedMST() {
-    Instant instant = DateUtil.RFC822StringToInstant("Mon, 2 Jan 2006 15:04:05 MST");
-    assertEquals("2006-01-02T22:04:05Z", instant.toString());
+    Instant instant = DateUtil.RFC822StringToInstant("  Mon, 2 Jan 2006 15:04:05 GMT  ");
+    assertEquals("2006-01-02T15:04:05Z", instant.toString());
   }
 
   @Test
@@ -108,12 +102,6 @@ class DateUtilTest {
   void RFC822WithUnsupportedUT() {
     Instant instant = DateUtil.RFC822StringToInstant("Mon, 2 Jan 2006 15:04:05 UT");
     assertEquals("2006-01-02T15:04:05Z", instant.toString());
-  }
-
-  @Test
-  void RFC822WithUnsupportedEST() {
-    Instant instant = DateUtil.RFC822StringToInstant("Mon, 2 Jan 2006 15:04:05 EST");
-    assertEquals("2006-01-02T20:04:05Z", instant.toString());
   }
 
   @Test

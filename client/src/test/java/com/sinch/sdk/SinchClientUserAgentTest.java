@@ -2,6 +2,7 @@ package com.sinch.sdk;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.models.Configuration;
@@ -15,7 +16,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
-class SinchClientTestIT extends BaseTest {
+class SinchClientUserAgentTest extends BaseTest {
+
+  @GivenTextResource("/client/auth/BearerAuthResponse.json")
+  String bearerAuthResponse;
+
   static MockWebServer mockBackEnd;
   String serverUrl = String.format("http://localhost:%s", mockBackEnd.getPort());
 
@@ -24,6 +29,7 @@ class SinchClientTestIT extends BaseTest {
           .setKeyId("foo")
           .setKeySecret("foo")
           .setProjectId("foo")
+          .setOAuthUrl(serverUrl)
           .setNumbersContext(NumbersContext.builder().setNumbersUrl(serverUrl).build())
           .build();
 
@@ -43,6 +49,10 @@ class SinchClientTestIT extends BaseTest {
   @Test
   void sdkUserAgent() throws InterruptedException {
 
+    mockBackEnd.enqueue(
+        new MockResponse()
+            .setBody(bearerAuthResponse)
+            .addHeader("Content-Type", "application/json"));
     mockBackEnd.enqueue(
         new MockResponse().setBody("foo").addHeader("Content-Type", "application/json"));
 

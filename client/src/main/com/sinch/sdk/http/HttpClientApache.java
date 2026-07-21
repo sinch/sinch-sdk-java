@@ -263,21 +263,18 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
     }
 
     Collection<String> auths = request.getAuthNames();
-    Optional<String> requestSupportBearerAuthentication =
-        auths.stream()
-            .filter(
-                f ->
-                    null != authManagersByOasSecuritySchemes.get(f)
-                        && authManagersByOasSecuritySchemes
-                            .get(f)
-                            .getSchema()
-                            .equals(OAuthManager.SCHEMA_KEYWORD_BEARER))
-            .findFirst();
 
-    if (!requestSupportBearerAuthentication.isPresent()) {
+    boolean requestSupportsBearer =
+        auths.stream()
+            .anyMatch(
+                authName -> {
+                  AuthManager authManager = authManagersByOasSecuritySchemes.get(authName);
+                  return authManager != null
+                      && authManager.getSchema().equals(OAuthManager.SCHEMA_KEYWORD_BEARER);
+                });
+    if (!requestSupportsBearer) {
       return false;
     }
-    // looking for "expired" keyword present in "www-authenticate" header
     Map<String, List<String>> responseHeaders = response.getHeaders();
     Collection<String> header = responseHeaders.get(BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD);
 
@@ -320,7 +317,8 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
     }
 
     MultipartEntityBuilder multiPartBuilder = MultipartEntityBuilder.create();
-    if (contentType.stream().noneMatch(cType -> cType.toLowerCase().contains("charset="))) {
+    if (null == contentType
+        || contentType.stream().noneMatch(cType -> cType.toLowerCase().contains("charset="))) {
       multiPartBuilder.setCharset(StandardCharsets.UTF_8);
     }
     formParams.forEach((key, value) -> addMultiPart(requestBuilder, multiPartBuilder, key, value));

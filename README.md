@@ -1,6 +1,10 @@
 # Sinch Java SDK
 
-[![Java](https://img.shields.io/badge/Java-8+-orange.svg)](https://www.java.com)
+[![Java 8](https://img.shields.io/badge/Java-8-orange.svg)](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html)
+[![Java 11](https://img.shields.io/badge/Java-11-orange.svg)](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html)
+[![Java 17](https://img.shields.io/badge/Java-17-orange.svg)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+[![Java 21](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html)
+[![Java 25](https://img.shields.io/badge/Java-25-orange.svg)](https://www.oracle.com/java/technologies/downloads/#java25)
 [![Latest Release](https://img.shields.io/maven-central/v/com.sinch.sdk/sinch-sdk-java?label=sinch&labelColor=FFC658)](https://central.sonatype.com/artifact/com.sinch.sdk/sinch-sdk-java)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/sinch/sinch-sdk-java/blob/main/LICENSE)
 
@@ -28,7 +32,7 @@ For more information on the SDK, refer to the dedicated [Java SDK documentation 
 
 ## Prerequisites
 
-- [JDK 8 or later](https://www.java.com)
+- Java in one of the supported versions - [8](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html), [11](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html), [17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html), [21](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html), [25](https://www.oracle.com/java/technologies/downloads/#java25)
 - [Maven](https://maven.apache.org/)
 - [Sinch account](https://dashboard.sinch.com/)
 

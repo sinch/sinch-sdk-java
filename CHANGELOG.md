@@ -16,6 +16,26 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ---
 
+## v2.1.1 patch - 2026-07-21
+
+### Build & CI
+
+- **[tech]** Build across a Java version matrix (`8`, `11`, `17`, `21`, `25`) in GitHub Actions, replacing the single Java 21 build — unit tests run on `11`, `17`, `21`, and `25`, and artifacts are built on Java 8.
+- **[tech]** e2e tests across a Java version matrix (`8`, `11`, `17`, `21`, `25`) in GitHub Actions, replacing the single Java 21 validation.
+- **[tech]** Apply Spotless / Google Java Format per JDK via version-activated Maven profiles (`spotless-jdk8`, `spotless-jdk11`, `spotless-jdk17`, `spotless-jdk21-plus`), keeping formatting working across the whole matrix.
+- **[tech]** Enable `-Dnet.bytebuddy.experimental=true` for Surefire so Mockito/ByteBuddy run on Java 25.
+- **[dependency]** Bump `maven-compiler-plugin` to `3.13.0`, Surefire and Failsafe to `3.5.6`, and Mockito to `5.23.0`.
+- **[dependency]** Remove unused dependency on `org.apache.maven:maven-model`.
+- **[dependency]** Bump `jackson.version` to `2.21.4` to solve a vulnerability in `jackson-databind` (CVE-2026-54513).
+
+
+### Documentation
+- **[doc]** README: document the supported Java versions (`8`, `11`, `17`, `21`, `25`) with per-version badges and download links, replacing the generic "Java 8+" badge.
+
+### Tests
+- **[test]** Remove `DateUtilTest` cases for unsupported timezone abbreviations (`MST`, `EST`): as of Java 25 the JDK no longer resolves legacy COMPAT timezone names ([JDK-8325568](https://bugs.openjdk.org/browse/JDK-8325568)).
+
+
 ## v2.1 – 2026-07-02
 
 ### Numbers

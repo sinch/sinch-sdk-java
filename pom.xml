@@ -37,8 +37,8 @@
         <url>https://github.com/sinch/sinch-sdk-java.git</url>
         <connection>scm:git:${project.scm.url}</connection>
         <developerConnection>scm:git:${project.scm.url}</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <issueManagement>
         <url>https://github.com/sinch/sinch-sdk-java/issues</url>
@@ -54,19 +54,19 @@
         <maven.compiler.testSource>1.8</maven.compiler.testSource>
         <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
         <maven.compiler.release>8</maven.compiler.release>
-        <maven.compiler.version>3.8.0</maven.compiler.version>
+        <maven.compiler.version>3.13.0</maven.compiler.version>
         <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
         <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- 3rd party dependencies -->
-        <jackson.version>2.21.1</jackson.version>
+        <jackson.version>2.21.4</jackson.version>
         <httpclient5.version>5.2.1</httpclient5.version>
 
         <!-- tests -->
-        <mockito.version>5.8.0</mockito.version>
-        <maven.failsafe.plugin.version>3.4.0</maven.failsafe.plugin.version>
-        <maven-surefire-plugin.version>3.4.0</maven-surefire-plugin.version>
+        <mockito.version>5.23.0</mockito.version>
+        <maven.failsafe.plugin.version>3.5.6</maven.failsafe.plugin.version>
+        <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
         <cucumber.version>7.18.1</cucumber.version>
 
         <!-- releasing -->
@@ -312,6 +312,8 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <skipTests>${skipUTs}</skipTests>
+                    <!-- required for Java 25 compatibility issue and mockito -->
+                    <argLine>-Dnet.bytebuddy.experimental=true</argLine>
                 </configuration>
             </plugin>
 
@@ -333,7 +335,7 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>2.40.0</version>
+                <version>${spotless.version}</version>
 
                 <configuration>
                     <json>
@@ -347,7 +349,7 @@
                         </includes>
                         <toggleOffOn />
                         <googleJavaFormat>
-                            <version>1.22.0</version>
+                            <version>${googleformat.version}</version>
                             <style>GOOGLE</style>
                             <reflowLongStrings>true</reflowLongStrings>
                         </googleJavaFormat>
@@ -423,7 +425,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>[3.27.7,)</version>
+            <version>3.27.7</version>
             <scope>test</scope>
         </dependency>
 
@@ -490,16 +492,74 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <!-- transient dependency overwrite: https://github.com/sinch/sinch-sdk-java/security/dependabot/8 -->
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-model</artifactId>
-            <version>[3.9.14,)</version>
-        </dependency>
-
     </dependencies>
 
     <profiles>
+
+        <!-- Java8 -->
+        <profile>
+            <id>spotless-jdk8</id>
+            <activation>
+                <jdk>[,9)</jdk>
+            </activation>
+            <properties>
+                <spotless.version>2.30.0</spotless.version>
+                <googleformat.version>1.22.0</googleformat.version>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven.compiler.version}</version>
+                        <configuration>
+                            <!-- Under JDK 8 only the e2e suite (Cucumber *Steps + *IT) is
+                                 compiled and run. -->
+                            <testExcludes>
+                                <testExclude>**/*Test.java</testExclude>
+                                <testExclude>**/ModelArgMatcher.java</testExclude>
+                                <testExclude>**/LogRecorder.java</testExclude>
+                                <testExclude>**/PaginationFillerHelper.java</testExclude>
+                                <testExclude>**/CredentialsValidationHelper.java</testExclude>
+                            </testExcludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Java 11 to <17: use a Spotless version compiled for older bytecode -->
+        <profile>
+            <id>spotless-jdk11</id>
+            <activation>
+                <jdk>[11,17)</jdk>
+            </activation>
+            <properties>
+                <spotless.version>2.43.0</spotless.version>
+                <googleformat.version>1.22.0</googleformat.version>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>spotless-jdk17</id>
+            <activation><jdk>[17,21)</jdk></activation>
+            <properties>
+                <!-- pin to a 3.x release using an older google-java-format
+                     that doesn't touch JDK-21-only javac internals -->
+                <spotless.version>3.0.0</spotless.version>
+                <googleformat.version>1.22.0</googleformat.version>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>spotless-jdk21-plus</id>
+            <activation><jdk>[21,)</jdk></activation>
+            <properties>
+                <spotless.version>3.8.0</spotless.version>
+                <googleformat.version>1.35.0</googleformat.version>
+            </properties>
+        </profile>
+        
         <profile>
             <id>release</id>
             <activation>
