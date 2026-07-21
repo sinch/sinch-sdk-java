@@ -39,7 +39,8 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 class HttpClientTest extends BaseTest {
 
-  static final String regExpBoundaryMarker = "--";
+  static final String RFC7578_MULTI_PART_BOUNDARY_EOL = "\r\n";
+
   static final String regExpBoundaryItem =
       "^.*(\\s)*"
           + "Content-Disposition: form-data; name=\"%s\"(\\s)*"
@@ -161,7 +162,7 @@ class HttpClientTest extends BaseTest {
               null,
               Collections.singletonList(oAuthManager.getSchema())));
     } catch (ApiException ae) {
-      // noop
+      throw new RuntimeException(ae);
     }
     // should have requested a token (because of not yet retrieved when service is started)
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
@@ -207,7 +208,7 @@ class HttpClientTest extends BaseTest {
               Arrays.asList("application/json; charset=utf-8"),
               null));
     } catch (ApiException ae) {
-      // noop
+      throw new RuntimeException(ae);
     }
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
     HttpUrl url = recordedRequest.getRequestUrl();
@@ -232,7 +233,7 @@ class HttpClientTest extends BaseTest {
               Arrays.asList("application/json; charset=utf-8"),
               null));
     } catch (ApiException ae) {
-      // noop
+      throw new RuntimeException(ae);
     }
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
     HttpUrl url = recordedRequest.getRequestUrl();
@@ -261,7 +262,7 @@ class HttpClientTest extends BaseTest {
               Arrays.asList("application/json; charset=utf-8"),
               null));
     } catch (ApiException ae) {
-      // noop
+      throw new RuntimeException(ae);
     }
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
     String payloadBody = recordedRequest.getBody().readString(StandardCharsets.UTF_8);
@@ -283,14 +284,17 @@ class HttpClientTest extends BaseTest {
           null,
           new HttpRequest("foo-path", HttpMethod.POST, null, formParams, null, null, null, null));
     } catch (ApiException ae) {
-      // noop
+      throw new RuntimeException(ae);
     }
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
 
     assertTrue(recordedRequest.getHeader("Content-Type").contains("multipart/form-data"));
 
     String payloadBody = recordedRequest.getBody().readString(StandardCharsets.UTF_8);
-    String[] split = payloadBody.split(regExpBoundaryMarker);
+
+    String boundaryMarker =
+        payloadBody.substring(0, payloadBody.indexOf(RFC7578_MULTI_PART_BOUNDARY_EOL));
+    String[] split = payloadBody.split(java.util.regex.Pattern.quote(boundaryMarker));
     assertTrue(
         split[1].matches(
             String.format(regExpBoundaryItem, "my key", "my value with unicode \uD83D\uDCE7")));
@@ -311,13 +315,15 @@ class HttpClientTest extends BaseTest {
           null,
           new HttpRequest("foo-path", HttpMethod.POST, null, formParams, null, null, null, null));
     } catch (ApiException ae) {
-      // noop
+      throw new RuntimeException(ae);
     }
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
 
     assertTrue(recordedRequest.getHeader("Content-Type").contains("multipart/form-data"));
     String payloadBody = recordedRequest.getBody().readString(StandardCharsets.UTF_8);
-    String[] split = payloadBody.split(regExpBoundaryMarker);
+    String boundaryMarker =
+        payloadBody.substring(0, payloadBody.indexOf(RFC7578_MULTI_PART_BOUNDARY_EOL));
+    String[] split = payloadBody.split(java.util.regex.Pattern.quote(boundaryMarker));
     assertTrue(split[1].matches(String.format(regExpBoundaryItem, "my key", "my value 1")));
     assertTrue(split[2].matches(String.format(regExpBoundaryItem, "my key", "my value 2")));
   }
@@ -351,13 +357,15 @@ class HttpClientTest extends BaseTest {
           null,
           new HttpRequest("foo-path", HttpMethod.POST, null, formParams, null, null, null, null));
     } catch (ApiException ae) {
-      // noop
+      throw new RuntimeException(ae);
     }
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
 
     assertTrue(recordedRequest.getHeader("Content-Type").contains("multipart/form-data"));
     String payloadBody = recordedRequest.getBody().readString(StandardCharsets.UTF_8);
-    String[] split = payloadBody.split(regExpBoundaryMarker);
+    String boundaryMarker =
+        payloadBody.substring(0, payloadBody.indexOf(RFC7578_MULTI_PART_BOUNDARY_EOL));
+    String[] split = payloadBody.split(java.util.regex.Pattern.quote(boundaryMarker));
     assertTrue(split[1].contains(content));
   }
 
@@ -379,7 +387,7 @@ class HttpClientTest extends BaseTest {
           new HttpRequest(
               "foo-path", HttpMethod.GET, null, (String) null, httpRequest, null, null, null));
     } catch (ApiException ae) {
-      // noop
+      throw new RuntimeException(ae);
     }
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
     String header = recordedRequest.getHeader(key);
@@ -403,7 +411,7 @@ class HttpClientTest extends BaseTest {
           null,
           new HttpRequest("foo-path", HttpMethod.GET, null, (String) null, null, null, null, null));
     } catch (ApiException ae) {
-      // noop
+      throw new RuntimeException(ae);
     }
     RecordedRequest recordedRequest = mockBackEnd.takeRequest();
     String header = recordedRequest.getHeader(key);
