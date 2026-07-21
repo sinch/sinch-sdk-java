@@ -16,7 +16,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ---
 
-## Unreleased
+## v2.1.1 patch - 2026-07-21
 
 ### Build & CI
 
@@ -26,6 +26,8 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[tech]** Enable `-Dnet.bytebuddy.experimental=true` for Surefire so Mockito/ByteBuddy run on Java 25.
 - **[dependency]** Bump `maven-compiler-plugin` to `3.13.0`, Surefire and Failsafe to `3.5.6`, and Mockito to `5.23.0`.
 - **[dependency]** Remove unused dependency on `org.apache.maven:maven-model`.
+- **[dependency]** Bump `jackson.version` to `2.21.4` to solve a vulnerability in `jackson-databind` (CVE-2026-54513).
+
 
 ### Documentation
 - **[doc]** README: document the supported Java versions (`8`, `11`, `17`, `21`, `25`) with per-version badges and download links, replacing the generic "Java 8+" badge.
