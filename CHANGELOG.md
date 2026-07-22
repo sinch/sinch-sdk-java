@@ -15,8 +15,12 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 > - `[tech]` — technical improvement
 
 ---
+## v2.2.0 - unreleased
 
-## v2.1.1 patch - 2026-07-21
+### Tests
+- **[test]** Fix HttpClient multipart test when returned boundary string contains '--' sequence
+
+## v2.1.1 - 2026-07-21
 
 ### Build & CI
 
