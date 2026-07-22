@@ -17,6 +17,9 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 ---
 ## v2.2.0 - unreleased
 
+### Build & CI
+- **[tech]** Build `examples` across a Java version matrix (`21`, `25`) in GitHub Actions, replacing the single Java 21 build.
+
 ### Tests
 - **[test]** Fix HttpClient multipart test when returned boundary string contains '--' sequence
 
