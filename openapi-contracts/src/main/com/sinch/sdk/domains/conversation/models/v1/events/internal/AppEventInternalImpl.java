@@ -21,6 +21,7 @@ import com.sinch.sdk.domains.conversation.models.v1.events.types.CommentReplyEve
 import com.sinch.sdk.domains.conversation.models.v1.events.types.ComposingEndEventImpl;
 import com.sinch.sdk.domains.conversation.models.v1.events.types.ComposingEventImpl;
 import com.sinch.sdk.domains.conversation.models.v1.events.types.GenericEventImpl;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.ReadMessageEventImpl;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -318,6 +319,47 @@ public class AppEventInternalImpl extends AbstractOpenApiSchema implements AppEv
         log.log(Level.FINER, "Input data does not match schema 'GenericEventImpl'", e);
       }
 
+      // deserialize ReadMessageEventImpl
+      try {
+        boolean attemptParsing = true;
+        // ensure that we respect type coercion as set on the client ObjectMapper
+        if (ReadMessageEventImpl.class.equals(Integer.class)
+            || ReadMessageEventImpl.class.equals(Long.class)
+            || ReadMessageEventImpl.class.equals(Float.class)
+            || ReadMessageEventImpl.class.equals(Double.class)
+            || ReadMessageEventImpl.class.equals(Boolean.class)
+            || ReadMessageEventImpl.class.equals(String.class)) {
+          attemptParsing = typeCoercion;
+          if (!attemptParsing) {
+            attemptParsing |=
+                ((ReadMessageEventImpl.class.equals(Integer.class)
+                        || ReadMessageEventImpl.class.equals(Long.class))
+                    && token == JsonToken.VALUE_NUMBER_INT);
+            attemptParsing |=
+                ((ReadMessageEventImpl.class.equals(Float.class)
+                        || ReadMessageEventImpl.class.equals(Double.class))
+                    && token == JsonToken.VALUE_NUMBER_FLOAT);
+            attemptParsing |=
+                (ReadMessageEventImpl.class.equals(Boolean.class)
+                    && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+            attemptParsing |=
+                (ReadMessageEventImpl.class.equals(String.class)
+                    && token == JsonToken.VALUE_STRING);
+          }
+        }
+        if (attemptParsing) {
+          deserialized = tree.traverse(jp.getCodec()).readValueAs(ReadMessageEventImpl.class);
+          // TODO: there is no validation against JSON schema constraints
+          // (min, max, enum, pattern...), this does not perform a strict JSON
+          // validation, which means the 'match' count may be higher than it should be.
+          match++;
+          log.log(Level.FINER, "Input data matches schema 'ReadMessageEventImpl'");
+        }
+      } catch (Exception e) {
+        // deserialization failed, continue
+        log.log(Level.FINER, "Input data does not match schema 'ReadMessageEventImpl'", e);
+      }
+
       if (match == 1) {
         AppEventInternalImpl ret = new AppEventInternalImpl();
         ret.setActualInstance(deserialized);
@@ -375,6 +417,11 @@ public class AppEventInternalImpl extends AbstractOpenApiSchema implements AppEv
     setActualInstance(o);
   }
 
+  public AppEventInternalImpl(ReadMessageEventImpl o) {
+    super("oneOf", Boolean.FALSE);
+    setActualInstance(o);
+  }
+
   static {
     schemas.put("AgentJoinedEventImpl", AgentJoinedEventImpl.class);
     schemas.put("AgentLeftEventImpl", AgentLeftEventImpl.class);
@@ -382,6 +429,7 @@ public class AppEventInternalImpl extends AbstractOpenApiSchema implements AppEv
     schemas.put("ComposingEndEventImpl", ComposingEndEventImpl.class);
     schemas.put("ComposingEventImpl", ComposingEventImpl.class);
     schemas.put("GenericEventImpl", GenericEventImpl.class);
+    schemas.put("ReadMessageEventImpl", ReadMessageEventImpl.class);
     JSONNavigator.registerDescendants(
         AppEventInternalImpl.class, Collections.unmodifiableMap(schemas));
   }
@@ -394,7 +442,8 @@ public class AppEventInternalImpl extends AbstractOpenApiSchema implements AppEv
   /**
    * Set the instance that matches the oneOf child schema, check the instance parameter is valid
    * against the oneOf child schemas: AgentJoinedEventImpl, AgentLeftEventImpl,
-   * CommentReplyEventImpl, ComposingEndEventImpl, ComposingEventImpl, GenericEventImpl
+   * CommentReplyEventImpl, ComposingEndEventImpl, ComposingEventImpl, GenericEventImpl,
+   * ReadMessageEventImpl
    *
    * <p>It could be an instance of the 'oneOf' schemas. The oneOf child schemas may themselves be a
    * composed schema (allOf, anyOf, oneOf).
@@ -433,18 +482,24 @@ public class AppEventInternalImpl extends AbstractOpenApiSchema implements AppEv
       return;
     }
 
+    if (JSONNavigator.isInstanceOf(ReadMessageEventImpl.class, instance, new HashSet<Class<?>>())) {
+      super.setActualInstance(instance);
+      return;
+    }
+
     throw new RuntimeException(
         "Invalid instance type. Must be AgentJoinedEventImpl, AgentLeftEventImpl,"
-            + " CommentReplyEventImpl, ComposingEndEventImpl, ComposingEventImpl,"
-            + " GenericEventImpl");
+            + " CommentReplyEventImpl, ComposingEndEventImpl, ComposingEventImpl, GenericEventImpl,"
+            + " ReadMessageEventImpl");
   }
 
   /**
    * Get the actual instance, which can be the following: AgentJoinedEventImpl, AgentLeftEventImpl,
-   * CommentReplyEventImpl, ComposingEndEventImpl, ComposingEventImpl, GenericEventImpl
+   * CommentReplyEventImpl, ComposingEndEventImpl, ComposingEventImpl, GenericEventImpl,
+   * ReadMessageEventImpl
    *
    * @return The actual instance (AgentJoinedEventImpl, AgentLeftEventImpl, CommentReplyEventImpl,
-   *     ComposingEndEventImpl, ComposingEventImpl, GenericEventImpl)
+   *     ComposingEndEventImpl, ComposingEventImpl, GenericEventImpl, ReadMessageEventImpl)
    */
   @Override
   public Object getActualInstance() {
@@ -515,5 +570,16 @@ public class AppEventInternalImpl extends AbstractOpenApiSchema implements AppEv
    */
   public GenericEventImpl getGenericEventImpl() throws ClassCastException {
     return (GenericEventImpl) super.getActualInstance();
+  }
+
+  /**
+   * Get the actual instance of `ReadMessageEventImpl`. If the actual instance is not
+   * `ReadMessageEventImpl`, the ClassCastException will be thrown.
+   *
+   * @return The actual instance of `ReadMessageEventImpl`
+   * @throws ClassCastException if the instance is not `ReadMessageEventImpl`
+   */
+  public ReadMessageEventImpl getReadMessageEventImpl() throws ClassCastException {
+    return (ReadMessageEventImpl) super.getActualInstance();
   }
 }

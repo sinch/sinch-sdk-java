@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.DisplayMode;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -16,7 +17,8 @@ import java.util.Objects;
   ChoiceMessageOneOfInternalImpl.JSON_PROPERTY_URL_MESSAGE,
   ChoiceMessageOneOfInternalImpl.JSON_PROPERTY_CALENDAR_MESSAGE,
   ChoiceMessageOneOfInternalImpl.JSON_PROPERTY_SHARE_LOCATION_MESSAGE,
-  ChoiceMessageOneOfInternalImpl.JSON_PROPERTY_POSTBACK_DATA
+  ChoiceMessageOneOfInternalImpl.JSON_PROPERTY_POSTBACK_DATA,
+  ChoiceMessageOneOfInternalImpl.JSON_PROPERTY_DISPLAY_MODE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -51,6 +53,10 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
 
   private OptionalValue<Object> postbackData;
 
+  public static final String JSON_PROPERTY_DISPLAY_MODE = "display_mode";
+
+  private OptionalValue<DisplayMode> displayMode;
+
   public ChoiceMessageOneOfInternalImpl() {}
 
   protected ChoiceMessageOneOfInternalImpl(
@@ -60,7 +66,8 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
       OptionalValue<UrlMessageInternal> urlMessage,
       OptionalValue<CalendarMessageInternal> calendarMessage,
       OptionalValue<ShareLocationMessageInternal> shareLocationMessage,
-      OptionalValue<Object> postbackData) {
+      OptionalValue<Object> postbackData,
+      OptionalValue<DisplayMode> displayMode) {
     this.callMessage = callMessage;
     this.locationMessage = locationMessage;
     this.textMessage = textMessage;
@@ -68,6 +75,7 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
     this.calendarMessage = calendarMessage;
     this.shareLocationMessage = shareLocationMessage;
     this.postbackData = postbackData;
+    this.displayMode = displayMode;
   }
 
   @JsonIgnore
@@ -147,6 +155,17 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
     return postbackData;
   }
 
+  @JsonIgnore
+  public DisplayMode getDisplayMode() {
+    return displayMode.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_DISPLAY_MODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<DisplayMode> displayMode() {
+    return displayMode;
+  }
+
   /** Return true if this Choice object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -163,7 +182,8 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
         && Objects.equals(this.urlMessage, choice.urlMessage)
         && Objects.equals(this.calendarMessage, choice.calendarMessage)
         && Objects.equals(this.shareLocationMessage, choice.shareLocationMessage)
-        && Objects.equals(this.postbackData, choice.postbackData);
+        && Objects.equals(this.postbackData, choice.postbackData)
+        && Objects.equals(this.displayMode, choice.displayMode);
   }
 
   @Override
@@ -175,7 +195,8 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
         urlMessage,
         calendarMessage,
         shareLocationMessage,
-        postbackData);
+        postbackData,
+        displayMode);
   }
 
   @Override
@@ -191,6 +212,7 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
         .append(toIndentedString(shareLocationMessage))
         .append("\n");
     sb.append("    postbackData: ").append(toIndentedString(postbackData)).append("\n");
+    sb.append("    displayMode: ").append(toIndentedString(displayMode)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -214,6 +236,7 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
     OptionalValue<CalendarMessageInternal> calendarMessage = OptionalValue.empty();
     OptionalValue<ShareLocationMessageInternal> shareLocationMessage = OptionalValue.empty();
     OptionalValue<Object> postbackData = OptionalValue.empty();
+    OptionalValue<DisplayMode> displayMode = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CALL_MESSAGE)
     public Builder setCallMessage(CallMessageInternal callMessage) {
@@ -257,6 +280,12 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_DISPLAY_MODE)
+    public Builder setDisplayMode(DisplayMode displayMode) {
+      this.displayMode = OptionalValue.of(displayMode);
+      return this;
+    }
+
     public ChoiceMessageOneOfInternal build() {
       return new ChoiceMessageOneOfInternalImpl(
           callMessage,
@@ -265,7 +294,8 @@ public class ChoiceMessageOneOfInternalImpl implements ChoiceMessageOneOfInterna
           urlMessage,
           calendarMessage,
           shareLocationMessage,
-          postbackData);
+          postbackData,
+          displayMode);
     }
   }
 }

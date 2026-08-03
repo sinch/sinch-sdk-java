@@ -36,7 +36,10 @@ public class SinchEventsSteps {
                   WEBHOOKS_PATH + "provisioning_to_voice_platform/succeeded"),
               new AbstractMap.SimpleEntry<>(
                   "failure_" + EventTypeEnum.PROVISIONING_TO_VOICE_PLATFORM.value(),
-                  WEBHOOKS_PATH + "provisioning_to_voice_platform/failed"))
+                  WEBHOOKS_PATH + "provisioning_to_voice_platform/failed"),
+              new AbstractMap.SimpleEntry<>(
+                  "completed_" + EventTypeEnum.NUMBER_ORDER_PROCESSING.value(),
+                  WEBHOOKS_PATH + "number_order_processing"))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
   Map<String, WebhooksHelper.Response<NumberSinchEvent>> receivedEvents = new ConcurrentHashMap<>();
@@ -97,8 +100,27 @@ public class SinchEventsSteps {
             .setInternalFailureCode(null)
             .build();
 
-    NumberSinchEvent expected =
-        Objects.equals(status, "success") ? expectedSuccess : expectedFailure;
+    NumberSinchEvent expectedNumberOrderCompleted =
+        NumberSinchEvent.builder()
+            .setEventId("01j1wefx7p3wf2r3x6h4dh6hh9")
+            .setTimestamp(Instant.parse("2024-06-06T14:42:42.846638361Z"))
+            .setProjectId("12c0ffee-dada-beef-cafe-baadc0de5678")
+            .setResourceId("01jgkbb8xywmz3hhahd76menqf")
+            .setResourceType(ResourceType.NUMBER_ORDER)
+            .setEventType(EventTypeEnum.NUMBER_ORDER_PROCESSING)
+            .setStatus(StatusEnum.COMPLETED)
+            .setFailureCode(null)
+            .setInternalFailureCode(null)
+            .build();
+
+    NumberSinchEvent expected;
+    if (Objects.equals(status, "success")) {
+      expected = expectedSuccess;
+    } else if (Objects.equals(status, "completed")) {
+      expected = expectedNumberOrderCompleted;
+    } else {
+      expected = expectedFailure;
+    }
     NumberSinchEvent receivedEvent = receivedEvents.get(status + "_" + trigger).event;
 
     Assertions.assertEquals(expected, receivedEvent);

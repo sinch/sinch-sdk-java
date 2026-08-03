@@ -1,0 +1,31 @@
+{
+  "choice_message": {
+    "text_message": {
+      "text": "This is a text message."
+    },
+    "choices": [
+      {
+        "text_message": {
+          "text": "This is a text message."
+        },
+        "postback_data": "postback persistent data value",
+        "display_mode": "PERSISTENT"
+      },
+      {
+        "url_message": {
+          "title": "title value",
+          "url": "an url value"
+        },
+        "postback_data": "postback unspecified data value",
+        "display_mode": "DISPLAY_MODE_UNSPECIFIED"
+      },
+      {
+        "call_message": {
+          "title": "title value",
+          "phone_number": "phone number value"
+        },
+        "postback_data": "postback without display mode value"
+      }
+    ]
+  }
+}

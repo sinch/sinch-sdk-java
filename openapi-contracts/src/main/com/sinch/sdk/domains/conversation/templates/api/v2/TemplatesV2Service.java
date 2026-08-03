@@ -22,15 +22,19 @@ public interface TemplatesV2Service {
   /**
    * List all templates belonging to a project ID.
    *
+   * <p>Lists all templates belonging to the given project ID.
+   *
    * @return TemplatesV2ListResponse
    * @throws ApiException if fails to make API call
    */
   TemplatesV2ListResponse list() throws ApiException;
 
   /**
-   * Creates a template
+   * Creates a template.
    *
-   * @param templateV2 Required. The template to create. (required)
+   * <p>Creates a new template under the given project ID.
+   *
+   * @param templateV2 The template to create. (required)
    * @return TemplateV2
    * @throws ApiException if fails to make API call
    */
@@ -39,33 +43,41 @@ public interface TemplatesV2Service {
   /**
    * Delete a template.
    *
-   * @param templateId Required. The ID of the template to delete. (required)
+   * <p>Deletes a template under the given project ID.
+   *
+   * @param templateId The ID of the template to delete. (required)
    * @throws ApiException if fails to make API call
    */
   void delete(String templateId) throws ApiException;
 
   /**
-   * Get a template
+   * Get a template.
    *
-   * @param templateId Required. The ID of the template to fetch. (required)
+   * <p>Fetches a template under the given project ID.
+   *
+   * @param templateId The ID of the template to fetch. (required)
    * @return TemplateV2
    * @throws ApiException if fails to make API call
    */
   TemplateV2 get(String templateId) throws ApiException;
 
   /**
-   * List translations for a template (using default parameters)
+   * List translations for a template. (using default parameters)
    *
-   * @param templateId Required. The ID of the template to fetch. (required)
+   * <p>Lists all translations for a template under the given project ID.
+   *
+   * @param templateId The ID of the template to fetch. (required)
    * @return TranslationsV2ListResponse
    * @throws ApiException if fails to make API call
    */
   TranslationsV2ListResponse listTranslations(String templateId) throws ApiException;
 
   /**
-   * List translations for a template
+   * List translations for a template.
    *
-   * @param templateId Required. The ID of the template to fetch. (required)
+   * <p>Lists all translations for a template under the given project ID.
+   *
+   * @param templateId The ID of the template to fetch. (required)
    * @param queryParameter (optional)
    * @return TranslationsV2ListResponse
    * @throws ApiException if fails to make API call
@@ -76,9 +88,11 @@ public interface TemplatesV2Service {
   /**
    * Updates a template.
    *
+   * <p>Updates a template under the given project ID.
+   *
    * @param templateId The id of the template to be updated. Specified or automatically generated
    *     during template creation. Unique per project. (required)
-   * @param templateV2 Required. The updated template. (required)
+   * @param templateV2 The updated template. (required)
    * @return TemplateV2
    * @throws ApiException if fails to make API call
    */

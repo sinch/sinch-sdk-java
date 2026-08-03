@@ -11,6 +11,7 @@
 package com.sinch.sdk.domains.conversation.models.v1.messages.types.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.conversation.models.v1.messages.types.choice.DisplayMode;
 
 /**
  * A choice is an action the user can take such as buttons for quick replies or other call to
@@ -68,6 +69,13 @@ public interface ChoiceMessageOneOfInternal {
    * @return postbackData
    */
   Object getPostbackData();
+
+  /**
+   * Get displayMode
+   *
+   * @return displayMode
+   */
+  DisplayMode getDisplayMode();
 
   /**
    * Getting builder
@@ -143,6 +151,15 @@ public interface ChoiceMessageOneOfInternal {
      * @see #getPostbackData
      */
     Builder setPostbackData(Object postbackData);
+
+    /**
+     * see getter
+     *
+     * @param displayMode see getter
+     * @return Current builder
+     * @see #getDisplayMode
+     */
+    Builder setDisplayMode(DisplayMode displayMode);
 
     /**
      * Create instance

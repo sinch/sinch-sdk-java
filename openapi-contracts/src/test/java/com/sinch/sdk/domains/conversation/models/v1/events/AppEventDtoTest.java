@@ -19,6 +19,8 @@ import com.sinch.sdk.domains.conversation.models.v1.events.types.ComposingEventD
 import com.sinch.sdk.domains.conversation.models.v1.events.types.ComposingEventImpl;
 import com.sinch.sdk.domains.conversation.models.v1.events.types.GenericEventDtoTest;
 import com.sinch.sdk.domains.conversation.models.v1.events.types.GenericEventImpl;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.ReadMessageEventDtoTest;
+import com.sinch.sdk.domains.conversation.models.v1.events.types.ReadMessageEventImpl;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -37,6 +39,12 @@ public class AppEventDtoTest extends ConversationBaseTest {
 
   @GivenTextResource("domains/conversation/v1/events/types/ComposingEndEventDto.json")
   String jsonComposingEndEvent;
+
+  @GivenJsonResource("domains/conversation/v1/events/types/ReadMessageEventDto.json")
+  AppEventInternalImpl dtoReadMessageEvent;
+
+  @GivenTextResource("domains/conversation/v1/events/types/ReadMessageEventDto.json")
+  String jsonReadMessageEvent;
 
   @GivenJsonResource("domains/conversation/v1/events/types/CommentReplyEventDto.json")
   AppEventInternalImpl dtoCommentReplyEvent;
@@ -67,6 +75,9 @@ public class AppEventDtoTest extends ConversationBaseTest {
 
   public static AppEventInternalImpl expectedComposingEndEventDto =
       new AppEventInternalImpl((ComposingEndEventImpl) ComposingEndEventDtoTest.expectedDto);
+
+  public static AppEventInternalImpl expectedReadMessageEventDto =
+      new AppEventInternalImpl((ReadMessageEventImpl) ReadMessageEventDtoTest.expectedDto);
 
   public static AppEventInternalImpl expectedCommentReplyEventDto =
       new AppEventInternalImpl((CommentReplyEventImpl) CommentReplyEventDtoTest.expectedDto);
@@ -100,6 +111,17 @@ public class AppEventDtoTest extends ConversationBaseTest {
   @Test
   void deserializeComposingEndDEventto() {
     TestHelpers.recursiveEquals(dtoComposingEndEvent, expectedComposingEndEventDto);
+  }
+
+  @Test
+  void serializeReadMessageEventDto() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(expectedReadMessageEventDto);
+    JSONAssert.assertEquals(jsonReadMessageEvent, serializedString, true);
+  }
+
+  @Test
+  void deserializeReadMessageEventDto() {
+    TestHelpers.recursiveEquals(dtoReadMessageEvent, expectedReadMessageEventDto);
   }
 
   @Test

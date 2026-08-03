@@ -1,0 +1,9 @@
+{
+  "eventId": "abcd1234efghijklmnop567890",
+  "timestamp": "2023-06-06T07:45:27.78789",
+  "projectId": "abcd12ef-ab12-ab12-bc34-abcdef123456",
+  "resourceId": "01jgkbb8xywmz3hhahd76menqf",
+  "resourceType": "NUMBER_ORDER",
+  "eventType": "NUMBER_ORDER_PROCESSING",
+  "status": "IN_REVIEW"
+}
