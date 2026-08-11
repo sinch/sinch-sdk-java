@@ -76,13 +76,15 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
   private static CloseableHttpClient buildHttpClient(HttpProxyConfiguration proxyConfiguration) {
     if (proxyConfiguration == null) {
-      return HttpClients.createDefault();
+      return HttpClients.custom().disableAutomaticRetries().build();
     }
 
     HttpHost proxyHost =
         new HttpHost(proxyConfiguration.getHostname(), proxyConfiguration.getPort());
     HttpClientBuilder builder =
-        HttpClients.custom().setRoutePlanner(new DefaultProxyRoutePlanner(proxyHost));
+        HttpClients.custom()
+            .disableAutomaticRetries()
+            .setRoutePlanner(new DefaultProxyRoutePlanner(proxyHost));
 
     if (proxyConfiguration.getUsername().isPresent()) {
       // getPassword() returns a defensive copy of the internal array; HC5 receives that copy and

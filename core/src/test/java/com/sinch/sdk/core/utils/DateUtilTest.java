@@ -122,4 +122,41 @@ class DateUtilTest {
     Instant instant = DateUtil.RFC822StringToInstant("Mon, 12 Jan 2006 15:04:05 +0100");
     assertNull(instant);
   }
+
+  @Test
+  void HTTPDateAcceptsTheThreeRequiredFormats() {
+    // the three spellings RFC 7231 section 7.1.1.1 requires a recipient to accept
+    assertEquals(
+        "1994-11-06T08:49:37Z",
+        DateUtil.HTTPDateStringToInstant("Sun, 06 Nov 1994 08:49:37 GMT").toString());
+    assertEquals(
+        "1994-11-06T08:49:37Z",
+        DateUtil.HTTPDateStringToInstant("Sunday, 06-Nov-94 08:49:37 GMT").toString());
+    assertEquals(
+        "1994-11-06T08:49:37Z",
+        DateUtil.HTTPDateStringToInstant("Sun Nov  6 08:49:37 1994").toString());
+  }
+
+  @Test
+  void HTTPDateResolvesTwoDigitYearsIntoThePast() {
+    // "94" must resolve to 1994, not 2094: the accepted window ends 50 years from now
+    Instant instant = DateUtil.HTTPDateStringToInstant("Sunday, 06-Nov-94 08:49:37 GMT");
+    assertTrue(instant.isBefore(Instant.now()), "expected a past date, got: " + instant);
+  }
+
+  @Test
+  void HTTPDateAcceptsATwoDigitDayInAsctime() {
+    assertEquals(
+        "1994-11-16T08:49:37Z",
+        DateUtil.HTTPDateStringToInstant("Wed Nov 16 08:49:37 1994").toString());
+  }
+
+  @Test
+  void HTTPDateRejectsAnythingElse() {
+    assertNull(DateUtil.HTTPDateStringToInstant(null));
+    assertNull(DateUtil.HTTPDateStringToInstant("   "));
+    assertNull(DateUtil.HTTPDateStringToInstant("not-a-date"));
+    // 12th of January 2006 is not a Monday (it was a Thursday)
+    assertNull(DateUtil.HTTPDateStringToInstant("Mon, 12 Jan 2006 15:04:05 GMT"));
+  }
 }
