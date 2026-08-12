@@ -14,6 +14,7 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.core.utils.DateUtil;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.nio.charset.StandardCharsets;
@@ -227,7 +228,7 @@ public class OAuthManagerTest extends BaseTest {
               ApiAuthException.class,
               () -> spyAuthManager.getAuthorizationHeaders(null, null, null, null));
       assertTrue(
-          exception.getMessage().startsWith("Token refresh failed: network or client error"),
+          exception.getMessage().startsWith("OAuth request failed: network or client error"),
           "expected a network/client-error cause, got: " + exception.getMessage());
 
       verify(httpClient, times(1)).invokeAPI(any(), any(), any());
@@ -245,7 +246,7 @@ public class OAuthManagerTest extends BaseTest {
               ApiAuthException.class,
               () -> spyAuthManager.getAuthorizationHeaders(null, null, null, null));
       assertTrue(
-          exception.getMessage().startsWith("Token refresh failed with HTTP 503"),
+          exception.getMessage().startsWith("Unable to extract token with HTTP 503"),
           "expected an HTTP-status cause, got: " + exception.getMessage());
 
       verify(httpClient, times(1)).invokeAPI(any(), any(), any());
@@ -264,7 +265,7 @@ public class OAuthManagerTest extends BaseTest {
               ApiAuthException.class,
               () -> spyAuthManager.getAuthorizationHeaders(null, null, null, null));
       assertTrue(
-          exception.getMessage().contains("without an access_token"),
+          exception.getMessage().contains("carries no access_token"),
           "expected the missing-token cause, got: " + exception.getMessage());
 
       verify(httpClient, times(1)).invokeAPI(any(), any(), any());
@@ -282,7 +283,7 @@ public class OAuthManagerTest extends BaseTest {
               ApiAuthException.class,
               () -> spyAuthManager.getAuthorizationHeaders(null, null, null, null));
       assertTrue(
-          exception.getMessage().startsWith("Token refresh failed: could not deserialize response"),
+          exception.getMessage().startsWith("Unable to extract token: could not deserialize"),
           "expected a deserialization cause, got: " + exception.getMessage());
 
       verify(httpClient, times(1)).invokeAPI(any(), any(), any());
@@ -356,11 +357,17 @@ public class OAuthManagerTest extends BaseTest {
     void honorsRetryAfter() {
       assertBetween(5_000, 5_250, backoff("Retry-After", "5", 0));
       assertBetween(
-          4_000, 5_250, backoff("Retry-After", httpDate(Instant.now().plusSeconds(5)), 0));
+          4_000,
+          5_250,
+          backoff("Retry-After", DateUtil.instantToRFC822String(Instant.now().plusSeconds(5)), 0));
 
       // A zero delay is still a delay, and a date already past means the window has reopened.
       assertBetween(0, 250, backoff("Retry-After", "0", 0));
-      assertBetween(0, 250, backoff("Retry-After", httpDate(Instant.now().minusSeconds(3600)), 0));
+      assertBetween(
+          0,
+          250,
+          backoff(
+              "Retry-After", DateUtil.instantToRFC822String(Instant.now().minusSeconds(3600)), 0));
 
       // HTTP/2 lower-cases header names, HTTP/1.1 servers usually do not; both must be honored.
       assertBetween(5_000, 5_250, backoff("retry-after", "5", 0));
@@ -391,11 +398,6 @@ public class OAuthManagerTest extends BaseTest {
       }
       return manager.computeBackoffMillis(
           new HttpResponse(429, "Too Many Requests", headers, null), attempt);
-    }
-
-    private String httpDate(Instant instant) {
-      return DateTimeFormatter.RFC_1123_DATE_TIME.format(
-          ZonedDateTime.ofInstant(instant, ZoneOffset.UTC));
     }
 
     /** Formats "five seconds from now" in one of the two obsolete HTTP-date forms. */

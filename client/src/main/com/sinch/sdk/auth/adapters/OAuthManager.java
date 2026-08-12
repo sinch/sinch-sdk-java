@@ -13,6 +13,7 @@ import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.DateUtil;
 import com.sinch.sdk.core.utils.Pair;
+import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.time.Duration;
 import java.time.Instant;
@@ -96,8 +97,8 @@ public class OAuthManager implements AuthManager {
       synchronized (this) {
         currentToken = token;
         if (currentToken == null) {
-          refreshToken();
-          currentToken = token;
+          currentToken = getNewToken();
+          token = currentToken;
         }
       }
     }
@@ -106,13 +107,12 @@ public class OAuthManager implements AuthManager {
   }
 
   /** Fetches a token, retrying only while the authentication service reports a rate limit. */
-  private void refreshToken() {
+  private String getNewToken() {
 
     for (int attempt = 0; ; attempt++) {
-      HttpResponse response = callTokenEndpoint();
+      HttpResponse response = callOAuthEndpoint();
       if (response.getCode() != HttpStatus.TOO_MANY_REQUESTS) {
-        token = extractAccessToken(response);
-        return;
+        return extractAccessToken(response);
       }
       if (attempt >= MAX_RATE_LIMIT_RETRIES) {
         throw new ApiAuthException(
@@ -138,10 +138,10 @@ public class OAuthManager implements AuthManager {
     }
   }
 
-  /** Calls the token endpoint once. A transport failure or a missing response is final. */
-  private HttpResponse callTokenEndpoint() {
+  /** Performs the OAuth request once. A transport failure or a missing response is final. */
+  private HttpResponse callOAuthEndpoint() {
 
-    LOGGER.fine("Refreshing OAuth token");
+    LOGGER.fine("Calling OAuth endpoint");
     HttpRequest request =
         new HttpRequest(
             null,
@@ -157,10 +157,10 @@ public class OAuthManager implements AuthManager {
       httpResponse = httpClientSupplier.get().invokeAPI(oAuthServer, authManagers, request);
     } catch (Exception e) {
       throw new ApiAuthException(
-          "Token refresh failed: network or client error: " + e.getMessage());
+          "OAuth request failed: network or client error: " + e.getMessage());
     }
     if (httpResponse == null) {
-      throw new ApiAuthException("Token refresh failed: no response received");
+      throw new ApiAuthException("OAuth request failed: no response received");
     }
     return httpResponse;
   }
@@ -168,7 +168,7 @@ public class OAuthManager implements AuthManager {
   private String extractAccessToken(HttpResponse response) {
 
     if (!HttpStatus.isSuccessfulStatus(response.getCode())) {
-      throw new ApiAuthException("Token refresh failed with HTTP " + response.getCode());
+      throw new ApiAuthException("Unable to extract token with HTTP " + response.getCode());
     }
 
     BearerAuthResponse authResponse;
@@ -176,15 +176,15 @@ public class OAuthManager implements AuthManager {
       authResponse = mapper.deserialize(response, new TypeReference<BearerAuthResponse>() {});
     } catch (Exception e) {
       throw new ApiAuthException(
-          "Token refresh failed: could not deserialize response: " + e.getMessage());
+          "Unable to extract token: could not deserialize response: " + e.getMessage());
     }
 
     String accessToken = null != authResponse ? authResponse.getAccessToken() : null;
-    if (null == accessToken || accessToken.trim().isEmpty()) {
+    if (StringUtil.isEmpty(accessToken)) {
       throw new ApiAuthException(
-          "Token refresh failed: the authentication service returned HTTP "
+          "Unable to extract token: the HTTP "
               + response.getCode()
-              + " without an access_token");
+              + " response carries no access_token");
     }
     return accessToken;
   }
@@ -220,7 +220,7 @@ public class OAuthManager implements AuthManager {
     } catch (NumberFormatException notDeltaSeconds) {
     }
     // Not a number, so try the HTTP-date form: all three RFC 7231 spellings are accepted.
-    Instant retryAt = DateUtil.HTTPDateStringToInstant(trimmed);
+    Instant retryAt = DateUtil.RFC7231StringToInstant(trimmed);
     if (null == retryAt) {
       return Optional.empty();
     }

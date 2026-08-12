@@ -22,18 +22,6 @@ public class DateUtil {
   private static final DateTimeFormatter RFC822_GMT_FORMAT =
       DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm:ss").withZone(ZoneId.of("GMT"));
 
-  // RFC 7231 section 7.1.1.1: a two-digit RFC 850 year that looks more than 50 years ahead must be
-  // read as the most recent past year with the same last two digits, so "94" gives 1994 not 2094.
-  private static final int RFC850_YEAR_PIVOT = ZonedDateTime.now(ZoneOffset.UTC).getYear() - 50;
-
-  private static final DateTimeFormatter RFC850_FORMAT =
-      new DateTimeFormatterBuilder()
-          .parseCaseInsensitive()
-          .appendPattern("EEEE, dd-MMM-")
-          .appendValueReduced(ChronoField.YEAR, 2, 2, RFC850_YEAR_PIVOT)
-          .appendPattern(" HH:mm:ss z")
-          .toFormatter(Locale.ENGLISH);
-
   private static final DateTimeFormatter ASCTIME_FORMAT =
       new DateTimeFormatterBuilder()
           .parseCaseInsensitive()
@@ -144,6 +132,12 @@ public class DateUtil {
     }
   }
 
+  public static String instantToRFC822String(Instant value) {
+    return (null == value
+        ? null
+        : DateTimeFormatter.RFC_1123_DATE_TIME.format(value.atZone(ZoneId.of("UTC"))));
+  }
+
   /**
    * Convert String to Instant
    *
@@ -181,7 +175,7 @@ public class DateUtil {
     return null;
   }
 
-  public static Instant HTTPDateStringToInstant(String value) {
+  public static Instant RFC7231StringToInstant(String value) {
 
     String trimmed = null == value ? "" : value.trim();
 
@@ -205,10 +199,20 @@ public class DateUtil {
 
   private static Instant parseRFC850(String trimmed) {
     try {
-      return ZonedDateTime.parse(trimmed, RFC850_FORMAT).toInstant();
+      return ZonedDateTime.parse(trimmed, rfc850Format()).toInstant();
     } catch (DateTimeParseException _unused) {
       return null;
     }
+  }
+
+  private static DateTimeFormatter rfc850Format() {
+    return new DateTimeFormatterBuilder()
+        .parseCaseInsensitive()
+        .appendPattern("EEEE, dd-MMM-")
+        .appendValueReduced(
+            ChronoField.YEAR, 2, 2, ZonedDateTime.now(ZoneOffset.UTC).getYear() - 50)
+        .appendPattern(" HH:mm:ss z")
+        .toFormatter(Locale.ENGLISH);
   }
 
   private static Instant parseAsctime(String trimmed) {

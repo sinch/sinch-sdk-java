@@ -18,10 +18,10 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 ## v2.2.0 - unreleased
 
 ### SDK
-- **[feature]** `OAuthManager`: honor the `Retry-After` response header on `HTTP 429` 
-- **[feature]** `DateUtil`: new `HTTPDateStringToInstant` accepting the three HTTP-date formats of RFC 7231 (IMF-fixdate, RFC 850, asctime); 
-- **[fix]** `OAuthManager`: retry a rate-limited token request 3 times instead of 2
-- **[fix]** `HttpClientApache`: disable Apache automatic retries
+- **[feature]** Default Apache HttpClient retry policy disabled in favor of a dedicated SDK implementation:
+  - honor the `Retry-After` response header on `HTTP 429` and fallback to exponential backoff if not present
+  - max retry changed from default Apache HttpClient (`1`) to SDK implementation: `3`
+- **[feature]** `DateUtil`: new `RFC7231StringToInstant` accepting the three HTTP-date formats of RFC 7231 (IMF-fixdate, RFC 850, asctime)
 
 ### Conversation
 - **[feature]** [Events] Support `ReadMessageEvent` app event (WhatsApp only): use `ReadMessageEvent.READ_MESSAGE_EVENT`
