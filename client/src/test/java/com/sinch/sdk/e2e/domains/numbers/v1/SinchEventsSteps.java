@@ -26,9 +26,6 @@ public class SinchEventsSteps {
 
   static final String WEBHOOKS_PATH = Config.NUMBERS_HOST_NAME + "/webhooks/numbers/";
   static final String SECRET = "strongPa$$PhraseWith36CharactersMax";
-
-  static final String UNSUPPORTED_EVENT_TYPE = "NUMBER_ORDER_PROCESSING";
-
   SinchEventsService service;
 
   Map<String, String> triggerToURL =
@@ -55,10 +52,6 @@ public class SinchEventsSteps {
   @When("I send a request to trigger the {string} for {string} event")
   public void triggerEvent(String status, String trigger) throws IOException {
 
-    if (UNSUPPORTED_EVENT_TYPE.equals(trigger)) {
-      return;
-    }
-
     WebhooksHelper.Response<NumberSinchEvent> response =
         WebhooksHelper.callURL(
             new URL(triggerToURL.get(status + "_" + trigger)), service::parseEvent);
@@ -67,10 +60,6 @@ public class SinchEventsSteps {
 
   @Then("the header of the {string} for {string} event contains a valid signature")
   public void validateEventSignature(String status, String trigger) {
-
-    if (UNSUPPORTED_EVENT_TYPE.equals(trigger)) {
-      return;
-    }
 
     WebhooksHelper.Response<NumberSinchEvent> receivedEvent =
         receivedEvents.get(status + "_" + trigger);
@@ -83,10 +72,6 @@ public class SinchEventsSteps {
 
   @Then("the event describes a {string} for {string} event")
   public void validateResult(String status, String trigger) {
-
-    if (UNSUPPORTED_EVENT_TYPE.equals(trigger)) {
-      return;
-    }
 
     NumberSinchEvent expectedSuccess =
         NumberSinchEvent.builder()
