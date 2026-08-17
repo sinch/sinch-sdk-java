@@ -40,6 +40,14 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 ### Tests
 - **[test]** Fix HttpClient multipart test when returned boundary string contains '--' sequence
 
+
+## v2.1.2 - 2026-08-13
+
+### Build
+
+- **[dependency]** Bump `jackson.version` to `2.21.5` to solve `@JsonView` bypass vulnerabilities in `jackson-databind` (CVE-2026-59889 and GHSA-mhm7-754m-9p8w).
+- **[dependency]** Bump `httpclient5.version` to `5.6.2` to solve a denial-of-service vulnerability in the transitive `httpcore5` dependency (CVE-2026-54399).
+
 ## v2.1.1 - 2026-07-21
 
 ### Build & CI

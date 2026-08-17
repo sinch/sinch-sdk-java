@@ -26,7 +26,6 @@ public class SinchEventsSteps {
 
   static final String WEBHOOKS_PATH = Config.NUMBERS_HOST_NAME + "/webhooks/numbers/";
   static final String SECRET = "strongPa$$PhraseWith36CharactersMax";
-
   SinchEventsService service;
 
   Map<String, String> triggerToURL =
