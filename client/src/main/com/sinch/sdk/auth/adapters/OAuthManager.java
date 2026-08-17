@@ -15,6 +15,7 @@ import com.sinch.sdk.core.utils.DateUtil;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.models.UnifiedCredentials;
+import java.time.DateTimeException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.AbstractMap;
@@ -226,7 +227,9 @@ public class OAuthManager implements AuthManager {
     }
     try {
       return Optional.of(Math.max(0, Duration.between(Instant.now(), retryAt).toMillis()));
-    } catch (ArithmeticException tooFarInTheFuture) {
+    } catch (DateTimeException | ArithmeticException unusableDate) {
+      // Never let a bad date reach the caller: this only computes a backoff, so anything we
+      // cannot turn into a delay falls back to the exponential one rather than failing the call.
       return Optional.empty();
     }
   }
