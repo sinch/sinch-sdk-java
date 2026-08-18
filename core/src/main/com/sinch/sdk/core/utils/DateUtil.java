@@ -7,7 +7,10 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 /** Utility class for Date */
@@ -18,6 +21,16 @@ public class DateUtil {
 
   private static final DateTimeFormatter RFC822_GMT_FORMAT =
       DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm:ss").withZone(ZoneId.of("GMT"));
+
+  private static final DateTimeFormatter ASCTIME_FORMAT =
+      new DateTimeFormatterBuilder()
+          .parseCaseInsensitive()
+          .appendPattern("EEE MMM ")
+          .padNext(2)
+          .appendValue(ChronoField.DAY_OF_MONTH)
+          .appendPattern(" HH:mm:ss yyyy")
+          .toFormatter(Locale.ENGLISH)
+          .withZone(ZoneOffset.UTC);
 
   private static final Logger LOGGER = Logger.getLogger(DateUtil.class.getName());
 
@@ -119,6 +132,12 @@ public class DateUtil {
     }
   }
 
+  public static String instantToRFC822String(Instant value) {
+    return (null == value
+        ? null
+        : DateTimeFormatter.RFC_1123_DATE_TIME.format(value.atZone(ZoneId.of("UTC"))));
+  }
+
   /**
    * Convert String to Instant
    *
@@ -154,6 +173,54 @@ public class DateUtil {
 
     LOGGER.severe(String.format("Unable to parse '%s' date string", value));
     return null;
+  }
+
+  public static Instant RFC7231StringToInstant(String value) {
+
+    String trimmed = null == value ? "" : value.trim();
+
+    if (trimmed.isEmpty()) {
+      return null;
+    }
+
+    // the preferred form first, then the two obsolete ones
+    Instant parsed = parseRFC822(trimmed);
+    if (null != parsed) {
+      return parsed;
+    }
+
+    parsed = parseRFC850(trimmed);
+    if (null != parsed) {
+      return parsed;
+    }
+
+    return parseAsctime(trimmed);
+  }
+
+  private static Instant parseRFC850(String trimmed) {
+    try {
+      return ZonedDateTime.parse(trimmed, rfc850Format()).toInstant();
+    } catch (DateTimeParseException _unused) {
+      return null;
+    }
+  }
+
+  private static DateTimeFormatter rfc850Format() {
+    return new DateTimeFormatterBuilder()
+        .parseCaseInsensitive()
+        .appendPattern("EEEE, dd-MMM-")
+        .appendValueReduced(
+            ChronoField.YEAR, 2, 2, ZonedDateTime.now(ZoneOffset.UTC).getYear() - 50)
+        .appendPattern(" HH:mm:ss z")
+        .toFormatter(Locale.ENGLISH);
+  }
+
+  private static Instant parseAsctime(String trimmed) {
+    try {
+      return ZonedDateTime.parse(trimmed, ASCTIME_FORMAT).toInstant();
+    } catch (DateTimeParseException _unused) {
+      return null;
+    }
   }
 
   private static Instant parseRFC822(String trimmed) {

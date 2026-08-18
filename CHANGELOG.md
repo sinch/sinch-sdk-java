@@ -17,6 +17,11 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 ---
 ## v2.2.0 - unreleased
 
+### SDK
+- **[feature]** Default Apache HttpClient retry policy disabled in favor of a dedicated SDK implementation:
+  - honor the `Retry-After` response header on `HTTP 429` and fallback to exponential backoff if not present
+  - max retry changed from default Apache HttpClient (`1`) to SDK implementation: `3`
+
 ### Conversation
 - **[feature]** [Events] Support `ReadMessageEvent` app event (WhatsApp only): use `ReadMessageEvent.READ_MESSAGE_EVENT`
 - **[feature]** [Messages] [Choice] Support new `displayMode` field and `DisplayMode` enum

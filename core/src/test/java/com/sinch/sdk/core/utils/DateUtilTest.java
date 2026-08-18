@@ -122,4 +122,41 @@ class DateUtilTest {
     Instant instant = DateUtil.RFC822StringToInstant("Mon, 12 Jan 2006 15:04:05 +0100");
     assertNull(instant);
   }
+
+  @Test
+  void RFC7231AcceptsTheThreeRequiredFormats() {
+    // the three spellings RFC 7231 section 7.1.1.1 requires a recipient to accept
+    assertEquals(
+        "1994-11-06T08:49:37Z",
+        DateUtil.RFC7231StringToInstant("Sun, 06 Nov 1994 08:49:37 GMT").toString());
+    assertEquals(
+        "1994-11-06T08:49:37Z",
+        DateUtil.RFC7231StringToInstant("Sunday, 06-Nov-94 08:49:37 GMT").toString());
+    assertEquals(
+        "1994-11-06T08:49:37Z",
+        DateUtil.RFC7231StringToInstant("Sun Nov  6 08:49:37 1994").toString());
+  }
+
+  @Test
+  void RFC7231ResolvesTwoDigitYearsIntoThePast() {
+    // "94" must resolve to 1994, not 2094: the accepted window ends 50 years from now
+    Instant instant = DateUtil.RFC7231StringToInstant("Sunday, 06-Nov-94 08:49:37 GMT");
+    assertTrue(instant.isBefore(Instant.now()), "expected a past date, got: " + instant);
+  }
+
+  @Test
+  void RFC7231AcceptsATwoDigitDayInAsctime() {
+    assertEquals(
+        "1994-11-16T08:49:37Z",
+        DateUtil.RFC7231StringToInstant("Wed Nov 16 08:49:37 1994").toString());
+  }
+
+  @Test
+  void RFC7231RejectsAnythingElse() {
+    assertNull(DateUtil.RFC7231StringToInstant(null));
+    assertNull(DateUtil.RFC7231StringToInstant("   "));
+    assertNull(DateUtil.RFC7231StringToInstant("not-a-date"));
+    // 12th of January 2006 is not a Monday (it was a Thursday)
+    assertNull(DateUtil.RFC7231StringToInstant("Mon, 12 Jan 2006 15:04:05 GMT"));
+  }
 }
