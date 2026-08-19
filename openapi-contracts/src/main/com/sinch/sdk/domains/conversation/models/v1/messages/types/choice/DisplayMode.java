@@ -5,7 +5,11 @@ import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/** Controls the display behavior of a choice. */
+/**
+ * Controls the display behavior of a choice. Only supported for Choice Message on the RCS channel.
+ * Has no effect on other channels or message types, except for a carousel's outer choices, where it
+ * is rejected outright.
+ */
 public class DisplayMode extends EnumDynamic<String, DisplayMode> {
 
   /** Default. Transient — choice disappears when new messages arrive. */
