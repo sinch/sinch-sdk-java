@@ -51,6 +51,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ### Tests
 - **[test]** Fix HttpClient multipart test when returned boundary string contains '--' sequence
+- **[test]** [Voice] [Verification] Extend `SinchEventsService.validateAuthenticationHeader` regression coverage
 
 
 ## v2.1.2 - 2026-08-13
