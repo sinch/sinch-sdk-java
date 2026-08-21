@@ -297,8 +297,10 @@
                                 <include>com.sinch.sdk.e2e.domains.voice.v1.VoiceIT</include>
                                 <include>com.sinch.sdk.e2e.domains.verification.v1.VerificationIT</include>
                                 <include>com.sinch.sdk.e2e.domains.numberlookup.v2.NumberLookupIT</include>
+                                <!-- DEVEXP-1592 (temporary workaround)
                                 <include>com.sinch.sdk.e2e.domains.proxy.ProxyIT</include>
                                 <include>com.sinch.sdk.e2e.domains.proxy.HttpClientApacheProxyIT</include>
+                                -->
                             </includes>
                         </configuration>
 

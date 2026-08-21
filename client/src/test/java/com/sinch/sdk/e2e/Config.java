@@ -17,26 +17,32 @@ public class Config {
   public static final String PROJECT_ID = "tinyfrog-jump-high-over-lilypadbasin";
   public static final String KEY_ID = "'keyId";
   public static final String KEY_SECRET = "keySecret";
-  public static final String AUTH_URL = "http://localhost:3011/oauth2/token";
-  public static final String NUMBERS_HOST_NAME = "http://localhost:3013";
-  public static final String CONVERSATION_HOST_NAME = "http://localhost:3014";
-  public static final String CONVERSATION_TEMPLATE_HOST_NAME = "http://localhost:3015";
+  private static final String DEFAULT_MOCK_SERVER_URL = "https://sinch-sdk-mockserver.sliplane.app";
+
+  public static final String MOCK_SERVER_URL = resolveMockServerUrl();
+  public static final String AUTH_URL = MOCK_SERVER_URL + "/authentication/oauth2/token";
+  public static final String NUMBERS_HOST_NAME = MOCK_SERVER_URL + "/numbers";
+  public static final String CONVERSATION_HOST_NAME = MOCK_SERVER_URL + "/conversation";
+  public static final String CONVERSATION_TEMPLATE_HOST_NAME =
+      MOCK_SERVER_URL + "/conversation-templates";
   public static final ConversationRegion CONVERSATION_REGION = ConversationRegion.US;
 
   public static final String APPLICATION_KEY = "appKey";
   public static final String APPLICATION_SECRET = "YXBwU2VjcmV0";
-  public static final String VOICE_HOST_NAME = "http://localhost:3019";
-  public static final String VOICE_MANAGEMENT_HOST_NAME = "http://localhost:3020";
+  public static final String VOICE_HOST_NAME = MOCK_SERVER_URL + "/voice";
+  public static final String VOICE_MANAGEMENT_HOST_NAME =
+      MOCK_SERVER_URL + "/voice-application-management";
 
-  public static final String MAILGUN_HOST_NAME = "http://localhost:3021";
+  public static final String MAILGUN_HOST_NAME = MOCK_SERVER_URL + "/mailgun";
   public static final String MAILGUN_API_KEY = "apiKey";
-  public static final String MAILGUN_STORAGE = "http://localhost:3021";
+  public static final String MAILGUN_STORAGE = MOCK_SERVER_URL + "/mailgun";
 
-  public static final String SMS_HOST_NAME = "http://localhost:3017";
+  public static final String SMS_HOST_NAME = MOCK_SERVER_URL + "/sms";
 
-  public static final String VERIFICATION_HOST_NAME = "http://localhost:3018";
+  public static final String VERIFICATION_HOST_NAME = MOCK_SERVER_URL;
+  public static final String VERIFICATION_WEBHOOKS_HOST_NAME = MOCK_SERVER_URL + "/verification";
 
-  public static final String NUMBER_LOOKUP_HOST_NAME = "http://localhost:3022";
+  public static final String NUMBER_LOOKUP_HOST_NAME = MOCK_SERVER_URL + "/number-lookup";
 
   public static final int PROXY_UNAUTHENTICATED_PORT = 3128;
   public static final int PROXY_AUTHENTICATED_PORT = 3129;
@@ -132,6 +138,15 @@ public class Config {
 
   public static SinchClient getSinchClientProxyAuthenticated() {
     return LazyHolder.INSTANCE.clientProxyAuthenticated;
+  }
+
+  private static String resolveMockServerUrl() {
+    String url = System.getenv("SINCH_MOCKSERVER_BASE_URL");
+    if (null == url || url.trim().isEmpty()) {
+      return DEFAULT_MOCK_SERVER_URL;
+    }
+    url = url.trim();
+    return url.endsWith("/") ? url.substring(0, url.length() - 1) : url;
   }
 
   private static Configuration createConfigurationWithProxyUsage(HttpProxyConfiguration proxy) {
