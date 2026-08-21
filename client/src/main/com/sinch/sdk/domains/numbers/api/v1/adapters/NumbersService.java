@@ -22,8 +22,10 @@ import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumbersListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.ValidateAddressResponse;
 import com.sinch.sdk.models.NumbersContext;
+import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -40,6 +42,7 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
   private final NumbersContext context;
   private final ServerConfiguration oAuthServer;
   private final Supplier<HttpClient> httpClientSupplier;
+  private final boolean useSinchAuth;
 
   private volatile String uriUUID;
   private volatile Map<String, AuthManager> authManagers;
@@ -58,10 +61,25 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
       NumbersContext context,
       ServerConfiguration oAuthServer,
       Supplier<HttpClient> httpClientSupplier) {
+    this(
+        credentials,
+        context,
+        oAuthServer,
+        httpClientSupplier,
+        TransportSettings.DEFAULT_USE_SINCH_AUTH);
+  }
+
+  public NumbersService(
+      UnifiedCredentials credentials,
+      NumbersContext context,
+      ServerConfiguration oAuthServer,
+      Supplier<HttpClient> httpClientSupplier,
+      boolean useSinchAuth) {
     this.credentials = credentials;
     this.context = context;
     this.oAuthServer = oAuthServer;
     this.httpClientSupplier = httpClientSupplier;
+    this.useSinchAuth = useSinchAuth;
   }
 
   AvailableNumberServiceFacade available() {
@@ -223,10 +241,12 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
         Objects.requireNonNull(
             credentials, "Numbers service require unified credentials to be defined");
         Objects.requireNonNull(context, "Numbers service requires context to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getKeyId(), "Numbers service requires 'keyId' to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getKeySecret(), "Numbers service requires 'keySecret' to be defined");
+        if (useSinchAuth) {
+          StringUtil.requireNonEmpty(
+              credentials.getKeyId(), "Numbers service requires 'keyId' to be defined");
+          StringUtil.requireNonEmpty(
+              credentials.getKeySecret(), "Numbers service requires 'keySecret' to be defined");
+        }
         StringUtil.requireNonEmpty(
             credentials.getProjectId(), "Numbers service requires 'projectId' to be defined");
         StringUtil.requireNonEmpty(
@@ -235,14 +255,19 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
         LOGGER.fine(
             "Activate numbers API with server='" + context.getNumbersServer().getUrl() + "'");
 
-        AuthManager authManager =
-            new OAuthManager(
-                credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
-
         uriUUID = credentials.getProjectId();
-        authManagers =
-            Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_NUMBERS, authManager))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        if (useSinchAuth) {
+          AuthManager authManager =
+              new OAuthManager(
+                  credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
+
+          authManagers =
+              Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_NUMBERS, authManager))
+                  .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        } else {
+          authManagers = Collections.emptyMap();
+        }
       }
     }
   }

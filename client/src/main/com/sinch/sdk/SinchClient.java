@@ -17,6 +17,7 @@ import com.sinch.sdk.models.NumberLookupContext;
 import com.sinch.sdk.models.NumbersContext;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.SmsContext;
+import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.VerificationContext;
 import com.sinch.sdk.models.VoiceContext;
 import com.sinch.sdk.models.VoiceRegion;
@@ -379,12 +380,21 @@ public class SinchClient {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
   }
 
+  private TransportSettings transportSettings() {
+    return configuration.getTransportSettings().orElse(TransportSettings.DEFAULTS);
+  }
+
+  private boolean useSinchAuth() {
+    return transportSettings().getUseSinchAuth();
+  }
+
   private NumbersService numbersInit() {
     return new com.sinch.sdk.domains.numbers.adapters.NumbersService(
         getConfiguration().getUnifiedCredentials().orElse(null),
         configuration.getNumbersContext().orElse(null),
         configuration.getOAuthServer(),
-        this::getHttpClient);
+        this::getHttpClient,
+        useSinchAuth());
   }
 
   private SMSService smsInit() {
@@ -401,7 +411,8 @@ public class SinchClient {
                     getConfiguration().getUnifiedCredentials().orElse(null),
                     getConfiguration().getSmsContext().orElse(null),
                     configuration.getOAuthServer(),
-                    this::getHttpClient));
+                    this::getHttpClient,
+                    useSinchAuth()));
   }
 
   private VerificationService verificationInit() {
@@ -423,7 +434,8 @@ public class SinchClient {
         getConfiguration().getUnifiedCredentials().orElse(null),
         getConfiguration().getConversationContext().orElse(null),
         getConfiguration().getOAuthServer(),
-        this::getHttpClient);
+        this::getHttpClient,
+        useSinchAuth());
   }
 
   private NumberLookupService lookupInit() {
@@ -431,7 +443,8 @@ public class SinchClient {
         getConfiguration().getUnifiedCredentials().orElse(null),
         getConfiguration().getNumberLookupContext().orElse(null),
         getConfiguration().getOAuthServer(),
-        this::getHttpClient);
+        this::getHttpClient,
+        useSinchAuth());
   }
 
   private Properties handlePropertiesFile(String fileName) {
@@ -454,7 +467,8 @@ public class SinchClient {
           local =
               new HttpClientApache(
                   configuration.getHttpProxyConfiguration().orElse(null),
-                  new DefaultRetryManager(configuration.getRetryConfiguration().orElse(null)));
+                  new DefaultRetryManager(configuration.getRetryConfiguration().orElse(null)),
+                  transportSettings().getTimeoutSeconds());
 
           // set SDK User-Agent
           String userAgent = formatSdkUserAgentHeader();

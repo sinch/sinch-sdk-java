@@ -4,6 +4,7 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesService;
 import com.sinch.sdk.models.ConversationContext;
+import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.function.Supplier;
 
@@ -13,6 +14,7 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
   private final ConversationContext context;
   private final ServerConfiguration oAuthServer;
   private final Supplier<HttpClient> httpClientSupplier;
+  private final boolean useSinchAuth;
 
   private volatile com.sinch.sdk.domains.conversation.api.v1.ConversationService conversationV1;
   private volatile TemplatesService templates;
@@ -22,10 +24,25 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
       ConversationContext context,
       ServerConfiguration oAuthServer,
       Supplier<HttpClient> httpClientSupplier) {
+    this(
+        credentials,
+        context,
+        oAuthServer,
+        httpClientSupplier,
+        TransportSettings.DEFAULT_USE_SINCH_AUTH);
+  }
+
+  public ConversationService(
+      UnifiedCredentials credentials,
+      ConversationContext context,
+      ServerConfiguration oAuthServer,
+      Supplier<HttpClient> httpClientSupplier,
+      boolean useSinchAuth) {
     this.credentials = credentials;
     this.context = context;
     this.oAuthServer = oAuthServer;
     this.httpClientSupplier = httpClientSupplier;
+    this.useSinchAuth = useSinchAuth;
   }
 
   public com.sinch.sdk.domains.conversation.api.v1.ConversationService v1() {
@@ -34,7 +51,7 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
         if (null == this.conversationV1) {
           this.conversationV1 =
               new com.sinch.sdk.domains.conversation.api.v1.adapters.ConversationService(
-                  credentials, context, oAuthServer, httpClientSupplier);
+                  credentials, context, oAuthServer, httpClientSupplier, useSinchAuth);
         }
       }
     }
@@ -46,7 +63,8 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
       synchronized (this) {
         if (null == this.templates) {
           this.templates =
-              new TemplatesService(credentials, context, oAuthServer, httpClientSupplier);
+              new TemplatesService(
+                  credentials, context, oAuthServer, httpClientSupplier, useSinchAuth);
         }
       }
     }

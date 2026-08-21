@@ -23,6 +23,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
   - max retry changed from default Apache HttpClient (`1`) to SDK implementation: `3`
 - **[feature]** `HTTP 429` retries extended to all endpoints (previously OAuth only), handled by a dedicated `RetryManager`
 - **[feature]** Retry policy configurable from `SinchClient` via `setRetryConfiguration`: `retryPolicy` (`DEFAULT`, `RETRY_AFTER`, `BACKOFF`, `NONE`), `maxRetryCount` (default `3`), `exponentialBackoff` (default `4`)
+- **[feature]** `SinchClient` transport level settings: `TransportSettings` (`timeoutSeconds`, `useSinchAuth`)
 - **[fix]** `HttpClientApache`: preserve the status code of an `ApiException` raised during authentication instead of discarding it
 
 ### Conversation

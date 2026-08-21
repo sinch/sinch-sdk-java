@@ -18,6 +18,7 @@ public class Configuration {
   private final HttpProxyConfiguration httpProxyConfiguration;
   private final NumberLookupContext numberLookupContext;
   private final RetryConfiguration retryConfiguration;
+  private final TransportSettings transportSettings;
 
   private Configuration(
       UnifiedCredentials unifiedCredentials,
@@ -31,7 +32,8 @@ public class Configuration {
       VoiceContext voiceContext,
       ConversationContext conversationContext,
       NumberLookupContext numberLookupContext,
-      RetryConfiguration retryConfiguration) {
+      RetryConfiguration retryConfiguration,
+      TransportSettings transportSettings) {
     this.unifiedCredentials = unifiedCredentials;
     this.applicationCredentials = applicationCredentials;
     this.smsServicePlanCredentials = smsServicePlanCredentials;
@@ -44,6 +46,7 @@ public class Configuration {
     this.numberLookupContext = numberLookupContext;
     this.httpProxyConfiguration = httpProxyConfiguration;
     this.retryConfiguration = retryConfiguration;
+    this.transportSettings = transportSettings;
   }
 
   @Override
@@ -68,6 +71,8 @@ public class Configuration {
         + httpProxyConfiguration
         + ", retryConfiguration="
         + retryConfiguration
+        + ", transportSettings="
+        + transportSettings
         + "}";
   }
 
@@ -207,6 +212,17 @@ public class Configuration {
   }
 
   /**
+   * Get the transport level settings
+   *
+   * @return Transport settings, or empty when none was set and {@link TransportSettings#DEFAULTS}
+   *     apply
+   * @since 2.2
+   */
+  public Optional<TransportSettings> getTransportSettings() {
+    return Optional.ofNullable(transportSettings);
+  }
+
+  /**
    * Getting Builder
    *
    * @return New Builder instance
@@ -246,6 +262,7 @@ public class Configuration {
     NumberLookupContext.Builder numberLookupContext;
     HttpProxyConfiguration httpProxyConfiguration;
     RetryConfiguration retryConfiguration;
+    TransportSettings transportSettings;
 
     protected Builder() {}
 
@@ -281,6 +298,7 @@ public class Configuration {
           configuration.getNumberLookupContext().map(NumberLookupContext::builder).orElse(null);
       this.httpProxyConfiguration = configuration.getHttpProxyConfiguration().orElse(null);
       this.retryConfiguration = configuration.getRetryConfiguration().orElse(null);
+      this.transportSettings = configuration.getTransportSettings().orElse(null);
     }
 
     /**
@@ -586,6 +604,19 @@ public class Configuration {
     }
 
     /**
+     * Set the transport level settings
+     *
+     * @param transportSettings Transport settings, or {@code null} to restore the defaults
+     * @return Current builder
+     * @see Configuration#getTransportSettings() getter
+     * @since 2.2
+     */
+    public Builder setTransportSettings(TransportSettings transportSettings) {
+      this.transportSettings = transportSettings;
+      return this;
+    }
+
+    /**
      * Build a Configuration instance from builder current state
      *
      * @return Configuration instance build from current builder state
@@ -605,7 +636,8 @@ public class Configuration {
           null != voiceContext ? voiceContext.build() : null,
           null != conversationContext ? conversationContext.build() : null,
           null != numberLookupContext ? numberLookupContext.build() : null,
-          retryConfiguration);
+          retryConfiguration,
+          transportSettings);
     }
   }
 }

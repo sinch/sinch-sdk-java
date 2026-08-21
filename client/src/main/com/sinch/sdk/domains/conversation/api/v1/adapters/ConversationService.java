@@ -44,8 +44,10 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.What
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessageMapper;
 import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesService;
 import com.sinch.sdk.models.ConversationContext;
+import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -64,6 +66,7 @@ public class ConversationService
   private final ServerConfiguration oAuthServer;
   private final ConversationContext context;
   private final Supplier<HttpClient> httpClientSupplier;
+  private final boolean useSinchAuth;
 
   private volatile Map<String, AuthManager> authManagers;
   private volatile AppsService apps;
@@ -88,12 +91,27 @@ public class ConversationService
       ConversationContext context,
       ServerConfiguration oAuthServer,
       Supplier<HttpClient> httpClientSupplier) {
+    this(
+        credentials,
+        context,
+        oAuthServer,
+        httpClientSupplier,
+        TransportSettings.DEFAULT_USE_SINCH_AUTH);
+  }
+
+  public ConversationService(
+      UnifiedCredentials credentials,
+      ConversationContext context,
+      ServerConfiguration oAuthServer,
+      Supplier<HttpClient> httpClientSupplier,
+      boolean useSinchAuth) {
 
     this.uriUUID = null != credentials ? credentials.getProjectId() : null;
     this.credentials = credentials;
     this.context = context;
     this.httpClientSupplier = httpClientSupplier;
     this.oAuthServer = oAuthServer;
+    this.useSinchAuth = useSinchAuth;
   }
 
   public AppsService apps() {
@@ -245,7 +263,8 @@ public class ConversationService
       synchronized (this) {
         if (null == this.templates) {
           this.templates =
-              new TemplatesService(credentials, context, oAuthServer, httpClientSupplier);
+              new TemplatesService(
+                  credentials, context, oAuthServer, httpClientSupplier, useSinchAuth);
         }
       }
     }
@@ -308,10 +327,13 @@ public class ConversationService
         Objects.requireNonNull(
             credentials, "Conversation service requires credentials to be defined");
         Objects.requireNonNull(context, "Conversation service requires context to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getKeyId(), "Conversation service requires 'keyId' to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getKeySecret(), "Conversation service requires 'keySecret' to be defined");
+        if (useSinchAuth) {
+          StringUtil.requireNonEmpty(
+              credentials.getKeyId(), "Conversation service requires 'keyId' to be defined");
+          StringUtil.requireNonEmpty(
+              credentials.getKeySecret(),
+              "Conversation service requires 'keySecret' to be defined");
+        }
         StringUtil.requireNonEmpty(
             credentials.getProjectId(), "Conversation service requires 'projectId' to be defined");
         Objects.requireNonNull(
@@ -321,12 +343,16 @@ public class ConversationService
         StringUtil.requireNonEmpty(
             context.getUrl(), "Conversation service requires 'url' to be defined");
 
-        OAuthManager authManager =
-            new OAuthManager(
-                credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
-        authManagers =
-            Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_, authManager))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        if (useSinchAuth) {
+          OAuthManager authManager =
+              new OAuthManager(
+                  credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
+          authManagers =
+              Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_, authManager))
+                  .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        } else {
+          authManagers = Collections.emptyMap();
+        }
 
         LOGGER.fine(
             String.format(
