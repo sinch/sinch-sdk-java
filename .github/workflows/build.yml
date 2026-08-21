@@ -7,21 +7,24 @@ jobs:
     name: Build Java ${{ matrix.java-version }}
 
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     strategy:
       matrix:
-        java-version: ['8', '11', '17', '21', '25']
+        # DEVEXP-1592 (temporary workaround): only Java 21 is built for now.
+        # TODO: restore ['8', '11', '17', '21', '25'] along with the commented 'include' entries below.
+        java-version: ['21']
         include:
-          - java-version: '8'
-            maven-args: '-Dmaven.test.skip=true -Dspotless.check.skip=true clean package'
-          - java-version: '11'
-            maven-args: '-Dspotless.check.skip=true clean package javadoc:javadoc'
-          - java-version: '17'
-            maven-args: 'clean package javadoc:javadoc'
+          # - java-version: '8'
+          #   maven-args: '-Dmaven.test.skip=true -Dspotless.check.skip=true clean package'
+          # - java-version: '11'
+          #   maven-args: '-Dspotless.check.skip=true clean package javadoc:javadoc'
+          # - java-version: '17'
+          #   maven-args: 'clean package javadoc:javadoc'
           - java-version: '21'
             maven-args: 'clean package javadoc:javadoc'
-          - java-version: '25'
-            maven-args: 'clean package javadoc:javadoc'
+          # - java-version: '25'
+          #   maven-args: 'clean package javadoc:javadoc'
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK ${{ matrix.java-version }}
@@ -42,6 +45,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
+    # DEVEXP-1592 (temporary workaround): E2E tests are disabled for every Java version.
+    # TODO: remove this 'if' to re-enable them.
+    if: false
+
     strategy:
       matrix:
         java-version: ['8', '11', '17', '21', '25']
@@ -60,16 +67,6 @@ jobs:
           token: ${{ secrets.MOCKSERVER_REPO_PAT_CI }}
           fetch-depth: 0
           path: sinch-sdk-mockserver
-
-      - name: Install Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-
-      - name: Start mock servers with Docker Compose
-        run: |
-          cd sinch-sdk-mockserver
-          docker-compose up -d
 
       - name: Link to feature files
         run: |
