@@ -9,6 +9,8 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.models.RetryConfiguration;
+import com.sinch.sdk.models.RetryPolicy;
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -146,5 +148,25 @@ class HttpClientApacheTest {
     assertEquals(407, response.getCode());
     verify(mockAuthManager, never()).resetToken();
     verify(client, times(1)).processRequest(any(), any());
+  }
+
+  @Test
+  void aClientCarryingNoManagerRetriesNothing() throws Exception {
+    try (HttpClientApache noRetries = new HttpClientApache(null, null)) {
+      assertSame(RetryManager.NO_RETRY, noRetries.getRetryManager().get());
+    }
+  }
+
+  @Test
+  void exposesTheManagerItWasBuiltWith() throws Exception {
+    RetryConfiguration configured =
+        RetryConfiguration.builder().setRetryPolicy(RetryPolicy.BACKOFF).build();
+
+    try (HttpClientApache configuredClient =
+        new HttpClientApache(null, new DefaultRetryManager(configured))) {
+      assertEquals(
+          RetryPolicy.BACKOFF,
+          configuredClient.getRetryManager().get().getRetryConfiguration().getRetryPolicy());
+    }
   }
 }

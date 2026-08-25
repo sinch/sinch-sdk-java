@@ -21,6 +21,9 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[feature]** Default Apache HttpClient retry policy disabled in favor of a dedicated SDK implementation:
   - honor the `Retry-After` response header on `HTTP 429` and fallback to exponential backoff if not present
   - max retry changed from default Apache HttpClient (`1`) to SDK implementation: `3`
+- **[feature]** `HTTP 429` retries extended to all endpoints (previously OAuth only), handled by a dedicated `RetryManager`
+- **[feature]** Retry policy configurable from `SinchClient` via `setRetryConfiguration`: `retryPolicy` (`DEFAULT`, `RETRY_AFTER`, `BACKOFF`, `NONE`), `maxRetryCount` (default `3`), `exponentialBackoff` (default `4`)
+- **[fix]** `HttpClientApache`: preserve the status code of an `ApiException` raised during authentication instead of discarding it
 
 ### Conversation
 - **[feature]** [Events] Support `ReadMessageEvent` app event (WhatsApp only): use `ReadMessageEvent.READ_MESSAGE_EVENT`

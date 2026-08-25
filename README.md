@@ -22,6 +22,7 @@ To use Sinch services, you'll need a Sinch account and access keys. You can sign
 - [Logging](#logging)
 - [Handling Exceptions](#handling-exceptions)
 - [Proxy configuration](#proxy-configuration)
+- [Retry configuration](#retry-configuration)
 - [Third-party dependencies](#third-party-dependencies)
 - [Examples](#examples)
 - [Changelog and Migration](#changelog--migration)
@@ -455,6 +456,54 @@ Configuration configuration = Configuration.builder()
 SinchClient client = new SinchClient(configuration);
 ```
 
+
+## Retry configuration
+
+When an API call or OAuth token request returns HTTP 429 (Too Many Requests), the SDK retries automatically. Configure this on `SinchClient`; the same settings apply to product API calls and token fetches.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `retryPolicy` | `RetryPolicy` | `DEFAULT` | `DEFAULT`: honor `Retry-After` when present, otherwise exponential backoff. `RETRY_AFTER`: retry only when a usable `Retry-After` header is present. `BACKOFF`: ignore `Retry-After` and use full-jitter exponential backoff. `NONE`: disable automatic retries. |
+| `maxRetryCount` | `number` | `3` | Maximum retries after the first attempt before the error is surfaced to the caller. Must be a non-negative integer (`0` is allowed; decimals are rejected). |
+| `exponentialBackoff` | `number` | `4` | Growth factor for the backoff ceiling (`1000ms * exponentialBackoff^attempt`). The wait is a random value between 0 and that ceiling. Must be a positive number (`> 0`; decimals are allowed). |
+
+`Retry-After` may be a delay in seconds or an HTTP-date (RFC 7231). A small jitter (0–250 ms) is added so concurrent clients do not retry in lockstep. Invalid values are rejected.
+
+### Retry settings
+
+```java
+import com.sinch.sdk.SinchClient;
+import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.RetryConfiguration;
+import com.sinch.sdk.models.RetryPolicy;
+
+...
+Configuration configuration = Configuration.builder()
+         ...
+        .setRetryConfiguration(
+                RetryConfiguration.builder()
+                        .setRetryPolicy(RetryPolicy.BACKOFF)
+                        .setMaxRetryCount(5)
+                        .setExponentialBackoff(2)
+                        .build())
+        .build();
+SinchClient client = new SinchClient(configuration);
+```
+
+### Disable Retry Policy
+
+To disable automatic retries (for example when an outer HTTP layer already honors `Retry-After`):
+
+```java
+Configuration configuration = Configuration.builder()
+        ...
+        .setRetryConfiguration(
+                RetryConfiguration.builder()
+                        .setRetryPolicy(RetryPolicy.NONE)
+                        .build())
+        .build();
+SinchClient client = new SinchClient(configuration);
+```
 
 ## Third-party dependencies
 The SDK relies on the following third-party dependencies:

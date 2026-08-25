@@ -7,6 +7,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.exceptions.ApiAuthException;
+import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
@@ -14,21 +15,20 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.core.utils.DateUtil;
 import com.sinch.sdk.core.utils.Pair;
+import com.sinch.sdk.http.DefaultRetryManager;
+import com.sinch.sdk.http.RetryCapable;
+import com.sinch.sdk.models.RetryConfiguration;
+import com.sinch.sdk.models.RetryPolicy;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -135,70 +135,73 @@ public class OAuthManagerTest extends BaseTest {
   }
 
   @Nested
-  class RetryOn429WithBackoff {
+  class RateLimitedTokenRequest {
 
-    private OAuthManager spyAuthManager;
+    private HttpResponse rateLimited() {
+      Map<String, List<String>> headers = new HashMap<>();
+      headers.put("Retry-After", Collections.singletonList("0"));
+      return new HttpResponse(429, "Too Many Requests", headers, null);
+    }
 
-    @BeforeEach
-    void setup() {
-      spyAuthManager =
-          spy(
-              new OAuthManager(
-                  credentials,
-                  new ServerConfiguration("OAuth url"),
-                  HttpMapper.getInstance(),
-                  () -> httpClient));
+    private HttpResponse ok() {
+      return new HttpResponse(
+          200, "foo message", null, jsonResponse.getBytes(StandardCharsets.UTF_8));
     }
 
     @Test
-    void retriesOn429ThenSucceeds() {
-      doReturn(0L).when(spyAuthManager).computeBackoffMillis(any(), anyInt());
-      HttpResponse rateLimited =
-          new HttpResponse(429, "Too Many Requests", Collections.emptyMap(), null);
-      HttpResponse ok =
-          new HttpResponse(200, "foo message", null, jsonResponse.getBytes(StandardCharsets.UTF_8));
-
-      when(httpClient.invokeAPI(any(), any(), any())).thenReturn(rateLimited, rateLimited, ok);
+    void retriesARateLimitedTokenRequestThenSucceeds() {
+      when(httpClient.invokeAPI(any(), any(), any()))
+          .thenReturn(rateLimited(), rateLimited(), ok());
 
       Collection<Pair<String, String>> headers =
-          spyAuthManager.getAuthorizationHeaders(null, null, null, null);
+          authManager.getAuthorizationHeaders(null, null, null, null);
 
-      assertNotNull(headers);
+      assertEquals("Bearer token value", headers.iterator().next().getRight());
       verify(httpClient, times(3)).invokeAPI(any(), any(), any());
     }
 
     @Test
-    void givesUpAfterMaxRetries() {
-      doReturn(0L).when(spyAuthManager).computeBackoffMillis(any(), anyInt());
-      HttpResponse rateLimited =
-          new HttpResponse(429, "Too Many Requests", Collections.emptyMap(), null);
-      when(httpClient.invokeAPI(any(), any(), any())).thenReturn(rateLimited);
-      ApiAuthException exception =
+    void reportsTheRateLimitOnceTheBudgetIsSpent() {
+      when(httpClient.invokeAPI(any(), any(), any())).thenReturn(rateLimited());
+
+      ApiException exception =
           assertThrows(
-              ApiAuthException.class,
-              () -> spyAuthManager.getAuthorizationHeaders(null, null, null, null));
+              ApiException.class,
+              () -> authManager.getAuthorizationHeaders(null, null, null, null));
+
+      assertEquals(
+          429,
+          exception.getCode(),
+          "a spent budget on the token exchange must surface the status the server sent,"
+              + " the same one a domain endpoint reports");
       assertTrue(
           exception.getMessage().contains("rate limited by the authentication service (HTTP 429)"),
-          "expected the give-up message to name the rate limit, got: " + exception.getMessage());
-      verify(httpClient, times(OAuthManager.MAX_RATE_LIMIT_RETRIES + 1))
+          "expected the failure to name the rate limit, got: " + exception.getMessage());
+      verify(httpClient, times(RetryConfiguration.DEFAULT_MAX_RETRY_COUNT + 1))
           .invokeAPI(any(), any(), any());
-      verify(spyAuthManager, times(OAuthManager.MAX_RATE_LIMIT_RETRIES))
-          .computeBackoffMillis(any(), anyInt());
     }
 
     @Test
-    void feedsTheRateLimitedResponseToTheBackoff() {
-      doReturn(0L).when(spyAuthManager).computeBackoffMillis(any(), anyInt());
-      Map<String, List<String>> headers = new HashMap<>();
-      headers.put("Retry-After", Collections.singletonList("5"));
-      HttpResponse rateLimited = new HttpResponse(429, "Too Many Requests", headers, null);
-      HttpResponse ok =
-          new HttpResponse(200, "foo message", null, jsonResponse.getBytes(StandardCharsets.UTF_8));
-      when(httpClient.invokeAPI(any(), any(), any())).thenReturn(rateLimited, ok);
-      spyAuthManager.getAuthorizationHeaders(null, null, null, null);
-      ArgumentCaptor<HttpResponse> captor = ArgumentCaptor.forClass(HttpResponse.class);
-      verify(spyAuthManager).computeBackoffMillis(captor.capture(), eq(0));
-      assertSame(rateLimited, captor.getValue());
+    void takesThePolicyFromATransportThatCarriesOne() {
+      HttpClient capable =
+          mock(HttpClient.class, withSettings().extraInterfaces(RetryCapable.class));
+      when(capable.invokeAPI(any(), any(), any())).thenReturn(rateLimited());
+      when(((RetryCapable) capable).getRetryManager())
+          .thenReturn(
+              Optional.of(
+                  new DefaultRetryManager(
+                      RetryConfiguration.builder().setRetryPolicy(RetryPolicy.NONE).build())));
+      AuthManager manager =
+          new OAuthManager(
+              credentials,
+              new ServerConfiguration("OAuth url"),
+              HttpMapper.getInstance(),
+              () -> capable);
+
+      assertThrows(
+          ApiException.class, () -> manager.getAuthorizationHeaders(null, null, null, null));
+
+      verify(capable, times(1)).invokeAPI(any(), any(), any());
     }
   }
 
@@ -232,7 +235,6 @@ public class OAuthManagerTest extends BaseTest {
           "expected a network/client-error cause, got: " + exception.getMessage());
 
       verify(httpClient, times(1)).invokeAPI(any(), any(), any());
-      verify(spyAuthManager, never()).computeBackoffMillis(any(), anyInt());
     }
 
     @Test
@@ -250,7 +252,6 @@ public class OAuthManagerTest extends BaseTest {
           "expected an HTTP-status cause, got: " + exception.getMessage());
 
       verify(httpClient, times(1)).invokeAPI(any(), any(), any());
-      verify(spyAuthManager, never()).computeBackoffMillis(any(), anyInt());
     }
 
     @Test
@@ -269,7 +270,6 @@ public class OAuthManagerTest extends BaseTest {
           "expected the missing-token cause, got: " + exception.getMessage());
 
       verify(httpClient, times(1)).invokeAPI(any(), any(), any());
-      verify(spyAuthManager, never()).computeBackoffMillis(any(), anyInt());
     }
 
     @Test
@@ -287,7 +287,6 @@ public class OAuthManagerTest extends BaseTest {
           "expected a deserialization cause, got: " + exception.getMessage());
 
       verify(httpClient, times(1)).invokeAPI(any(), any(), any());
-      verify(spyAuthManager, never()).computeBackoffMillis(any(), anyInt());
     }
   }
 
@@ -296,6 +295,8 @@ public class OAuthManagerTest extends BaseTest {
 
     @Test
     void concurrentCallersShareASingleRefresh() throws Exception {
+      Map<String, List<String>> retryAfterNow = new HashMap<>();
+      retryAfterNow.put("Retry-After", Collections.singletonList("0"));
       OAuthManager spyAuthManager =
           spy(
               new OAuthManager(
@@ -303,9 +304,7 @@ public class OAuthManagerTest extends BaseTest {
                   new ServerConfiguration("OAuth url"),
                   HttpMapper.getInstance(),
                   () -> httpClient));
-      doReturn(0L).when(spyAuthManager).computeBackoffMillis(any(), anyInt());
-      HttpResponse rateLimited =
-          new HttpResponse(429, "Too Many Requests", Collections.emptyMap(), null);
+      HttpResponse rateLimited = new HttpResponse(429, "Too Many Requests", retryAfterNow, null);
       HttpResponse ok =
           new HttpResponse(200, "foo message", null, jsonResponse.getBytes(StandardCharsets.UTF_8));
       when(httpClient.invokeAPI(any(), any(), any())).thenReturn(rateLimited, ok);
@@ -335,83 +334,6 @@ public class OAuthManagerTest extends BaseTest {
 
       // one shared sequence for all ten callers: the 429, then the retry that succeeded
       verify(httpClient, times(2)).invokeAPI(any(), any(), any());
-    }
-  }
-
-  @Nested
-  class ComputeBackoff {
-
-    private OAuthManager manager;
-
-    @BeforeEach
-    void setup() {
-      manager =
-          new OAuthManager(
-              credentials,
-              new ServerConfiguration("OAuth url"),
-              HttpMapper.getInstance(),
-              () -> httpClient);
-    }
-
-    @Test
-    void honorsRetryAfter() {
-      assertBetween(5_000, 5_250, backoff("Retry-After", "5", 0));
-      assertBetween(
-          4_000,
-          5_250,
-          backoff("Retry-After", DateUtil.instantToRFC822String(Instant.now().plusSeconds(5)), 0));
-
-      // A zero delay is still a delay, and a date already past means the window has reopened.
-      assertBetween(0, 250, backoff("Retry-After", "0", 0));
-      assertBetween(
-          0,
-          250,
-          backoff(
-              "Retry-After", DateUtil.instantToRFC822String(Instant.now().minusSeconds(3600)), 0));
-
-      // HTTP/2 lower-cases header names, HTTP/1.1 servers usually do not; both must be honored.
-      assertBetween(5_000, 5_250, backoff("retry-after", "5", 0));
-
-      // The two obsolete formats a recipient must still accept (RFC 7231 section 7.1.1.1)
-      assertBetween(4_000, 5_250, backoff("Retry-After", obsoleteDate("RFC850"), 0));
-      assertBetween(4_000, 5_250, backoff("Retry-After", obsoleteDate("asctime"), 0));
-    }
-
-    @Test
-    void fallsBackToExponentialBackoffWhenRetryAfterIsUnusable() {
-      for (String value : new String[] {"", "   ", "abc", "-3", "NaN", "Infinity", "1e30"}) {
-        assertBetween(0, 1_000, backoff("Retry-After", value, 0));
-      }
-    }
-
-    @Test
-    void exponentialBackoffGrowsWithEachAttempt() {
-      assertBetween(0, 1_000, backoff(null, null, 0));
-      assertBetween(0, 4_000, backoff(null, null, 1));
-      assertBetween(0, 16_000, backoff(null, null, 2));
-    }
-
-    private long backoff(String headerName, String headerValue, int attempt) {
-      Map<String, List<String>> headers = new HashMap<>();
-      if (null != headerName && null != headerValue) {
-        headers.put(headerName, Collections.singletonList(headerValue));
-      }
-      return manager.computeBackoffMillis(
-          new HttpResponse(429, "Too Many Requests", headers, null), attempt);
-    }
-
-    /** Formats "five seconds from now" in one of the two obsolete HTTP-date forms. */
-    private String obsoleteDate(String form) {
-      ZonedDateTime when = ZonedDateTime.ofInstant(Instant.now().plusSeconds(5), ZoneOffset.UTC);
-      String pattern =
-          "RFC850".equals(form) ? "EEEE, dd-MMM-yy HH:mm:ss 'GMT'" : "EEE MMM ppd HH:mm:ss yyyy";
-      return DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH).format(when);
-    }
-
-    private void assertBetween(long lowInclusive, long highInclusive, long actual) {
-      assertTrue(
-          actual >= lowInclusive && actual <= highInclusive,
-          "expected a value in [" + lowInclusive + ", " + highInclusive + "], got: " + actual);
     }
   }
 }

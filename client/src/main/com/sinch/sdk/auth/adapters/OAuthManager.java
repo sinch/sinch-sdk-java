@@ -3,6 +3,7 @@ package com.sinch.sdk.auth.adapters;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sinch.sdk.auth.models.BearerAuthResponse;
 import com.sinch.sdk.core.exceptions.ApiAuthException;
+import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
@@ -11,19 +12,15 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.core.utils.DateUtil;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.http.RetryCapable;
+import com.sinch.sdk.http.RetryManager;
 import com.sinch.sdk.models.UnifiedCredentials;
-import java.time.DateTimeException;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -35,15 +32,6 @@ public class OAuthManager implements AuthManager {
   public static final String BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD = "www-authenticate";
   private static final Logger LOGGER = Logger.getLogger(OAuthManager.class.getName());
   private static final String AUTH_KEYWORD = "Bearer";
-
-  private static final double BACKOFF_BASE_SECONDS = 1.0;
-  private static final int BACKOFF_GROWTH = 4;
-
-  private static final String RETRY_AFTER_HEADER = "Retry-After";
-
-  protected static final int MAX_RATE_LIMIT_RETRIES = 3;
-
-  private static final long RETRY_AFTER_JITTER_MILLIS = 250L;
 
   private final ServerConfiguration oAuthServer;
   private final HttpMapper mapper;
@@ -107,39 +95,14 @@ public class OAuthManager implements AuthManager {
         new Pair<>("Authorization", AUTH_KEYWORD + " " + currentToken));
   }
 
-  /** Fetches a token, retrying only while the authentication service reports a rate limit. */
   private String getNewToken() {
-
-    for (int attempt = 0; ; attempt++) {
-      HttpResponse response = callOAuthEndpoint();
-      if (response.getCode() != HttpStatus.TOO_MANY_REQUESTS) {
-        return extractAccessToken(response);
-      }
-      if (attempt >= MAX_RATE_LIMIT_RETRIES) {
-        throw new ApiAuthException(
-            "Token refresh failed: rate limited by the authentication service (HTTP 429) after "
-                + (MAX_RATE_LIMIT_RETRIES + 1)
-                + " attempts");
-      }
-      long sleepMillis = computeBackoffMillis(response, attempt);
-      LOGGER.fine(
-          "Rate limited (HTTP 429) during token refresh, attempt "
-              + (attempt + 1)
-              + "/"
-              + (MAX_RATE_LIMIT_RETRIES + 1)
-              + ", waiting "
-              + sleepMillis
-              + "ms before retrying");
-      try {
-        Thread.sleep(sleepMillis);
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-        throw new ApiAuthException("Token refresh interrupted");
-      }
-    }
+    return extractAccessToken(callOAuthEndpoint());
   }
 
-  /** Performs the OAuth request once. A transport failure or a missing response is final. */
+  /**
+   * Performs the OAuth request under the retry policy. A transport failure or a missing response is
+   * final; a rate-limited one is retried for as long as the policy allows.
+   */
   private HttpResponse callOAuthEndpoint() {
 
     LOGGER.fine("Calling OAuth endpoint");
@@ -153,9 +116,12 @@ public class OAuthManager implements AuthManager {
             null,
             Collections.singletonList("application/x-www-form-urlencoded"),
             Collections.singletonList(SCHEMA_KEYWORD_BASIC));
+    HttpClient httpClient = httpClientSupplier.get();
     HttpResponse httpResponse;
     try {
-      httpResponse = httpClientSupplier.get().invokeAPI(oAuthServer, authManagers, request);
+      httpResponse =
+          retryManagerOf(httpClient)
+              .execute(() -> httpClient.invokeAPI(oAuthServer, authManagers, request));
     } catch (Exception e) {
       throw new ApiAuthException(
           "OAuth request failed: network or client error: " + e.getMessage());
@@ -166,8 +132,22 @@ public class OAuthManager implements AuthManager {
     return httpResponse;
   }
 
+  private static RetryManager retryManagerOf(HttpClient client) {
+    if (!(client instanceof RetryCapable)) {
+      return RetryManager.DEFAULTS;
+    }
+    return ((RetryCapable) client).getRetryManager().orElse(RetryManager.NO_RETRY);
+  }
+
   private String extractAccessToken(HttpResponse response) {
 
+    // Reported with the status the server actually sent, not as an authentication failure: a
+    // caller branching on HTTP 429 must see the same code here as from any other endpoint.
+    if (response.getCode() == HttpStatus.TOO_MANY_REQUESTS) {
+      throw new ApiException(
+          HttpStatus.TOO_MANY_REQUESTS,
+          "Token refresh failed: rate limited by the authentication service (HTTP 429)");
+    }
     if (!HttpStatus.isSuccessfulStatus(response.getCode())) {
       throw new ApiAuthException("Unable to extract token with HTTP " + response.getCode());
     }
@@ -188,50 +168,6 @@ public class OAuthManager implements AuthManager {
               + " response carries no access_token");
     }
     return accessToken;
-  }
-
-  long computeBackoffMillis(HttpResponse response, int attempt) {
-    Optional<Long> retryAfter =
-        retryAfterHeader(response).flatMap(OAuthManager::parseRetryAfterMillis);
-    if (retryAfter.isPresent()) {
-      return retryAfter.get() + ThreadLocalRandom.current().nextLong(RETRY_AFTER_JITTER_MILLIS + 1);
-    }
-    double maxDelay = BACKOFF_BASE_SECONDS * Math.pow(BACKOFF_GROWTH, attempt);
-    return (long) (ThreadLocalRandom.current().nextDouble(maxDelay) * 1000);
-  }
-
-  private static Optional<String> retryAfterHeader(HttpResponse response) {
-    return response.getHeaders().entrySet().stream()
-        .filter(entry -> RETRY_AFTER_HEADER.equalsIgnoreCase(entry.getKey()))
-        .map(Map.Entry::getValue)
-        .filter(values -> null != values && !values.isEmpty())
-        .map(values -> values.get(0))
-        .findFirst();
-  }
-
-  private static Optional<Long> parseRetryAfterMillis(String value) {
-    String trimmed = null == value ? "" : value.trim();
-    if (trimmed.isEmpty()) {
-      return Optional.empty();
-    }
-    try {
-      double seconds = Double.parseDouble(trimmed);
-      boolean usable = seconds >= 0 && seconds < Long.MAX_VALUE / 1000d;
-      return usable ? Optional.of((long) (seconds * 1000)) : Optional.empty();
-    } catch (NumberFormatException notDeltaSeconds) {
-    }
-    // Not a number, so try the HTTP-date form: all three RFC 7231 spellings are accepted.
-    Instant retryAt = DateUtil.RFC7231StringToInstant(trimmed);
-    if (null == retryAt) {
-      return Optional.empty();
-    }
-    try {
-      return Optional.of(Math.max(0, Duration.between(Instant.now(), retryAt).toMillis()));
-    } catch (DateTimeException | ArithmeticException unusableDate) {
-      // Never let a bad date reach the caller: this only computes a backoff, so anything we
-      // cannot turn into a delay falls back to the exponential one rather than failing the call.
-      return Optional.empty();
-    }
   }
 
   public boolean validateAuthenticatedRequest(
