@@ -101,14 +101,14 @@ Note: The `${sdk.version}` needs to be set according to the released version to 
 ## Supported APIs
 
 
-| API Category    | API Name                                                            |
-|-----------------|---------------------------------------------------------------------|
-| Messaging       | [Conversation API](https://developers.sinch.com/docs/conversation/) |
-|                 | [SMS API](https://developers.sinch.com/docs/sms/)                   |
-| Voice and Video | [Voice API](https://developers.sinch.com/docs/voice/)               |
-| Numbers         | [Numbers API](https://developers.sinch.com/docs/numbers/)           |
-| Verification    | [Verification API](https://developers.sinch.com/docs/verification/) |
-|                 | [Number Lookup API](https://developers.sinch.com/docs/number-lookup/) |
+| API Category    | API Name                                                                     |
+|-----------------|------------------------------------------------------------------------------|
+| Messaging       | [Conversation API](https://developers.sinch.com/docs/conversation/)          |
+|                 | [SMS API](https://developers.sinch.com/docs/sms/)                            |
+| Voice and Video | [Voice API](https://developers.sinch.com/docs/voice/)                        |
+| Numbers         | [Numbers API](https://developers.sinch.com/docs/numbers/)                    |
+| Verification    | [Verification API](https://developers.sinch.com/docs/verification/)          |
+|                 | [Number Lookup API](https://developers.sinch.com/docs/number-lookup-api-v2/) |
 
 > **Note:** The SMS API is end-of-sale. New integrations should use the [Conversation API](https://developers.sinch.com/docs/conversation/) instead, which supports SMS and many other channels.
 
