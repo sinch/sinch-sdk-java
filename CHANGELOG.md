@@ -44,6 +44,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ### Build & CI
 - **[tech]** Build `examples` across a Java version matrix (`21`, `25`) in GitHub Actions, replacing the single Java 21 build.
+- **[dependency]** Bump `httpclient5.version` to `5.6.3` to solve a connection leak leading to connection pool exhaustion in `httpclient5` (CVE-2026-64607 and GHSA-hjcp-jmpx-g3qm).
 
 ### Tests
 - **[test]** Fix HttpClient multipart test when returned boundary string contains '--' sequence
