@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.apache.hc.client5.http.ClientProtocolException;
@@ -52,7 +53,7 @@ import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
 import org.apache.hc.core5.http.support.AbstractMessageBuilder;
 
-public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
+public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, RetryCapable {
 
   private static final Logger LOGGER = Logger.getLogger(HttpClientApache.class.getName());
 
@@ -66,23 +67,42 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
   private volatile CloseableHttpClient client;
 
+  private final RetryManager retryManager;
+
   public HttpClientApache() {
     this(null);
   }
 
   public HttpClientApache(HttpProxyConfiguration proxyConfiguration) {
+    this(proxyConfiguration, null);
+  }
+
+  /**
+   * @param proxyConfiguration Proxy to route through, or {@code null} for a direct connection
+   * @param retryManager Manager applied to rate-limited responses, or {@code null} to retry nothing
+   * @since 2.2
+   */
+  public HttpClientApache(HttpProxyConfiguration proxyConfiguration, RetryManager retryManager) {
     this.client = buildHttpClient(proxyConfiguration);
+    this.retryManager = null != retryManager ? retryManager : RetryManager.NO_RETRY;
+  }
+
+  @Override
+  public Optional<RetryManager> getRetryManager() {
+    return Optional.ofNullable(retryManager);
   }
 
   private static CloseableHttpClient buildHttpClient(HttpProxyConfiguration proxyConfiguration) {
     if (proxyConfiguration == null) {
-      return HttpClients.createDefault();
+      return HttpClients.custom().disableAutomaticRetries().build();
     }
 
     HttpHost proxyHost =
         new HttpHost(proxyConfiguration.getHostname(), proxyConfiguration.getPort());
     HttpClientBuilder builder =
-        HttpClients.custom().setRoutePlanner(new DefaultProxyRoutePlanner(proxyHost));
+        HttpClients.custom()
+            .disableAutomaticRetries()
+            .setRoutePlanner(new DefaultProxyRoutePlanner(proxyHost));
 
     if (proxyConfiguration.getUsername().isPresent()) {
       // getPassword() returns a defensive copy of the internal array; HC5 receives that copy and
@@ -194,11 +214,8 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
 
       addFormParams(requestBuilder, contentType, formParams);
 
-      addAuth(requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
-
-      ClassicHttpRequest request = requestBuilder.build();
-
-      HttpResponse response = processRequest(activeClient, request);
+      HttpResponse response =
+          send(activeClient, requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
       LOGGER.finest("connection response: " + response);
 
       // HTTP 407 (Proxy Authentication Required) is normally handled transparently by Apache
@@ -220,10 +237,8 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
         boolean couldRetryRequest =
             processUnauthorizedResponse(httpRequest, response, authManagersByOasSecuritySchemes);
         if (couldRetryRequest) {
-          // refresh authorization
-          addAuth(requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
-          request = requestBuilder.build();
-          response = processRequest(activeClient, request);
+          response =
+              send(activeClient, requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
           LOGGER.finest("connection response on retry: " + response);
         }
       }
@@ -237,6 +252,9 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
       }
       LOGGER.severe("HTTP protocol error: " + cpe.getMessage());
       throw new ApiException("HTTP protocol error: " + cpe.getMessage(), cpe);
+    } catch (ApiException e) {
+      LOGGER.severe("Error:" + e);
+      throw e;
     } catch (Exception e) {
       LOGGER.severe("Error:" + e);
       throw new ApiException(e);
@@ -410,6 +428,29 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient {
         LOGGER.finest("Ignore unknown authentication value: '" + entry + "'");
       }
     }
+  }
+
+  /**
+   * Performs one HTTP exchange under the retry policy, so that a rate-limited response is retried
+   * for every endpoint that goes through this transport.
+   */
+  private HttpResponse send(
+      CloseableHttpClient client,
+      ClassicRequestBuilder requestBuilder,
+      Map<String, AuthManager> authManagersByOasSecuritySchemes,
+      Collection<String> authNames,
+      String body)
+      throws Exception {
+    addAuth(requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
+
+    AtomicBoolean firstAttempt = new AtomicBoolean(true);
+    return retryManager.execute(
+        () -> {
+          if (!firstAttempt.getAndSet(false)) {
+            addAuth(requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
+          }
+          return processRequest(client, requestBuilder.build());
+        });
   }
 
   HttpResponse processRequest(CloseableHttpClient client, ClassicHttpRequest request)

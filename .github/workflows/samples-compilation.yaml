@@ -4,20 +4,26 @@ on: [push]
 
 jobs:
   build:
+    name: Examples Java ${{ matrix.java-version }}
 
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        java-version: ['21', '25']
+        maven-args: ['clean install -DskipTests=true -Dspotless.check.skip=true -DskipUTs -DskipITs']
+
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK
+      - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v3
         with:
-          java-version: '21'
+          java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
           cache: maven
       - name: Building
         run: |
-          mvn clean install -DskipTests=true -Dspotless.apply.skip=true -DskipUTs -DskipITs
+          mvn -B ${{ matrix.maven-args }} --file pom.xml
           cd examples
           ./compile.sh
 

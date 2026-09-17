@@ -15,15 +15,52 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 > - `[tech]` — technical improvement
 
 ---
-## v2.1.2 patch - 2026-08-13
+## v2.2.0 - 2026-09-17
+
+### SDK
+- **[feature]** Default Apache HttpClient retry policy disabled in favor of a dedicated SDK implementation:
+  - honor the `Retry-After` response header on `HTTP 429` and fallback to exponential backoff if not present
+  - max retry changed from default Apache HttpClient (`1`) to SDK implementation: `3`
+- **[feature]** `HTTP 429` retries extended to all endpoints (previously OAuth only), handled by a dedicated `RetryManager`
+- **[feature]** Retry policy configurable from `SinchClient` via `setRetryConfiguration`: `retryPolicy` (`DEFAULT`, `RETRY_AFTER`, `BACKOFF`, `NONE`), `maxRetryCount` (default `3`), `exponentialBackoff` (default `4`)
+- **[fix]** `HttpClientApache`: preserve the status code of an `ApiException` raised during authentication instead of discarding it
+
+### Conversation
+- **[feature]** [Events] Support `ReadMessageEvent` app event (WhatsApp only): use `ReadMessageEvent.READ_MESSAGE_EVENT`
+- **[feature]** [Messages] [Choice] Support new `displayMode` field and `DisplayMode` enum
+- **[tech]** [Templates V2] Synch with backend not returning body onto `delete`. No effect at SDK interface level
+
+### Numbers
+- Extend `NumberSinchEvent` class.
+  - **[feature]** Support new `NumberSinchEvent`: `ActiveNumberSinchEvent` and `NumberOrderSinchEvent`
+  - **[deprecation notice]** `NumberSinchEvent` is now a base class for new use cases from backend: `ActiveNumberSinchEvent` and `NumberOrderSinchEvent`.
+    - The following fields are deprecated at `NumberSinchEvent` level and will be removed in next major version:
+      - `getResourceId()`
+      - `getEventType()`
+      - `getStatus()`
+      - `getFailureCode()`
+      - `getInternalFailureCode()`
+    - Use their dedicated `ActiveNumberSinchEvent` and `NumberOrderSinchEvent` fields
+
+### Voice
+- **[feature]** Support `dice` field for `customCallout`: the callback URL receiving the DiCE event when the call is disconnected
+
+### Build & CI
+- **[tech]** Build `examples` across a Java version matrix (`21`, `25`) in GitHub Actions, replacing the single Java 21 build.
+- **[dependency]** Bump `httpclient5.version` to `5.6.3` to solve a connection leak leading to connection pool exhaustion in `httpclient5` (CVE-2026-64607 and GHSA-hjcp-jmpx-g3qm).
+
+### Tests
+- **[test]** Fix HttpClient multipart test when returned boundary string contains '--' sequence
+
+
+## v2.1.2 - 2026-08-13
 
 ### Build
 
 - **[dependency]** Bump `jackson.version` to `2.21.5` to solve `@JsonView` bypass vulnerabilities in `jackson-databind` (CVE-2026-59889 and GHSA-mhm7-754m-9p8w).
 - **[dependency]** Bump `httpclient5.version` to `5.6.2` to solve a denial-of-service vulnerability in the transitive `httpcore5` dependency (CVE-2026-54399).
 
-
-## v2.1.1 patch - 2026-07-21
+## v2.1.1 - 2026-07-21
 
 ### Build & CI
 

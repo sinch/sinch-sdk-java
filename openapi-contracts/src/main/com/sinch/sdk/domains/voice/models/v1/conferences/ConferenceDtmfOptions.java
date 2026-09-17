@@ -26,8 +26,22 @@ public interface ConferenceDtmfOptions {
 
   /** Determines what DTMF mode the participant will use in the call. */
   public class ModeEnum extends EnumDynamic<String, ModeEnum> {
+    /**
+     * Nothing is done with the participant's DTMF signals. This is the default mode. Any DTMF
+     * signals that the participant sends can still be heard by all participants, but no action will
+     * be performed.
+     */
     public static final ModeEnum IGNORE = new ModeEnum("ignore");
+
+    /** The participant's DTMF signals are forwarded to all other participants in the conference. */
     public static final ModeEnum FORWARD = new ModeEnum("forward");
+
+    /**
+     * The participant's DTMF signals are detected by the conference and sent to your backend server
+     * using a <a
+     * href="https://developers.sinch.com/docs/voice/api-reference/voice/callbacks/pie">Prompt Input
+     * Event</a> (PIE) callback.
+     */
     public static final ModeEnum DETECT = new ModeEnum("detect");
 
     private static final EnumSupportDynamic<String, ModeEnum> ENUM_SUPPORT =

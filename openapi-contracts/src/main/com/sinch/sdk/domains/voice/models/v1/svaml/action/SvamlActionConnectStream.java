@@ -29,6 +29,7 @@ public interface SvamlActionConnectStream
 
   /** The name property. Must have the value <code>connectStream</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>connectStream</code> action. */
     public static final NameEnum CONNECT_STREAM = new NameEnum("connectStream");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =

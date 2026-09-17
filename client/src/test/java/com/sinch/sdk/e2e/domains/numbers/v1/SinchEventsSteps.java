@@ -26,9 +26,6 @@ public class SinchEventsSteps {
 
   static final String WEBHOOKS_PATH = Config.NUMBERS_HOST_NAME + "/webhooks/numbers/";
   static final String SECRET = "strongPa$$PhraseWith36CharactersMax";
-
-  static final String UNSUPPORTED_EVENT_TYPE = "NUMBER_ORDER_PROCESSING";
-
   SinchEventsService service;
 
   Map<String, String> triggerToURL =
@@ -38,7 +35,10 @@ public class SinchEventsSteps {
                   WEBHOOKS_PATH + "provisioning_to_voice_platform/succeeded"),
               new AbstractMap.SimpleEntry<>(
                   "failure_" + EventTypeEnum.PROVISIONING_TO_VOICE_PLATFORM.value(),
-                  WEBHOOKS_PATH + "provisioning_to_voice_platform/failed"))
+                  WEBHOOKS_PATH + "provisioning_to_voice_platform/failed"),
+              new AbstractMap.SimpleEntry<>(
+                  "completed_" + EventTypeEnum.NUMBER_ORDER_PROCESSING.value(),
+                  WEBHOOKS_PATH + "number_order_processing"))
           .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
   Map<String, WebhooksHelper.Response<NumberSinchEvent>> receivedEvents = new ConcurrentHashMap<>();
@@ -52,10 +52,6 @@ public class SinchEventsSteps {
   @When("I send a request to trigger the {string} for {string} event")
   public void triggerEvent(String status, String trigger) throws IOException {
 
-    if (UNSUPPORTED_EVENT_TYPE.equals(trigger)) {
-      return;
-    }
-
     WebhooksHelper.Response<NumberSinchEvent> response =
         WebhooksHelper.callURL(
             new URL(triggerToURL.get(status + "_" + trigger)), service::parseEvent);
@@ -64,10 +60,6 @@ public class SinchEventsSteps {
 
   @Then("the header of the {string} for {string} event contains a valid signature")
   public void validateEventSignature(String status, String trigger) {
-
-    if (UNSUPPORTED_EVENT_TYPE.equals(trigger)) {
-      return;
-    }
 
     WebhooksHelper.Response<NumberSinchEvent> receivedEvent =
         receivedEvents.get(status + "_" + trigger);
@@ -80,10 +72,6 @@ public class SinchEventsSteps {
 
   @Then("the event describes a {string} for {string} event")
   public void validateResult(String status, String trigger) {
-
-    if (UNSUPPORTED_EVENT_TYPE.equals(trigger)) {
-      return;
-    }
 
     NumberSinchEvent expectedSuccess =
         NumberSinchEvent.builder()
@@ -111,8 +99,27 @@ public class SinchEventsSteps {
             .setInternalFailureCode(null)
             .build();
 
-    NumberSinchEvent expected =
-        Objects.equals(status, "success") ? expectedSuccess : expectedFailure;
+    NumberSinchEvent expectedNumberOrderCompleted =
+        NumberSinchEvent.builder()
+            .setEventId("01j1wefx7p3wf2r3x6h4dh6hh9")
+            .setTimestamp(Instant.parse("2024-06-06T14:42:42.846638361Z"))
+            .setProjectId("12c0ffee-dada-beef-cafe-baadc0de5678")
+            .setResourceId("01jgkbb8xywmz3hhahd76menqf")
+            .setResourceType(ResourceType.NUMBER_ORDER)
+            .setEventType(EventTypeEnum.NUMBER_ORDER_PROCESSING)
+            .setStatus(StatusEnum.COMPLETED)
+            .setFailureCode(null)
+            .setInternalFailureCode(null)
+            .build();
+
+    NumberSinchEvent expected;
+    if (Objects.equals(status, "success")) {
+      expected = expectedSuccess;
+    } else if (Objects.equals(status, "completed")) {
+      expected = expectedNumberOrderCompleted;
+    } else {
+      expected = expectedFailure;
+    }
     NumberSinchEvent receivedEvent = receivedEvents.get(status + "_" + trigger).event;
 
     Assertions.assertEquals(expected, receivedEvent);

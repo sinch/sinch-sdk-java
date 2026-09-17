@@ -6,8 +6,10 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.text.TextMess
 public class ChoiceTextMessageImpl extends ChoiceImpl<TextMessage> implements ChoiceTextMessage {
 
   private ChoiceTextMessageImpl(
-      OptionalValue<TextMessage> message, OptionalValue<Object> postbackData) {
-    super(message, postbackData);
+      OptionalValue<TextMessage> message,
+      OptionalValue<Object> postbackData,
+      OptionalValue<DisplayMode> displayMode) {
+    super(message, postbackData, displayMode);
   }
 
   /**

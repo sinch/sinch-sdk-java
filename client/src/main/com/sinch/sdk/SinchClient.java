@@ -1,5 +1,6 @@
 package com.sinch.sdk;
 
+import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.ConversationService;
 import com.sinch.sdk.domains.numberlookup.NumberLookupService;
@@ -7,6 +8,7 @@ import com.sinch.sdk.domains.numbers.NumbersService;
 import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
 import com.sinch.sdk.domains.voice.VoiceService;
+import com.sinch.sdk.http.DefaultRetryManager;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
@@ -68,7 +70,7 @@ public class SinchClient {
   private volatile VoiceService voice;
   private volatile ConversationService conversation;
   private volatile NumberLookupService lookup;
-  private volatile HttpClientApache httpClient;
+  private volatile HttpClient httpClient;
 
   /**
    * Create a Sinch Client instance based onto configuration
@@ -443,13 +445,16 @@ public class SinchClient {
     return prop;
   }
 
-  private HttpClientApache getHttpClient() {
-    HttpClientApache local = httpClient;
+  private HttpClient getHttpClient() {
+    HttpClient local = httpClient;
     if (null == local || local.isClosed()) {
       synchronized (this) {
         local = httpClient;
         if (null == local || local.isClosed()) {
-          local = new HttpClientApache(configuration.getHttpProxyConfiguration().orElse(null));
+          local =
+              new HttpClientApache(
+                  configuration.getHttpProxyConfiguration().orElse(null),
+                  new DefaultRetryManager(configuration.getRetryConfiguration().orElse(null)));
 
           // set SDK User-Agent
           String userAgent = formatSdkUserAgentHeader();
@@ -507,7 +512,7 @@ public class SinchClient {
    */
   public void close() {
     synchronized (this) {
-      HttpClientApache local = httpClient;
+      HttpClient local = httpClient;
       httpClient = null;
       numbers = null;
       sms = null;

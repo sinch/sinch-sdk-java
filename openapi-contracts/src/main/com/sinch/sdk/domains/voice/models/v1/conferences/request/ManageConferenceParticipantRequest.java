@@ -23,9 +23,16 @@ public interface ManageConferenceParticipantRequest {
 
   /** Action to apply on conference participant. */
   public class CommandEnum extends EnumDynamic<String, CommandEnum> {
+    /** Mutes participant. */
     public static final CommandEnum MUTE = new CommandEnum("mute");
+
+    /** Unmutes participant. */
     public static final CommandEnum UNMUTE = new CommandEnum("unmute");
+
+    /** Puts participant on hold. */
     public static final CommandEnum ONHOLD = new CommandEnum("onhold");
+
+    /** Returns participant to conference. */
     public static final CommandEnum RESUME = new CommandEnum("resume");
 
     private static final EnumSupportDynamic<String, CommandEnum> ENUM_SUPPORT =

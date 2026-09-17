@@ -1,0 +1,332 @@
+package com.sinch.sdk.domains.numbers.models.v1.sinchevents;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.sinch.sdk.core.models.OptionalValue;
+import java.time.Instant;
+import java.util.Objects;
+
+@JsonPropertyOrder({
+  ActiveNumberSinchEventImpl.JSON_PROPERTY_EVENT_ID,
+  ActiveNumberSinchEventImpl.JSON_PROPERTY_TIMESTAMP,
+  ActiveNumberSinchEventImpl.JSON_PROPERTY_PROJECT_ID,
+  ActiveNumberSinchEventImpl.JSON_PROPERTY_RESOURCE_TYPE,
+  ActiveNumberSinchEventImpl.JSON_PROPERTY_EVENT_TYPE,
+  ActiveNumberSinchEventImpl.JSON_PROPERTY_STATUS,
+  ActiveNumberSinchEventImpl.JSON_PROPERTY_FAILURE_CODE,
+  ActiveNumberSinchEventImpl.JSON_PROPERTY_INTERNAL_FAILURE_CODE,
+  ActiveNumberSinchEventImpl.JSON_PROPERTY_RESOURCE_ID
+})
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
+public class ActiveNumberSinchEventImpl
+    implements ActiveNumberSinchEvent,
+        com.sinch.sdk.domains.numbers.models.v1.sinchevents.NumberSinchEvent {
+  private static final long serialVersionUID = 1L;
+
+  public static final String JSON_PROPERTY_EVENT_ID = "eventId";
+
+  private OptionalValue<String> eventId;
+
+  public static final String JSON_PROPERTY_TIMESTAMP = "timestamp";
+
+  private OptionalValue<Instant> timestamp;
+
+  public static final String JSON_PROPERTY_PROJECT_ID = "projectId";
+
+  private OptionalValue<String> projectId;
+
+  public static final String JSON_PROPERTY_RESOURCE_TYPE = "resourceType";
+
+  private OptionalValue<ResourceType> resourceType;
+
+  public static final String JSON_PROPERTY_EVENT_TYPE = "eventType";
+
+  private OptionalValue<EventTypeEnum> eventType;
+
+  public static final String JSON_PROPERTY_STATUS = "status";
+
+  private OptionalValue<StatusEnum> status;
+
+  public static final String JSON_PROPERTY_FAILURE_CODE = "failureCode";
+
+  private OptionalValue<FailureCodeEnum> failureCode;
+
+  public static final String JSON_PROPERTY_INTERNAL_FAILURE_CODE = "internalFailureCode";
+
+  private OptionalValue<String> internalFailureCode;
+
+  public static final String JSON_PROPERTY_RESOURCE_ID = "resourceId";
+
+  private OptionalValue<String> resourceId;
+
+  public ActiveNumberSinchEventImpl() {}
+
+  protected ActiveNumberSinchEventImpl(
+      OptionalValue<String> eventId,
+      OptionalValue<Instant> timestamp,
+      OptionalValue<String> projectId,
+      OptionalValue<ResourceType> resourceType,
+      OptionalValue<EventTypeEnum> eventType,
+      OptionalValue<StatusEnum> status,
+      OptionalValue<FailureCodeEnum> failureCode,
+      OptionalValue<String> internalFailureCode,
+      OptionalValue<String> resourceId) {
+    this.eventId = eventId;
+    this.timestamp = timestamp;
+    this.projectId = projectId;
+    this.resourceType = resourceType;
+    this.eventType = eventType;
+    this.status = status;
+    this.failureCode = failureCode;
+    this.internalFailureCode = internalFailureCode;
+    this.resourceId = resourceId;
+  }
+
+  @JsonIgnore
+  public String getEventId() {
+    return eventId.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_EVENT_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> eventId() {
+    return eventId;
+  }
+
+  @JsonIgnore
+  public Instant getTimestamp() {
+    return timestamp.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_TIMESTAMP)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<Instant> timestamp() {
+    return timestamp;
+  }
+
+  @JsonIgnore
+  public String getProjectId() {
+    return projectId.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_PROJECT_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> projectId() {
+    return projectId;
+  }
+
+  @JsonIgnore
+  public ResourceType getResourceType() {
+    return resourceType.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_RESOURCE_TYPE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<ResourceType> resourceType() {
+    return resourceType;
+  }
+
+  @JsonIgnore
+  public EventTypeEnum getEventType() {
+    return eventType.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_EVENT_TYPE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<EventTypeEnum> eventType() {
+    return eventType;
+  }
+
+  @JsonIgnore
+  public StatusEnum getStatus() {
+    return status.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_STATUS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<StatusEnum> status() {
+    return status;
+  }
+
+  @JsonIgnore
+  public FailureCodeEnum getFailureCode() {
+    return failureCode.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_FAILURE_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<FailureCodeEnum> failureCode() {
+    return failureCode;
+  }
+
+  @JsonIgnore
+  public String getInternalFailureCode() {
+    return internalFailureCode.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_INTERNAL_FAILURE_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> internalFailureCode() {
+    return internalFailureCode;
+  }
+
+  @JsonIgnore
+  public String getResourceId() {
+    return resourceId.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_RESOURCE_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> resourceId() {
+    return resourceId;
+  }
+
+  /** Return true if this CallbackPayloadActiveNumber object is equal to o. */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ActiveNumberSinchEventImpl callbackPayloadActiveNumber = (ActiveNumberSinchEventImpl) o;
+    return Objects.equals(this.eventId, callbackPayloadActiveNumber.eventId)
+        && Objects.equals(this.timestamp, callbackPayloadActiveNumber.timestamp)
+        && Objects.equals(this.projectId, callbackPayloadActiveNumber.projectId)
+        && Objects.equals(this.resourceType, callbackPayloadActiveNumber.resourceType)
+        && Objects.equals(this.eventType, callbackPayloadActiveNumber.eventType)
+        && Objects.equals(this.status, callbackPayloadActiveNumber.status)
+        && Objects.equals(this.failureCode, callbackPayloadActiveNumber.failureCode)
+        && Objects.equals(this.internalFailureCode, callbackPayloadActiveNumber.internalFailureCode)
+        && Objects.equals(this.resourceId, callbackPayloadActiveNumber.resourceId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        eventId,
+        timestamp,
+        projectId,
+        resourceType,
+        eventType,
+        status,
+        failureCode,
+        internalFailureCode,
+        resourceId);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class ActiveNumberSinchEventImpl {\n");
+    sb.append("    eventId: ").append(toIndentedString(eventId)).append("\n");
+    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
+    sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
+    sb.append("    resourceType: ").append(toIndentedString(resourceType)).append("\n");
+    sb.append("    eventType: ").append(toIndentedString(eventType)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    failureCode: ").append(toIndentedString(failureCode)).append("\n");
+    sb.append("    internalFailureCode: ")
+        .append(toIndentedString(internalFailureCode))
+        .append("\n");
+    sb.append("    resourceId: ").append(toIndentedString(resourceId)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
+
+  @JsonPOJOBuilder(withPrefix = "set")
+  static class Builder implements ActiveNumberSinchEvent.Builder {
+    OptionalValue<String> eventId = OptionalValue.empty();
+    OptionalValue<Instant> timestamp = OptionalValue.empty();
+    OptionalValue<String> projectId = OptionalValue.empty();
+    OptionalValue<ResourceType> resourceType = OptionalValue.empty();
+    OptionalValue<EventTypeEnum> eventType = OptionalValue.empty();
+    OptionalValue<StatusEnum> status = OptionalValue.empty();
+    OptionalValue<FailureCodeEnum> failureCode = OptionalValue.empty();
+    OptionalValue<String> internalFailureCode = OptionalValue.empty();
+    OptionalValue<String> resourceId = OptionalValue.empty();
+
+    @JsonProperty(JSON_PROPERTY_EVENT_ID)
+    public Builder setEventId(String eventId) {
+      this.eventId = OptionalValue.of(eventId);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_TIMESTAMP)
+    public Builder setTimestamp(Instant timestamp) {
+      this.timestamp = OptionalValue.of(timestamp);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_PROJECT_ID)
+    public Builder setProjectId(String projectId) {
+      this.projectId = OptionalValue.of(projectId);
+      return this;
+    }
+
+    @JsonProperty(value = JSON_PROPERTY_RESOURCE_TYPE, required = true)
+    public Builder setResourceType(ResourceType resourceType) {
+      this.resourceType = OptionalValue.of(resourceType);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_EVENT_TYPE)
+    public Builder setEventType(EventTypeEnum eventType) {
+      this.eventType = OptionalValue.of(eventType);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_STATUS)
+    public Builder setStatus(StatusEnum status) {
+      this.status = OptionalValue.of(status);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_FAILURE_CODE)
+    public Builder setFailureCode(FailureCodeEnum failureCode) {
+      this.failureCode = OptionalValue.of(failureCode);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_INTERNAL_FAILURE_CODE)
+    public Builder setInternalFailureCode(String internalFailureCode) {
+      this.internalFailureCode = OptionalValue.of(internalFailureCode);
+      return this;
+    }
+
+    @JsonProperty(JSON_PROPERTY_RESOURCE_ID)
+    public Builder setResourceId(String resourceId) {
+      this.resourceId = OptionalValue.of(resourceId);
+      return this;
+    }
+
+    public ActiveNumberSinchEvent build() {
+      return new ActiveNumberSinchEventImpl(
+          eventId,
+          timestamp,
+          projectId,
+          resourceType,
+          eventType,
+          status,
+          failureCode,
+          internalFailureCode,
+          resourceId);
+    }
+  }
+}

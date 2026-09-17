@@ -31,6 +31,7 @@ public interface SvamlActionContinue
 
   /** The name property. Must have the value <code>continue</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>continue</code> action. */
     public static final NameEnum CONTINUE = new NameEnum("continue");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =

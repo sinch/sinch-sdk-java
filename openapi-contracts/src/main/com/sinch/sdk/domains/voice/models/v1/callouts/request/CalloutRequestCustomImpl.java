@@ -215,6 +215,24 @@ public class CalloutRequestCustomImpl
         : OptionalValue.empty();
   }
 
+  @JsonIgnore
+  public String getDice() {
+    if (null == customCallout
+        || !customCallout.isPresent()
+        || null == customCallout.get().getDice()) {
+      return null;
+    }
+    return customCallout.get().getDice();
+  }
+
+  public OptionalValue<String> dice() {
+    return null != customCallout && customCallout.isPresent()
+        ? customCallout
+            .map(f -> ((CustomCalloutInternalImpl) f).dice())
+            .orElse(OptionalValue.empty())
+        : OptionalValue.empty();
+  }
+
   /** Return true if this customCalloutRequest object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -321,6 +339,12 @@ public class CalloutRequestCustomImpl
     @JsonIgnore
     public Builder setPie(Control pie) {
       getDelegatedBuilder().setPie(pie);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setDice(String dice) {
+      getDelegatedBuilder().setDice(dice);
       return this;
     }
 

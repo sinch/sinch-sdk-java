@@ -8,29 +8,17 @@ import java.util.stream.Stream;
 /** The identifier of the channel you want to include. Must be one of the enum values. */
 public class ConversationChannel extends EnumDynamic<String, ConversationChannel> {
 
-  /** The WhatsApp channel. */
-  public static final ConversationChannel WHATSAPP = new ConversationChannel("WHATSAPP");
+  /** The SMS channel. */
+  public static final ConversationChannel SMS = new ConversationChannel("SMS");
 
   /** The RCS channel. */
   public static final ConversationChannel RCS = new ConversationChannel("RCS");
 
-  /** The SMS channel. */
-  public static final ConversationChannel SMS = new ConversationChannel("SMS");
-
-  /** The Facebook Messenger channel. */
-  public static final ConversationChannel MESSENGER = new ConversationChannel("MESSENGER");
-
-  /** The Viber Business Messages channel. */
-  public static final ConversationChannel VIBERBM = new ConversationChannel("VIBERBM");
+  /** The WhatsApp channel. */
+  public static final ConversationChannel WHATSAPP = new ConversationChannel("WHATSAPP");
 
   /** The MMS channel. */
   public static final ConversationChannel MMS = new ConversationChannel("MMS");
-
-  /** The Instagram channel. */
-  public static final ConversationChannel INSTAGRAM = new ConversationChannel("INSTAGRAM");
-
-  /** The Telegram channel. */
-  public static final ConversationChannel TELEGRAM = new ConversationChannel("TELEGRAM");
 
   /** The KakaoTalk channel. */
   public static final ConversationChannel KAKAOTALK = new ConversationChannel("KAKAOTALK");
@@ -38,11 +26,23 @@ public class ConversationChannel extends EnumDynamic<String, ConversationChannel
   /** The KakaoTalk chat channel (used primarily in ConsultationTalk). */
   public static final ConversationChannel KAKAOTALKCHAT = new ConversationChannel("KAKAOTALKCHAT");
 
+  /** The Viber Business Messages channel. */
+  public static final ConversationChannel VIBERBM = new ConversationChannel("VIBERBM");
+
   /** The LINE channel. */
   public static final ConversationChannel LINE = new ConversationChannel("LINE");
 
+  /** The Instagram channel. */
+  public static final ConversationChannel INSTAGRAM = new ConversationChannel("INSTAGRAM");
+
+  /** The Facebook Messenger channel. */
+  public static final ConversationChannel MESSENGER = new ConversationChannel("MESSENGER");
+
   /** The WeChat channel. */
   public static final ConversationChannel WECHAT = new ConversationChannel("WECHAT");
+
+  /** The Telegram channel. */
+  public static final ConversationChannel TELEGRAM = new ConversationChannel("TELEGRAM");
 
   /** The Apple Messages for Business channel. */
   public static final ConversationChannel APPLEBC = new ConversationChannel("APPLEBC");
@@ -52,18 +52,18 @@ public class ConversationChannel extends EnumDynamic<String, ConversationChannel
           ConversationChannel.class,
           ConversationChannel::new,
           Arrays.asList(
-              WHATSAPP,
-              RCS,
               SMS,
-              MESSENGER,
-              VIBERBM,
+              RCS,
+              WHATSAPP,
               MMS,
-              INSTAGRAM,
-              TELEGRAM,
               KAKAOTALK,
               KAKAOTALKCHAT,
+              VIBERBM,
               LINE,
+              INSTAGRAM,
+              MESSENGER,
               WECHAT,
+              TELEGRAM,
               APPLEBC));
 
   private ConversationChannel(String value) {

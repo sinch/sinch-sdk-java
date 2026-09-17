@@ -6,8 +6,10 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.url.UrlMessag
 public class ChoiceURLMessageImpl extends ChoiceImpl<UrlMessage> implements ChoiceURLMessage {
 
   private ChoiceURLMessageImpl(
-      OptionalValue<UrlMessage> message, OptionalValue<Object> postbackData) {
-    super(message, postbackData);
+      OptionalValue<UrlMessage> message,
+      OptionalValue<Object> postbackData,
+      OptionalValue<DisplayMode> displayMode) {
+    super(message, postbackData, displayMode);
   }
 
   /**

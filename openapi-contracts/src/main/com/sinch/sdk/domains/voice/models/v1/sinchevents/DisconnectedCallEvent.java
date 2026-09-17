@@ -50,6 +50,7 @@ public interface DisconnectedCallEvent extends VoiceSinchEvent, VoiceCallSinchEv
 
   /** Must have the value <code>dice</code>. */
   public class SinchEventType extends EnumDynamic<String, SinchEventType> {
+    /** A Disconnected Call Event. */
     public static final SinchEventType DICE = new SinchEventType("dice");
 
     private static final EnumSupportDynamic<String, SinchEventType> ENUM_SUPPORT =
@@ -74,20 +75,49 @@ public interface DisconnectedCallEvent extends VoiceSinchEvent, VoiceCallSinchEv
 
   /** The reason the call was disconnected. */
   public class ReasonEnum extends EnumDynamic<String, ReasonEnum> {
+    /** Not applicable. */
     public static final ReasonEnum N_A = new ReasonEnum("N/A");
+
+    /** Call successfully connected. */
     public static final ReasonEnum ESTABLISHED = new ReasonEnum("ESTABLISHED");
+
+    /** Call was answered by another instance of the same user. */
     public static final ReasonEnum OTHERPEERANSWERED = new ReasonEnum("OTHERPEERANSWERED");
+
+    /** The call exceeded the configured timeout. */
     public static final ReasonEnum TIMEOUT = new ReasonEnum("TIMEOUT");
+
+    /** The caller hung up the call. */
     public static final ReasonEnum CALLERHANGUP = new ReasonEnum("CALLERHANGUP");
+
+    /** The callee hung up the call. */
     public static final ReasonEnum CALLEEHANGUP = new ReasonEnum("CALLEEHANGUP");
+
+    /** The call was blocked. */
     public static final ReasonEnum BLOCKED = new ReasonEnum("BLOCKED");
+
+    /** The call manager hung up the call. */
     public static final ReasonEnum MANAGERHANGUP = new ReasonEnum("MANAGERHANGUP");
+
+    /** No sufficient credit to make the call. */
     public static final ReasonEnum NOCREDITPARTNER = new ReasonEnum("NOCREDITPARTNER");
+
+    /** The call was disconnected due to a network related issue. */
     public static final ReasonEnum CLIENTNETWORK = new ReasonEnum("CLIENTNETWORK");
+
+    /** No routes available to connect the call. */
     public static final ReasonEnum CONGESTION = new ReasonEnum("CONGESTION");
+
+    /** A non-specified error ended the call. */
     public static final ReasonEnum GENERALERROR = new ReasonEnum("GENERALERROR");
+
+    /** The call was canceled. */
     public static final ReasonEnum CANCEL = new ReasonEnum("CANCEL");
+
+    /** The user was not found. */
     public static final ReasonEnum USERNOTFOUND = new ReasonEnum("USERNOTFOUND");
+
+    /** An error with the callback ended the call. */
     public static final ReasonEnum CALLBACKERROR = new ReasonEnum("CALLBACKERROR");
 
     private static final EnumSupportDynamic<String, ReasonEnum> ENUM_SUPPORT =

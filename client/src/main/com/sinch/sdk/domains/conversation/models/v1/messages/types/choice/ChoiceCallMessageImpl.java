@@ -6,8 +6,10 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.call.CallMess
 public class ChoiceCallMessageImpl extends ChoiceImpl<CallMessage> implements ChoiceCallMessage {
 
   private ChoiceCallMessageImpl(
-      OptionalValue<CallMessage> message, OptionalValue<Object> postbackData) {
-    super(message, postbackData);
+      OptionalValue<CallMessage> message,
+      OptionalValue<Object> postbackData,
+      OptionalValue<DisplayMode> displayMode) {
+    super(message, postbackData, displayMode);
   }
 
   /**

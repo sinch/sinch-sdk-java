@@ -22,6 +22,7 @@ public interface NotificationEvent extends VoiceSinchEvent {
 
   /** Must have the value <code>notify</code>. */
   public class SinchEventType extends EnumDynamic<String, SinchEventType> {
+    /** A Notification Event. */
     public static final SinchEventType NOTIFY = new SinchEventType("notify");
 
     private static final EnumSupportDynamic<String, SinchEventType> ENUM_SUPPORT =

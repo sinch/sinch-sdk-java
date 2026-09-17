@@ -27,7 +27,8 @@ import org.junit.jupiter.api.Assertions;
 
 public class SinchEventsEventsSteps {
 
-  static final String WEBHOOKS_PATH = Config.VERIFICATION_HOST_NAME + "/webhooks/verification/";
+  static final String WEBHOOKS_PATH =
+      Config.VERIFICATION_WEBHOOKS_HOST_NAME + "/webhooks/verification/";
 
   SinchEventsService service;
 

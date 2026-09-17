@@ -7,8 +7,10 @@ public class ChoiceLocationMessageImpl extends ChoiceImpl<LocationMessage>
     implements ChoiceLocationMessage {
 
   private ChoiceLocationMessageImpl(
-      OptionalValue<LocationMessage> message, OptionalValue<Object> postbackData) {
-    super(message, postbackData);
+      OptionalValue<LocationMessage> message,
+      OptionalValue<Object> postbackData,
+      OptionalValue<DisplayMode> displayMode) {
+    super(message, postbackData, displayMode);
   }
 
   /**

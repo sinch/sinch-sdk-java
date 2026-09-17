@@ -23,8 +23,11 @@ import org.junit.jupiter.api.Test;
 @TestWithResources
 public class SinchEventsServiceTest extends BaseTest {
 
-  @GivenTextResource("/domains/numbers/v1/sinchevents/number-sinch-event.json")
+  @GivenTextResource("/domains/numbers/v1/sinchevents/active-number-sinch-event.json")
   String incomingNumberEventJSON;
+
+  @GivenTextResource("/domains/numbers/v1/sinchevents/number-order-sinch-event.json")
+  String incomingNumberOrderEventJSON;
 
   SinchEventsService sinchEventsService;
 
@@ -49,11 +52,19 @@ public class SinchEventsServiceTest extends BaseTest {
   }
 
   @Test
-  void parse() throws ApiException {
+  void parseActiveNumberEvent() throws ApiException {
 
     NumberSinchEvent response = sinchEventsService.parseEvent(incomingNumberEventJSON);
 
-    TestHelpers.recursiveEquals(response, SinchEventsDtoTest.numberEvent);
+    TestHelpers.recursiveEquals(response, SinchEventsDtoTest.activeNumberSinchEvent);
+  }
+
+  @Test
+  void parseNumberOrderEvent() throws ApiException {
+
+    NumberSinchEvent response = sinchEventsService.parseEvent(incomingNumberOrderEventJSON);
+
+    TestHelpers.recursiveEquals(response, SinchEventsDtoTest.numberOrderEvent);
   }
 
   @BeforeEach

@@ -11,8 +11,12 @@ public class ResourceType extends EnumDynamic<String, ResourceType> {
   /** Numbers which are already active and updated with new campaign IDs or service plan IDs. */
   public static final ResourceType ACTIVE_NUMBER = new ResourceType("ACTIVE_NUMBER");
 
+  /** Number orders created for buying one or more phone numbers. */
+  public static final ResourceType NUMBER_ORDER = new ResourceType("NUMBER_ORDER");
+
   private static final EnumSupportDynamic<String, ResourceType> ENUM_SUPPORT =
-      new EnumSupportDynamic<>(ResourceType.class, ResourceType::new, Arrays.asList(ACTIVE_NUMBER));
+      new EnumSupportDynamic<>(
+          ResourceType.class, ResourceType::new, Arrays.asList(ACTIVE_NUMBER, NUMBER_ORDER));
 
   private ResourceType(String value) {
     super(value);

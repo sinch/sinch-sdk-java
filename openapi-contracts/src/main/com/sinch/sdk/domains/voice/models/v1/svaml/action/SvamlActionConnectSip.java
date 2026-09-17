@@ -30,6 +30,7 @@ public interface SvamlActionConnectSip
 
   /** The name property. Must have the value <code>connectSip</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>connectSip</code> action. */
     public static final NameEnum CONNECT_SIP = new NameEnum("connectSip");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =
@@ -80,8 +81,13 @@ public interface SvamlActionConnectSip
 
   /** An optional parameter to specify the SIP transport protocol. If unspecified, UDP is used. */
   public class TransportEnum extends EnumDynamic<String, TransportEnum> {
+    /** User Datagram Protocol */
     public static final TransportEnum UDP = new TransportEnum("UDP");
+
+    /** Transmission Control Protocol */
     public static final TransportEnum TCP = new TransportEnum("TCP");
+
+    /** Transport Layer Security */
     public static final TransportEnum TLS = new TransportEnum("TLS");
 
     private static final EnumSupportDynamic<String, TransportEnum> ENUM_SUPPORT =

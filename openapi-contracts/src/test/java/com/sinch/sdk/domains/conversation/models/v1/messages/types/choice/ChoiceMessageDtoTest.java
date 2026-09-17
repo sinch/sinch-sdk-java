@@ -89,12 +89,37 @@ public class ChoiceMessageDtoTest extends ConversationBaseTest {
               ChoiceAdditionalProperties.builder().setWhatsappFooter("My whatsapp footer").build())
           .build();
 
+  public static ChoiceMessage choiceMessageWithDisplayModeDto =
+      ChoiceMessage.builder()
+          .setTextMessage(TextMessageDtoTest.textMessageDto)
+          .setChoices(
+              Arrays.asList(
+                  Choice.<TextMessage>builder()
+                      .setMessage(TextMessageDtoTest.textMessageDto)
+                      .setPostbackData("postback persistent data value")
+                      .setDisplayMode(DisplayMode.PERSISTENT)
+                      .build(),
+                  Choice.<UrlMessage>builder()
+                      .setMessage(UrlMessageDtoTest.urlMessageDto)
+                      .setPostbackData("postback unspecified data value")
+                      .setDisplayMode(DisplayMode.DISPLAY_MODE_UNSPECIFIED)
+                      .build(),
+                  Choice.<CallMessage>builder()
+                      .setMessage(CallMessageDtoTest.callMessageDto)
+                      .setPostbackData("postback without display mode value")
+                      .build()))
+          .build();
+
   @GivenTextResource("/domains/conversation/v1/messages/types/choice/ChoiceMessageDto.json")
   String jsonChoiceMessageDto;
 
   @GivenTextResource(
       "/domains/conversation/v1/messages/types/choice/ChoiceMessageWithWhatsappFooterDto.json")
   String jsonChoiceMessageWithWhatsappFooterDto;
+
+  @GivenTextResource(
+      "/domains/conversation/v1/messages/types/choice/ChoiceMessageWithDisplayModeDto.json")
+  String jsonChoiceMessageWithDisplayModeDto;
 
   @Test
   void serializeMessageDto() throws JsonProcessingException, JSONException {
@@ -123,5 +148,20 @@ public class ChoiceMessageDtoTest extends ConversationBaseTest {
         objectMapper.readValue(jsonChoiceMessageWithWhatsappFooterDto, ChoiceMessage.class);
 
     TestHelpers.recursiveEquals(deserialized, choiceMessageWithWhatsappFooterDto);
+  }
+
+  @Test
+  void serializeMessageDisplayModeDto() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(choiceMessageWithDisplayModeDto);
+
+    JSONAssert.assertEquals(jsonChoiceMessageWithDisplayModeDto, serializedString, true);
+  }
+
+  @Test
+  void deserializeMessageDisplayModeDto() throws JsonProcessingException {
+    Object deserialized =
+        objectMapper.readValue(jsonChoiceMessageWithDisplayModeDto, ChoiceMessage.class);
+
+    TestHelpers.recursiveEquals(deserialized, choiceMessageWithDisplayModeDto);
   }
 }

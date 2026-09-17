@@ -1,9 +1,8 @@
 package com.sinch.sdk.core.utils.databind;
 
 import com.sinch.sdk.core.databind.FormSerializer;
+import com.sinch.sdk.core.utils.DateUtil;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 public class RFC822FormSerializer extends FormSerializer<Instant> {
@@ -14,6 +13,6 @@ public class RFC822FormSerializer extends FormSerializer<Instant> {
   }
 
   public static String format(Instant instant) {
-    return DateTimeFormatter.RFC_1123_DATE_TIME.format(instant.atZone(ZoneId.of("UTC")));
+    return DateUtil.instantToRFC822String(instant);
   }
 }

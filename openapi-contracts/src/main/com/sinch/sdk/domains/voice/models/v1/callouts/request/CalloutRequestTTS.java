@@ -26,6 +26,7 @@ public interface CalloutRequestTTS
 
   /** Gets or Sets method */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
+    /** Define <code>ttsC allout</code> request */
     public static final MethodEnum TTS_CALLOUT = new MethodEnum("ttsCallout");
 
     private static final EnumSupportDynamic<String, MethodEnum> ENUM_SUPPORT =

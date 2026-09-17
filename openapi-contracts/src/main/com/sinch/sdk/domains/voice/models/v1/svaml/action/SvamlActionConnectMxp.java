@@ -29,6 +29,7 @@ public interface SvamlActionConnectMxp
 
   /** The name property. Must have the value <code>connectMxp</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>connectMxp</code> action. */
     public static final NameEnum CONNECT_MXP = new NameEnum("connectMxp");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =

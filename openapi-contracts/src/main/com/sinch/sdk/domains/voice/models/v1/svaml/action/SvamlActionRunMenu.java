@@ -36,6 +36,7 @@ public interface SvamlActionRunMenu
 
   /** The name property. Must have the value <code>runMenu</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>runMenu</code> action. */
     public static final NameEnum RUN_MENU = new NameEnum("runMenu");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =

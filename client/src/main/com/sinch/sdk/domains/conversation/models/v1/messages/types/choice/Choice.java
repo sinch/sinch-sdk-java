@@ -21,6 +21,14 @@ public interface Choice<T extends ChoiceMessageType> {
    */
   Object getPostbackData();
 
+  /**
+   * Controls the display behavior of a choice.
+   *
+   * @return displayMode
+   * @since 2.2
+   */
+  DisplayMode getDisplayMode();
+
   static <T extends ChoiceMessageType> Builder<T> builder() {
     return new ChoiceImpl.Builder<>();
   }
@@ -38,6 +46,16 @@ public interface Choice<T extends ChoiceMessageType> {
      * @see #getPostbackData
      */
     Builder<T> setPostbackData(Object postbackData);
+
+    /**
+     * see getter
+     *
+     * @param displayMode see getter
+     * @return Current builder
+     * @see #getDisplayMode
+     * @since 2.2
+     */
+    Builder<T> setDisplayMode(DisplayMode displayMode);
 
     Choice<T> build();
   }

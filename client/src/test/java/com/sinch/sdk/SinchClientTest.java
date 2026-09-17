@@ -7,6 +7,8 @@ import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
 import com.sinch.sdk.models.HttpProxyConfiguration;
+import com.sinch.sdk.models.RetryConfiguration;
+import com.sinch.sdk.models.RetryPolicy;
 import com.sinch.sdk.models.SMSRegion;
 import com.sinch.sdk.models.VoiceContext;
 import com.sinch.sdk.models.VoiceRegion;
@@ -336,5 +338,44 @@ class SinchClientTest {
         org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner.class,
         routePlanner,
         "HttpClient must use a DefaultProxyRoutePlanner when proxy is configured");
+  }
+
+  @Test
+  void retryConfigurationWiredIntoHttpClient() throws Exception {
+    Configuration configuration =
+        Configuration.builder()
+            .setRetryConfiguration(
+                RetryConfiguration.builder()
+                    .setRetryPolicy(RetryPolicy.RETRY_AFTER)
+                    .setMaxRetryCount(7)
+                    .setExponentialBackoff(2)
+                    .build())
+            .build();
+
+    RetryConfiguration applied = retryConfigurationOf(new SinchClient(configuration));
+
+    assertEquals(RetryPolicy.RETRY_AFTER, applied.getRetryPolicy());
+    assertEquals(7, applied.getMaxRetryCount());
+    assertEquals(2, applied.getExponentialBackoff());
+  }
+
+  @Test
+  void defaultRetryConfigurationWiredIntoHttpClient() throws Exception {
+    RetryConfiguration applied =
+        retryConfigurationOf(new SinchClient(Configuration.builder().build()));
+
+    assertEquals(RetryPolicy.DEFAULT, applied.getRetryPolicy());
+    assertEquals(RetryConfiguration.DEFAULT_MAX_RETRY_COUNT, applied.getMaxRetryCount());
+    assertEquals(RetryConfiguration.DEFAULT_EXPONENTIAL_BACKOFF, applied.getExponentialBackoff());
+  }
+
+  /** Reaches the policy the client actually handed to its transport, not the one it was given. */
+  private static RetryConfiguration retryConfigurationOf(SinchClient client) throws Exception {
+    Method getHttpClient = SinchClient.class.getDeclaredMethod("getHttpClient");
+    getHttpClient.setAccessible(true);
+    return ((HttpClientApache) getHttpClient.invoke(client))
+        .getRetryManager()
+        .orElseThrow(AssertionError::new)
+        .getRetryConfiguration();
   }
 }

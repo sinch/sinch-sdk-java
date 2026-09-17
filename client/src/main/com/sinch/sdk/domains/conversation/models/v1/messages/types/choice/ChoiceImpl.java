@@ -36,9 +36,15 @@ public class ChoiceImpl<T extends ChoiceMessageType> implements Choice<T> {
 
   private final OptionalValue<Object> postbackData;
 
-  public ChoiceImpl(OptionalValue<T> message, OptionalValue<Object> postbackData) {
+  private final OptionalValue<DisplayMode> displayMode;
+
+  public ChoiceImpl(
+      OptionalValue<T> message,
+      OptionalValue<Object> postbackData,
+      OptionalValue<DisplayMode> displayMode) {
     this.message = message;
     this.postbackData = postbackData;
+    this.displayMode = displayMode;
   }
 
   public T getMessage() {
@@ -57,9 +63,24 @@ public class ChoiceImpl<T extends ChoiceMessageType> implements Choice<T> {
     return postbackData;
   }
 
+  public DisplayMode getDisplayMode() {
+    return displayMode.orElse(null);
+  }
+
+  public OptionalValue<DisplayMode> displayMode() {
+    return displayMode;
+  }
+
   @Override
   public String toString() {
-    return "ChoiceImpl{" + "message=" + message + ", postbackData=" + postbackData + '}';
+    return "ChoiceImpl{"
+        + "message="
+        + message
+        + ", postbackData="
+        + postbackData
+        + ", displayMode="
+        + displayMode
+        + '}';
   }
 
   /** Dedicated Builder */
@@ -68,6 +89,8 @@ public class ChoiceImpl<T extends ChoiceMessageType> implements Choice<T> {
     OptionalValue<T> message = OptionalValue.empty();
 
     OptionalValue<Object> postbackData = OptionalValue.empty();
+
+    OptionalValue<DisplayMode> displayMode = OptionalValue.empty();
 
     public Builder<T> setMessage(T message) {
       this.message = OptionalValue.of(message);
@@ -79,8 +102,13 @@ public class ChoiceImpl<T extends ChoiceMessageType> implements Choice<T> {
       return this;
     }
 
+    public Builder<T> setDisplayMode(DisplayMode displayMode) {
+      this.displayMode = OptionalValue.of(displayMode);
+      return this;
+    }
+
     public ChoiceImpl<T> build() {
-      return new ChoiceImpl<>(message, postbackData);
+      return new ChoiceImpl<>(message, postbackData, displayMode);
     }
   }
 
@@ -102,6 +130,7 @@ public class ChoiceImpl<T extends ChoiceMessageType> implements Choice<T> {
       ChoiceMessageOneOfInternal.Builder internal = ChoiceMessageOneOfInternal.builder();
 
       value.postbackData().ifPresent(internal::setPostbackData);
+      value.displayMode().ifPresent(internal::setDisplayMode);
       value
           .message()
           .ifPresent(
@@ -191,6 +220,7 @@ public class ChoiceImpl<T extends ChoiceMessageType> implements Choice<T> {
         return null;
       }
       deserialized.postbackData().ifPresent(builder::setPostbackData);
+      deserialized.displayMode().ifPresent(builder::setDisplayMode);
       return builder.build();
     }
   }

@@ -27,6 +27,8 @@
   <properties>
     <sinch.sdk.java.version>[2.0.0,)</sinch.sdk.java.version>
     <java.version>21</java.version>
+    <spotless.version>3.8.0</spotless.version>
+    <googleformat.version>1.35.0</googleformat.version>
   </properties>
 
   <dependencies>
@@ -59,7 +61,7 @@
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
-        <version>3.8.0</version>
+        <version>${spotless.version}</version>
 
         <configuration>
 
@@ -69,7 +71,7 @@
             </includes>
 
             <googleJavaFormat>
-              <version>1.35.0</version>
+              <version>${googleformat.version}</version>
               <reflowLongStrings>true</reflowLongStrings>
             </googleJavaFormat>
             <endWithNewline/>

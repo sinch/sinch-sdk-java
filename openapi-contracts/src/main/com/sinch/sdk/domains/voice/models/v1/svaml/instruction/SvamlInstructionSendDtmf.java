@@ -23,6 +23,7 @@ public interface SvamlInstructionSendDtmf
 
   /** The <code>name</code> property. Must have the value <code>sendDtmf</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>sendDtmf</code> instruction. */
     public static final NameEnum SEND_DTMF = new NameEnum("sendDtmf");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =

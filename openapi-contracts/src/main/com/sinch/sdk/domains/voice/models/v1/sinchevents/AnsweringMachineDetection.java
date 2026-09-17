@@ -26,9 +26,16 @@ public interface AnsweringMachineDetection {
 
   /** The determination by the system of who answered the call. */
   public class StatusEnum extends EnumDynamic<String, StatusEnum> {
+    /** An answering machine was detected as answering the call. */
     public static final StatusEnum MACHINE = new StatusEnum("machine");
+
+    /** A human was detected as answering the call. */
     public static final StatusEnum HUMAN = new StatusEnum("human");
+
+    /** The system was unable to determine who answered the call. */
     public static final StatusEnum NOTSURE = new StatusEnum("notsure");
+
+    /** The call was hung up. */
     public static final StatusEnum HANGUP = new StatusEnum("hangup");
 
     private static final EnumSupportDynamic<String, StatusEnum> ENUM_SUPPORT =
@@ -61,9 +68,19 @@ public interface AnsweringMachineDetection {
 
   /** The reason that the system used to determine who answered the call. */
   public class ReasonEnum extends EnumDynamic<String, ReasonEnum> {
+    /** If the greeting is too long, this could be indicative of an answering machine. */
     public static final ReasonEnum LONGGREETING = new ReasonEnum("longgreeting");
+
+    /**
+     * If there is an initial silence after the call is answered before the greeting starts, this
+     * could be indicative of an answering machine.
+     */
     public static final ReasonEnum INITIALSILENCE = new ReasonEnum("initialsilence");
+
+    /** If there is a beep in the call, this could be indicative of an answering machine. */
     public static final ReasonEnum BEEP = new ReasonEnum("beep");
+
+    /** This is displayed if a reason isn't available. */
     public static final ReasonEnum N_A = new ReasonEnum("n/a");
 
     private static final EnumSupportDynamic<String, ReasonEnum> ENUM_SUPPORT =

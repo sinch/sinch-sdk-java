@@ -17,6 +17,7 @@ public class Configuration {
   private final ConversationContext conversationContext;
   private final HttpProxyConfiguration httpProxyConfiguration;
   private final NumberLookupContext numberLookupContext;
+  private final RetryConfiguration retryConfiguration;
 
   private Configuration(
       UnifiedCredentials unifiedCredentials,
@@ -29,7 +30,8 @@ public class Configuration {
       VerificationContext verificationContext,
       VoiceContext voiceContext,
       ConversationContext conversationContext,
-      NumberLookupContext numberLookupContext) {
+      NumberLookupContext numberLookupContext,
+      RetryConfiguration retryConfiguration) {
     this.unifiedCredentials = unifiedCredentials;
     this.applicationCredentials = applicationCredentials;
     this.smsServicePlanCredentials = smsServicePlanCredentials;
@@ -41,6 +43,7 @@ public class Configuration {
     this.conversationContext = conversationContext;
     this.numberLookupContext = numberLookupContext;
     this.httpProxyConfiguration = httpProxyConfiguration;
+    this.retryConfiguration = retryConfiguration;
   }
 
   @Override
@@ -63,6 +66,8 @@ public class Configuration {
         + numberLookupContext
         + ", httpProxyConfiguration="
         + httpProxyConfiguration
+        + ", retryConfiguration="
+        + retryConfiguration
         + "}";
   }
 
@@ -191,6 +196,17 @@ public class Configuration {
   }
 
   /**
+   * Get the retry policy applied to rate-limited responses
+   *
+   * @return Retry configuration, or empty when none was set and {@link RetryConfiguration#DEFAULTS}
+   *     apply
+   * @since 2.2
+   */
+  public Optional<RetryConfiguration> getRetryConfiguration() {
+    return Optional.ofNullable(retryConfiguration);
+  }
+
+  /**
    * Getting Builder
    *
    * @return New Builder instance
@@ -229,6 +245,7 @@ public class Configuration {
     ConversationContext.Builder conversationContext;
     NumberLookupContext.Builder numberLookupContext;
     HttpProxyConfiguration httpProxyConfiguration;
+    RetryConfiguration retryConfiguration;
 
     protected Builder() {}
 
@@ -263,6 +280,7 @@ public class Configuration {
       this.numberLookupContext =
           configuration.getNumberLookupContext().map(NumberLookupContext::builder).orElse(null);
       this.httpProxyConfiguration = configuration.getHttpProxyConfiguration().orElse(null);
+      this.retryConfiguration = configuration.getRetryConfiguration().orElse(null);
     }
 
     /**
@@ -561,6 +579,12 @@ public class Configuration {
       return this;
     }
 
+    /** Set the retry policy applied to rate-limited responses */
+    public Builder setRetryConfiguration(RetryConfiguration retryConfiguration) {
+      this.retryConfiguration = retryConfiguration;
+      return this;
+    }
+
     /**
      * Build a Configuration instance from builder current state
      *
@@ -580,7 +604,8 @@ public class Configuration {
           null != verificationContext ? verificationContext.build() : null,
           null != voiceContext ? voiceContext.build() : null,
           null != conversationContext ? conversationContext.build() : null,
-          null != numberLookupContext ? numberLookupContext.build() : null);
+          null != numberLookupContext ? numberLookupContext.build() : null,
+          retryConfiguration);
     }
   }
 }
