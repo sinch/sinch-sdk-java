@@ -15,7 +15,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 > - `[tech]` — technical improvement
 
 ---
-## v2.2.0 - unreleased
+## v2.2.0 - 2026-09-17
 
 ### SDK
 - **[feature]** Default Apache HttpClient retry policy disabled in favor of a dedicated SDK implementation:
