@@ -42,6 +42,9 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
       - `getInternalFailureCode()`
     - Use their dedicated `ActiveNumberSinchEvent` and `NumberOrderSinchEvent` fields
 
+### Voice
+- **[feature]** Support `dice` field for `customCallout`: the callback URL receiving the DiCE event when the call is disconnected
+
 ### Build & CI
 - **[tech]** Build `examples` across a Java version matrix (`21`, `25`) in GitHub Actions, replacing the single Java 21 build.
 - **[dependency]** Bump `httpclient5.version` to `5.6.3` to solve a connection leak leading to connection pool exhaustion in `httpclient5` (CVE-2026-64607 and GHSA-hjcp-jmpx-g3qm).
