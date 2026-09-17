@@ -23,6 +23,7 @@ public interface SvamlInstructionStartRecording
 
   /** The <code>name</code> property. Must have the value <code>startRecording</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>startRecording</code> instruction. */
     public static final NameEnum START_RECORDING = new NameEnum("startRecording");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =

@@ -23,6 +23,7 @@ public interface PromptInputEvent extends VoiceSinchEvent {
 
   /** Must have the value <code>pie</code>. */
   public class SinchEventType extends EnumDynamic<String, SinchEventType> {
+    /** A Prompt Input Event. */
     public static final SinchEventType PIE = new SinchEventType("pie");
 
     private static final EnumSupportDynamic<String, SinchEventType> ENUM_SUPPORT =

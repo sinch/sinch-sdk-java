@@ -38,6 +38,7 @@ public interface CallInformation {
 
   /** Must be <code>pstn</code> for PSTN. */
   public class DomainEnum extends EnumDynamic<String, DomainEnum> {
+    /** The Public Switched Telephone Network, or a normal phone call. */
     public static final DomainEnum PSTN = new DomainEnum("pstn");
 
     private static final EnumSupportDynamic<String, DomainEnum> ENUM_SUPPORT =
@@ -83,7 +84,10 @@ public interface CallInformation {
 
   /** The status of the call. Either <code>ONGOING</code> or <code>FINAL</code> */
   public class StatusEnum extends EnumDynamic<String, StatusEnum> {
+    /** Call status is <code>ONGOING</code> */
     public static final StatusEnum ONGOING = new StatusEnum("ONGOING");
+
+    /** Call status is <code>FINAL</code> */
     public static final StatusEnum FINAL = new StatusEnum("FINAL");
 
     private static final EnumSupportDynamic<String, StatusEnum> ENUM_SUPPORT =
@@ -122,15 +126,34 @@ public interface CallInformation {
 
   /** Contains the reason why a call ended. */
   public class ReasonEnum extends EnumDynamic<String, ReasonEnum> {
+    /** Not available. */
     public static final ReasonEnum N_A = new ReasonEnum("N/A");
+
+    /** Timed out. */
     public static final ReasonEnum TIMEOUT = new ReasonEnum("TIMEOUT");
+
+    /** Caller hung up. */
     public static final ReasonEnum CALLERHANGUP = new ReasonEnum("CALLERHANGUP");
+
+    /** Callee hung up. */
     public static final ReasonEnum CALLEEHANGUP = new ReasonEnum("CALLEEHANGUP");
+
+    /** The call was blocked. */
     public static final ReasonEnum BLOCKED = new ReasonEnum("BLOCKED");
+
+    /** No credit available. */
     public static final ReasonEnum NOCREDITPARTNER = new ReasonEnum("NOCREDITPARTNER");
+
+    /** The Sinch server ended the call. */
     public static final ReasonEnum MANAGERHANGUP = new ReasonEnum("MANAGERHANGUP");
+
+    /** Call was canceled. */
     public static final ReasonEnum CANCEL = new ReasonEnum("CANCEL");
+
+    /** A general error. */
     public static final ReasonEnum GENERALERROR = new ReasonEnum("GENERALERROR");
+
+    /** Call could not be completed due to invalid SVAML response. */
     public static final ReasonEnum INVALIDSVAMLACTION = new ReasonEnum("INVALIDSVAMLACTION");
 
     private static final EnumSupportDynamic<String, ReasonEnum> ENUM_SUPPORT =

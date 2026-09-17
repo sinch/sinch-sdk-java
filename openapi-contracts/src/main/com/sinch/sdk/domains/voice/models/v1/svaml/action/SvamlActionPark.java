@@ -29,6 +29,7 @@ public interface SvamlActionPark
 
   /** The name property. Must have the value <code>park</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>park</code> action. */
     public static final NameEnum PARK = new NameEnum("park");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =
