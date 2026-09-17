@@ -39,7 +39,7 @@ public class Config {
 
   public static final String SMS_HOST_NAME = MOCK_SERVER_URL + "/sms";
 
-  public static final String VERIFICATION_HOST_NAME = MOCK_SERVER_URL;
+  public static final String VERIFICATION_HOST_NAME = MOCK_SERVER_URL + "/verification";
   public static final String VERIFICATION_WEBHOOKS_HOST_NAME = MOCK_SERVER_URL + "/verification";
 
   public static final String NUMBER_LOOKUP_HOST_NAME = MOCK_SERVER_URL + "/number-lookup";
