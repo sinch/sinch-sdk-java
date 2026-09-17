@@ -26,6 +26,7 @@ public interface CalloutRequestCustom
 
   /** Gets or Sets method */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
+    /** Define <code>customCallout</code> request */
     public static final MethodEnum CUSTOM_CALLOUT = new MethodEnum("customCallout");
 
     private static final EnumSupportDynamic<String, MethodEnum> ENUM_SUPPORT =
@@ -130,6 +131,16 @@ public interface CalloutRequestCustom
   Control getPie();
 
   /**
+   * URL of the callback server that will receive the DiCE event when the call is disconnected. The
+   * DiCE event will contain information about the call, such as the call duration, the reason for
+   * disconnection, and any custom data that was included in the callout request. Example: <code>
+   * \&quot;https://your-application-server-host/application\&quot;</code>
+   *
+   * @return dice
+   */
+  String getDice();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -212,6 +223,15 @@ public interface CalloutRequestCustom
      * @see #getPie
      */
     Builder setPie(Control pie);
+
+    /**
+     * see getter
+     *
+     * @param dice see getter
+     * @return Current builder
+     * @see #getDice
+     */
+    Builder setDice(String dice);
 
     /**
      * Create instance

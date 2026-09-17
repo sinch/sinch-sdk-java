@@ -27,6 +27,7 @@ public interface SvamlInstructionPlayFiles
 
   /** The <code>name</code> property. Must have the value <code>playFiles</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>playFiles</code> instruction. */
     public static final NameEnum PLAY_FILES = new NameEnum("playFiles");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =

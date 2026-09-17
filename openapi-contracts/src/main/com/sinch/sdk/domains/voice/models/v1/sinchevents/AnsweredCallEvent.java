@@ -45,6 +45,7 @@ public interface AnsweredCallEvent extends VoiceSinchEvent, VoiceCallSinchEvent 
 
   /** Must have the value <code>ace</code>. */
   public class SinchEventType extends EnumDynamic<String, SinchEventType> {
+    /** An Answered Call Event. */
     public static final SinchEventType ACE = new SinchEventType("ace");
 
     private static final EnumSupportDynamic<String, SinchEventType> ENUM_SUPPORT =

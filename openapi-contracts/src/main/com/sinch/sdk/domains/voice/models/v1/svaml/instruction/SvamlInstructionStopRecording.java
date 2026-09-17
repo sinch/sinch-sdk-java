@@ -27,6 +27,7 @@ public interface SvamlInstructionStopRecording
 
   /** The <code>name</code> property. Must have the value <code>stopRecording</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>stopRecording</code> instruction. */
     public static final NameEnum STOP_RECORDING = new NameEnum("stopRecording");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =

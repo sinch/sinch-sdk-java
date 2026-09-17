@@ -28,6 +28,7 @@ public interface SvamlActionConnectPstn
 
   /** The name property. Must have the value <code>connectPstn</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>connectPstn</code> action. */
     public static final NameEnum CONNECT_PSTN = new NameEnum("connectPstn");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =
@@ -117,44 +118,121 @@ public interface SvamlActionConnectPstn
 
   /** The locale's tone to play while ringing. */
   public class IndicationsEnum extends EnumDynamic<String, IndicationsEnum> {
+    /** Austria */
     public static final IndicationsEnum AT = new IndicationsEnum("at");
+
+    /** Australia */
     public static final IndicationsEnum AU = new IndicationsEnum("au");
+
+    /** Bulgaria */
     public static final IndicationsEnum BG = new IndicationsEnum("bg");
+
+    /** Brazil */
     public static final IndicationsEnum BR = new IndicationsEnum("br");
+
+    /** Belgium */
     public static final IndicationsEnum BE = new IndicationsEnum("be");
+
+    /** Switzerland */
     public static final IndicationsEnum CH = new IndicationsEnum("ch");
+
+    /** Chile */
     public static final IndicationsEnum CL = new IndicationsEnum("cl");
+
+    /** China */
     public static final IndicationsEnum CN = new IndicationsEnum("cn");
+
+    /** Czech Republic */
     public static final IndicationsEnum CZ = new IndicationsEnum("cz");
+
+    /** Germany */
     public static final IndicationsEnum DE = new IndicationsEnum("de");
+
+    /** Denmark */
     public static final IndicationsEnum DK = new IndicationsEnum("dk");
+
+    /** Estonia */
     public static final IndicationsEnum EE = new IndicationsEnum("ee");
+
+    /** Spain */
     public static final IndicationsEnum ES = new IndicationsEnum("es");
+
+    /** Finland */
     public static final IndicationsEnum FI = new IndicationsEnum("fi");
+
+    /** France */
     public static final IndicationsEnum FR = new IndicationsEnum("fr");
+
+    /** Greece */
     public static final IndicationsEnum GR = new IndicationsEnum("gr");
+
+    /** Hungary */
     public static final IndicationsEnum HU = new IndicationsEnum("hu");
+
+    /** Israel */
     public static final IndicationsEnum IL = new IndicationsEnum("il");
+
+    /** India */
     public static final IndicationsEnum IN = new IndicationsEnum("in");
+
+    /** Italy */
     public static final IndicationsEnum IT = new IndicationsEnum("it");
+
+    /** Lithuania */
     public static final IndicationsEnum LT = new IndicationsEnum("lt");
+
+    /** Japan */
     public static final IndicationsEnum JP = new IndicationsEnum("jp");
+
+    /** Mexico */
     public static final IndicationsEnum MX = new IndicationsEnum("mx");
+
+    /** Malaysia */
     public static final IndicationsEnum MY = new IndicationsEnum("my");
+
+    /** Netherlands */
     public static final IndicationsEnum NL = new IndicationsEnum("nl");
+
+    /** Norway */
     public static final IndicationsEnum FALSE = new IndicationsEnum("false");
+
+    /** New Zealand */
     public static final IndicationsEnum NZ = new IndicationsEnum("nz");
+
+    /** Philippines */
     public static final IndicationsEnum PH = new IndicationsEnum("ph");
+
+    /** Poland */
     public static final IndicationsEnum PL = new IndicationsEnum("pl");
+
+    /** Portugal */
     public static final IndicationsEnum PT = new IndicationsEnum("pt");
+
+    /** Russia */
     public static final IndicationsEnum RU = new IndicationsEnum("ru");
+
+    /** Sweden */
     public static final IndicationsEnum SE = new IndicationsEnum("se");
+
+    /** Singapore */
     public static final IndicationsEnum SG = new IndicationsEnum("sg");
+
+    /** Thailand */
     public static final IndicationsEnum TH = new IndicationsEnum("th");
+
+    /** United Kingdom */
     public static final IndicationsEnum UK = new IndicationsEnum("uk");
+
+    /** United States */
     public static final IndicationsEnum US = new IndicationsEnum("us");
+
+    /** Taiwan */
     public static final IndicationsEnum TW = new IndicationsEnum("tw");
+
+    /** Venezuela */
     public static final IndicationsEnum VE = new IndicationsEnum("ve");
+
+    /** South Africa */
     public static final IndicationsEnum ZA = new IndicationsEnum("za");
 
     private static final EnumSupportDynamic<String, IndicationsEnum> ENUM_SUPPORT =

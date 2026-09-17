@@ -28,6 +28,7 @@ public interface CalloutRequestConference
 
   /** Gets or Sets method */
   public class MethodEnum extends EnumDynamic<String, MethodEnum> {
+    /** Define <code>conferenceCallout</code> request */
     public static final MethodEnum CONFERENCE_CALLOUT = new MethodEnum("conferenceCallout");
 
     private static final EnumSupportDynamic<String, MethodEnum> ENUM_SUPPORT =

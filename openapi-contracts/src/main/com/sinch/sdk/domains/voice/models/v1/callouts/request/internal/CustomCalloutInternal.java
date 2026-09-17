@@ -104,6 +104,16 @@ public interface CustomCalloutInternal {
   Control getPie();
 
   /**
+   * URL of the callback server that will receive the DiCE event when the call is disconnected. The
+   * DiCE event will contain information about the call, such as the call duration, the reason for
+   * disconnection, and any custom data that was included in the callout request. Example: <code>
+   * \&quot;https://your-application-server-host/application\&quot;</code>
+   *
+   * @return dice
+   */
+  String getDice();
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
@@ -186,6 +196,15 @@ public interface CustomCalloutInternal {
      * @see #getPie
      */
     Builder setPie(Control pie);
+
+    /**
+     * see getter
+     *
+     * @param dice see getter
+     * @return Current builder
+     * @see #getDice
+     */
+    Builder setDice(String dice);
 
     /**
      * Create instance

@@ -23,6 +23,7 @@ public interface SvamlInstructionSetCookie
 
   /** The <code>name</code> property. Must have the value <code>setCookie</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>setCookie</code> instruction. */
     public static final NameEnum SET_COOKIE = new NameEnum("setCookie");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =

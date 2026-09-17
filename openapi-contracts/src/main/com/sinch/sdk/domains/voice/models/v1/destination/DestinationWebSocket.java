@@ -30,6 +30,7 @@ public interface DestinationWebSocket {
    * supported.
    */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** Use websocket stream protocol */
     public static final TypeEnum WEBSOCKET = new TypeEnum("Websocket");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =

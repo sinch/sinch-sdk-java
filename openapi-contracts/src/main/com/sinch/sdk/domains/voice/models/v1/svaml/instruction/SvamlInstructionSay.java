@@ -26,6 +26,7 @@ public interface SvamlInstructionSay
 
   /** The <code>name</code> property. Must have the value <code>say</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>say</code> instruction. */
     public static final NameEnum SAY = new NameEnum("say");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =

@@ -29,6 +29,7 @@ public interface SvamlActionConnectConference
 
   /** The name property. Must have the value <code>connectConf</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>connectConf</code> action. */
     public static final NameEnum CONNECT_CONF = new NameEnum("connectConf");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =

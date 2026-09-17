@@ -29,11 +29,22 @@ public interface MenuResult {
 
   /** The type of information that's returned. */
   public class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** Returned if there's an error with the input. */
     public static final TypeEnum ERROR = new TypeEnum("error");
+
+    /** Returned when the event has been triggered from a <code>return</code> command. */
     public static final TypeEnum RETURN = new TypeEnum("return");
+
+    /** Returned when the event has been triggered from collecting DTMF digits. */
     public static final TypeEnum SEQUENCE = new TypeEnum("sequence");
+
+    /** Returned when the timeout period has elapsed. */
     public static final TypeEnum TIMEOUT = new TypeEnum("timeout");
+
+    /** Returned when the call is hung up. */
     public static final TypeEnum HANGUP = new TypeEnum("hangup");
+
+    /** Returned when the value of the input is invalid. */
     public static final TypeEnum INVALIDINPUT = new TypeEnum("invalidinput");
 
     private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
@@ -75,7 +86,10 @@ public interface MenuResult {
 
   /** The type of input received. */
   public class InputMethodEnum extends EnumDynamic<String, InputMethodEnum> {
+    /** The input is key presses of specified digits. */
     public static final InputMethodEnum DTMF = new InputMethodEnum("dtmf");
+
+    /** The input is voice answers. */
     public static final InputMethodEnum VOICE = new InputMethodEnum("voice");
 
     private static final EnumSupportDynamic<String, InputMethodEnum> ENUM_SUPPORT =

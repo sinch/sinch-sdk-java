@@ -20,7 +20,8 @@ import java.util.Objects;
   CustomCalloutInternalImpl.JSON_PROPERTY_MAX_DURATION,
   CustomCalloutInternalImpl.JSON_PROPERTY_ICE,
   CustomCalloutInternalImpl.JSON_PROPERTY_ACE,
-  CustomCalloutInternalImpl.JSON_PROPERTY_PIE
+  CustomCalloutInternalImpl.JSON_PROPERTY_PIE,
+  CustomCalloutInternalImpl.JSON_PROPERTY_DICE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -59,6 +60,10 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
 
   private OptionalValue<Control> pie;
 
+  public static final String JSON_PROPERTY_DICE = "dice";
+
+  private OptionalValue<String> dice;
+
   public CustomCalloutInternalImpl() {}
 
   protected CustomCalloutInternalImpl(
@@ -69,7 +74,8 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
       OptionalValue<Integer> maxDuration,
       OptionalValue<Control> ice,
       OptionalValue<Control> ace,
-      OptionalValue<Control> pie) {
+      OptionalValue<Control> pie,
+      OptionalValue<String> dice) {
     this.cli = cli;
     this.destination = destination;
     this.dtmf = dtmf;
@@ -78,6 +84,7 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
     this.ice = ice;
     this.ace = ace;
     this.pie = pie;
+    this.dice = dice;
   }
 
   @JsonIgnore
@@ -168,6 +175,17 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
     return pie;
   }
 
+  @JsonIgnore
+  public String getDice() {
+    return dice.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_DICE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<String> dice() {
+    return dice;
+  }
+
   /** Return true if this customCallout object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -185,12 +203,13 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
         && Objects.equals(this.maxDuration, customCallout.maxDuration)
         && Objects.equals(this.ice, customCallout.ice)
         && Objects.equals(this.ace, customCallout.ace)
-        && Objects.equals(this.pie, customCallout.pie);
+        && Objects.equals(this.pie, customCallout.pie)
+        && Objects.equals(this.dice, customCallout.dice);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cli, destination, dtmf, custom, maxDuration, ice, ace, pie);
+    return Objects.hash(cli, destination, dtmf, custom, maxDuration, ice, ace, pie, dice);
   }
 
   @Override
@@ -205,6 +224,7 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
     sb.append("    ice: ").append(toIndentedString(ice)).append("\n");
     sb.append("    ace: ").append(toIndentedString(ace)).append("\n");
     sb.append("    pie: ").append(toIndentedString(pie)).append("\n");
+    sb.append("    dice: ").append(toIndentedString(dice)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -229,6 +249,7 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
     OptionalValue<Control> ice = OptionalValue.empty();
     OptionalValue<Control> ace = OptionalValue.empty();
     OptionalValue<Control> pie = OptionalValue.empty();
+    OptionalValue<String> dice = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_CLI)
     public Builder setCli(String cli) {
@@ -278,9 +299,15 @@ public class CustomCalloutInternalImpl implements CustomCalloutInternal {
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_DICE)
+    public Builder setDice(String dice) {
+      this.dice = OptionalValue.of(dice);
+      return this;
+    }
+
     public CustomCalloutInternal build() {
       return new CustomCalloutInternalImpl(
-          cli, destination, dtmf, custom, maxDuration, ice, ace, pie);
+          cli, destination, dtmf, custom, maxDuration, ice, ace, pie, dice);
     }
   }
 }

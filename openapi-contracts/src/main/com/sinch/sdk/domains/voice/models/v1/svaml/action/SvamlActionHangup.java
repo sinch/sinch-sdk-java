@@ -33,6 +33,7 @@ public interface SvamlActionHangup
 
   /** The name property. Must have the value <code>hangup</code>. */
   public class NameEnum extends EnumDynamic<String, NameEnum> {
+    /** The <code>hangup</code> action. */
     public static final NameEnum HANGUP = new NameEnum("hangup");
 
     private static final EnumSupportDynamic<String, NameEnum> ENUM_SUPPORT =
