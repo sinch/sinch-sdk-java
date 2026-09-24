@@ -1,0 +1,8 @@
+{
+  "onFinish": [
+    {
+      "command": "hangup",
+      "callName": "origin"
+    }
+  ]
+}

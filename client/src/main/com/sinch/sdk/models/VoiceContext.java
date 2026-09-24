@@ -8,12 +8,22 @@ public class VoiceContext {
   private final VoiceRegion voiceRegion;
   private final String voiceUrl;
   private final String voiceApplicationManagementUrl;
+  private final String voiceV2Url;
 
   public VoiceContext(
       VoiceRegion voiceRegion, String voiceUrl, String voiceApplicationManagementUrl) {
+    this(voiceRegion, voiceUrl, voiceApplicationManagementUrl, null);
+  }
+
+  public VoiceContext(
+      VoiceRegion voiceRegion,
+      String voiceUrl,
+      String voiceApplicationManagementUrl,
+      String voiceV2Url) {
     this.voiceRegion = voiceRegion;
     this.voiceUrl = voiceUrl;
     this.voiceApplicationManagementUrl = voiceApplicationManagementUrl;
+    this.voiceV2Url = voiceV2Url;
   }
 
   /**
@@ -67,6 +77,26 @@ public class VoiceContext {
   }
 
   /**
+   * Voice V2 URL
+   *
+   * @return Voice V2 Server URL
+   * @since 2.3
+   */
+  public String getVoiceV2Url() {
+    return voiceV2Url;
+  }
+
+  /**
+   * Voice V2 Server Configuration
+   *
+   * @return Voice V2 Server configuration to be used
+   * @since 2.3
+   */
+  public ServerConfiguration getVoiceV2Server() {
+    return new ServerConfiguration(getVoiceV2Url());
+  }
+
+  /**
    * Getting Builder
    *
    * @return New Builder instance
@@ -97,6 +127,7 @@ public class VoiceContext {
     VoiceRegion voiceRegion;
     String voiceUrl;
     String voiceApplicationMngmtUrl;
+    String voiceV2Url;
 
     protected Builder() {}
 
@@ -111,6 +142,7 @@ public class VoiceContext {
       this.voiceUrl = null != context ? context.getVoiceUrl() : null;
       this.voiceApplicationMngmtUrl =
           null != context ? context.getVoiceApplicationManagementUrl() : null;
+      this.voiceV2Url = null != context ? context.getVoiceV2Url() : null;
     }
 
     /**
@@ -150,6 +182,18 @@ public class VoiceContext {
     }
 
     /**
+     * Set Voice V2 URL to be used
+     *
+     * @param voiceV2Url Voice V2 URL
+     * @return Current builder
+     * @since 2.3
+     */
+    public Builder setVoiceV2Url(String voiceV2Url) {
+      this.voiceV2Url = voiceV2Url;
+      return this;
+    }
+
+    /**
      * Create instance
      *
      * @return The instance build with current builder values
@@ -157,7 +201,7 @@ public class VoiceContext {
      */
     public VoiceContext build() {
 
-      return new VoiceContext(voiceRegion, voiceUrl, voiceApplicationMngmtUrl);
+      return new VoiceContext(voiceRegion, voiceUrl, voiceApplicationMngmtUrl, voiceV2Url);
     }
   }
 }

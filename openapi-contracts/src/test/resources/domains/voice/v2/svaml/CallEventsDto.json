@@ -1,0 +1,193 @@
+{
+  "onAnswer": [
+    {
+      "command": "answer"
+    },
+    {
+      "command": "amd",
+      "events": {
+        "onHuman": [
+          {
+            "command": "messages",
+            "messagesName": "my-messages",
+            "messages": [
+              {
+                "type": "SAY",
+                "say": {
+                  "text": "Hello, your call is now connected.",
+                  "format": "TEXT",
+                  "voiceName": "Emma"
+                }
+              },
+              {
+                "type": "PLAY",
+                "play": {
+                  "url": "https://example.com/audio/welcome.mp3"
+                }
+              }
+            ],
+            "events": {
+              "onFinish": [
+                {
+                  "command": "hangup",
+                  "callName": "origin"
+                }
+              ]
+            }
+          }
+        ],
+        "onMachine": [
+          {
+            "command": "hangup",
+            "callName": "origin"
+          }
+        ],
+        "onBeep": [
+          {
+            "command": "pause",
+            "durationMilliseconds": 1500
+          }
+        ],
+        "onUnknown": [
+          {
+            "command": "hangup",
+            "callName": "origin"
+          }
+        ]
+      }
+    },
+    {
+      "command": "startRecording",
+      "recordingName": "my-recording",
+      "recordingOptions": {
+        "format": "MP3",
+        "recordingType": "COMBINED",
+        "destination": "AWS",
+        "destinationUrl": "s3://my-bucket/recordings",
+        "credentials": "access-key:secret-key",
+        "transcriptionOptions": {
+          "isEnabled": true,
+          "locale": "en-US"
+        }
+      },
+      "events": {
+        "onFinish": [
+          {
+            "command": "hangup",
+            "callName": "origin"
+          }
+        ],
+        "onFailure": [
+          {
+            "command": "hangup",
+            "callName": "origin"
+          }
+        ]
+      }
+    },
+    {
+      "command": "menu",
+      "startMenu": "main",
+      "menus": {
+        "main": {
+          "prompt": {
+            "allowBargeIn": false,
+            "messages": [
+              {
+                "type": "SAY",
+                "say": {
+                  "text": "Hello, your call is now connected.",
+                  "format": "TEXT",
+                  "voiceName": "Emma"
+                }
+              }
+            ]
+          },
+          "repeatPrompt": {
+            "allowBargeIn": false,
+            "messages": [
+              {
+                "type": "SAY",
+                "say": {
+                  "text": "Hello, your call is now connected.",
+                  "format": "TEXT",
+                  "voiceName": "Emma"
+                }
+              }
+            ]
+          },
+          "inputTimeoutDurationSeconds": 10,
+          "repeatCount": 3,
+          "minimumInputLength": 1,
+          "maximumInputLength": 4,
+          "terminatingSequence": "#",
+          "inputMethods": [
+            "DTMF"
+          ],
+          "matches": {
+            "1": [
+              {
+                "command": "gotoMenu",
+                "menuName": "main"
+              }
+            ]
+          },
+          "onFail": [
+            {
+              "command": "hangup",
+              "callName": "origin"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "command": "bridgeCall",
+      "bridgeName": "bridge"
+    },
+    {
+      "command": "webhook",
+      "webhookName": "my.custom.event",
+      "url": "https://example.com/events",
+      "fallbackUrl": "https://fallback.example.com/events"
+    },
+    {
+      "command": "stopMessages",
+      "messagesName": "my-messages"
+    }
+  ],
+  "onBusy": [
+    {
+      "command": "hangup",
+      "callName": "origin"
+    }
+  ],
+  "onReject": [
+    {
+      "command": "hangup",
+      "callName": "origin"
+    }
+  ],
+  "onTimeout": [
+    {
+      "command": "hangup",
+      "callName": "origin"
+    }
+  ],
+  "onHangup": [
+    {
+      "command": "stopRecording",
+      "recordingName": "my-recording"
+    },
+    {
+      "command": "hangup",
+      "callName": "origin"
+    }
+  ],
+  "onFailure": [
+    {
+      "command": "hangup",
+      "callName": "origin"
+    }
+  ]
+}

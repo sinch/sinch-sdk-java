@@ -32,6 +32,7 @@ public class Config {
   public static final String VOICE_HOST_NAME = MOCK_SERVER_URL + "/voice";
   public static final String VOICE_MANAGEMENT_HOST_NAME =
       MOCK_SERVER_URL + "/voice-application-management";
+  public static final String VOICE_V2_HOST_NAME = MOCK_SERVER_URL + "/voice-v2";
 
   public static final String MAILGUN_HOST_NAME = MOCK_SERVER_URL + "/mailgun";
   public static final String MAILGUN_API_KEY = "apiKey";
@@ -80,6 +81,7 @@ public class Config {
                 VoiceContext.builder()
                     .setVoiceApplicationMngmtUrl(VOICE_MANAGEMENT_HOST_NAME)
                     .setVoiceUrl(VOICE_HOST_NAME)
+                    .setVoiceV2Url(VOICE_V2_HOST_NAME)
                     .build())
             .setSmsContext(
                 SmsContext.builder().setSmsUrl(SMS_HOST_NAME).setSmsRegion(SMSRegion.EU).build())

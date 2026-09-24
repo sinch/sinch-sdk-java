@@ -46,6 +46,7 @@ public class SinchClient {
   private static final String VOICE_REGION_KEY = "voice-region";
   private static final String VOICE_APPLICATION_MANAGEMENT_SERVER_KEY =
       "voice-application-management-server";
+  private static final String VOICE_V2_SERVER_KEY = "voice-v2-server";
 
   private static final String VERIFICATION_SERVER_KEY = "verification-server";
 
@@ -182,6 +183,9 @@ public class SinchClient {
             .map(VoiceContext::getVoiceApplicationManagementUrl)
             .orElse(null);
 
+    String voiceV2Url =
+        configuration.getVoiceContext().map(VoiceContext::getVoiceV2Url).orElse(null);
+
     // default region to be used ?
     if (null == region && props.containsKey(VOICE_REGION_KEY)) {
       region = VoiceRegion.from(props.getProperty(VOICE_REGION_KEY));
@@ -200,12 +204,21 @@ public class SinchClient {
       voiceApplicationManagementUrl = props.getProperty(VOICE_APPLICATION_MANAGEMENT_SERVER_KEY);
     }
 
-    if (null != region || null != voiceUrl || null != voiceApplicationManagementUrl) {
+    // Voice V2 server
+    if (StringUtil.isEmpty(voiceV2Url) && props.containsKey(VOICE_V2_SERVER_KEY)) {
+      voiceV2Url = props.getProperty(VOICE_V2_SERVER_KEY);
+    }
+
+    if (null != region
+        || null != voiceUrl
+        || null != voiceApplicationManagementUrl
+        || null != voiceV2Url) {
       builder.setVoiceContext(
           VoiceContext.builder()
               .setVoiceRegion(region)
               .setVoiceUrl(voiceUrl)
               .setVoiceApplicationMngmtUrl(voiceApplicationManagementUrl)
+              .setVoiceV2Url(voiceV2Url)
               .build());
     }
   }
@@ -414,7 +427,9 @@ public class SinchClient {
   private VoiceService voiceInit() {
     return new com.sinch.sdk.domains.voice.adapters.VoiceService(
         getConfiguration().getApplicationCredentials().orElse(null),
+        getConfiguration().getUnifiedCredentials().orElse(null),
         getConfiguration().getVoiceContext().orElse(null),
+        getConfiguration().getOAuthServer(),
         this::getHttpClient);
   }
 

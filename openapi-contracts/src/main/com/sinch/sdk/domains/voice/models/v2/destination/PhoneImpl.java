@@ -1,0 +1,117 @@
+package com.sinch.sdk.domains.voice.models.v2.destination;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.sinch.sdk.core.models.OptionalValue;
+import java.util.Objects;
+
+@JsonPropertyOrder({PhoneImpl.JSON_PROPERTY_TYPE, PhoneImpl.JSON_PROPERTY_PHONE})
+@JsonFilter("uninitializedFilter")
+@JsonInclude(value = JsonInclude.Include.CUSTOM)
+public class PhoneImpl implements Phone, CallOrigin, CallDestination {
+  private static final long serialVersionUID = 1L;
+
+  public static final String JSON_PROPERTY_TYPE = "type";
+
+  private OptionalValue<TypeEnum> type;
+
+  public static final String JSON_PROPERTY_PHONE = "phone";
+
+  private OptionalValue<PhoneDetails> phone;
+
+  public PhoneImpl() {}
+
+  protected PhoneImpl(OptionalValue<TypeEnum> type, OptionalValue<PhoneDetails> phone) {
+    this.type = type;
+    this.phone = phone;
+  }
+
+  @JsonIgnore
+  public TypeEnum getType() {
+    return type.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_TYPE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<TypeEnum> type() {
+    return type;
+  }
+
+  @JsonIgnore
+  public PhoneDetails getPhone() {
+    return phone.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_PHONE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<PhoneDetails> phone() {
+    return phone;
+  }
+
+  /** Return true if this Phone object is equal to o. */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    PhoneImpl phone = (PhoneImpl) o;
+    return Objects.equals(this.type, phone.type) && Objects.equals(this.phone, phone.phone);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(type, phone);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class PhoneImpl {\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    phone: ").append(toIndentedString(phone)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
+
+  @JsonPOJOBuilder(withPrefix = "set")
+  static class Builder implements Phone.Builder {
+    OptionalValue<TypeEnum> type = OptionalValue.of(TypeEnum.PHONE);
+    OptionalValue<PhoneDetails> phone = OptionalValue.empty();
+
+    @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
+    Builder setType(TypeEnum type) {
+      if (!Objects.equals(type, TypeEnum.PHONE)) {
+        throw new IllegalArgumentException(
+            String.format("'type' must be '%s' (is '%s')", TypeEnum.PHONE, type));
+      }
+      return this;
+    }
+
+    @JsonProperty(value = JSON_PROPERTY_PHONE, required = true)
+    public Builder setPhone(PhoneDetails phone) {
+      this.phone = OptionalValue.of(phone);
+      return this;
+    }
+
+    public Phone build() {
+      return new PhoneImpl(type, phone);
+    }
+  }
+}

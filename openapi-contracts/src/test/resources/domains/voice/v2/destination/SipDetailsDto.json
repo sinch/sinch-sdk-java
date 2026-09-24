@@ -1,0 +1,10 @@
+{
+  "endpoint": "sips:bob@sip.example.com",
+  "transport": "TLS",
+  "callHeaders": [
+    {
+      "key": "X-Custom-Header",
+      "value": "custom-value"
+    }
+  ]
+}

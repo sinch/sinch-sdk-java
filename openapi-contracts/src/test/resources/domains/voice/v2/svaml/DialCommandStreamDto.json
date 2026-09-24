@@ -1,0 +1,20 @@
+{
+  "command": "dial",
+  "to": {
+    "type": "STREAM",
+    "stream": {
+      "endpoint": "wss://myapp.example.com/audio",
+      "streamOptions": {
+        "version": 1,
+        "codec": "PCM",
+        "sampleRate": 16000
+      },
+      "callHeaders": [
+        {
+          "key": "customer-id",
+          "value": "12345"
+        }
+      ]
+    }
+  }
+}

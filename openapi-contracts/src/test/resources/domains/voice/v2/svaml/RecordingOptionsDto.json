@@ -1,0 +1,11 @@
+{
+  "format": "MP3",
+  "recordingType": "COMBINED",
+  "destination": "AWS",
+  "destinationUrl": "s3://my-bucket/recordings",
+  "credentials": "access-key:secret-key",
+  "transcriptionOptions": {
+    "isEnabled": true,
+    "locale": "en-US"
+  }
+}

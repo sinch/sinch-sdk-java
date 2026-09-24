@@ -1,0 +1,29 @@
+{
+  "command": "startRecording",
+  "recordingName": "my-recording",
+  "recordingOptions": {
+    "format": "MP3",
+    "recordingType": "COMBINED",
+    "destination": "AWS",
+    "destinationUrl": "s3://my-bucket/recordings",
+    "credentials": "access-key:secret-key",
+    "transcriptionOptions": {
+      "isEnabled": true,
+      "locale": "en-US"
+    }
+  },
+  "events": {
+    "onFinish": [
+      {
+        "command": "hangup",
+        "callName": "origin"
+      }
+    ],
+    "onFailure": [
+      {
+        "command": "hangup",
+        "callName": "origin"
+      }
+    ]
+  }
+}
