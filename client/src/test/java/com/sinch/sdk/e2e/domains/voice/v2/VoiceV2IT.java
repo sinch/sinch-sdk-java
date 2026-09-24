@@ -18,6 +18,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @SuiteDisplayName("Voice V2")
 @IncludeEngines("cucumber")
 @SelectClasspathResource("features/voice-v2/calls.feature")
+@SelectClasspathResource("features/voice-v2/batches.feature")
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.sinch.sdk.e2e.domains.voice.v2")
 @ConfigurationParameter(key = FILTER_NAME_PROPERTY_NAME, value = "^\\[Start\\].*")
 @ConfigurationParameter(key = PARALLEL_EXECUTION_ENABLED_PROPERTY_NAME, value = "true")

@@ -6,6 +6,7 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.domains.voice.api.v2.BatchesService;
 import com.sinch.sdk.domains.voice.api.v2.CallsService;
 import com.sinch.sdk.models.UnifiedCredentials;
 import com.sinch.sdk.models.VoiceContext;
@@ -31,6 +32,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
   private volatile Map<String, AuthManager> authManagers;
 
   private volatile CallsService calls;
+  private volatile BatchesService batches;
 
   public VoiceService(
       UnifiedCredentials credentials,
@@ -59,6 +61,24 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
       }
     }
     return this.calls;
+  }
+
+  public BatchesService batches() {
+    if (null == this.batches) {
+      synchronized (this) {
+        if (null == this.batches) {
+          instanceLazyInit();
+          this.batches =
+              new BatchesServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getVoiceV2Server(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
+    }
+    return this.batches;
   }
 
   private void instanceLazyInit() {

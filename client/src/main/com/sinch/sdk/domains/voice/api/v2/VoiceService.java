@@ -16,4 +16,12 @@ public interface VoiceService {
    * @since 2.3
    */
   CallsService calls();
+
+  /**
+   * Batches Service instance
+   *
+   * @return service instance for project
+   * @since 2.3
+   */
+  BatchesService batches();
 }

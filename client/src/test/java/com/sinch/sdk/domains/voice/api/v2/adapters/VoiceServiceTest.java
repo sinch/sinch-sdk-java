@@ -87,4 +87,16 @@ class VoiceServiceTest {
   void initPassed() {
     assertDoesNotThrow(() -> service(credentials("foo", "foo", "foo"), context).calls());
   }
+
+  @Test
+  void batchesInitPassed() {
+    assertDoesNotThrow(() -> service(credentials("foo", "foo", "foo"), context).batches());
+  }
+
+  @Test
+  void batchesDoNotAcceptNullCredentials() {
+    Exception exception =
+        assertThrows(NullPointerException.class, () -> service(null, context).batches());
+    assertTrue(exception.getMessage().contains("Voice V2 service requires unified credentials"));
+  }
 }

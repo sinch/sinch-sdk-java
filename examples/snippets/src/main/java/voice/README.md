@@ -24,3 +24,5 @@ See main [README.md](../../../../README.md) for how to execute snippets
 - V2
   - Calls
     - [voice/v2/calls/Start](./v2/calls/Start.java)
+  - Batches
+    - [voice/v2/batches/Start](./v2/batches/Start.java)
