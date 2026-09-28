@@ -10,13 +10,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface PlayMessage extends Message {
 
   /**
-   * Get play
+   * URL of the media to send
    *
    * <p>Field is required
    *
-   * @return play
+   * @return url
    */
-  Play getPlay();
+  String getUrl();
 
   /**
    * Getting builder
@@ -33,11 +33,11 @@ public interface PlayMessage extends Message {
     /**
      * see getter
      *
-     * @param play see getter
+     * @param url see getter
      * @return Current builder
-     * @see #getPlay
+     * @see #getUrl
      */
-    Builder setPlay(Play play);
+    Builder setUrl(String url);
 
     /**
      * Create instance

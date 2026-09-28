@@ -5,6 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import java.util.Arrays;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -14,7 +15,11 @@ public class VoiceRelayDtoTest extends BaseTest {
 
   public static final VoiceRelay expectedVoiceRelay =
       VoiceRelay.builder()
-          .setVoiceRelay(VoiceRelayDetailsDtoTest.expectedVoiceRelayDetails)
+          .setEndpoint("wss://relay.example.com/agent")
+          .setEnableInterruptions(false)
+          .setTtsVoice("Emma")
+          .setSttLanguage("en-US")
+          .setCallHeaders(Arrays.asList(CallHeaderDtoTest.expectedCallHeader))
           .build();
 
   @GivenTextResource("/domains/voice/v2/destination/VoiceRelayDto.json")

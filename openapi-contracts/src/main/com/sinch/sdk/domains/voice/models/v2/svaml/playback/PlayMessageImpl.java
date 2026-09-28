@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.voice.models.v2.svaml.playback.internal.PlayMessageInternal;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -49,11 +50,11 @@ public class PlayMessageImpl implements PlayMessage, Message {
 
   public static final String JSON_PROPERTY_PLAY = "play";
 
-  private OptionalValue<Play> play;
+  private OptionalValue<PlayMessageInternal> play;
 
   public PlayMessageImpl() {}
 
-  protected PlayMessageImpl(OptionalValue<TypeEnum> type, OptionalValue<Play> play) {
+  protected PlayMessageImpl(OptionalValue<TypeEnum> type, OptionalValue<PlayMessageInternal> play) {
     this.type = type;
     this.play = play;
   }
@@ -70,14 +71,22 @@ public class PlayMessageImpl implements PlayMessage, Message {
   }
 
   @JsonIgnore
-  public Play getPlay() {
+  public PlayMessageInternal getPlay() {
     return play.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_PLAY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<Play> play() {
+  public OptionalValue<PlayMessageInternal> play() {
     return play;
+  }
+
+  @JsonIgnore
+  public String getUrl() {
+    if (null == play || !play.isPresent() || null == play.get().getUrl()) {
+      return null;
+    }
+    return play.get().getUrl();
   }
 
   /** Return true if this PlayMessage object is equal to o. */
@@ -122,7 +131,9 @@ public class PlayMessageImpl implements PlayMessage, Message {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements PlayMessage.Builder {
     OptionalValue<TypeEnum> type = OptionalValue.of(TypeEnum.PLAY);
-    OptionalValue<Play> play = OptionalValue.empty();
+    OptionalValue<PlayMessageInternal> play = OptionalValue.empty();
+
+    PlayMessageInternal.Builder _delegatedBuilder = null;
 
     @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
     Builder setType(TypeEnum type) {
@@ -134,12 +145,29 @@ public class PlayMessageImpl implements PlayMessage, Message {
     }
 
     @JsonProperty(value = JSON_PROPERTY_PLAY, required = true)
-    public Builder setPlay(Play play) {
+    public Builder setPlay(PlayMessageInternal play) {
       this.play = OptionalValue.of(play);
       return this;
     }
 
+    @JsonIgnore
+    public Builder setUrl(String url) {
+      getDelegatedBuilder().setUrl(url);
+      return this;
+    }
+
+    private PlayMessageInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = PlayMessageInternal.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
     public PlayMessage build() {
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.play = OptionalValue.of(this._delegatedBuilder.build());
+      }
       return new PlayMessageImpl(type, play);
     }
   }

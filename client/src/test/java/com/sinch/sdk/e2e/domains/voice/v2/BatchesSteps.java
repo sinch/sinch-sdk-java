@@ -6,13 +6,11 @@ import com.sinch.sdk.domains.voice.models.v2.batches.request.BatchOptions;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequest;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.StartBatchResponse;
 import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
-import com.sinch.sdk.domains.voice.models.v2.destination.PhoneDetails;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.CallEvents;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.DialCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.HangupCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessageEvents;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessagesCommand;
-import com.sinch.sdk.domains.voice.models.v2.svaml.playback.Say;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.SayMessage;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
@@ -40,12 +38,8 @@ public class BatchesSteps {
             .setMessages(
                 Collections.singletonList(
                     SayMessage.builder()
-                        .setSay(
-                            Say.builder()
-                                .setText(
-                                    "Hello, this is an automated reminder from Sinch. Goodbye.")
-                                .setVoiceName("Emma")
-                                .build())
+                        .setText("Hello, this is an automated reminder from Sinch. Goodbye.")
+                        .setVoiceName("Emma")
                         .build()))
             .setEvents(
                 MessageEvents.builder()
@@ -56,14 +50,8 @@ public class BatchesSteps {
     DialCommand dial =
         DialCommand.builder()
             .setCallName("batch-reminder")
-            .setFrom(
-                Phone.builder()
-                    .setPhone(PhoneDetails.builder().setNumber("+12015555555").build())
-                    .build())
-            .setTo(
-                Phone.builder()
-                    .setPhone(PhoneDetails.builder().setNumber("@toNumber").build())
-                    .build())
+            .setFrom(Phone.builder().setNumber("+12015555555").build())
+            .setTo(Phone.builder().setNumber("@toNumber").build())
             .setDialTimeoutDurationSeconds(30)
             .setMaxCallDurationSeconds(120)
             .setEvents(

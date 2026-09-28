@@ -23,6 +23,16 @@ public interface PauseCommand extends SvamlCommand {
   Integer getDurationMilliseconds();
 
   /**
+   * Create a pause command of the given duration
+   *
+   * @param durationMilliseconds see {@link #getDurationMilliseconds()}
+   * @return A new PauseCommand
+   */
+  static PauseCommand of(int durationMilliseconds) {
+    return builder().setDurationMilliseconds(durationMilliseconds).build();
+  }
+
+  /**
    * Getting builder
    *
    * @return New Builder instance

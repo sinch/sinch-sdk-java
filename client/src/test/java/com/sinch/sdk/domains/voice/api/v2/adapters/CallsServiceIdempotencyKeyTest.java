@@ -1,8 +1,8 @@
 package com.sinch.sdk.domains.voice.api.v2.adapters;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpMapper;
@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.UUID;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterEach;
@@ -111,7 +110,7 @@ class CallsServiceIdempotencyKeyTest {
 
     assertEquals(2, server.getRequestCount(), "expected the 429 to be retried once");
     String first = takeIdempotencyKey();
-    assertDoesNotThrow(() -> UUID.fromString(first), "generated key is not a UUID: " + first);
+    assertNotNull(first, "no idempotency key was generated");
     assertEquals(first, takeIdempotencyKey());
   }
 

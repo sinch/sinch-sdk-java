@@ -1,9 +1,9 @@
-package com.sinch.sdk.domains.voice.models.v2.destination;
+package com.sinch.sdk.domains.voice.models.v2.destination.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonDeserialize(builder = SipFromDetailsImpl.Builder.class)
-public interface SipFromDetails {
+@JsonDeserialize(builder = SipFromInternalImpl.Builder.class)
+public interface SipFromInternal {
 
   /**
    * SIP URI of the originating endpoint. Both <code>sip:</code> (unencrypted) and <code>sips:
@@ -30,7 +30,7 @@ public interface SipFromDetails {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new SipFromDetailsImpl.Builder();
+    return new SipFromInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -59,6 +59,6 @@ public interface SipFromDetails {
      *
      * @return The instance build with current builder values
      */
-    SipFromDetails build();
+    SipFromInternal build();
   }
 }

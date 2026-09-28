@@ -1,42 +1,12 @@
-package com.sinch.sdk.domains.voice.models.v2.destination;
+package com.sinch.sdk.domains.voice.models.v2.destination.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.core.utils.EnumSupportDynamic;
-import java.util.Arrays;
+import com.sinch.sdk.domains.voice.models.v2.destination.Sip.TransportEnum;
+import com.sinch.sdk.domains.voice.models.v2.destination.SipCallHeader;
 import java.util.List;
 
-@JsonDeserialize(builder = SipDetailsImpl.Builder.class)
-public interface SipDetails {
-
-  /** Gets or Sets transport */
-  public class TransportEnum extends EnumDynamic<String, TransportEnum> {
-    public static final TransportEnum UDP = new TransportEnum("UDP");
-
-    public static final TransportEnum TCP = new TransportEnum("TCP");
-
-    public static final TransportEnum TLS = new TransportEnum("TLS");
-
-    private static final EnumSupportDynamic<String, TransportEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            TransportEnum.class, TransportEnum::new, Arrays.asList(UDP, TCP, TLS));
-
-    private TransportEnum(String value) {
-      super(value);
-    }
-
-    public static java.util.stream.Stream<TransportEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static TransportEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(TransportEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
+@JsonDeserialize(builder = SipInternalImpl.Builder.class)
+public interface SipInternal {
 
   /**
    * SIP URI of the destination endpoint. Both <code>sip:</code> (unencrypted) and <code>sips:
@@ -73,7 +43,7 @@ public interface SipDetails {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new SipDetailsImpl.Builder();
+    return new SipInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -111,6 +81,6 @@ public interface SipDetails {
      *
      * @return The instance build with current builder values
      */
-    SipDetails build();
+    SipInternal build();
   }
 }

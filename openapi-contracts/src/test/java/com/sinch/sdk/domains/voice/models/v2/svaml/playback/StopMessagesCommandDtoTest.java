@@ -32,4 +32,9 @@ public class StopMessagesCommandDtoTest extends BaseTest {
 
     TestHelpers.recursiveEquals(deserialized, expectedStopMessagesCommand);
   }
+
+  @Test
+  void of() {
+    TestHelpers.recursiveEquals(StopMessagesCommand.of("my-messages"), expectedStopMessagesCommand);
+  }
 }

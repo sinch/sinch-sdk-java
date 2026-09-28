@@ -5,6 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import java.util.Arrays;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -13,7 +14,11 @@ import org.skyscreamer.jsonassert.JSONAssert;
 public class SipDtoTest extends BaseTest {
 
   public static final Sip expectedSip =
-      Sip.builder().setSip(SipDetailsDtoTest.expectedSipDetails).build();
+      Sip.builder()
+          .setEndpoint("sips:bob@sip.example.com")
+          .setTransport(Sip.TransportEnum.TLS)
+          .setCallHeaders(Arrays.asList(SipCallHeaderDtoTest.expectedSipCallHeader))
+          .build();
 
   @GivenTextResource("/domains/voice/v2/destination/SipDto.json")
   String jsonSip;

@@ -22,6 +22,16 @@ public interface StopRecordingCommand extends SvamlCommand {
   String getRecordingName();
 
   /**
+   * Create a stopRecording command stopping the given recording
+   *
+   * @param recordingName see {@link #getRecordingName()}
+   * @return A new StopRecordingCommand
+   */
+  static StopRecordingCommand of(String recordingName) {
+    return builder().setRecordingName(recordingName).build();
+  }
+
+  /**
    * Getting builder
    *
    * @return New Builder instance

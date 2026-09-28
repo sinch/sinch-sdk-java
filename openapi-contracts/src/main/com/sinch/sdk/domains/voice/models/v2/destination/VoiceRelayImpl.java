@@ -9,7 +9,9 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.voice.models.v2.destination.internal.VoiceRelayInternal;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({VoiceRelayImpl.JSON_PROPERTY_TYPE, VoiceRelayImpl.JSON_PROPERTY_VOICE_RELAY})
@@ -49,12 +51,12 @@ public class VoiceRelayImpl implements VoiceRelay, CallDestination {
 
   public static final String JSON_PROPERTY_VOICE_RELAY = "voiceRelay";
 
-  private OptionalValue<VoiceRelayDetails> voiceRelay;
+  private OptionalValue<VoiceRelayInternal> voiceRelay;
 
   public VoiceRelayImpl() {}
 
   protected VoiceRelayImpl(
-      OptionalValue<TypeEnum> type, OptionalValue<VoiceRelayDetails> voiceRelay) {
+      OptionalValue<TypeEnum> type, OptionalValue<VoiceRelayInternal> voiceRelay) {
     this.type = type;
     this.voiceRelay = voiceRelay;
   }
@@ -71,14 +73,60 @@ public class VoiceRelayImpl implements VoiceRelay, CallDestination {
   }
 
   @JsonIgnore
-  public VoiceRelayDetails getVoiceRelay() {
+  public VoiceRelayInternal getVoiceRelay() {
     return voiceRelay.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_VOICE_RELAY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<VoiceRelayDetails> voiceRelay() {
+  public OptionalValue<VoiceRelayInternal> voiceRelay() {
     return voiceRelay;
+  }
+
+  @JsonIgnore
+  public String getEndpoint() {
+    if (null == voiceRelay || !voiceRelay.isPresent() || null == voiceRelay.get().getEndpoint()) {
+      return null;
+    }
+    return voiceRelay.get().getEndpoint();
+  }
+
+  @JsonIgnore
+  public Boolean getEnableInterruptions() {
+    if (null == voiceRelay
+        || !voiceRelay.isPresent()
+        || null == voiceRelay.get().getEnableInterruptions()) {
+      return null;
+    }
+    return voiceRelay.get().getEnableInterruptions();
+  }
+
+  @JsonIgnore
+  public String getTtsVoice() {
+    if (null == voiceRelay || !voiceRelay.isPresent() || null == voiceRelay.get().getTtsVoice()) {
+      return null;
+    }
+    return voiceRelay.get().getTtsVoice();
+  }
+
+  @JsonIgnore
+  public String getSttLanguage() {
+    if (null == voiceRelay
+        || !voiceRelay.isPresent()
+        || null == voiceRelay.get().getSttLanguage()) {
+      return null;
+    }
+    return voiceRelay.get().getSttLanguage();
+  }
+
+  @JsonIgnore
+  public List<CallHeader> getCallHeaders() {
+    if (null == voiceRelay
+        || !voiceRelay.isPresent()
+        || null == voiceRelay.get().getCallHeaders()) {
+      return null;
+    }
+    return voiceRelay.get().getCallHeaders();
   }
 
   /** Return true if this VoiceRelay object is equal to o. */
@@ -123,7 +171,9 @@ public class VoiceRelayImpl implements VoiceRelay, CallDestination {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements VoiceRelay.Builder {
     OptionalValue<TypeEnum> type = OptionalValue.of(TypeEnum.VOICE_RELAY);
-    OptionalValue<VoiceRelayDetails> voiceRelay = OptionalValue.empty();
+    OptionalValue<VoiceRelayInternal> voiceRelay = OptionalValue.empty();
+
+    VoiceRelayInternal.Builder _delegatedBuilder = null;
 
     @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
     Builder setType(TypeEnum type) {
@@ -135,12 +185,53 @@ public class VoiceRelayImpl implements VoiceRelay, CallDestination {
     }
 
     @JsonProperty(value = JSON_PROPERTY_VOICE_RELAY, required = true)
-    public Builder setVoiceRelay(VoiceRelayDetails voiceRelay) {
+    public Builder setVoiceRelay(VoiceRelayInternal voiceRelay) {
       this.voiceRelay = OptionalValue.of(voiceRelay);
       return this;
     }
 
+    @JsonIgnore
+    public Builder setEndpoint(String endpoint) {
+      getDelegatedBuilder().setEndpoint(endpoint);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setEnableInterruptions(Boolean enableInterruptions) {
+      getDelegatedBuilder().setEnableInterruptions(enableInterruptions);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setTtsVoice(String ttsVoice) {
+      getDelegatedBuilder().setTtsVoice(ttsVoice);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setSttLanguage(String sttLanguage) {
+      getDelegatedBuilder().setSttLanguage(sttLanguage);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setCallHeaders(List<CallHeader> callHeaders) {
+      getDelegatedBuilder().setCallHeaders(callHeaders);
+      return this;
+    }
+
+    private VoiceRelayInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = VoiceRelayInternal.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
     public VoiceRelay build() {
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.voiceRelay = OptionalValue.of(this._delegatedBuilder.build());
+      }
       return new VoiceRelayImpl(type, voiceRelay);
     }
   }

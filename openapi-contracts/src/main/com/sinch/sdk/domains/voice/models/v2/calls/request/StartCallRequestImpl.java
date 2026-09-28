@@ -21,18 +21,13 @@ public class StartCallRequestImpl implements StartCallRequest {
 
   private OptionalValue<List<SvamlCommand>> commands;
 
-  private OptionalValue<String> serviceId;
-
   private OptionalValue<String> idempotencyKey;
 
   public StartCallRequestImpl() {}
 
   protected StartCallRequestImpl(
-      OptionalValue<List<SvamlCommand>> commands,
-      OptionalValue<String> serviceId,
-      OptionalValue<String> idempotencyKey) {
+      OptionalValue<List<SvamlCommand>> commands, OptionalValue<String> idempotencyKey) {
     this.commands = commands;
-    this.serviceId = serviceId;
     this.idempotencyKey = idempotencyKey;
   }
 
@@ -45,16 +40,6 @@ public class StartCallRequestImpl implements StartCallRequest {
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<List<SvamlCommand>> commands() {
     return commands;
-  }
-
-  @JsonIgnore
-  public String getServiceId() {
-    return serviceId.orElse(null);
-  }
-
-  @JsonIgnore
-  public OptionalValue<String> serviceId() {
-    return serviceId;
   }
 
   @JsonIgnore
@@ -78,13 +63,12 @@ public class StartCallRequestImpl implements StartCallRequest {
     }
     StartCallRequestImpl startCallRequest = (StartCallRequestImpl) o;
     return Objects.equals(this.commands, startCallRequest.commands)
-        && Objects.equals(this.serviceId, startCallRequest.serviceId)
         && Objects.equals(this.idempotencyKey, startCallRequest.idempotencyKey);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(commands, serviceId, idempotencyKey);
+    return Objects.hash(commands, idempotencyKey);
   }
 
   @Override
@@ -92,7 +76,6 @@ public class StartCallRequestImpl implements StartCallRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class StartCallRequestImpl {\n");
     sb.append("    commands: ").append(toIndentedString(commands)).append("\n");
-    sb.append("    serviceId: ").append(toIndentedString(serviceId)).append("\n");
     sb.append("    idempotencyKey: ").append(toIndentedString(idempotencyKey)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -111,18 +94,11 @@ public class StartCallRequestImpl implements StartCallRequest {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements StartCallRequest.Builder {
     OptionalValue<List<SvamlCommand>> commands = OptionalValue.empty();
-    OptionalValue<String> serviceId = OptionalValue.empty();
     OptionalValue<String> idempotencyKey = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_COMMANDS, required = true)
     public Builder setCommands(List<SvamlCommand> commands) {
       this.commands = OptionalValue.of(commands);
-      return this;
-    }
-
-    @JsonIgnore
-    public Builder setServiceId(String serviceId) {
-      this.serviceId = OptionalValue.of(serviceId);
       return this;
     }
 
@@ -133,7 +109,7 @@ public class StartCallRequestImpl implements StartCallRequest {
     }
 
     public StartCallRequest build() {
-      return new StartCallRequestImpl(commands, serviceId, idempotencyKey);
+      return new StartCallRequestImpl(commands, idempotencyKey);
     }
   }
 }

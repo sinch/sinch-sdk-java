@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v2.destination;
+package com.sinch.sdk.domains.voice.models.v2.destination.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,19 +7,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.voice.models.v2.destination.CallHeader;
 import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  VoiceRelayDetailsImpl.JSON_PROPERTY_ENDPOINT,
-  VoiceRelayDetailsImpl.JSON_PROPERTY_ENABLE_INTERRUPTIONS,
-  VoiceRelayDetailsImpl.JSON_PROPERTY_TTS_VOICE,
-  VoiceRelayDetailsImpl.JSON_PROPERTY_STT_LANGUAGE,
-  VoiceRelayDetailsImpl.JSON_PROPERTY_CALL_HEADERS
+  VoiceRelayInternalImpl.JSON_PROPERTY_ENDPOINT,
+  VoiceRelayInternalImpl.JSON_PROPERTY_ENABLE_INTERRUPTIONS,
+  VoiceRelayInternalImpl.JSON_PROPERTY_TTS_VOICE,
+  VoiceRelayInternalImpl.JSON_PROPERTY_STT_LANGUAGE,
+  VoiceRelayInternalImpl.JSON_PROPERTY_CALL_HEADERS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class VoiceRelayDetailsImpl implements VoiceRelayDetails {
+public class VoiceRelayInternalImpl implements VoiceRelayInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ENDPOINT = "endpoint";
@@ -42,9 +43,9 @@ public class VoiceRelayDetailsImpl implements VoiceRelayDetails {
 
   private OptionalValue<List<CallHeader>> callHeaders;
 
-  public VoiceRelayDetailsImpl() {}
+  public VoiceRelayInternalImpl() {}
 
-  protected VoiceRelayDetailsImpl(
+  protected VoiceRelayInternalImpl(
       OptionalValue<String> endpoint,
       OptionalValue<Boolean> enableInterruptions,
       OptionalValue<String> ttsVoice,
@@ -112,7 +113,7 @@ public class VoiceRelayDetailsImpl implements VoiceRelayDetails {
     return callHeaders;
   }
 
-  /** Return true if this VoiceRelayDetails object is equal to o. */
+  /** Return true if this VoiceRelayInternal object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -121,7 +122,7 @@ public class VoiceRelayDetailsImpl implements VoiceRelayDetails {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    VoiceRelayDetailsImpl voiceRelayDetails = (VoiceRelayDetailsImpl) o;
+    VoiceRelayInternalImpl voiceRelayDetails = (VoiceRelayInternalImpl) o;
     return Objects.equals(this.endpoint, voiceRelayDetails.endpoint)
         && Objects.equals(this.enableInterruptions, voiceRelayDetails.enableInterruptions)
         && Objects.equals(this.ttsVoice, voiceRelayDetails.ttsVoice)
@@ -137,7 +138,7 @@ public class VoiceRelayDetailsImpl implements VoiceRelayDetails {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class VoiceRelayDetailsImpl {\n");
+    sb.append("class VoiceRelayInternalImpl {\n");
     sb.append("    endpoint: ").append(toIndentedString(endpoint)).append("\n");
     sb.append("    enableInterruptions: ")
         .append(toIndentedString(enableInterruptions))
@@ -160,7 +161,7 @@ public class VoiceRelayDetailsImpl implements VoiceRelayDetails {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements VoiceRelayDetails.Builder {
+  static class Builder implements VoiceRelayInternal.Builder {
     OptionalValue<String> endpoint = OptionalValue.empty();
     OptionalValue<Boolean> enableInterruptions = OptionalValue.empty();
     OptionalValue<String> ttsVoice = OptionalValue.empty();
@@ -197,8 +198,8 @@ public class VoiceRelayDetailsImpl implements VoiceRelayDetails {
       return this;
     }
 
-    public VoiceRelayDetails build() {
-      return new VoiceRelayDetailsImpl(
+    public VoiceRelayInternal build() {
+      return new VoiceRelayInternalImpl(
           endpoint, enableInterruptions, ttsVoice, sttLanguage, callHeaders);
     }
   }

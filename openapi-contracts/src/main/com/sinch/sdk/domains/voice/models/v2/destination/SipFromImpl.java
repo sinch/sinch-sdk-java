@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.voice.models.v2.destination.internal.SipFromInternal;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -49,11 +50,11 @@ public class SipFromImpl implements SipFrom, CallOrigin {
 
   public static final String JSON_PROPERTY_SIP = "sip";
 
-  private OptionalValue<SipFromDetails> sip;
+  private OptionalValue<SipFromInternal> sip;
 
   public SipFromImpl() {}
 
-  protected SipFromImpl(OptionalValue<TypeEnum> type, OptionalValue<SipFromDetails> sip) {
+  protected SipFromImpl(OptionalValue<TypeEnum> type, OptionalValue<SipFromInternal> sip) {
     this.type = type;
     this.sip = sip;
   }
@@ -70,14 +71,30 @@ public class SipFromImpl implements SipFrom, CallOrigin {
   }
 
   @JsonIgnore
-  public SipFromDetails getSip() {
+  public SipFromInternal getSip() {
     return sip.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SIP)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<SipFromDetails> sip() {
+  public OptionalValue<SipFromInternal> sip() {
     return sip;
+  }
+
+  @JsonIgnore
+  public String getEndpoint() {
+    if (null == sip || !sip.isPresent() || null == sip.get().getEndpoint()) {
+      return null;
+    }
+    return sip.get().getEndpoint();
+  }
+
+  @JsonIgnore
+  public String getDisplayName() {
+    if (null == sip || !sip.isPresent() || null == sip.get().getDisplayName()) {
+      return null;
+    }
+    return sip.get().getDisplayName();
   }
 
   /** Return true if this SipFrom object is equal to o. */
@@ -121,7 +138,9 @@ public class SipFromImpl implements SipFrom, CallOrigin {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements SipFrom.Builder {
     OptionalValue<TypeEnum> type = OptionalValue.of(TypeEnum.SIP);
-    OptionalValue<SipFromDetails> sip = OptionalValue.empty();
+    OptionalValue<SipFromInternal> sip = OptionalValue.empty();
+
+    SipFromInternal.Builder _delegatedBuilder = null;
 
     @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
     Builder setType(TypeEnum type) {
@@ -133,12 +152,35 @@ public class SipFromImpl implements SipFrom, CallOrigin {
     }
 
     @JsonProperty(value = JSON_PROPERTY_SIP, required = true)
-    public Builder setSip(SipFromDetails sip) {
+    public Builder setSip(SipFromInternal sip) {
       this.sip = OptionalValue.of(sip);
       return this;
     }
 
+    @JsonIgnore
+    public Builder setEndpoint(String endpoint) {
+      getDelegatedBuilder().setEndpoint(endpoint);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setDisplayName(String displayName) {
+      getDelegatedBuilder().setDisplayName(displayName);
+      return this;
+    }
+
+    private SipFromInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = SipFromInternal.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
     public SipFrom build() {
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.sip = OptionalValue.of(this._delegatedBuilder.build());
+      }
       return new SipFromImpl(type, sip);
     }
   }

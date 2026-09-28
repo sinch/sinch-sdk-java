@@ -1,10 +1,12 @@
-package com.sinch.sdk.domains.voice.models.v2.destination;
+package com.sinch.sdk.domains.voice.models.v2.destination.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.voice.models.v2.destination.CallHeader;
+import com.sinch.sdk.domains.voice.models.v2.destination.StreamOptions;
 import java.util.List;
 
-@JsonDeserialize(builder = StreamDetailsImpl.Builder.class)
-public interface StreamDetails {
+@JsonDeserialize(builder = StreamInternalImpl.Builder.class)
+public interface StreamInternal {
 
   /**
    * WebSocket endpoint that will accept the incoming connection for real-time audio streaming. Must
@@ -38,7 +40,7 @@ public interface StreamDetails {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new StreamDetailsImpl.Builder();
+    return new StreamInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -76,6 +78,6 @@ public interface StreamDetails {
      *
      * @return The instance build with current builder values
      */
-    StreamDetails build();
+    StreamInternal build();
   }
 }

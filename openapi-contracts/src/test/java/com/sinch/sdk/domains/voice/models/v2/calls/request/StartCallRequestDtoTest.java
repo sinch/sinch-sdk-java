@@ -17,7 +17,6 @@ public class StartCallRequestDtoTest extends BaseTest {
   public static final StartCallRequest expectedStartCallRequest =
       StartCallRequest.builder()
           .setCommands(Arrays.asList(DialCommandDtoTest.expectedDialCommand))
-          .setServiceId("6e124178-c29d-46a5-943c-5c2ae544aade")
           .setIdempotencyKey("3f1c7a52-8d3e-4b9a-9c0e-2f6d1b7a4e21")
           .build();
 

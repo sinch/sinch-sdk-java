@@ -56,15 +56,6 @@ public interface StartBatchRequest {
   BatchOptions getBatchOptions();
 
   /**
-   * The ID of the service to use for the calls. If omitted, the project's default service is used.
-   *
-   * <p>Sent as the <code>serviceId</code> query parameter.
-   *
-   * @return serviceId
-   */
-  String getServiceId();
-
-  /**
    * Client-generated idempotency key to safely retry requests. The server uses this key to
    * recognize retries of the same request. If a request with the same key is received within 10
    * minutes, the server returns the cached response from the original request. Using a random UUID
@@ -116,15 +107,6 @@ public interface StartBatchRequest {
      * @see #getBatchOptions
      */
     Builder setBatchOptions(BatchOptions batchOptions);
-
-    /**
-     * see getter
-     *
-     * @param serviceId see getter
-     * @return Current builder
-     * @see #getServiceId
-     */
-    Builder setServiceId(String serviceId);
 
     /**
      * see getter

@@ -9,7 +9,9 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.voice.models.v2.destination.internal.StreamInternal;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({StreamImpl.JSON_PROPERTY_TYPE, StreamImpl.JSON_PROPERTY_STREAM})
@@ -49,11 +51,11 @@ public class StreamImpl implements Stream, CallDestination {
 
   public static final String JSON_PROPERTY_STREAM = "stream";
 
-  private OptionalValue<StreamDetails> stream;
+  private OptionalValue<StreamInternal> stream;
 
   public StreamImpl() {}
 
-  protected StreamImpl(OptionalValue<TypeEnum> type, OptionalValue<StreamDetails> stream) {
+  protected StreamImpl(OptionalValue<TypeEnum> type, OptionalValue<StreamInternal> stream) {
     this.type = type;
     this.stream = stream;
   }
@@ -70,14 +72,38 @@ public class StreamImpl implements Stream, CallDestination {
   }
 
   @JsonIgnore
-  public StreamDetails getStream() {
+  public StreamInternal getStream() {
     return stream.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_STREAM)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<StreamDetails> stream() {
+  public OptionalValue<StreamInternal> stream() {
     return stream;
+  }
+
+  @JsonIgnore
+  public String getEndpoint() {
+    if (null == stream || !stream.isPresent() || null == stream.get().getEndpoint()) {
+      return null;
+    }
+    return stream.get().getEndpoint();
+  }
+
+  @JsonIgnore
+  public StreamOptions getStreamOptions() {
+    if (null == stream || !stream.isPresent() || null == stream.get().getStreamOptions()) {
+      return null;
+    }
+    return stream.get().getStreamOptions();
+  }
+
+  @JsonIgnore
+  public List<CallHeader> getCallHeaders() {
+    if (null == stream || !stream.isPresent() || null == stream.get().getCallHeaders()) {
+      return null;
+    }
+    return stream.get().getCallHeaders();
   }
 
   /** Return true if this Stream object is equal to o. */
@@ -121,7 +147,9 @@ public class StreamImpl implements Stream, CallDestination {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements Stream.Builder {
     OptionalValue<TypeEnum> type = OptionalValue.of(TypeEnum.STREAM);
-    OptionalValue<StreamDetails> stream = OptionalValue.empty();
+    OptionalValue<StreamInternal> stream = OptionalValue.empty();
+
+    StreamInternal.Builder _delegatedBuilder = null;
 
     @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
     Builder setType(TypeEnum type) {
@@ -133,12 +161,41 @@ public class StreamImpl implements Stream, CallDestination {
     }
 
     @JsonProperty(value = JSON_PROPERTY_STREAM, required = true)
-    public Builder setStream(StreamDetails stream) {
+    public Builder setStream(StreamInternal stream) {
       this.stream = OptionalValue.of(stream);
       return this;
     }
 
+    @JsonIgnore
+    public Builder setEndpoint(String endpoint) {
+      getDelegatedBuilder().setEndpoint(endpoint);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setStreamOptions(StreamOptions streamOptions) {
+      getDelegatedBuilder().setStreamOptions(streamOptions);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setCallHeaders(List<CallHeader> callHeaders) {
+      getDelegatedBuilder().setCallHeaders(callHeaders);
+      return this;
+    }
+
+    private StreamInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = StreamInternal.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
     public Stream build() {
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.stream = OptionalValue.of(this._delegatedBuilder.build());
+      }
       return new StreamImpl(type, stream);
     }
   }

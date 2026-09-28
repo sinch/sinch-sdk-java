@@ -31,7 +31,6 @@ public class StartBatchRequestDtoTest extends BaseTest {
               Arrays.asList(
                   Collections.singletonMap("numberB", "+15559876543"), secondCallParameters))
           .setBatchOptions(BatchOptionsDtoTest.expectedBatchOptions)
-          .setServiceId("6e124178-c29d-46a5-943c-5c2ae544aade")
           .setIdempotencyKey("3f1c7a52-8d3e-4b9a-9c0e-2f6d1b7a4e21")
           .build();
 

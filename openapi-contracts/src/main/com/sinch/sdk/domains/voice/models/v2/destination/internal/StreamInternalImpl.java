@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v2.destination;
+package com.sinch.sdk.domains.voice.models.v2.destination.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,39 +7,41 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.voice.models.v2.destination.CallHeader;
+import com.sinch.sdk.domains.voice.models.v2.destination.StreamOptions;
 import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  SipDetailsImpl.JSON_PROPERTY_ENDPOINT,
-  SipDetailsImpl.JSON_PROPERTY_TRANSPORT,
-  SipDetailsImpl.JSON_PROPERTY_CALL_HEADERS
+  StreamInternalImpl.JSON_PROPERTY_ENDPOINT,
+  StreamInternalImpl.JSON_PROPERTY_STREAM_OPTIONS,
+  StreamInternalImpl.JSON_PROPERTY_CALL_HEADERS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class SipDetailsImpl implements SipDetails {
+public class StreamInternalImpl implements StreamInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ENDPOINT = "endpoint";
 
   private OptionalValue<String> endpoint;
 
-  public static final String JSON_PROPERTY_TRANSPORT = "transport";
+  public static final String JSON_PROPERTY_STREAM_OPTIONS = "streamOptions";
 
-  private OptionalValue<TransportEnum> transport;
+  private OptionalValue<StreamOptions> streamOptions;
 
   public static final String JSON_PROPERTY_CALL_HEADERS = "callHeaders";
 
-  private OptionalValue<List<SipCallHeader>> callHeaders;
+  private OptionalValue<List<CallHeader>> callHeaders;
 
-  public SipDetailsImpl() {}
+  public StreamInternalImpl() {}
 
-  protected SipDetailsImpl(
+  protected StreamInternalImpl(
       OptionalValue<String> endpoint,
-      OptionalValue<TransportEnum> transport,
-      OptionalValue<List<SipCallHeader>> callHeaders) {
+      OptionalValue<StreamOptions> streamOptions,
+      OptionalValue<List<CallHeader>> callHeaders) {
     this.endpoint = endpoint;
-    this.transport = transport;
+    this.streamOptions = streamOptions;
     this.callHeaders = callHeaders;
   }
 
@@ -55,28 +57,28 @@ public class SipDetailsImpl implements SipDetails {
   }
 
   @JsonIgnore
-  public TransportEnum getTransport() {
-    return transport.orElse(null);
+  public StreamOptions getStreamOptions() {
+    return streamOptions.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_TRANSPORT)
+  @JsonProperty(JSON_PROPERTY_STREAM_OPTIONS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<TransportEnum> transport() {
-    return transport;
+  public OptionalValue<StreamOptions> streamOptions() {
+    return streamOptions;
   }
 
   @JsonIgnore
-  public List<SipCallHeader> getCallHeaders() {
+  public List<CallHeader> getCallHeaders() {
     return callHeaders.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_CALL_HEADERS)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<SipCallHeader>> callHeaders() {
+  public OptionalValue<List<CallHeader>> callHeaders() {
     return callHeaders;
   }
 
-  /** Return true if this SipDetails object is equal to o. */
+  /** Return true if this StreamInternal object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -85,23 +87,23 @@ public class SipDetailsImpl implements SipDetails {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SipDetailsImpl sipDetails = (SipDetailsImpl) o;
-    return Objects.equals(this.endpoint, sipDetails.endpoint)
-        && Objects.equals(this.transport, sipDetails.transport)
-        && Objects.equals(this.callHeaders, sipDetails.callHeaders);
+    StreamInternalImpl streamDetails = (StreamInternalImpl) o;
+    return Objects.equals(this.endpoint, streamDetails.endpoint)
+        && Objects.equals(this.streamOptions, streamDetails.streamOptions)
+        && Objects.equals(this.callHeaders, streamDetails.callHeaders);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(endpoint, transport, callHeaders);
+    return Objects.hash(endpoint, streamOptions, callHeaders);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SipDetailsImpl {\n");
+    sb.append("class StreamInternalImpl {\n");
     sb.append("    endpoint: ").append(toIndentedString(endpoint)).append("\n");
-    sb.append("    transport: ").append(toIndentedString(transport)).append("\n");
+    sb.append("    streamOptions: ").append(toIndentedString(streamOptions)).append("\n");
     sb.append("    callHeaders: ").append(toIndentedString(callHeaders)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -118,10 +120,10 @@ public class SipDetailsImpl implements SipDetails {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements SipDetails.Builder {
+  static class Builder implements StreamInternal.Builder {
     OptionalValue<String> endpoint = OptionalValue.empty();
-    OptionalValue<TransportEnum> transport = OptionalValue.empty();
-    OptionalValue<List<SipCallHeader>> callHeaders = OptionalValue.empty();
+    OptionalValue<StreamOptions> streamOptions = OptionalValue.empty();
+    OptionalValue<List<CallHeader>> callHeaders = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_ENDPOINT, required = true)
     public Builder setEndpoint(String endpoint) {
@@ -129,20 +131,20 @@ public class SipDetailsImpl implements SipDetails {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_TRANSPORT)
-    public Builder setTransport(TransportEnum transport) {
-      this.transport = OptionalValue.of(transport);
+    @JsonProperty(JSON_PROPERTY_STREAM_OPTIONS)
+    public Builder setStreamOptions(StreamOptions streamOptions) {
+      this.streamOptions = OptionalValue.of(streamOptions);
       return this;
     }
 
     @JsonProperty(JSON_PROPERTY_CALL_HEADERS)
-    public Builder setCallHeaders(List<SipCallHeader> callHeaders) {
+    public Builder setCallHeaders(List<CallHeader> callHeaders) {
       this.callHeaders = OptionalValue.of(callHeaders);
       return this;
     }
 
-    public SipDetails build() {
-      return new SipDetailsImpl(endpoint, transport, callHeaders);
+    public StreamInternal build() {
+      return new StreamInternalImpl(endpoint, streamOptions, callHeaders);
     }
   }
 }

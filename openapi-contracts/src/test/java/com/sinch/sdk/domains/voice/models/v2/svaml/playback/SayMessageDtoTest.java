@@ -13,7 +13,11 @@ import org.skyscreamer.jsonassert.JSONAssert;
 public class SayMessageDtoTest extends BaseTest {
 
   public static final SayMessage expectedSayMessage =
-      SayMessage.builder().setSay(SayDtoTest.expectedSay).build();
+      SayMessage.builder()
+          .setText("Hello, your call is now connected.")
+          .setFormat(SayMessage.FormatEnum.TEXT)
+          .setVoiceName("Emma")
+          .build();
 
   @GivenTextResource("/domains/voice/v2/svaml/playback/SayMessageDto.json")
   String jsonSayMessage;

@@ -32,4 +32,10 @@ public class StopRecordingCommandDtoTest extends BaseTest {
 
     TestHelpers.recursiveEquals(deserialized, expectedStopRecordingCommand);
   }
+
+  @Test
+  void of() {
+    TestHelpers.recursiveEquals(
+        StopRecordingCommand.of("my-recording"), expectedStopRecordingCommand);
+  }
 }

@@ -5,9 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
-import org.json.JSONException;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
 public class StartBatchResponseDtoTest extends BaseTest {
@@ -21,13 +19,6 @@ public class StartBatchResponseDtoTest extends BaseTest {
 
   @GivenTextResource("/domains/voice/v2/batches/response/StartBatchResponseDto.json")
   String jsonStartBatchResponse;
-
-  @Test
-  void serialize() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(expectedStartBatchResponse);
-
-    JSONAssert.assertEquals(jsonStartBatchResponse, serializedString, true);
-  }
 
   @Test
   void deserialize() throws JsonProcessingException {

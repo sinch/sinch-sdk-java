@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.voice.models.v2.destination.internal.PhoneInternal;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -49,11 +50,11 @@ public class PhoneImpl implements Phone, CallOrigin, CallDestination {
 
   public static final String JSON_PROPERTY_PHONE = "phone";
 
-  private OptionalValue<PhoneDetails> phone;
+  private OptionalValue<PhoneInternal> phone;
 
   public PhoneImpl() {}
 
-  protected PhoneImpl(OptionalValue<TypeEnum> type, OptionalValue<PhoneDetails> phone) {
+  protected PhoneImpl(OptionalValue<TypeEnum> type, OptionalValue<PhoneInternal> phone) {
     this.type = type;
     this.phone = phone;
   }
@@ -70,14 +71,22 @@ public class PhoneImpl implements Phone, CallOrigin, CallDestination {
   }
 
   @JsonIgnore
-  public PhoneDetails getPhone() {
+  public PhoneInternal getPhone() {
     return phone.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_PHONE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<PhoneDetails> phone() {
+  public OptionalValue<PhoneInternal> phone() {
     return phone;
+  }
+
+  @JsonIgnore
+  public String getNumber() {
+    if (null == phone || !phone.isPresent() || null == phone.get().getNumber()) {
+      return null;
+    }
+    return phone.get().getNumber();
   }
 
   /** Return true if this Phone object is equal to o. */
@@ -121,7 +130,9 @@ public class PhoneImpl implements Phone, CallOrigin, CallDestination {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements Phone.Builder {
     OptionalValue<TypeEnum> type = OptionalValue.of(TypeEnum.PHONE);
-    OptionalValue<PhoneDetails> phone = OptionalValue.empty();
+    OptionalValue<PhoneInternal> phone = OptionalValue.empty();
+
+    PhoneInternal.Builder _delegatedBuilder = null;
 
     @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
     Builder setType(TypeEnum type) {
@@ -133,12 +144,29 @@ public class PhoneImpl implements Phone, CallOrigin, CallDestination {
     }
 
     @JsonProperty(value = JSON_PROPERTY_PHONE, required = true)
-    public Builder setPhone(PhoneDetails phone) {
+    public Builder setPhone(PhoneInternal phone) {
       this.phone = OptionalValue.of(phone);
       return this;
     }
 
+    @JsonIgnore
+    public Builder setNumber(String number) {
+      getDelegatedBuilder().setNumber(number);
+      return this;
+    }
+
+    private PhoneInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = PhoneInternal.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
     public Phone build() {
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.phone = OptionalValue.of(this._delegatedBuilder.build());
+      }
       return new PhoneImpl(type, phone);
     }
   }

@@ -7,13 +7,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface Phone extends CallOrigin, CallDestination {
 
   /**
-   * Get phone
+   * E.164 Phone number
    *
    * <p>Field is required
    *
-   * @return phone
+   * @return number
    */
-  PhoneDetails getPhone();
+  String getNumber();
 
   /**
    * Getting builder
@@ -30,11 +30,11 @@ public interface Phone extends CallOrigin, CallDestination {
     /**
      * see getter
      *
-     * @param phone see getter
+     * @param number see getter
      * @return Current builder
-     * @see #getPhone
+     * @see #getNumber
      */
-    Builder setPhone(PhoneDetails phone);
+    Builder setNumber(String number);
 
     /**
      * Create instance

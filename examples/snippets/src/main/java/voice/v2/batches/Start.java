@@ -12,12 +12,10 @@ import com.sinch.sdk.domains.voice.api.v2.BatchesService;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequest;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.StartBatchResponse;
 import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
-import com.sinch.sdk.domains.voice.models.v2.destination.PhoneDetails;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.CallEvents;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.DialCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.HangupCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessagesCommand;
-import com.sinch.sdk.domains.voice.models.v2.svaml.playback.Say;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.SayMessage;
 import com.sinch.sdk.models.Configuration;
 import java.util.Arrays;
@@ -60,11 +58,8 @@ public class Start {
             .setMessages(
                 Collections.singletonList(
                     SayMessage.builder()
-                        .setSay(
-                            Say.builder()
-                                .setText("Hello, your call is now connected.")
-                                .setVoiceName("Emma")
-                                .build())
+                        .setText("Hello, your call is now connected.")
+                        .setVoiceName("Emma")
                         .build()))
             .build();
 
@@ -72,14 +67,8 @@ public class Start {
     DialCommand dial =
         DialCommand.builder()
             .setCallName("Java_SDK_Snippet_Call")
-            .setFrom(
-                Phone.builder()
-                    .setPhone(PhoneDetails.builder().setNumber(sinchPhoneNumber).build())
-                    .build())
-            .setTo(
-                Phone.builder()
-                    .setPhone(PhoneDetails.builder().setNumber("@toNumber").build())
-                    .build())
+            .setFrom(Phone.builder().setNumber(sinchPhoneNumber).build())
+            .setTo(Phone.builder().setNumber("@toNumber").build())
             .setEvents(
                 CallEvents.builder()
                     .setOnAnswer(Collections.singletonList(greeting))

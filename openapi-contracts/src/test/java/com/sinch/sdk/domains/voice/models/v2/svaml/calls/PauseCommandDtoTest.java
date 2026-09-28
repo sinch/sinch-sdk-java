@@ -31,4 +31,9 @@ public class PauseCommandDtoTest extends BaseTest {
 
     TestHelpers.recursiveEquals(deserialized, expectedPauseCommand);
   }
+
+  @Test
+  void of() {
+    TestHelpers.recursiveEquals(PauseCommand.of(1500), expectedPauseCommand);
+  }
 }

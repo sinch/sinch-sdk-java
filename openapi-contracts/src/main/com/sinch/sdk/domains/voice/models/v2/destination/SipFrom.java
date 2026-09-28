@@ -6,13 +6,23 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface SipFrom extends CallOrigin {
 
   /**
-   * Get sip
+   * SIP URI of the originating endpoint. Both <code>sip:</code> (unencrypted) and <code>sips:
+   * </code> (TLS-encrypted) schemes are supported.
    *
    * <p>Field is required
    *
-   * @return sip
+   * @return endpoint
    */
-  SipFromDetails getSip();
+  String getEndpoint();
+
+  /**
+   * Display name presented to the called party as the caller identity. Transmitted as the display
+   * name part of the SIP <code>From</code> header (for example, <code>
+   * Alice &lt;sip:alice&#64;example.com&gt;</code>).
+   *
+   * @return displayName
+   */
+  String getDisplayName();
 
   /**
    * Getting builder
@@ -29,11 +39,20 @@ public interface SipFrom extends CallOrigin {
     /**
      * see getter
      *
-     * @param sip see getter
+     * @param endpoint see getter
      * @return Current builder
-     * @see #getSip
+     * @see #getEndpoint
      */
-    Builder setSip(SipFromDetails sip);
+    Builder setEndpoint(String endpoint);
+
+    /**
+     * see getter
+     *
+     * @param displayName see getter
+     * @return Current builder
+     * @see #getDisplayName
+     */
+    Builder setDisplayName(String displayName);
 
     /**
      * Create instance

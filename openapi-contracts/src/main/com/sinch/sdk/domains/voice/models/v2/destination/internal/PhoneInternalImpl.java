@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v2.svaml.playback;
+package com.sinch.sdk.domains.voice.models.v2.destination.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,34 +9,34 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
-@JsonPropertyOrder({PlayImpl.JSON_PROPERTY_URL})
+@JsonPropertyOrder({PhoneInternalImpl.JSON_PROPERTY_NUMBER})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class PlayImpl implements Play {
+public class PhoneInternalImpl implements PhoneInternal {
   private static final long serialVersionUID = 1L;
 
-  public static final String JSON_PROPERTY_URL = "url";
+  public static final String JSON_PROPERTY_NUMBER = "number";
 
-  private OptionalValue<String> url;
+  private OptionalValue<String> number;
 
-  public PlayImpl() {}
+  public PhoneInternalImpl() {}
 
-  protected PlayImpl(OptionalValue<String> url) {
-    this.url = url;
+  protected PhoneInternalImpl(OptionalValue<String> number) {
+    this.number = number;
   }
 
   @JsonIgnore
-  public String getUrl() {
-    return url.orElse(null);
+  public String getNumber() {
+    return number.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_URL)
+  @JsonProperty(JSON_PROPERTY_NUMBER)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<String> url() {
-    return url;
+  public OptionalValue<String> number() {
+    return number;
   }
 
-  /** Return true if this Play object is equal to o. */
+  /** Return true if this PhoneInternal object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -45,20 +45,20 @@ public class PlayImpl implements Play {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PlayImpl play = (PlayImpl) o;
-    return Objects.equals(this.url, play.url);
+    PhoneInternalImpl phoneDetails = (PhoneInternalImpl) o;
+    return Objects.equals(this.number, phoneDetails.number);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(url);
+    return Objects.hash(number);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PlayImpl {\n");
-    sb.append("    url: ").append(toIndentedString(url)).append("\n");
+    sb.append("class PhoneInternalImpl {\n");
+    sb.append("    number: ").append(toIndentedString(number)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -74,17 +74,17 @@ public class PlayImpl implements Play {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements Play.Builder {
-    OptionalValue<String> url = OptionalValue.empty();
+  static class Builder implements PhoneInternal.Builder {
+    OptionalValue<String> number = OptionalValue.empty();
 
-    @JsonProperty(value = JSON_PROPERTY_URL, required = true)
-    public Builder setUrl(String url) {
-      this.url = OptionalValue.of(url);
+    @JsonProperty(value = JSON_PROPERTY_NUMBER, required = true)
+    public Builder setNumber(String number) {
+      this.number = OptionalValue.of(number);
       return this;
     }
 
-    public Play build() {
-      return new PlayImpl(url);
+    public PhoneInternal build() {
+      return new PhoneInternalImpl(number);
     }
   }
 }

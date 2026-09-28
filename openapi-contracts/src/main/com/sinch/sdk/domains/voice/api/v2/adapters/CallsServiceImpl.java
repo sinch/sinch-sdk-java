@@ -10,12 +10,13 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
+import com.sinch.sdk.core.http.IdempotencyKey;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
-import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.CallsService {
@@ -53,9 +53,24 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Call
   @Override
   public StartCallResponse start(StartCallRequest startCallRequest) throws ApiException {
 
-    LOGGER.finest("[start]" + " " + "startCallRequest: " + startCallRequest);
+    return start((StartCallQueryParameters) null, startCallRequest);
+  }
 
-    HttpRequest httpRequest = startRequestBuilder(startCallRequest);
+  @Override
+  public StartCallResponse start(
+      StartCallQueryParameters queryParameter, StartCallRequest startCallRequest)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[start]"
+            + " "
+            + "queryParameter: "
+            + queryParameter
+            + ", "
+            + "startCallRequest: "
+            + startCallRequest);
+
+    HttpRequest httpRequest = startRequestBuilder(queryParameter, startCallRequest);
     HttpResponse response =
         httpClient.invokeAPI(
             this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
@@ -72,7 +87,9 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Call
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
   }
 
-  private HttpRequest startRequestBuilder(StartCallRequest startCallRequest) throws ApiException {
+  private HttpRequest startRequestBuilder(
+      StartCallQueryParameters queryParameter, StartCallRequest startCallRequest)
+      throws ApiException {
     // verify the required parameter 'this.projectId' is set
     if (this.projectId == null) {
       throw new ApiException(
@@ -91,9 +108,9 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Call
                 URLPathUtils.encodePathSegment(this.projectId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
-    if (null != startCallRequest.getServiceId()) {
+    if (null != queryParameter) {
       URLParameterUtils.addQueryParam(
-          OptionalValue.of(startCallRequest.getServiceId()),
+          queryParameter.getServiceId(),
           "serviceId",
           URLParameter.form,
           null,
@@ -105,10 +122,10 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Call
     // re-sends this same request on every retry, so the key does not change between attempts.
     String idempotencyKey = startCallRequest.getIdempotencyKey();
     if (StringUtil.isEmpty(idempotencyKey)) {
-      idempotencyKey = UUID.randomUUID().toString();
+      idempotencyKey = IdempotencyKey.generate();
     }
     Map<String, String> localVarHeaderParams = new HashMap<>();
-    localVarHeaderParams.put("Idempotency-Key", idempotencyKey);
+    localVarHeaderParams.put(IdempotencyKey.HEADER, idempotencyKey);
 
     final Collection<String> localVarAccepts =
         Arrays.asList("application/json", "application/problem+json");

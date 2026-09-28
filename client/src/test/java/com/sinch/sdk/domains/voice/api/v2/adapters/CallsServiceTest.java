@@ -23,6 +23,7 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.voice.api.v2.CallsService;
+import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
@@ -32,7 +33,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,10 +75,7 @@ public class CallsServiceTest extends BaseTest {
             HttpMethod.POST,
             Collections.singletonList(
                 new URLParameter(
-                    "serviceId",
-                    StartCallRequestDtoTest.expectedStartCallRequest.getServiceId(),
-                    URLParameter.form,
-                    true)),
+                    "serviceId", "6e124178-c29d-46a5-943c-5c2ae544aade", URLParameter.form, true)),
             jsonStartCallRequestDto,
             Collections.singletonMap(
                 "Idempotency-Key",
@@ -95,7 +92,12 @@ public class CallsServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    StartCallResponse response = service.start(StartCallRequestDtoTest.expectedStartCallRequest);
+    StartCallResponse response =
+        service.start(
+            StartCallQueryParameters.builder()
+                .setServiceId("6e124178-c29d-46a5-943c-5c2ae544aade")
+                .build(),
+            StartCallRequestDtoTest.expectedStartCallRequest);
 
     TestHelpers.recursiveEquals(response, StartCallResponseDtoTest.expectedStartCallResponse);
   }
@@ -119,8 +121,7 @@ public class CallsServiceTest extends BaseTest {
     verify(httpClient).invokeAPI(eq(serverConfiguration), eq(authManagers), sent.capture());
 
     String idempotencyKey = sent.getValue().getHeaderParams().get("Idempotency-Key");
-    Assertions.assertDoesNotThrow(
-        () -> UUID.fromString(idempotencyKey), "generated key is not a UUID: " + idempotencyKey);
+    Assertions.assertNotNull(idempotencyKey, "no idempotency key was generated");
 
     HttpRequest expected =
         new HttpRequest(

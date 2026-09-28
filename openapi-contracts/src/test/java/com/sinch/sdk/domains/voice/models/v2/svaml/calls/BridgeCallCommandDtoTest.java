@@ -32,4 +32,9 @@ public class BridgeCallCommandDtoTest extends BaseTest {
 
     TestHelpers.recursiveEquals(deserialized, expectedBridgeCallCommand);
   }
+
+  @Test
+  void of() {
+    TestHelpers.recursiveEquals(BridgeCallCommand.of("bridge"), expectedBridgeCallCommand);
+  }
 }

@@ -1,10 +1,11 @@
-package com.sinch.sdk.domains.voice.models.v2.destination;
+package com.sinch.sdk.domains.voice.models.v2.destination.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.voice.models.v2.destination.CallHeader;
 import java.util.List;
 
-@JsonDeserialize(builder = VoiceRelayDetailsImpl.Builder.class)
-public interface VoiceRelayDetails {
+@JsonDeserialize(builder = VoiceRelayInternalImpl.Builder.class)
+public interface VoiceRelayInternal {
 
   /**
    * URL to the server that will accept the web-socket request
@@ -68,7 +69,7 @@ public interface VoiceRelayDetails {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new VoiceRelayDetailsImpl.Builder();
+    return new VoiceRelayInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -124,6 +125,6 @@ public interface VoiceRelayDetails {
      *
      * @return The instance build with current builder values
      */
-    VoiceRelayDetails build();
+    VoiceRelayInternal build();
   }
 }

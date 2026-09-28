@@ -25,6 +25,16 @@ public interface BridgeCallCommand extends SvamlCommand {
   String getBridgeName();
 
   /**
+   * Create a bridgeCall command joining the given bridge
+   *
+   * @param bridgeName see {@link #getBridgeName()}
+   * @return A new BridgeCallCommand
+   */
+  static BridgeCallCommand of(String bridgeName) {
+    return builder().setBridgeName(bridgeName).build();
+  }
+
+  /**
    * Getting builder
    *
    * @return New Builder instance

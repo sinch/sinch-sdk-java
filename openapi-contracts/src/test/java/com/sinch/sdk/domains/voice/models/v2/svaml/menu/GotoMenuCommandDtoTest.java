@@ -32,4 +32,9 @@ public class GotoMenuCommandDtoTest extends BaseTest {
 
     TestHelpers.recursiveEquals(deserialized, expectedGotoMenuCommand);
   }
+
+  @Test
+  void of() {
+    TestHelpers.recursiveEquals(GotoMenuCommand.of("main"), expectedGotoMenuCommand);
+  }
 }

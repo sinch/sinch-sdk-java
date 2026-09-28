@@ -1,18 +1,18 @@
-package com.sinch.sdk.domains.voice.models.v2.destination;
+package com.sinch.sdk.domains.voice.models.v2.svaml.playback.internal;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonDeserialize(builder = PhoneDetailsImpl.Builder.class)
-public interface PhoneDetails {
+@JsonDeserialize(builder = PlayMessageInternalImpl.Builder.class)
+public interface PlayMessageInternal {
 
   /**
-   * E.164 Phone number
+   * URL of the media to send
    *
    * <p>Field is required
    *
-   * @return number
+   * @return url
    */
-  String getNumber();
+  String getUrl();
 
   /**
    * Getting builder
@@ -20,7 +20,7 @@ public interface PhoneDetails {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new PhoneDetailsImpl.Builder();
+    return new PlayMessageInternalImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -29,17 +29,17 @@ public interface PhoneDetails {
     /**
      * see getter
      *
-     * @param number see getter
+     * @param url see getter
      * @return Current builder
-     * @see #getNumber
+     * @see #getUrl
      */
-    Builder setNumber(String number);
+    Builder setUrl(String url);
 
     /**
      * Create instance
      *
      * @return The instance build with current builder values
      */
-    PhoneDetails build();
+    PlayMessageInternal build();
   }
 }

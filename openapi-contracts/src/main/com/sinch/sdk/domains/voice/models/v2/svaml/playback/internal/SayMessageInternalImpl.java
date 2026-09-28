@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v2.svaml.playback;
+package com.sinch.sdk.domains.voice.models.v2.svaml.playback.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,16 +7,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.voice.models.v2.svaml.playback.SayMessage.FormatEnum;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  SayImpl.JSON_PROPERTY_TEXT,
-  SayImpl.JSON_PROPERTY_FORMAT,
-  SayImpl.JSON_PROPERTY_VOICE_NAME
+  SayMessageInternalImpl.JSON_PROPERTY_TEXT,
+  SayMessageInternalImpl.JSON_PROPERTY_FORMAT,
+  SayMessageInternalImpl.JSON_PROPERTY_VOICE_NAME
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class SayImpl implements Say {
+public class SayMessageInternalImpl implements SayMessageInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_TEXT = "text";
@@ -31,9 +32,9 @@ public class SayImpl implements Say {
 
   private OptionalValue<String> voiceName;
 
-  public SayImpl() {}
+  public SayMessageInternalImpl() {}
 
-  protected SayImpl(
+  protected SayMessageInternalImpl(
       OptionalValue<String> text,
       OptionalValue<FormatEnum> format,
       OptionalValue<String> voiceName) {
@@ -75,7 +76,7 @@ public class SayImpl implements Say {
     return voiceName;
   }
 
-  /** Return true if this Say object is equal to o. */
+  /** Return true if this SayMessageInternal object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -84,7 +85,7 @@ public class SayImpl implements Say {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SayImpl say = (SayImpl) o;
+    SayMessageInternalImpl say = (SayMessageInternalImpl) o;
     return Objects.equals(this.text, say.text)
         && Objects.equals(this.format, say.format)
         && Objects.equals(this.voiceName, say.voiceName);
@@ -98,7 +99,7 @@ public class SayImpl implements Say {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SayImpl {\n");
+    sb.append("class SayMessageInternalImpl {\n");
     sb.append("    text: ").append(toIndentedString(text)).append("\n");
     sb.append("    format: ").append(toIndentedString(format)).append("\n");
     sb.append("    voiceName: ").append(toIndentedString(voiceName)).append("\n");
@@ -117,7 +118,7 @@ public class SayImpl implements Say {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements Say.Builder {
+  static class Builder implements SayMessageInternal.Builder {
     OptionalValue<String> text = OptionalValue.empty();
     OptionalValue<FormatEnum> format = OptionalValue.empty();
     OptionalValue<String> voiceName = OptionalValue.empty();
@@ -140,8 +141,8 @@ public class SayImpl implements Say {
       return this;
     }
 
-    public Say build() {
-      return new SayImpl(text, format, voiceName);
+    public SayMessageInternal build() {
+      return new SayMessageInternalImpl(text, format, voiceName);
     }
   }
 }

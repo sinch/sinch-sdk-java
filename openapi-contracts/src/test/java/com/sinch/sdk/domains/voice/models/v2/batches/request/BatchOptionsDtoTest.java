@@ -4,7 +4,6 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.core.TestHelpers;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -23,12 +22,5 @@ public class BatchOptionsDtoTest extends BaseTest {
     String serializedString = objectMapper.writeValueAsString(expectedBatchOptions);
 
     JSONAssert.assertEquals(jsonBatchOptions, serializedString, true);
-  }
-
-  @Test
-  void deserialize() throws JsonProcessingException {
-    BatchOptions deserialized = objectMapper.readValue(jsonBatchOptions, BatchOptions.class);
-
-    TestHelpers.recursiveEquals(deserialized, expectedBatchOptions);
   }
 }

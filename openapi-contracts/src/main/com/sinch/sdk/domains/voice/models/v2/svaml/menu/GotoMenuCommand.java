@@ -23,6 +23,16 @@ public interface GotoMenuCommand extends SvamlCommand {
   String getMenuName();
 
   /**
+   * Create a gotoMenu command jumping to the given menu
+   *
+   * @param menuName see {@link #getMenuName()}
+   * @return A new GotoMenuCommand
+   */
+  static GotoMenuCommand of(String menuName) {
+    return builder().setMenuName(menuName).build();
+  }
+
+  /**
    * Getting builder
    *
    * @return New Builder instance

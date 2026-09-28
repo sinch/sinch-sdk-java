@@ -1,6 +1,10 @@
 package com.sinch.sdk.domains.voice.models.v2.svaml.playback;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.core.utils.EnumDynamic;
+import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * A text-to-speech (TTS) message item. The platform synthesizes the provided text into speech and
@@ -9,14 +13,63 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize(builder = SayMessageImpl.Builder.class)
 public interface SayMessage extends Message {
 
+  /** Gets or Sets format */
+  public class FormatEnum extends EnumDynamic<String, FormatEnum> {
+    public static final FormatEnum TEXT = new FormatEnum("TEXT");
+
+    public static final FormatEnum SSML = new FormatEnum("SSML");
+
+    private static final EnumSupportDynamic<String, FormatEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(FormatEnum.class, FormatEnum::new, Arrays.asList(TEXT, SSML));
+
+    private FormatEnum(String value) {
+      super(value);
+    }
+
+    public static Stream<FormatEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static FormatEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(FormatEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
+
   /**
-   * Get say
+   * The text to be synthesized into speech.
+   *
+   * <p>If <code>format</code> is <code>TEXT</code> (default), provide plain text. If <code>format
+   * </code> is <code>SSML</code>, provide a valid SSML document (for example, <code>
+   * &lt;speak&gt;...&lt;/speak&gt;</code>).
    *
    * <p>Field is required
    *
-   * @return say
+   * @return text
    */
-  Say getSay();
+  String getText();
+
+  /**
+   * Format of the message
+   *
+   * @return format
+   */
+  FormatEnum getFormat();
+
+  /**
+   * The name of the voice to use for text-to-speech synthesis.
+   *
+   * <p>Supported voices include: Emma, Brian, and others. For a complete list of available voices
+   * and their characteristics, see the Text-to-Speech Voices documentation.
+   *
+   * <p>Field is required
+   *
+   * @return voiceName
+   */
+  String getVoiceName();
 
   /**
    * Getting builder
@@ -33,11 +86,29 @@ public interface SayMessage extends Message {
     /**
      * see getter
      *
-     * @param say see getter
+     * @param text see getter
      * @return Current builder
-     * @see #getSay
+     * @see #getText
      */
-    Builder setSay(Say say);
+    Builder setText(String text);
+
+    /**
+     * see getter
+     *
+     * @param format see getter
+     * @return Current builder
+     * @see #getFormat
+     */
+    Builder setFormat(FormatEnum format);
+
+    /**
+     * see getter
+     *
+     * @param voiceName see getter
+     * @return Current builder
+     * @see #getVoiceName
+     */
+    Builder setVoiceName(String voiceName);
 
     /**
      * Create instance

@@ -34,8 +34,6 @@ public class StartBatchRequestImpl implements StartBatchRequest {
 
   private OptionalValue<BatchOptions> batchOptions;
 
-  private OptionalValue<String> serviceId;
-
   private OptionalValue<String> idempotencyKey;
 
   public StartBatchRequestImpl() {}
@@ -44,12 +42,10 @@ public class StartBatchRequestImpl implements StartBatchRequest {
       OptionalValue<List<SvamlCommand>> commands,
       OptionalValue<List<Map<String, String>>> parameters,
       OptionalValue<BatchOptions> batchOptions,
-      OptionalValue<String> serviceId,
       OptionalValue<String> idempotencyKey) {
     this.commands = commands;
     this.parameters = parameters;
     this.batchOptions = batchOptions;
-    this.serviceId = serviceId;
     this.idempotencyKey = idempotencyKey;
   }
 
@@ -87,16 +83,6 @@ public class StartBatchRequestImpl implements StartBatchRequest {
   }
 
   @JsonIgnore
-  public String getServiceId() {
-    return serviceId.orElse(null);
-  }
-
-  @JsonIgnore
-  public OptionalValue<String> serviceId() {
-    return serviceId;
-  }
-
-  @JsonIgnore
   public String getIdempotencyKey() {
     return idempotencyKey.orElse(null);
   }
@@ -119,13 +105,12 @@ public class StartBatchRequestImpl implements StartBatchRequest {
     return Objects.equals(this.commands, startBatchRequest.commands)
         && Objects.equals(this.parameters, startBatchRequest.parameters)
         && Objects.equals(this.batchOptions, startBatchRequest.batchOptions)
-        && Objects.equals(this.serviceId, startBatchRequest.serviceId)
         && Objects.equals(this.idempotencyKey, startBatchRequest.idempotencyKey);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(commands, parameters, batchOptions, serviceId, idempotencyKey);
+    return Objects.hash(commands, parameters, batchOptions, idempotencyKey);
   }
 
   @Override
@@ -135,7 +120,6 @@ public class StartBatchRequestImpl implements StartBatchRequest {
     sb.append("    commands: ").append(toIndentedString(commands)).append("\n");
     sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
     sb.append("    batchOptions: ").append(toIndentedString(batchOptions)).append("\n");
-    sb.append("    serviceId: ").append(toIndentedString(serviceId)).append("\n");
     sb.append("    idempotencyKey: ").append(toIndentedString(idempotencyKey)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -156,7 +140,6 @@ public class StartBatchRequestImpl implements StartBatchRequest {
     OptionalValue<List<SvamlCommand>> commands = OptionalValue.empty();
     OptionalValue<List<Map<String, String>>> parameters = OptionalValue.empty();
     OptionalValue<BatchOptions> batchOptions = OptionalValue.empty();
-    OptionalValue<String> serviceId = OptionalValue.empty();
     OptionalValue<String> idempotencyKey = OptionalValue.empty();
 
     @JsonProperty(value = JSON_PROPERTY_COMMANDS, required = true)
@@ -178,20 +161,13 @@ public class StartBatchRequestImpl implements StartBatchRequest {
     }
 
     @JsonIgnore
-    public Builder setServiceId(String serviceId) {
-      this.serviceId = OptionalValue.of(serviceId);
-      return this;
-    }
-
-    @JsonIgnore
     public Builder setIdempotencyKey(String idempotencyKey) {
       this.idempotencyKey = OptionalValue.of(idempotencyKey);
       return this;
     }
 
     public StartBatchRequest build() {
-      return new StartBatchRequestImpl(
-          commands, parameters, batchOptions, serviceId, idempotencyKey);
+      return new StartBatchRequestImpl(commands, parameters, batchOptions, idempotencyKey);
     }
   }
 }

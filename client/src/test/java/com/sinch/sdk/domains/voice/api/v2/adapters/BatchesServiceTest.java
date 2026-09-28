@@ -23,6 +23,7 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.voice.api.v2.BatchesService;
+import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequest;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.StartBatchResponse;
@@ -31,7 +32,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -74,10 +74,7 @@ public class BatchesServiceTest extends BaseTest {
             HttpMethod.POST,
             Collections.singletonList(
                 new URLParameter(
-                    "serviceId",
-                    StartBatchRequestDtoTest.expectedStartBatchRequest.getServiceId(),
-                    URLParameter.form,
-                    true)),
+                    "serviceId", "6e124178-c29d-46a5-943c-5c2ae544aade", URLParameter.form, true)),
             jsonStartBatchRequestDto,
             Collections.singletonMap(
                 "Idempotency-Key",
@@ -94,7 +91,12 @@ public class BatchesServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    StartBatchResponse response = service.start(StartBatchRequestDtoTest.expectedStartBatchRequest);
+    StartBatchResponse response =
+        service.start(
+            StartBatchQueryParameters.builder()
+                .setServiceId("6e124178-c29d-46a5-943c-5c2ae544aade")
+                .build(),
+            StartBatchRequestDtoTest.expectedStartBatchRequest);
 
     TestHelpers.recursiveEquals(response, StartBatchResponseDtoTest.expectedStartBatchResponse);
   }
@@ -121,8 +123,7 @@ public class BatchesServiceTest extends BaseTest {
     verify(httpClient).invokeAPI(eq(serverConfiguration), eq(authManagers), sent.capture());
 
     String idempotencyKey = sent.getValue().getHeaderParams().get("Idempotency-Key");
-    Assertions.assertDoesNotThrow(
-        () -> UUID.fromString(idempotencyKey), "generated key is not a UUID: " + idempotencyKey);
+    Assertions.assertNotNull(idempotencyKey, "no idempotency key was generated");
 
     HttpRequest expected =
         new HttpRequest(

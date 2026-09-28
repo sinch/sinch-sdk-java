@@ -12,12 +12,10 @@ import com.sinch.sdk.domains.voice.api.v2.CallsService;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
 import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
-import com.sinch.sdk.domains.voice.models.v2.destination.PhoneDetails;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.CallEvents;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.DialCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.HangupCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessagesCommand;
-import com.sinch.sdk.domains.voice.models.v2.svaml.playback.Say;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.SayMessage;
 import com.sinch.sdk.models.Configuration;
 import java.util.Collections;
@@ -56,25 +54,16 @@ public class Start {
             .setMessages(
                 Collections.singletonList(
                     SayMessage.builder()
-                        .setSay(
-                            Say.builder()
-                                .setText("Hello, your call is now connected.")
-                                .setVoiceName("Emma")
-                                .build())
+                        .setText("Hello, your call is now connected.")
+                        .setVoiceName("Emma")
                         .build()))
             .build();
 
     DialCommand dial =
         DialCommand.builder()
             .setCallName("Java_SDK_Snippet_Call")
-            .setFrom(
-                Phone.builder()
-                    .setPhone(PhoneDetails.builder().setNumber(sinchPhoneNumber).build())
-                    .build())
-            .setTo(
-                Phone.builder()
-                    .setPhone(PhoneDetails.builder().setNumber(recipientPhoneNumber).build())
-                    .build())
+            .setFrom(Phone.builder().setNumber(sinchPhoneNumber).build())
+            .setTo(Phone.builder().setNumber(recipientPhoneNumber).build())
             .setEvents(
                 CallEvents.builder()
                     .setOnAnswer(Collections.singletonList(greeting))

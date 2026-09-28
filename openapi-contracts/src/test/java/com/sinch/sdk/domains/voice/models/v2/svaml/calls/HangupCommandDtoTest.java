@@ -31,4 +31,16 @@ public class HangupCommandDtoTest extends BaseTest {
 
     TestHelpers.recursiveEquals(deserialized, expectedHangupCommand);
   }
+
+  @Test
+  void of() {
+    TestHelpers.recursiveEquals(HangupCommand.of("origin"), expectedHangupCommand);
+  }
+
+  @Test
+  void serializeHangupCommandConstant() throws JsonProcessingException, JSONException {
+    String serializedString = objectMapper.writeValueAsString(HangupCommand.HANGUP_COMMAND);
+
+    JSONAssert.assertEquals("{\"command\": \"hangup\"}", serializedString, true);
+  }
 }

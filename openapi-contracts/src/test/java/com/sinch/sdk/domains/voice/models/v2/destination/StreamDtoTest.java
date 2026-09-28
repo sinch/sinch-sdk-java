@@ -5,6 +5,7 @@ import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
+import java.util.Arrays;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -13,7 +14,11 @@ import org.skyscreamer.jsonassert.JSONAssert;
 public class StreamDtoTest extends BaseTest {
 
   public static final Stream expectedStream =
-      Stream.builder().setStream(StreamDetailsDtoTest.expectedStreamDetails).build();
+      Stream.builder()
+          .setEndpoint("wss://myapp.example.com/audio")
+          .setStreamOptions(StreamOptionsDtoTest.expectedStreamOptions)
+          .setCallHeaders(Arrays.asList(CallHeaderDtoTest.expectedCallHeader))
+          .build();
 
   @GivenTextResource("/domains/voice/v2/destination/StreamDto.json")
   String jsonStream;

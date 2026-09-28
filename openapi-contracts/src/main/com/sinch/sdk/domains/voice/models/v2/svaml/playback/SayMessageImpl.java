@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import com.sinch.sdk.domains.voice.models.v2.svaml.playback.internal.SayMessageInternal;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -49,11 +50,11 @@ public class SayMessageImpl implements SayMessage, Message {
 
   public static final String JSON_PROPERTY_SAY = "say";
 
-  private OptionalValue<Say> say;
+  private OptionalValue<SayMessageInternal> say;
 
   public SayMessageImpl() {}
 
-  protected SayMessageImpl(OptionalValue<TypeEnum> type, OptionalValue<Say> say) {
+  protected SayMessageImpl(OptionalValue<TypeEnum> type, OptionalValue<SayMessageInternal> say) {
     this.type = type;
     this.say = say;
   }
@@ -70,14 +71,38 @@ public class SayMessageImpl implements SayMessage, Message {
   }
 
   @JsonIgnore
-  public Say getSay() {
+  public SayMessageInternal getSay() {
     return say.orElse(null);
   }
 
   @JsonProperty(JSON_PROPERTY_SAY)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public OptionalValue<Say> say() {
+  public OptionalValue<SayMessageInternal> say() {
     return say;
+  }
+
+  @JsonIgnore
+  public String getText() {
+    if (null == say || !say.isPresent() || null == say.get().getText()) {
+      return null;
+    }
+    return say.get().getText();
+  }
+
+  @JsonIgnore
+  public FormatEnum getFormat() {
+    if (null == say || !say.isPresent() || null == say.get().getFormat()) {
+      return null;
+    }
+    return say.get().getFormat();
+  }
+
+  @JsonIgnore
+  public String getVoiceName() {
+    if (null == say || !say.isPresent() || null == say.get().getVoiceName()) {
+      return null;
+    }
+    return say.get().getVoiceName();
   }
 
   /** Return true if this SayMessage object is equal to o. */
@@ -121,7 +146,9 @@ public class SayMessageImpl implements SayMessage, Message {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements SayMessage.Builder {
     OptionalValue<TypeEnum> type = OptionalValue.of(TypeEnum.SAY);
-    OptionalValue<Say> say = OptionalValue.empty();
+    OptionalValue<SayMessageInternal> say = OptionalValue.empty();
+
+    SayMessageInternal.Builder _delegatedBuilder = null;
 
     @JsonProperty(value = JSON_PROPERTY_TYPE, required = true)
     Builder setType(TypeEnum type) {
@@ -133,12 +160,41 @@ public class SayMessageImpl implements SayMessage, Message {
     }
 
     @JsonProperty(value = JSON_PROPERTY_SAY, required = true)
-    public Builder setSay(Say say) {
+    public Builder setSay(SayMessageInternal say) {
       this.say = OptionalValue.of(say);
       return this;
     }
 
+    @JsonIgnore
+    public Builder setText(String text) {
+      getDelegatedBuilder().setText(text);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setFormat(FormatEnum format) {
+      getDelegatedBuilder().setFormat(format);
+      return this;
+    }
+
+    @JsonIgnore
+    public Builder setVoiceName(String voiceName) {
+      getDelegatedBuilder().setVoiceName(voiceName);
+      return this;
+    }
+
+    private SayMessageInternal.Builder getDelegatedBuilder() {
+      if (null == _delegatedBuilder) {
+        this._delegatedBuilder = SayMessageInternal.builder();
+      }
+      return this._delegatedBuilder;
+    }
+
     public SayMessage build() {
+      // delegated builder was used: filling the related source of delegation field
+      if (null != this._delegatedBuilder) {
+        this.say = OptionalValue.of(this._delegatedBuilder.build());
+      }
       return new SayMessageImpl(type, say);
     }
   }

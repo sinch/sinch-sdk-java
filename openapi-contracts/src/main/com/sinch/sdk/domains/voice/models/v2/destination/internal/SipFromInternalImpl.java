@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v2.destination;
+package com.sinch.sdk.domains.voice.models.v2.destination.internal;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,12 +10,12 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  SipFromDetailsImpl.JSON_PROPERTY_ENDPOINT,
-  SipFromDetailsImpl.JSON_PROPERTY_DISPLAY_NAME
+  SipFromInternalImpl.JSON_PROPERTY_ENDPOINT,
+  SipFromInternalImpl.JSON_PROPERTY_DISPLAY_NAME
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class SipFromDetailsImpl implements SipFromDetails {
+public class SipFromInternalImpl implements SipFromInternal {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ENDPOINT = "endpoint";
@@ -26,9 +26,9 @@ public class SipFromDetailsImpl implements SipFromDetails {
 
   private OptionalValue<String> displayName;
 
-  public SipFromDetailsImpl() {}
+  public SipFromInternalImpl() {}
 
-  protected SipFromDetailsImpl(OptionalValue<String> endpoint, OptionalValue<String> displayName) {
+  protected SipFromInternalImpl(OptionalValue<String> endpoint, OptionalValue<String> displayName) {
     this.endpoint = endpoint;
     this.displayName = displayName;
   }
@@ -55,7 +55,7 @@ public class SipFromDetailsImpl implements SipFromDetails {
     return displayName;
   }
 
-  /** Return true if this SipFromDetails object is equal to o. */
+  /** Return true if this SipFromInternal object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -64,7 +64,7 @@ public class SipFromDetailsImpl implements SipFromDetails {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SipFromDetailsImpl sipFromDetails = (SipFromDetailsImpl) o;
+    SipFromInternalImpl sipFromDetails = (SipFromInternalImpl) o;
     return Objects.equals(this.endpoint, sipFromDetails.endpoint)
         && Objects.equals(this.displayName, sipFromDetails.displayName);
   }
@@ -77,7 +77,7 @@ public class SipFromDetailsImpl implements SipFromDetails {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SipFromDetailsImpl {\n");
+    sb.append("class SipFromInternalImpl {\n");
     sb.append("    endpoint: ").append(toIndentedString(endpoint)).append("\n");
     sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
     sb.append("}");
@@ -95,7 +95,7 @@ public class SipFromDetailsImpl implements SipFromDetails {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements SipFromDetails.Builder {
+  static class Builder implements SipFromInternal.Builder {
     OptionalValue<String> endpoint = OptionalValue.empty();
     OptionalValue<String> displayName = OptionalValue.empty();
 
@@ -111,8 +111,8 @@ public class SipFromDetailsImpl implements SipFromDetails {
       return this;
     }
 
-    public SipFromDetails build() {
-      return new SipFromDetailsImpl(endpoint, displayName);
+    public SipFromInternal build() {
+      return new SipFromInternalImpl(endpoint, displayName);
     }
   }
 }

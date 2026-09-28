@@ -25,6 +25,19 @@ public interface HangupCommand extends SvamlCommand {
    */
   String getCallName();
 
+  /** Hangup command for the current call leg, to be used instead of building an empty one */
+  HangupCommand HANGUP_COMMAND = HangupCommand.builder().build();
+
+  /**
+   * Create a hangup command for the given call leg
+   *
+   * @param callName see {@link #getCallName()}
+   * @return A new HangupCommand
+   */
+  static HangupCommand of(String callName) {
+    return builder().setCallName(callName).build();
+  }
+
   /**
    * Getting builder
    *

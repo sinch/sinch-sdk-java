@@ -12,8 +12,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class PhoneDtoTest extends BaseTest {
 
-  public static final Phone expectedPhone =
-      Phone.builder().setPhone(PhoneDetailsDtoTest.expectedPhoneDetails).build();
+  public static final Phone expectedPhone = Phone.builder().setNumber("+15551234567").build();
 
   @GivenTextResource("/domains/voice/v2/destination/PhoneDto.json")
   String jsonPhone;

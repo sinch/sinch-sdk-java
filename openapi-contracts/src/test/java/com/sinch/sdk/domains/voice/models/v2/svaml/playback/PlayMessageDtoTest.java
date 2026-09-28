@@ -13,7 +13,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 public class PlayMessageDtoTest extends BaseTest {
 
   public static final PlayMessage expectedPlayMessage =
-      PlayMessage.builder().setPlay(PlayDtoTest.expectedPlay).build();
+      PlayMessage.builder().setUrl("https://example.com/audio/welcome.mp3").build();
 
   @GivenTextResource("/domains/voice/v2/svaml/playback/PlayMessageDto.json")
   String jsonPlayMessage;

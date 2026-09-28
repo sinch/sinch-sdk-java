@@ -13,7 +13,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 public class SipFromDtoTest extends BaseTest {
 
   public static final SipFrom expectedSipFrom =
-      SipFrom.builder().setSip(SipFromDetailsDtoTest.expectedSipFromDetails).build();
+      SipFrom.builder().setEndpoint("sip:alice@sip.example.com").setDisplayName("Alice").build();
 
   @GivenTextResource("/domains/voice/v2/destination/SipFromDto.json")
   String jsonSipFrom;

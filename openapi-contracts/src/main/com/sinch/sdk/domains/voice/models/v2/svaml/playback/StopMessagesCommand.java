@@ -24,6 +24,16 @@ public interface StopMessagesCommand extends SvamlCommand {
   String getMessagesName();
 
   /**
+   * Create a stopMessages command stopping the given message sequence
+   *
+   * @param messagesName see {@link #getMessagesName()}
+   * @return A new StopMessagesCommand
+   */
+  static StopMessagesCommand of(String messagesName) {
+    return builder().setMessagesName(messagesName).build();
+  }
+
+  /**
    * Getting builder
    *
    * @return New Builder instance
