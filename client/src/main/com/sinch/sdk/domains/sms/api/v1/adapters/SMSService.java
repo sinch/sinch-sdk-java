@@ -79,6 +79,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
     this.context = context;
     this.httpClientSupplier = httpClientSupplier;
     this.oAuthServer = null;
+    // no-op with service plan credentials: they do not use Sinch OAuth
     this.useSinchAuth = TransportSettings.DEFAULT_USE_SINCH_AUTH;
   }
 

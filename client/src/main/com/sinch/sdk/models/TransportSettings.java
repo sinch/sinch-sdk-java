@@ -3,7 +3,7 @@ package com.sinch.sdk.models;
 /**
  * Transport level settings applied to every request the SDK sends.
  *
- * @since 2.2
+ * @since 2.3
  */
 public class TransportSettings {
 
@@ -17,7 +17,7 @@ public class TransportSettings {
    * Settings holding the default of every field: {@link #DEFAULT_TIMEOUT_SECONDS} and {@link
    * #DEFAULT_USE_SINCH_AUTH}.
    *
-   * @since 2.2
+   * @since 2.3
    */
   public static final TransportSettings DEFAULTS =
       builder()
@@ -37,7 +37,7 @@ public class TransportSettings {
    * Timeout applied to HTTP I/O operations. Zero disables it.
    *
    * @return Timeout in seconds
-   * @since 2.2
+   * @since 2.3
    */
   public int getTimeoutSeconds() {
     return timeoutSeconds;
@@ -47,7 +47,7 @@ public class TransportSettings {
    * Whether the endpoints supporting it authenticate against the Sinch auth server.
    *
    * @return Flag value
-   * @since 2.2
+   * @since 2.3
    */
   public boolean getUseSinchAuth() {
     return useSinchAuth;
@@ -67,7 +67,7 @@ public class TransportSettings {
    * Getting Builder
    *
    * @return New Builder instance
-   * @since 2.2
+   * @since 2.3
    */
   public static Builder builder() {
     return new Builder();
@@ -78,7 +78,7 @@ public class TransportSettings {
    *
    * @param settings Source settings to fill initial builder state
    * @return New Builder instance
-   * @since 2.2
+   * @since 2.3
    */
   public static Builder builder(TransportSettings settings) {
     return new Builder(settings);
@@ -87,7 +87,7 @@ public class TransportSettings {
   /**
    * Dedicated Builder
    *
-   * @since 2.2
+   * @since 2.3
    */
   public static class Builder {
 
@@ -105,12 +105,12 @@ public class TransportSettings {
     }
 
     /**
-     * Set the timeout applied to HTTP I/O operations
+     * Set the timeout applied to HTTP I/O operations. Zero disables it.
      *
      * @param timeoutSeconds Timeout in seconds, zero to disable it
      * @return Current builder
      * @see TransportSettings#getTimeoutSeconds() getter
-     * @since 2.2
+     * @since 2.3
      */
     public Builder setTimeoutSeconds(Integer timeoutSeconds) {
       this.timeoutSeconds = timeoutSeconds;
@@ -123,7 +123,7 @@ public class TransportSettings {
      * @param useSinchAuth Flag value
      * @return Current builder
      * @see TransportSettings#getUseSinchAuth() getter
-     * @since 2.2
+     * @since 2.3
      */
     public Builder setUseSinchAuth(Boolean useSinchAuth) {
       this.useSinchAuth = useSinchAuth;
@@ -134,7 +134,7 @@ public class TransportSettings {
      * Build a {@link TransportSettings} instance from builder current state
      *
      * @return TransportSettings instance built from current builder state
-     * @since 2.2
+     * @since 2.3
      */
     public TransportSettings build() {
       if (null != timeoutSeconds && timeoutSeconds < 0) {

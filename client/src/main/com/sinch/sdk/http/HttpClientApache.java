@@ -88,20 +88,17 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
    * @since 2.2
    */
   public HttpClientApache(HttpProxyConfiguration proxyConfiguration, RetryManager retryManager) {
-    this(proxyConfiguration, retryManager, null);
+    this(proxyConfiguration, retryManager, TransportSettings.DEFAULT_TIMEOUT_SECONDS);
   }
 
   /**
    * @param proxyConfiguration Proxy to route through, or {@code null} for a direct connection
    * @param retryManager Manager applied to rate-limited responses, or {@code null} to retry nothing
-   * @param timeoutSeconds Timeout applied to I/O operations, zero to disable it, or {@code null}
-   *     for {@link TransportSettings#DEFAULT_TIMEOUT_SECONDS}
-   * @since 2.2
+   * @param timeoutSeconds Timeout applied to I/O operations, zero to disable it
+   * @since 2.3
    */
   public HttpClientApache(
-      HttpProxyConfiguration proxyConfiguration,
-      RetryManager retryManager,
-      Integer timeoutSeconds) {
+      HttpProxyConfiguration proxyConfiguration, RetryManager retryManager, int timeoutSeconds) {
     this.client = buildHttpClient(proxyConfiguration, timeoutSeconds);
     this.retryManager = null != retryManager ? retryManager : RetryManager.NO_RETRY;
   }
@@ -112,11 +109,9 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
   }
 
   private static CloseableHttpClient buildHttpClient(
-      HttpProxyConfiguration proxyConfiguration, Integer timeoutSeconds) {
+      HttpProxyConfiguration proxyConfiguration, int timeoutSeconds) {
 
-    Timeout timeout =
-        Timeout.ofSeconds(
-            null != timeoutSeconds ? timeoutSeconds : TransportSettings.DEFAULT_TIMEOUT_SECONDS);
+    Timeout timeout = Timeout.ofSeconds(timeoutSeconds);
 
     HttpClientBuilder builder =
         HttpClients.custom()

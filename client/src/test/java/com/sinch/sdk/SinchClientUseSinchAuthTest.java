@@ -97,7 +97,13 @@ class SinchClientUseSinchAuthTest extends BaseTest {
 
   @Test
   void enabledStillFetchesATokenAndAuthorizes() {
-    SinchClient client = new SinchClient(base().setKeyId("key").setKeySecret("secret").build());
+    SinchClient client =
+        new SinchClient(
+            base()
+                .setKeyId("key")
+                .setKeySecret("secret")
+                .setTransportSettings(TransportSettings.builder().setUseSinchAuth(true).build())
+                .build());
 
     lookup(client);
 
@@ -109,7 +115,11 @@ class SinchClientUseSinchAuthTest extends BaseTest {
 
   @Test
   void enabledStillRequiresCredentials() {
-    SinchClient client = new SinchClient(base().build());
+    SinchClient client =
+        new SinchClient(
+            base()
+                .setTransportSettings(TransportSettings.builder().setUseSinchAuth(true).build())
+                .build());
 
     assertThrows(RuntimeException.class, () -> lookup(client));
     client.close();

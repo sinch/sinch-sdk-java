@@ -46,8 +46,8 @@ class HttpClientApacheTimeoutTest {
       assertThrows(ApiException.class, () -> invoke(client));
       long elapsed = System.currentTimeMillis() - start;
       assertTrue(
-          elapsed < 4_000,
-          "expected the 1s timeout to fire well before the 5s body, took " + elapsed);
+          elapsed < 2_000,
+          "expected the 1s timeout to fire before the 3s headers delay, took " + elapsed);
     }
   }
 
@@ -64,7 +64,7 @@ class HttpClientApacheTimeoutTest {
   void theDefaultTimeoutIsUsedWhenNoneIsGiven() throws Exception {
     server.enqueue(new MockResponse().setBody("{}"));
 
-    try (HttpClientApache client = new HttpClientApache(null, RetryManager.NO_RETRY, null)) {
+    try (HttpClientApache client = new HttpClientApache(null, RetryManager.NO_RETRY)) {
       assertEquals(200, invoke(client).getCode());
     }
   }

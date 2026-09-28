@@ -216,7 +216,7 @@ public class Configuration {
    *
    * @return Transport settings, or empty when none was set and {@link TransportSettings#DEFAULTS}
    *     apply
-   * @since 2.2
+   * @since 2.3
    */
   public Optional<TransportSettings> getTransportSettings() {
     return Optional.ofNullable(transportSettings);
@@ -609,7 +609,7 @@ public class Configuration {
      * @param transportSettings Transport settings, or {@code null} to restore the defaults
      * @return Current builder
      * @see Configuration#getTransportSettings() getter
-     * @since 2.2
+     * @since 2.3
      */
     public Builder setTransportSettings(TransportSettings transportSettings) {
       this.transportSettings = transportSettings;
