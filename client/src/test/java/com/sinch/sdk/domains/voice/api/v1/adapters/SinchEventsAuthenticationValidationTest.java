@@ -1,11 +1,12 @@
 package com.sinch.sdk.domains.voice.api.v1.adapters;
 
-import com.sinch.sdk.auth.SignedRequestValidationTestBase;
+import com.sinch.sdk.auth.SinchEventsApplicationAuthValidationTest;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.VoiceContext;
 import java.util.Map;
 
-public class SinchEventsAuthenticationValidationTest extends SignedRequestValidationTestBase {
+public class SinchEventsAuthenticationValidationTest
+    extends SinchEventsApplicationAuthValidationTest {
 
   static final String APPLICATION_KEY = "669E367E-6BBA-48AB-AF15-266871C28135";
   static final String APPLICATION_SECRET = "BeIukql3pTKJ8RGL5zo0DA==";

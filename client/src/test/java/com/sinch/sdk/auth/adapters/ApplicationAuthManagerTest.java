@@ -100,6 +100,151 @@ class ApplicationAuthManagerTest {
     Assertions.assertThat(authenticationResult).isEqualTo(false);
   }
 
+  @Test
+  void checkValidateAuthenticatedRequestWithQueryParametersInPath() {
+
+    // query parameters are not part of the signed data
+    boolean authenticationResult =
+        authManager.validateAuthenticatedRequest(
+            METHOD, PATH + "?foo=bar&baz=42", validHeaders(), PAYLOAD);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(true);
+  }
+
+  @Test
+  void checkValidateAuthenticatedRequestWithAbsoluteUrlAsPath() {
+
+    // only the path part of an absolute URL is signed
+    boolean authenticationResult =
+        authManager.validateAuthenticatedRequest(
+            METHOD, "https://callbacks.yourdomain.com" + PATH, validHeaders(), PAYLOAD);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(true);
+  }
+
+  @Test
+  void checkApplicationAuthenticationFailureOnKeywordOnly() {
+
+    boolean authenticationResult =
+        authManager.validateAuthenticatedRequest(
+            METHOD, PATH, validHeadersWith("authorization", "application"), PAYLOAD);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+
+  @Test
+  void checkApplicationAuthenticationFailureOnMissingHash() {
+
+    boolean authenticationResult =
+        authManager.validateAuthenticatedRequest(
+            METHOD, PATH, getHeaders("application", KEY, ""), PAYLOAD);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+
+  @Test
+  void checkApplicationAuthenticationFailureOnMissingTimestamp() {
+
+    boolean authenticationResult =
+        authManager.validateAuthenticatedRequest(
+            METHOD, PATH, validHeadersWithout("x-timestamp"), PAYLOAD);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+
+  @Test
+  void checkApplicationAuthenticationFailureOnTimestamp() {
+
+    boolean authenticationResult =
+        authManager.validateAuthenticatedRequest(
+            METHOD, PATH, validHeadersWith("x-timestamp", "2019-11-03T10:59:41Z"), PAYLOAD);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+
+  @Test
+  void checkApplicationAuthenticationFailureOnMissingContentType() {
+
+    boolean authenticationResult =
+        authManager.validateAuthenticatedRequest(
+            METHOD, PATH, validHeadersWithout("content-type"), PAYLOAD);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+
+  @Test
+  void checkApplicationAuthenticationFailureOnContentType() {
+
+    boolean authenticationResult =
+        authManager.validateAuthenticatedRequest(
+            METHOD, PATH, validHeadersWith("content-type", "text/plain"), PAYLOAD);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+
+  @Test
+  void checkApplicationAuthenticationFailureOnMethod() {
+
+    boolean authenticationResult =
+        authManager.validateAuthenticatedRequest(
+            HttpMethod.GET.name(), PATH, validHeaders(), PAYLOAD);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+
+  @Test
+  void checkApplicationAuthenticationFailureOnPath() {
+
+    boolean authenticationResult =
+        authManager.validateAuthenticatedRequest(METHOD, "/not/that/path", validHeaders(), PAYLOAD);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+
+  @Test
+  void checkApplicationAuthenticationFailureOnPayload() {
+
+    boolean authenticationResult =
+        authManager.validateAuthenticatedRequest(
+            METHOD, PATH, validHeaders(), "{\"hello\":\"world\"}");
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+
+  @Test
+  void checkApplicationAuthenticationFailureOnEmptyPayload() {
+
+    boolean authenticationResult =
+        authManager.validateAuthenticatedRequest(METHOD, PATH, validHeaders(), "");
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+
+  @Test
+  void checkApplicationAuthenticationFailureOnNullPayload() {
+
+    boolean authenticationResult =
+        authManager.validateAuthenticatedRequest(METHOD, PATH, validHeaders(), null);
+
+    Assertions.assertThat(authenticationResult).isEqualTo(false);
+  }
+
+  private static Map<String, String> validHeaders() {
+    return getHeaders("application", KEY, HASH);
+  }
+
+  private static Map<String, String> validHeadersWith(String header, String value) {
+    Map<String, String> headers = validHeaders();
+    headers.put(header, value);
+    return headers;
+  }
+
+  private static Map<String, String> validHeadersWithout(String header) {
+    Map<String, String> headers = validHeaders();
+    headers.remove(header);
+    return headers;
+  }
+
   private static Map<String, String> getHeaders(String keyword, String key, String hash) {
     return Stream.of(
             new AbstractMap.SimpleEntry<>("authorization", keyword + " " + key + ":" + hash),

@@ -15,6 +15,18 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 > - `[tech]` — technical improvement
 
 ---
+## v2.3.0 - Unreleased
+
+### SDK
+- **[test]** Extend `ApplicationAuthManager` signed request validation coverage
+
+### Verification
+- **[test]** Extend `SinchEventsService.validateAuthenticationHeader` coverage
+
+### Voice
+- **[test]** Extend `SinchEventsService.validateAuthenticationHeader` coverage
+
+
 ## v2.2.0 - 2026-09-17
 
 ### SDK
@@ -51,7 +63,6 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ### Tests
 - **[test]** Fix HttpClient multipart test when returned boundary string contains '--' sequence
-- **[test]** [Voice] [Verification] Extend `SinchEventsService.validateAuthenticationHeader` regression coverage
 
 
 ## v2.1.2 - 2026-08-13

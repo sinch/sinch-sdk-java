@@ -1,11 +1,12 @@
 package com.sinch.sdk.domains.verification.api.v1.adapters;
 
-import com.sinch.sdk.auth.SignedRequestValidationTestBase;
+import com.sinch.sdk.auth.SinchEventsApplicationAuthValidationTest;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.VerificationContext;
 import java.util.Map;
 
-public class SinchEventsAuthenticationValidationTest extends SignedRequestValidationTestBase {
+public class SinchEventsAuthenticationValidationTest
+    extends SinchEventsApplicationAuthValidationTest {
 
   static final String APPLICATION_KEY = "789";
   static final String APPLICATION_SECRET = "9876543210";
