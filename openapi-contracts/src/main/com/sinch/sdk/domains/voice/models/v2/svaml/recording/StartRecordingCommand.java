@@ -1,11 +1,7 @@
 package com.sinch.sdk.domains.voice.models.v2.svaml.recording;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlCommand;
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 /**
  * Starts recording the call. This is a non-blocking command — execution continues to the next
@@ -13,32 +9,6 @@ import java.util.stream.Stream;
  */
 @JsonDeserialize(builder = StartRecordingCommandImpl.Builder.class)
 public interface StartRecordingCommand extends SvamlCommand {
-
-  /** The command property. Must have the value <code>startRecording</code>. */
-  public class CommandEnum extends EnumDynamic<String, CommandEnum> {
-    /** The <code>startRecording</code> command. */
-    public static final CommandEnum START_RECORDING = new CommandEnum("startRecording");
-
-    private static final EnumSupportDynamic<String, CommandEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(
-            CommandEnum.class, CommandEnum::new, Arrays.asList(START_RECORDING));
-
-    private CommandEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<CommandEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static CommandEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(CommandEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
 
   /**
    * Identifier for this recording within the session. Must be unique across active recordings in

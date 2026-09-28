@@ -1,12 +1,8 @@
 package com.sinch.sdk.domains.voice.models.v2.svaml.playback;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlCommand;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Plays one or more messages on the call. Multiple messages in the array are played sequentially in
@@ -18,31 +14,6 @@ import java.util.stream.Stream;
  */
 @JsonDeserialize(builder = MessagesCommandImpl.Builder.class)
 public interface MessagesCommand extends SvamlCommand {
-
-  /** The command property. Must have the value <code>messages</code>. */
-  public class CommandEnum extends EnumDynamic<String, CommandEnum> {
-    /** The <code>messages</code> command. */
-    public static final CommandEnum MESSAGES = new CommandEnum("messages");
-
-    private static final EnumSupportDynamic<String, CommandEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(CommandEnum.class, CommandEnum::new, Arrays.asList(MESSAGES));
-
-    private CommandEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<CommandEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static CommandEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(CommandEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
 
   /**
    * Name of the message for identification and reference within the call session.

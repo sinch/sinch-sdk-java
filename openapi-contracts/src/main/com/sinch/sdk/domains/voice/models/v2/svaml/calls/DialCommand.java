@@ -1,13 +1,9 @@
 package com.sinch.sdk.domains.voice.models.v2.svaml.calls;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.voice.models.v2.destination.CallDestination;
 import com.sinch.sdk.domains.voice.models.v2.destination.CallOrigin;
 import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlCommand;
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 /**
  * Initiates a new outbound call leg within the current session.
@@ -24,31 +20,6 @@ import java.util.stream.Stream;
  */
 @JsonDeserialize(builder = DialCommandImpl.Builder.class)
 public interface DialCommand extends SvamlCommand {
-
-  /** The command property. Must have the value <code>dial</code>. */
-  public class CommandEnum extends EnumDynamic<String, CommandEnum> {
-    /** The <code>dial</code> command. */
-    public static final CommandEnum DIAL = new CommandEnum("dial");
-
-    private static final EnumSupportDynamic<String, CommandEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(CommandEnum.class, CommandEnum::new, Arrays.asList(DIAL));
-
-    private CommandEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<CommandEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static CommandEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(CommandEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
 
   /**
    * Identifier for this call leg within the session. Must be unique across all active call legs in

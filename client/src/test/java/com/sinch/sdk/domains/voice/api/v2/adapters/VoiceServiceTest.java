@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.voice.models.v2.VoiceContext;
 import com.sinch.sdk.models.UnifiedCredentials;
-import com.sinch.sdk.models.VoiceContext;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
@@ -16,7 +16,7 @@ class VoiceServiceTest {
   @Mock HttpClient httpClient;
 
   static final ServerConfiguration oAuthServer = new ServerConfiguration("https://oauth.foo.url");
-  static final VoiceContext context = VoiceContext.builder().setVoiceV2Url("foo url").build();
+  static final VoiceContext context = VoiceContext.builder().setVoiceUrl("foo url").build();
 
   static UnifiedCredentials credentials(String keyId, String keySecret, String projectId) {
     return UnifiedCredentials.builder()
@@ -74,13 +74,13 @@ class VoiceServiceTest {
   }
 
   @Test
-  void doNotAcceptNullVoiceV2Url() {
+  void doNotAcceptNullVoiceUrl() {
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
             () ->
                 service(credentials("foo", "foo", "foo"), VoiceContext.builder().build()).calls());
-    assertTrue(exception.getMessage().contains("voiceV2Url"));
+    assertTrue(exception.getMessage().contains("voiceUrl"));
   }
 
   @Test

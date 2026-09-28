@@ -14,6 +14,7 @@ public class Configuration {
   private final SmsContext smsContext;
   private final VerificationContext verificationContext;
   private final VoiceContext voiceContext;
+  private final com.sinch.sdk.domains.voice.models.v2.VoiceContext voiceV2Context;
   private final ConversationContext conversationContext;
   private final HttpProxyConfiguration httpProxyConfiguration;
   private final NumberLookupContext numberLookupContext;
@@ -29,6 +30,7 @@ public class Configuration {
       SmsContext smsContext,
       VerificationContext verificationContext,
       VoiceContext voiceContext,
+      com.sinch.sdk.domains.voice.models.v2.VoiceContext voiceV2Context,
       ConversationContext conversationContext,
       NumberLookupContext numberLookupContext,
       RetryConfiguration retryConfiguration) {
@@ -39,6 +41,7 @@ public class Configuration {
     this.numbersContext = numbersContext;
     this.smsContext = smsContext;
     this.voiceContext = voiceContext;
+    this.voiceV2Context = voiceV2Context;
     this.verificationContext = verificationContext;
     this.conversationContext = conversationContext;
     this.numberLookupContext = numberLookupContext;
@@ -60,6 +63,8 @@ public class Configuration {
         + verificationContext
         + ", voiceContext="
         + voiceContext
+        + ", voiceV2Context="
+        + voiceV2Context
         + ", conversationContext="
         + conversationContext
         + ", numberLookupContext="
@@ -153,6 +158,16 @@ public class Configuration {
   }
 
   /**
+   * Get Voice V2 domain related execution context
+   *
+   * @return Current Voice V2 context
+   * @since 2.3
+   */
+  public Optional<com.sinch.sdk.domains.voice.models.v2.VoiceContext> getVoiceV2Context() {
+    return Optional.ofNullable(voiceV2Context);
+  }
+
+  /**
    * Credentials to be used for Verification and Voice services
    *
    * @return Application credentials
@@ -242,6 +257,7 @@ public class Configuration {
     SmsContext.Builder smsContext;
     VerificationContext.Builder verificationContext;
     VoiceContext.Builder voiceContext;
+    com.sinch.sdk.domains.voice.models.v2.VoiceContext.Builder voiceV2Context;
     ConversationContext.Builder conversationContext;
     NumberLookupContext.Builder numberLookupContext;
     HttpProxyConfiguration httpProxyConfiguration;
@@ -275,6 +291,11 @@ public class Configuration {
       this.verificationContext =
           configuration.getVerificationContext().map(VerificationContext::builder).orElse(null);
       this.voiceContext = configuration.getVoiceContext().map(VoiceContext::builder).orElse(null);
+      this.voiceV2Context =
+          configuration
+              .getVoiceV2Context()
+              .map(com.sinch.sdk.domains.voice.models.v2.VoiceContext::builder)
+              .orElse(null);
       this.conversationContext =
           configuration.getConversationContext().map(ConversationContext::builder).orElse(null);
       this.numberLookupContext =
@@ -484,6 +505,21 @@ public class Configuration {
     }
 
     /**
+     * Set Voice V2 related context
+     *
+     * @param context {@link #getVoiceV2Context() getter}
+     * @return Current builder
+     * @since 2.3
+     */
+    public Builder setVoiceV2Context(com.sinch.sdk.domains.voice.models.v2.VoiceContext context) {
+      this.voiceV2Context =
+          null != context
+              ? com.sinch.sdk.domains.voice.models.v2.VoiceContext.builder(context)
+              : null;
+      return this;
+    }
+
+    /**
      * Set Conversation Region to be used
      *
      * @param conversationRegion Conversation Region
@@ -603,6 +639,7 @@ public class Configuration {
           null != smsContext ? smsContext.build() : null,
           null != verificationContext ? verificationContext.build() : null,
           null != voiceContext ? voiceContext.build() : null,
+          null != voiceV2Context ? voiceV2Context.build() : null,
           null != conversationContext ? conversationContext.build() : null,
           null != numberLookupContext ? numberLookupContext.build() : null,
           retryConfiguration);

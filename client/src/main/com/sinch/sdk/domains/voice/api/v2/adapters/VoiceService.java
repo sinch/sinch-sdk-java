@@ -8,8 +8,8 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.voice.api.v2.BatchesService;
 import com.sinch.sdk.domains.voice.api.v2.CallsService;
+import com.sinch.sdk.domains.voice.models.v2.VoiceContext;
 import com.sinch.sdk.models.UnifiedCredentials;
-import com.sinch.sdk.models.VoiceContext;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Objects;
@@ -53,7 +53,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
           this.calls =
               new CallsServiceImpl(
                   httpClientSupplier.get(),
-                  context.getVoiceV2Server(),
+                  context.getVoiceServer(),
                   authManagers,
                   HttpMapper.getInstance(),
                   uriUUID);
@@ -71,7 +71,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
           this.batches =
               new BatchesServiceImpl(
                   httpClientSupplier.get(),
-                  context.getVoiceV2Server(),
+                  context.getVoiceServer(),
                   authManagers,
                   HttpMapper.getInstance(),
                   uriUUID);
@@ -97,10 +97,10 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
         StringUtil.requireNonEmpty(
             credentials.getProjectId(), "Voice V2 service requires 'projectId' to be defined");
         StringUtil.requireNonEmpty(
-            context.getVoiceV2Url(), "Voice V2 service requires 'voiceV2Url' to be defined");
+            context.getVoiceUrl(), "Voice V2 service requires 'voiceUrl' to be defined");
 
         LOGGER.fine(
-            "Activate Voice V2 API with server='" + context.getVoiceV2Server().getUrl() + "'");
+            "Activate Voice V2 API with server='" + context.getVoiceServer().getUrl() + "'");
 
         AuthManager authManager =
             new OAuthManager(

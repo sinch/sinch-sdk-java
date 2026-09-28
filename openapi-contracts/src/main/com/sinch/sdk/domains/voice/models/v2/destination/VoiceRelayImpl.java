@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.core.utils.EnumDynamic;
+import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import java.util.Arrays;
 import java.util.Objects;
 
 @JsonPropertyOrder({VoiceRelayImpl.JSON_PROPERTY_TYPE, VoiceRelayImpl.JSON_PROPERTY_VOICE_RELAY})
@@ -14,6 +17,31 @@ import java.util.Objects;
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class VoiceRelayImpl implements VoiceRelay, CallDestination {
   private static final long serialVersionUID = 1L;
+
+  /** The type property. Must have the value <code>VOICE_RELAY</code>. */
+  public static class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** The <code>VOICE_RELAY</code> type. */
+    public static final TypeEnum VOICE_RELAY = new TypeEnum("VOICE_RELAY");
+
+    private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(VOICE_RELAY));
+
+    private TypeEnum(String value) {
+      super(value);
+    }
+
+    public static java.util.stream.Stream<TypeEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static TypeEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(TypeEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
 
   public static final String JSON_PROPERTY_TYPE = "type";
 

@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.core.utils.EnumDynamic;
+import com.sinch.sdk.core.utils.EnumSupportDynamic;
+import java.util.Arrays;
 import java.util.Objects;
 
 @JsonPropertyOrder({SipFromImpl.JSON_PROPERTY_TYPE, SipFromImpl.JSON_PROPERTY_SIP})
@@ -14,6 +17,31 @@ import java.util.Objects;
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class SipFromImpl implements SipFrom, CallOrigin {
   private static final long serialVersionUID = 1L;
+
+  /** The type property. Must have the value <code>SIP</code>. */
+  public static class TypeEnum extends EnumDynamic<String, TypeEnum> {
+    /** The <code>SIP</code> type. */
+    public static final TypeEnum SIP = new TypeEnum("SIP");
+
+    private static final EnumSupportDynamic<String, TypeEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(TypeEnum.class, TypeEnum::new, Arrays.asList(SIP));
+
+    private TypeEnum(String value) {
+      super(value);
+    }
+
+    public static java.util.stream.Stream<TypeEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static TypeEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(TypeEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
 
   public static final String JSON_PROPERTY_TYPE = "type";
 

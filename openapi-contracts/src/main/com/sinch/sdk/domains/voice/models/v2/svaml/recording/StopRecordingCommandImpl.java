@@ -7,7 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.core.utils.EnumDynamic;
+import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlCommand;
+import java.util.Arrays;
 import java.util.Objects;
 
 @JsonPropertyOrder({
@@ -18,6 +21,32 @@ import java.util.Objects;
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
 public class StopRecordingCommandImpl implements StopRecordingCommand, SvamlCommand {
   private static final long serialVersionUID = 1L;
+
+  /** The command property. Must have the value <code>stopRecording</code>. */
+  public static class CommandEnum extends EnumDynamic<String, CommandEnum> {
+    /** The <code>stopRecording</code> command. */
+    public static final CommandEnum STOP_RECORDING = new CommandEnum("stopRecording");
+
+    private static final EnumSupportDynamic<String, CommandEnum> ENUM_SUPPORT =
+        new EnumSupportDynamic<>(
+            CommandEnum.class, CommandEnum::new, Arrays.asList(STOP_RECORDING));
+
+    private CommandEnum(String value) {
+      super(value);
+    }
+
+    public static java.util.stream.Stream<CommandEnum> values() {
+      return ENUM_SUPPORT.values();
+    }
+
+    public static CommandEnum from(String value) {
+      return ENUM_SUPPORT.from(value);
+    }
+
+    public static String valueOf(CommandEnum e) {
+      return ENUM_SUPPORT.valueOf(e);
+    }
+  }
 
   public static final String JSON_PROPERTY_COMMAND = "command";
 

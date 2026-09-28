@@ -81,7 +81,10 @@ public class Config {
                 VoiceContext.builder()
                     .setVoiceApplicationMngmtUrl(VOICE_MANAGEMENT_HOST_NAME)
                     .setVoiceUrl(VOICE_HOST_NAME)
-                    .setVoiceV2Url(VOICE_V2_HOST_NAME)
+                    .build())
+            .setVoiceV2Context(
+                com.sinch.sdk.domains.voice.models.v2.VoiceContext.builder()
+                    .setVoiceUrl(VOICE_V2_HOST_NAME)
                     .build())
             .setSmsContext(
                 SmsContext.builder().setSmsUrl(SMS_HOST_NAME).setSmsRegion(SMSRegion.EU).build())

@@ -1,12 +1,8 @@
 package com.sinch.sdk.domains.voice.models.v2.svaml.menu;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sinch.sdk.core.utils.EnumDynamic;
-import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlCommand;
-import java.util.Arrays;
 import java.util.Map;
-import java.util.stream.Stream;
 
 /**
  * Defines a set of named menus and executes them starting from startMenu. This is a blocking
@@ -16,31 +12,6 @@ import java.util.stream.Stream;
  */
 @JsonDeserialize(builder = MenuCommandImpl.Builder.class)
 public interface MenuCommand extends SvamlCommand {
-
-  /** The command property. Must have the value <code>menu</code>. */
-  public class CommandEnum extends EnumDynamic<String, CommandEnum> {
-    /** The <code>menu</code> command. */
-    public static final CommandEnum MENU = new CommandEnum("menu");
-
-    private static final EnumSupportDynamic<String, CommandEnum> ENUM_SUPPORT =
-        new EnumSupportDynamic<>(CommandEnum.class, CommandEnum::new, Arrays.asList(MENU));
-
-    private CommandEnum(String value) {
-      super(value);
-    }
-
-    public static Stream<CommandEnum> values() {
-      return ENUM_SUPPORT.values();
-    }
-
-    public static CommandEnum from(String value) {
-      return ENUM_SUPPORT.from(value);
-    }
-
-    public static String valueOf(CommandEnum e) {
-      return ENUM_SUPPORT.valueOf(e);
-    }
-  }
 
   /**
    * Name of the menu to execute first. Must match a key in menus.

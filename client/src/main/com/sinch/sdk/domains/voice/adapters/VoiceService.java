@@ -12,6 +12,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
   private final ApplicationCredentials credentials;
   private final UnifiedCredentials unifiedCredentials;
   private final VoiceContext context;
+  private final com.sinch.sdk.domains.voice.models.v2.VoiceContext v2Context;
   private final ServerConfiguration oAuthServer;
   private final Supplier<HttpClient> httpClientSupplier;
 
@@ -22,18 +23,20 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
       ApplicationCredentials credentials,
       VoiceContext context,
       Supplier<HttpClient> httpClientSupplier) {
-    this(credentials, null, context, null, httpClientSupplier);
+    this(credentials, null, context, null, null, httpClientSupplier);
   }
 
   public VoiceService(
       ApplicationCredentials credentials,
       UnifiedCredentials unifiedCredentials,
       VoiceContext context,
+      com.sinch.sdk.domains.voice.models.v2.VoiceContext v2Context,
       ServerConfiguration oAuthServer,
       Supplier<HttpClient> httpClientSupplier) {
     this.credentials = credentials;
     this.unifiedCredentials = unifiedCredentials;
     this.context = context;
+    this.v2Context = v2Context;
     this.oAuthServer = oAuthServer;
     this.httpClientSupplier = httpClientSupplier;
   }
@@ -57,7 +60,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
         if (null == this.v2) {
           this.v2 =
               new com.sinch.sdk.domains.voice.api.v2.adapters.VoiceService(
-                  unifiedCredentials, context, oAuthServer, httpClientSupplier);
+                  unifiedCredentials, v2Context, oAuthServer, httpClientSupplier);
         }
       }
     }

@@ -46,7 +46,7 @@ public class SinchClient {
   private static final String VOICE_REGION_KEY = "voice-region";
   private static final String VOICE_APPLICATION_MANAGEMENT_SERVER_KEY =
       "voice-application-management-server";
-  private static final String VOICE_V2_SERVER_KEY = "voice-v2-server";
+  private static final String VOICE_V2_REGION_KEY = "voice-v2-region";
 
   private static final String VERIFICATION_SERVER_KEY = "verification-server";
 
@@ -95,6 +95,7 @@ public class SinchClient {
     handleDefaultSmsSettings(configurationGuard, props, builder);
     handleDefaultVerificationSettings(configurationGuard, props, builder);
     handleDefaultVoiceSettings(configurationGuard, props, builder);
+    handleDefaultVoiceV2Settings(configurationGuard, props, builder);
     handleDefaultConversationSettings(configurationGuard, props, builder);
     handleDefaultNumberLookupSettings(configurationGuard, props, builder);
 
@@ -183,9 +184,6 @@ public class SinchClient {
             .map(VoiceContext::getVoiceApplicationManagementUrl)
             .orElse(null);
 
-    String voiceV2Url =
-        configuration.getVoiceContext().map(VoiceContext::getVoiceV2Url).orElse(null);
-
     // default region to be used ?
     if (null == region && props.containsKey(VOICE_REGION_KEY)) {
       region = VoiceRegion.from(props.getProperty(VOICE_REGION_KEY));
@@ -204,21 +202,51 @@ public class SinchClient {
       voiceApplicationManagementUrl = props.getProperty(VOICE_APPLICATION_MANAGEMENT_SERVER_KEY);
     }
 
-    // Voice V2 server
-    if (StringUtil.isEmpty(voiceV2Url) && props.containsKey(VOICE_V2_SERVER_KEY)) {
-      voiceV2Url = props.getProperty(VOICE_V2_SERVER_KEY);
-    }
-
-    if (null != region
-        || null != voiceUrl
-        || null != voiceApplicationManagementUrl
-        || null != voiceV2Url) {
+    if (null != region || null != voiceUrl || null != voiceApplicationManagementUrl) {
       builder.setVoiceContext(
           VoiceContext.builder()
               .setVoiceRegion(region)
               .setVoiceUrl(voiceUrl)
               .setVoiceApplicationMngmtUrl(voiceApplicationManagementUrl)
-              .setVoiceV2Url(voiceV2Url)
+              .build());
+    }
+  }
+
+  private void handleDefaultVoiceV2Settings(
+      Configuration configuration, Properties props, Configuration.Builder builder) {
+
+    com.sinch.sdk.domains.voice.models.v2.VoiceRegion region =
+        configuration
+            .getVoiceV2Context()
+            .map(com.sinch.sdk.domains.voice.models.v2.VoiceContext::getVoiceRegion)
+            .orElse(null);
+
+    String voiceUrl =
+        configuration
+            .getVoiceV2Context()
+            .map(com.sinch.sdk.domains.voice.models.v2.VoiceContext::getVoiceUrl)
+            .orElse(null);
+
+    // default region to be used ?
+    if (null == region && props.containsKey(VOICE_V2_REGION_KEY)) {
+      region =
+          com.sinch.sdk.domains.voice.models.v2.VoiceRegion.from(
+              props.getProperty(VOICE_V2_REGION_KEY));
+    }
+
+    // server is not defined: use the region to set to an existing one and use "global" as a default
+    // fallback
+    if (StringUtil.isEmpty(voiceUrl)) {
+      com.sinch.sdk.domains.voice.models.v2.VoiceRegion regionForFormat =
+          null == region ? com.sinch.sdk.domains.voice.models.v2.VoiceRegion.GLOBAL : region;
+      voiceUrl = props.getProperty(String.format("voice-v2-server-%s", regionForFormat.value()));
+    }
+
+    if (null != region || null != voiceUrl) {
+      builder.setVoiceV2Context(
+          com.sinch.sdk.domains.voice.models.v2.VoiceContext.builder()
+              .setVoiceRegion(region)
+              .setVoiceUrl(voiceUrl)
               .build());
     }
   }
@@ -429,6 +457,7 @@ public class SinchClient {
         getConfiguration().getApplicationCredentials().orElse(null),
         getConfiguration().getUnifiedCredentials().orElse(null),
         getConfiguration().getVoiceContext().orElse(null),
+        getConfiguration().getVoiceV2Context().orElse(null),
         getConfiguration().getOAuthServer(),
         this::getHttpClient);
   }
