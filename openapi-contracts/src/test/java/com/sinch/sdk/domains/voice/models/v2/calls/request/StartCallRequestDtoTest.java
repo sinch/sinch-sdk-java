@@ -4,7 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
-import com.sinch.sdk.domains.voice.models.v2.svaml.DialCommandDtoTest;
+import com.sinch.sdk.domains.voice.models.v2.svaml.calls.DialCommandDtoTest;
 import java.util.Arrays;
 import org.json.JSONException;
 import org.junit.jupiter.api.Assertions;

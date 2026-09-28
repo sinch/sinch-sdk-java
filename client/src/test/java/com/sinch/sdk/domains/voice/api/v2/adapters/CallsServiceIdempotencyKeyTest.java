@@ -10,7 +10,7 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.domains.voice.api.v2.CallsService;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
-import com.sinch.sdk.domains.voice.models.v2.svaml.DialCommandDtoTest;
+import com.sinch.sdk.domains.voice.models.v2.svaml.calls.DialCommandDtoTest;
 import com.sinch.sdk.http.DefaultRetryManager;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.RetryConfiguration;

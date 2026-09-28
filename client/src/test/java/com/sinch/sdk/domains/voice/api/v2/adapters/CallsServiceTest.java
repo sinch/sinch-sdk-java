@@ -27,7 +27,7 @@ import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponseDtoTest;
-import com.sinch.sdk.domains.voice.models.v2.svaml.DialCommandDtoTest;
+import com.sinch.sdk.domains.voice.models.v2.svaml.calls.DialCommandDtoTest;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
