@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import org.json.JSONException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -38,5 +39,13 @@ public class RecordingOptionsDtoTest extends BaseTest {
         objectMapper.readValue(jsonRecordingOptions, RecordingOptions.class);
 
     TestHelpers.recursiveEquals(deserialized, expectedRecordingOptions);
+  }
+
+  @Test
+  void toStringMasksCredentials() {
+    String string = expectedRecordingOptions.toString();
+
+    Assertions.assertFalse(string.contains("access-key:secret-key"), string);
+    Assertions.assertTrue(string.contains("credentials: ***"), string);
   }
 }

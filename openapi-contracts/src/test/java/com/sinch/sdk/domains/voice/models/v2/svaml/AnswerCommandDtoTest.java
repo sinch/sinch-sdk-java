@@ -12,7 +12,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 @TestWithResources
 public class AnswerCommandDtoTest extends BaseTest {
 
-  public static final AnswerCommand expectedAnswerCommand = AnswerCommand.builder().build();
+  public static final AnswerCommand expectedAnswerCommand = AnswerCommand.ANSWER_COMMAND;
 
   @GivenTextResource("/domains/voice/v2/svaml/AnswerCommandDto.json")
   String jsonAnswerCommand;

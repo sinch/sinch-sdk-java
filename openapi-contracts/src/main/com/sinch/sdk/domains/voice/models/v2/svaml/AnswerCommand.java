@@ -38,6 +38,9 @@ public interface AnswerCommand extends SvamlCommand {
     }
   }
 
+  /** Default answer command, to be used instead of building an empty one */
+  AnswerCommand ANSWER_COMMAND = AnswerCommand.builder().build();
+
   /**
    * Getting builder
    *

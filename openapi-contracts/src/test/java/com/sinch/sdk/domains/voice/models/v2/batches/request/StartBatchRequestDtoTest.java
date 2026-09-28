@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -42,5 +43,13 @@ public class StartBatchRequestDtoTest extends BaseTest {
     String serializedString = objectMapper.writeValueAsString(expectedStartBatchRequest);
 
     JSONAssert.assertEquals(jsonStartBatchRequest, serializedString, true);
+  }
+
+  @Test
+  void toStringMasksRecordingCredentials() {
+    String string = expectedStartBatchRequest.toString();
+
+    Assertions.assertFalse(string.contains("access-key:secret-key"), string);
+    Assertions.assertTrue(string.contains("credentials: ***"), string);
   }
 }

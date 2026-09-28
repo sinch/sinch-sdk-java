@@ -7,6 +7,7 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.voice.models.v2.svaml.DialCommandDtoTest;
 import java.util.Arrays;
 import org.json.JSONException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -28,5 +29,13 @@ public class StartCallRequestDtoTest extends BaseTest {
     String serializedString = objectMapper.writeValueAsString(expectedStartCallRequest);
 
     JSONAssert.assertEquals(jsonStartCallRequest, serializedString, true);
+  }
+
+  @Test
+  void toStringMasksRecordingCredentials() {
+    String string = expectedStartCallRequest.toString();
+
+    Assertions.assertFalse(string.contains("access-key:secret-key"), string);
+    Assertions.assertTrue(string.contains("credentials: ***"), string);
   }
 }

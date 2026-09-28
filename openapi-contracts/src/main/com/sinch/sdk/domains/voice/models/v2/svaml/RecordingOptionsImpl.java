@@ -161,7 +161,7 @@ public class RecordingOptionsImpl implements RecordingOptions {
     sb.append("    recordingType: ").append(toIndentedString(recordingType)).append("\n");
     sb.append("    destination: ").append(toIndentedString(destination)).append("\n");
     sb.append("    destinationUrl: ").append(toIndentedString(destinationUrl)).append("\n");
-    sb.append("    credentials: ").append(toIndentedString(credentials)).append("\n");
+    sb.append("    credentials: ").append(toIndentedString("***")).append("\n");
     sb.append("    transcriptionOptions: ")
         .append(toIndentedString(transcriptionOptions))
         .append("\n");
