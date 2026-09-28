@@ -37,9 +37,12 @@ public class Start {
 
     // The phone number to be used as the caller ID, in E.164 format (e.g., +12025550123)
     String sinchPhoneNumber = Settings.getPhoneNumber().orElse("MY_SINCH_PHONE_NUMBER");
-    // The phone numbers you want to call, in E.164 format (e.g., +12025550123): one call each
-    List<String> recipientPhoneNumbers =
-        Arrays.asList("RECIPIENT_PHONE_NUMBER_1", "RECIPIENT_PHONE_NUMBER_2");
+    // The phone numbers you want to call, in E.164 format (e.g., +12025550123).
+    // One call per entry, each one filling the "@toNumber" placeholder of the dial command
+    List<Map<String, String>> parameters =
+        Arrays.asList(
+            Collections.singletonMap("toNumber", "RECIPIENT_PHONE_NUMBER_1"),
+            Collections.singletonMap("toNumber", "RECIPIENT_PHONE_NUMBER_2"));
 
     Configuration configuration =
         Configuration.builder()
@@ -76,19 +79,13 @@ public class Start {
                     .build())
             .build();
 
-    // One parameter set per call, each giving a value for the "@toNumber" placeholder
-    List<Map<String, String>> parameters =
-        Arrays.asList(
-            Collections.singletonMap("toNumber", recipientPhoneNumbers.get(0)),
-            Collections.singletonMap("toNumber", recipientPhoneNumbers.get(1)));
-
     StartBatchRequest request =
         StartBatchRequest.builder()
             .setCommands(Collections.singletonList(dial))
             .setParameters(parameters)
             .build();
 
-    LOGGER.info("Start a batch of calls to: " + recipientPhoneNumbers);
+    LOGGER.info("Start a batch of calls to: " + parameters);
 
     StartBatchResponse response = batchesService.start(request);
 
