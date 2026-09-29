@@ -19,6 +19,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ### SDK
 - **[feature]** `SinchClient` transport level settings: `TransportSettings` (`timeoutSeconds`, `useSinchAuth`)
+- **[deprecation notice]** `HttpClientApache` constructors without a timeout, use `HttpClientApache(HttpProxyConfiguration, RetryManager, int)`
 
 
 ## v2.2.0 - 2026-09-17

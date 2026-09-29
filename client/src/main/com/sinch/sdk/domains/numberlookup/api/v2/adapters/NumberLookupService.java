@@ -10,7 +10,6 @@ import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.numberlookup.models.v2.request.NumberLookupRequest;
 import com.sinch.sdk.domains.numberlookup.models.v2.response.NumberLookupResponse;
 import com.sinch.sdk.models.NumberLookupContext;
-import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Collections;
@@ -37,19 +36,6 @@ public class NumberLookupService
   private volatile Map<String, AuthManager> authManagers;
 
   private volatile NumberLookupServiceFacade lookup;
-
-  public NumberLookupService(
-      UnifiedCredentials credentials,
-      NumberLookupContext context,
-      ServerConfiguration oAuthServer,
-      Supplier<HttpClient> httpClientSupplier) {
-    this(
-        credentials,
-        context,
-        oAuthServer,
-        httpClientSupplier,
-        TransportSettings.DEFAULT_USE_SINCH_AUTH);
-  }
 
   public NumberLookupService(
       UnifiedCredentials credentials,

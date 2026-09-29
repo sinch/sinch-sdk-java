@@ -3,7 +3,6 @@ package com.sinch.sdk.domains.numberlookup.adapters;
 import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.models.NumberLookupContext;
-import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.function.Supplier;
 
@@ -16,19 +15,6 @@ public class NumberLookupService implements com.sinch.sdk.domains.numberlookup.N
   private final boolean useSinchAuth;
 
   private volatile com.sinch.sdk.domains.numberlookup.api.v2.NumberLookupService v2;
-
-  public NumberLookupService(
-      UnifiedCredentials credentials,
-      NumberLookupContext context,
-      ServerConfiguration oAuthServer,
-      Supplier<HttpClient> httpClientSupplier) {
-    this(
-        credentials,
-        context,
-        oAuthServer,
-        httpClientSupplier,
-        TransportSettings.DEFAULT_USE_SINCH_AUTH);
-  }
 
   public NumberLookupService(
       UnifiedCredentials credentials,

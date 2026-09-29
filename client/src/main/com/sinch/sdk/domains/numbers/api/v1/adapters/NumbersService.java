@@ -22,7 +22,6 @@ import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumber;
 import com.sinch.sdk.domains.numbers.models.v1.response.AvailableNumbersListResponse;
 import com.sinch.sdk.domains.numbers.models.v1.response.ValidateAddressResponse;
 import com.sinch.sdk.models.NumbersContext;
-import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Collections;
@@ -54,19 +53,6 @@ public class NumbersService implements com.sinch.sdk.domains.numbers.api.v1.Numb
 
   static {
     LocalLazyInit.init();
-  }
-
-  public NumbersService(
-      UnifiedCredentials credentials,
-      NumbersContext context,
-      ServerConfiguration oAuthServer,
-      Supplier<HttpClient> httpClientSupplier) {
-    this(
-        credentials,
-        context,
-        oAuthServer,
-        httpClientSupplier,
-        TransportSettings.DEFAULT_USE_SINCH_AUTH);
   }
 
   public NumbersService(

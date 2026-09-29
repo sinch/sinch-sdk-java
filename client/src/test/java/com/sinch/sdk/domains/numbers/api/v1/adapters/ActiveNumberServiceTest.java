@@ -109,7 +109,7 @@ class ActiveNumberServiceTest extends NumbersBaseTest {
   public void initMocks() {
     service =
         new com.sinch.sdk.domains.numbers.api.v1.adapters.NumbersService(
-            credentials, context, oAuthServer, httpClientSupplier);
+            credentials, context, oAuthServer, httpClientSupplier, true);
   }
 
   @Test

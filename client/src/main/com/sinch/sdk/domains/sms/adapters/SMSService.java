@@ -4,7 +4,6 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.models.SmsContext;
 import com.sinch.sdk.models.SmsServicePlanCredentials;
-import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.function.Supplier;
 
@@ -13,19 +12,6 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
   private final Supplier<com.sinch.sdk.domains.sms.api.v1.SMSService> v1Initializer;
 
   private volatile com.sinch.sdk.domains.sms.api.v1.SMSService v1;
-
-  public SMSService(
-      UnifiedCredentials credentials,
-      SmsContext context,
-      ServerConfiguration oAuthServer,
-      Supplier<HttpClient> httpClientSupplier) {
-    this(
-        credentials,
-        context,
-        oAuthServer,
-        httpClientSupplier,
-        TransportSettings.DEFAULT_USE_SINCH_AUTH);
-  }
 
   public SMSService(
       UnifiedCredentials credentials,

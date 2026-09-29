@@ -36,7 +36,7 @@ class CredentialsValidationHelper {
             NullPointerException.class,
             () ->
                 service.accept(
-                    new NumberLookupService(null, context, oAuthServer, httpClientSupplier)));
+                    new NumberLookupService(null, context, oAuthServer, httpClientSupplier, true)));
     assertTrue(
         exception
             .getMessage()
@@ -56,7 +56,7 @@ class CredentialsValidationHelper {
             () ->
                 service.accept(
                     new NumberLookupService(
-                        credentials, context, oAuthServer, httpClientSupplier)));
+                        credentials, context, oAuthServer, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("keyId"));
   }
 
@@ -73,7 +73,7 @@ class CredentialsValidationHelper {
             () ->
                 service.accept(
                     new NumberLookupService(
-                        credentials, context, oAuthServer, httpClientSupplier)));
+                        credentials, context, oAuthServer, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("keySecret"));
   }
 
@@ -90,7 +90,7 @@ class CredentialsValidationHelper {
             () ->
                 service.accept(
                     new NumberLookupService(
-                        credentials, context, oAuthServer, httpClientSupplier)));
+                        credentials, context, oAuthServer, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("projectId"));
   }
 
@@ -108,7 +108,8 @@ class CredentialsValidationHelper {
             NullPointerException.class,
             () ->
                 service.accept(
-                    new NumberLookupService(credentials, null, oAuthServer, httpClientSupplier)));
+                    new NumberLookupService(
+                        credentials, null, oAuthServer, httpClientSupplier, true)));
     assertTrue(
         exception.getMessage().contains("Number Lookup service requires context to be defined"));
   }
@@ -129,7 +130,7 @@ class CredentialsValidationHelper {
             () ->
                 service.accept(
                     new NumberLookupService(
-                        credentials, context, oAuthServer, httpClientSupplier)));
+                        credentials, context, oAuthServer, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("numberLookupUrl"));
   }
 
@@ -147,7 +148,8 @@ class CredentialsValidationHelper {
     assertDoesNotThrow(
         () ->
             service.accept(
-                new NumberLookupService(credentials, context, oAuthServer, httpClientSupplier)),
+                new NumberLookupService(
+                    credentials, context, oAuthServer, httpClientSupplier, true)),
         "Init passed");
   }
 }

@@ -61,6 +61,7 @@ class HttpClientApacheTimeoutTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   void theDefaultTimeoutIsUsedWhenNoneIsGiven() throws Exception {
     server.enqueue(new MockResponse().setBody("{}"));
 

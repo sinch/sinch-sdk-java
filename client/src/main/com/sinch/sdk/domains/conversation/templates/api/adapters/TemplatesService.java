@@ -12,7 +12,6 @@ import com.sinch.sdk.domains.conversation.templates.api.v2.adapters.TemplatesV2S
 import com.sinch.sdk.domains.conversation.templates.models.v2.ChannelTemplateOverrideMapper;
 import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateTranslationMapper;
 import com.sinch.sdk.models.ConversationContext;
-import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Collections;
@@ -42,19 +41,6 @@ public class TemplatesService
 
   static {
     LocalLazyInit.init();
-  }
-
-  public TemplatesService(
-      UnifiedCredentials credentials,
-      ConversationContext context,
-      ServerConfiguration oAuthServer,
-      Supplier<HttpClient> httpClientSupplier) {
-    this(
-        credentials,
-        context,
-        oAuthServer,
-        httpClientSupplier,
-        TransportSettings.DEFAULT_USE_SINCH_AUTH);
   }
 
   public TemplatesService(

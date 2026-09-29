@@ -6,6 +6,7 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.models.HttpProxyConfiguration;
+import com.sinch.sdk.models.TransportSettings;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -43,7 +44,8 @@ class HttpClientApacheProxyTest {
     mockProxy.enqueue(
         new MockResponse().setBody("{}").addHeader("Content-Type", "application/json"));
 
-    try (HttpClientApache proxyClient = new HttpClientApache(proxySettings)) {
+    try (HttpClientApache proxyClient =
+        new HttpClientApache(proxySettings, null, TransportSettings.DEFAULT_TIMEOUT_SECONDS)) {
       proxyClient.invokeAPI(
           new ServerConfiguration("http://foo.com"),
           null,
@@ -90,7 +92,8 @@ class HttpClientApacheProxyTest {
     mockProxy.enqueue(
         new MockResponse().setBody("{}").addHeader("Content-Type", "application/json"));
 
-    try (HttpClientApache proxyClient = new HttpClientApache(proxySettings)) {
+    try (HttpClientApache proxyClient =
+        new HttpClientApache(proxySettings, null, TransportSettings.DEFAULT_TIMEOUT_SECONDS)) {
       proxyClient.invokeAPI(
           new ServerConfiguration("http://foo.com"),
           null,
@@ -152,7 +155,8 @@ class HttpClientApacheProxyTest {
     mockProxy.enqueue(
         new MockResponse().setBody("{}").addHeader("Content-Type", "application/json"));
 
-    try (HttpClientApache proxyClient = new HttpClientApache(proxySettings)) {
+    try (HttpClientApache proxyClient =
+        new HttpClientApache(proxySettings, null, TransportSettings.DEFAULT_TIMEOUT_SECONDS)) {
       proxyClient.invokeAPI(
           new ServerConfiguration("http://foo.com"),
           null,

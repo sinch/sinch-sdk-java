@@ -49,19 +49,6 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
       UnifiedCredentials credentials,
       SmsContext context,
       ServerConfiguration oAuthServer,
-      Supplier<HttpClient> httpClientSupplier) {
-    this(
-        credentials,
-        context,
-        oAuthServer,
-        httpClientSupplier,
-        TransportSettings.DEFAULT_USE_SINCH_AUTH);
-  }
-
-  public SMSService(
-      UnifiedCredentials credentials,
-      SmsContext context,
-      ServerConfiguration oAuthServer,
       Supplier<HttpClient> httpClientSupplier,
       boolean useSinchAuth) {
     this.credentials = credentials;

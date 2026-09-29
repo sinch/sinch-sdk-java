@@ -39,7 +39,8 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, context, server, httpClientSupplier)));
+                    new ConversationService(
+                        credentials, context, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("keyId"));
   }
 
@@ -54,7 +55,8 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, context, server, httpClientSupplier)));
+                    new ConversationService(
+                        credentials, context, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("keySecret"));
   }
 
@@ -70,7 +72,8 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, context, server, httpClientSupplier)));
+                    new ConversationService(
+                        credentials, context, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("projectId"));
   }
 
@@ -82,7 +85,8 @@ class CredentialsValidationHelper {
         assertThrows(
             NullPointerException.class,
             () ->
-                service.accept(new ConversationService(null, context, server, httpClientSupplier)));
+                service.accept(
+                    new ConversationService(null, context, server, httpClientSupplier, true)));
     assertTrue(
         exception.getMessage().contains("Conversation service requires credentials to be defined"));
   }
@@ -101,7 +105,7 @@ class CredentialsValidationHelper {
             NullPointerException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, null, server, httpClientSupplier)));
+                    new ConversationService(credentials, null, server, httpClientSupplier, true)));
     assertTrue(
         exception.getMessage().contains("Conversation service requires context to be defined"));
   }
@@ -122,7 +126,8 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, context, server, httpClientSupplier)));
+                    new ConversationService(
+                        credentials, context, server, httpClientSupplier, true)));
     assertTrue(
         exception.getMessage().contains("Conversation service requires 'url' to be defined"));
   }
@@ -143,7 +148,8 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, context, server, httpClientSupplier)));
+                    new ConversationService(
+                        credentials, context, server, httpClientSupplier, true)));
     assertTrue(
         exception.getMessage().contains("Conversation service requires 'url' to be defined"));
   }
@@ -163,7 +169,8 @@ class CredentialsValidationHelper {
             NullPointerException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, context, server, httpClientSupplier)));
+                    new ConversationService(
+                        credentials, context, server, httpClientSupplier, true)));
     assertTrue(
         exception.getMessage().contains("Conversation service requires 'region' to be defined"));
   }
@@ -187,7 +194,8 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new ConversationService(credentials, context, server, httpClientSupplier)));
+                    new ConversationService(
+                        credentials, context, server, httpClientSupplier, true)));
     assertTrue(
         exception.getMessage().contains("Conversation service requires 'region' to be defined"));
   }
@@ -209,7 +217,7 @@ class CredentialsValidationHelper {
     assertDoesNotThrow(
         () ->
             service.accept(
-                new ConversationService(credentials, context, server, httpClientSupplier)),
+                new ConversationService(credentials, context, server, httpClientSupplier, true)),
         "Init passed");
   }
 }

@@ -44,7 +44,6 @@ import com.sinch.sdk.domains.conversation.models.v1.messages.types.internal.What
 import com.sinch.sdk.domains.conversation.models.v1.messages.types.template.TemplateMessageMapper;
 import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesService;
 import com.sinch.sdk.models.ConversationContext;
-import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
 import java.util.Collections;
@@ -84,19 +83,6 @@ public class ConversationService
 
   static {
     LocalLazyInit.init();
-  }
-
-  public ConversationService(
-      UnifiedCredentials credentials,
-      ConversationContext context,
-      ServerConfiguration oAuthServer,
-      Supplier<HttpClient> httpClientSupplier) {
-    this(
-        credentials,
-        context,
-        oAuthServer,
-        httpClientSupplier,
-        TransportSettings.DEFAULT_USE_SINCH_AUTH);
   }
 
   public ConversationService(

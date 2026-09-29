@@ -46,7 +46,8 @@ public class TransportSettings {
   /**
    * Whether the endpoints supporting it authenticate against the Sinch auth server.
    *
-   * @return Flag value
+   * @return {@code true} when the SDK fetches a Sinch access token and adds the {@code
+   *     Authorization} header, {@code false} when the caller authorizes the requests
    * @since 2.3
    */
   public boolean getUseSinchAuth() {
@@ -120,7 +121,8 @@ public class TransportSettings {
     /**
      * Set whether the endpoints supporting it authenticate against the Sinch auth server
      *
-     * @param useSinchAuth Flag value
+     * @param useSinchAuth {@code true} to let the SDK fetch a Sinch access token and add the {@code
+     *     Authorization} header, {@code false} to authorize the requests yourself
      * @return Current builder
      * @see TransportSettings#getUseSinchAuth() getter
      * @since 2.3

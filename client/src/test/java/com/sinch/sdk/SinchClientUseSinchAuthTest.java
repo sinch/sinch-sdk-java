@@ -7,6 +7,7 @@ import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.NumberLookupContext;
 import com.sinch.sdk.models.TransportSettings;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
@@ -20,7 +21,7 @@ class SinchClientUseSinchAuthTest extends BaseTest {
 
   private MockWebServer server;
   private final AtomicInteger authRequests = new AtomicInteger();
-  private volatile String lastLookupAuthorization = "unset";
+  private volatile Optional<String> lastLookupAuthorization = Optional.empty();
 
   @BeforeEach
   void setUp() throws IOException {
@@ -39,7 +40,7 @@ class SinchClientUseSinchAuthTest extends BaseTest {
                   .setBody(
                       "{\"access_token\":\"t\",\"expires_in\":3600,\"token_type\":\"Bearer\"}");
             }
-            lastLookupAuthorization = request.getHeader("Authorization");
+            lastLookupAuthorization = Optional.ofNullable(request.getHeader("Authorization"));
             return new MockResponse()
                 .setResponseCode(200)
                 .addHeader("Content-Type", "application/json")
@@ -79,7 +80,7 @@ class SinchClientUseSinchAuthTest extends BaseTest {
     lookup(client);
 
     assertEquals(0, authRequests.get(), "no token must be fetched when Sinch auth is disabled");
-    assertNull(lastLookupAuthorization, "no Authorization header must be sent");
+    assertFalse(lastLookupAuthorization.isPresent(), "no Authorization header must be sent");
     client.close();
   }
 
@@ -108,8 +109,8 @@ class SinchClientUseSinchAuthTest extends BaseTest {
     lookup(client);
 
     assertEquals(1, authRequests.get(), "the token exchange must still happen by default");
-    assertNotNull(lastLookupAuthorization);
-    assertTrue(lastLookupAuthorization.startsWith("Bearer "));
+    assertTrue(lastLookupAuthorization.isPresent());
+    assertTrue(lastLookupAuthorization.get().startsWith("Bearer "));
     client.close();
   }
 

@@ -23,8 +23,8 @@ To use Sinch services, you'll need a Sinch account and access keys. You can sign
 - [Logging](#logging)
 - [Handling Exceptions](#handling-exceptions)
 - [Proxy configuration](#proxy-configuration)
-- [Transport settings](#transport-settings)
 - [Retry configuration](#retry-configuration)
+- [Transport settings](#transport-settings)
 - [Third-party dependencies](#third-party-dependencies)
 - [Examples](#examples)
 - [Changelog and Migration](#changelog--migration)
@@ -495,52 +495,6 @@ SinchClient client = new SinchClient(configuration);
 ```
 
 
-## Transport settings
-
-`SinchClient` accepts optional transport-level settings alongside credentials. They apply to product API calls and to OAuth token fetches.
-
-### Timeout
-
-`timeoutSeconds` is the HTTP I/O timeout. The default is `60`. Pass `0` to disable the timeout. Negative values are rejected.
-
-```java
-import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.models.Configuration;
-import com.sinch.sdk.models.TransportSettings;
-
-...
-Configuration configuration = Configuration.builder()
-        .setKeyId(PARAM_KEY_ID)
-        .setKeySecret(PARAM_KEY_SECRET)
-        .setProjectId(PARAM_PROJECT_ID)
-        .setTransportSettings(
-                TransportSettings.builder()
-                        .setTimeoutSeconds(30)
-                        .build())
-        .build();
-SinchClient client = new SinchClient(configuration);
-```
-
-### Disable Sinch OAuth
-
-By default (`useSinchAuth` set to `true`), OAuth-capable APIs fetch a Sinch access token. Set it to `false` to skip the token exchange: no `Authorization` header is added by the SDK and the caller is responsible for authorizing the request. In that mode only `projectId` is required.
-
-```java
-import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.models.Configuration;
-import com.sinch.sdk.models.TransportSettings;
-
-...
-Configuration configuration = Configuration.builder()
-        .setProjectId(PARAM_PROJECT_ID)
-        .setTransportSettings(
-                TransportSettings.builder()
-                        .setUseSinchAuth(false)
-                        .build())
-        .build();
-SinchClient client = new SinchClient(configuration);
-```
-
 ## Retry configuration
 
 When an API call or OAuth token request returns HTTP 429 (Too Many Requests), the SDK retries automatically. Configure this on `SinchClient`; the same settings apply to product API calls and token fetches.
@@ -584,6 +538,46 @@ Configuration configuration = Configuration.builder()
         .setRetryConfiguration(
                 RetryConfiguration.builder()
                         .setRetryPolicy(RetryPolicy.NONE)
+                        .build())
+        .build();
+SinchClient client = new SinchClient(configuration);
+```
+
+## Transport settings
+
+`SinchClient` accepts optional transport-level settings alongside credentials. They apply to product API calls and to OAuth token fetches.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `timeoutSeconds` | `int` | `60` | HTTP I/O timeout in seconds. Pass `0` to disable the timeout. Negative values are rejected. |
+| `useSinchAuth` | `boolean` | `true` | When `true`, OAuth-capable APIs fetch a Sinch access token. Set `false` to skip the token exchange: the SDK adds no `Authorization` header and the caller authorizes the requests. In that mode only `projectId` is required. |
+
+### Timeout
+
+```java
+import com.sinch.sdk.SinchClient;
+import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.TransportSettings;
+
+...
+Configuration configuration = Configuration.builder()
+        ...
+        .setTransportSettings(
+                TransportSettings.builder()
+                        .setTimeoutSeconds(30)
+                        .build())
+        .build();
+SinchClient client = new SinchClient(configuration);
+```
+
+### Disable Sinch OAuth
+
+```java
+Configuration configuration = Configuration.builder()
+        .setProjectId(PARAM_PROJECT_ID)
+        .setTransportSettings(
+                TransportSettings.builder()
+                        .setUseSinchAuth(false)
                         .build())
         .build();
 SinchClient client = new SinchClient(configuration);

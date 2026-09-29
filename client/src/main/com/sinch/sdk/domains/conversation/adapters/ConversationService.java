@@ -4,7 +4,6 @@ import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.conversation.templates.api.adapters.TemplatesService;
 import com.sinch.sdk.models.ConversationContext;
-import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.function.Supplier;
 
@@ -18,19 +17,6 @@ public class ConversationService implements com.sinch.sdk.domains.conversation.C
 
   private volatile com.sinch.sdk.domains.conversation.api.v1.ConversationService conversationV1;
   private volatile TemplatesService templates;
-
-  public ConversationService(
-      UnifiedCredentials credentials,
-      ConversationContext context,
-      ServerConfiguration oAuthServer,
-      Supplier<HttpClient> httpClientSupplier) {
-    this(
-        credentials,
-        context,
-        oAuthServer,
-        httpClientSupplier,
-        TransportSettings.DEFAULT_USE_SINCH_AUTH);
-  }
 
   public ConversationService(
       UnifiedCredentials credentials,
