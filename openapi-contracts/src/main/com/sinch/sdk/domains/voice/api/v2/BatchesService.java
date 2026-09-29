@@ -16,8 +16,7 @@ public interface BatchesService {
    *
    * <p>Uses the same API operation as {@link CallsService#start}.
    *
-   * @param startBatchRequest The SVAML commands describing the call flow, the parameter sets and
-   *     batch options, plus the optional idempotency key (required)
+   * @param startBatchRequest The batch of calls to start (required)
    * @return StartBatchResponse
    * @throws ApiException if fails to make API call
    * @since 2.3
@@ -34,8 +33,7 @@ public interface BatchesService {
    * <p>Uses the same API operation as {@link CallsService#start}.
    *
    * @param queryParameter (optional)
-   * @param startBatchRequest The SVAML commands describing the call flow, the parameter sets and
-   *     batch options, plus the optional idempotency key (required)
+   * @param startBatchRequest The batch of calls to start (required)
    * @return StartBatchResponse
    * @throws ApiException if fails to make API call
    * @since 2.3

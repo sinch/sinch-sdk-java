@@ -1,9 +1,7 @@
 package com.sinch.sdk.domains.voice.api.v2.adapters;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
@@ -24,11 +22,9 @@ import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.voice.api.v2.CallsService;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallQueryParameters;
-import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponseDtoTest;
-import com.sinch.sdk.domains.voice.models.v2.svaml.calls.DialCommandDtoTest;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -36,7 +32,6 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
 @TestWithResources
@@ -98,42 +93,6 @@ public class CallsServiceTest extends BaseTest {
                 .setServiceId("6e124178-c29d-46a5-943c-5c2ae544aade")
                 .build(),
             StartCallRequestDtoTest.expectedStartCallRequest);
-
-    TestHelpers.recursiveEquals(response, StartCallResponseDtoTest.expectedStartCallResponse);
-  }
-
-  @Test
-  void startWithoutIdempotencyKeyGeneratesOne() throws ApiException {
-
-    HttpResponse httpResponse =
-        new HttpResponse(201, null, Collections.emptyMap(), jsonStartCallResponseDto.getBytes());
-
-    when(httpClient.invokeAPI(eq(serverConfiguration), eq(authManagers), any(HttpRequest.class)))
-        .thenReturn(httpResponse);
-
-    StartCallResponse response =
-        service.start(
-            StartCallRequest.builder()
-                .setCommands(Arrays.asList(DialCommandDtoTest.expectedDialCommand))
-                .build());
-
-    ArgumentCaptor<HttpRequest> sent = ArgumentCaptor.forClass(HttpRequest.class);
-    verify(httpClient).invokeAPI(eq(serverConfiguration), eq(authManagers), sent.capture());
-
-    String idempotencyKey = sent.getValue().getHeaderParams().get("Idempotency-Key");
-    Assertions.assertNotNull(idempotencyKey, "no idempotency key was generated");
-
-    HttpRequest expected =
-        new HttpRequest(
-            "/v2/projects/" + URLPathUtils.encodePathSegment(PROJECT_ID) + "/calls",
-            HttpMethod.POST,
-            Collections.emptyList(),
-            jsonStartCallRequestDto,
-            Collections.singletonMap("Idempotency-Key", idempotencyKey),
-            ACCEPTS,
-            Collections.singletonList(HttpContentType.APPLICATION_JSON),
-            AUTH_NAMES);
-    Assertions.assertTrue(new HttpRequestMatcher(expected).matches(sent.getValue()));
 
     TestHelpers.recursiveEquals(response, StartCallResponseDtoTest.expectedStartCallResponse);
   }

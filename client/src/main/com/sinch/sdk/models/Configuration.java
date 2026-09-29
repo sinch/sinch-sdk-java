@@ -505,6 +505,38 @@ public class Configuration {
     }
 
     /**
+     * Set Voice V2 related region
+     *
+     * @param region {@link com.sinch.sdk.domains.voice.models.v2.VoiceContext#getVoiceRegion()
+     *     getter}
+     * @return Current builder
+     * @since 2.3
+     */
+    public Builder setVoiceV2Region(com.sinch.sdk.domains.voice.models.v2.VoiceRegion region) {
+      if (null == this.voiceV2Context) {
+        this.voiceV2Context = com.sinch.sdk.domains.voice.models.v2.VoiceContext.builder();
+      }
+      this.voiceV2Context.setVoiceRegion(region);
+      return this;
+    }
+
+    /**
+     * Set Voice V2 API URL
+     *
+     * @param voiceUrl {@link com.sinch.sdk.domains.voice.models.v2.VoiceContext#getVoiceUrl()
+     *     getter}
+     * @return Current builder
+     * @since 2.3
+     */
+    public Builder setVoiceV2Url(String voiceUrl) {
+      if (null == this.voiceV2Context) {
+        this.voiceV2Context = com.sinch.sdk.domains.voice.models.v2.VoiceContext.builder();
+      }
+      this.voiceV2Context.setVoiceUrl(voiceUrl);
+      return this;
+    }
+
+    /**
      * Set Voice V2 related context
      *
      * @param context {@link #getVoiceV2Context() getter}

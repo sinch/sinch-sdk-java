@@ -16,7 +16,7 @@ public class StreamOptionsDtoTest extends BaseTest {
       StreamOptions.builder()
           .setVersion(1)
           .setCodec(StreamOptions.CodecEnum.PCM)
-          .setSampleRate(StreamOptions.SampleRateEnum.NUMBER_16000)
+          .setSampleRate(StreamOptions.SampleRateEnum.HZ_16000)
           .build();
 
   @GivenTextResource("/domains/voice/v2/destination/StreamOptionsDto.json")

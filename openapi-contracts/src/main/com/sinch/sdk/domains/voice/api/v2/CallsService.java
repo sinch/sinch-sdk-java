@@ -11,8 +11,7 @@ public interface CallsService {
   /**
    * Create and initiate a new outbound voice call, associated to the project's default service
    *
-   * @param startCallRequest The SVAML commands describing the call flow, plus the optional
-   *     idempotency key (required)
+   * @param startCallRequest The call to start (required)
    * @return StartCallResponse
    * @throws ApiException if fails to make API call
    * @since 2.3
@@ -26,8 +25,7 @@ public interface CallsService {
    * specified by {@link StartCallQueryParameters#getServiceId()}.
    *
    * @param queryParameter (optional)
-   * @param startCallRequest The SVAML commands describing the call flow, plus the optional
-   *     idempotency key (required)
+   * @param startCallRequest The call to start (required)
    * @return StartCallResponse
    * @throws ApiException if fails to make API call
    * @since 2.3

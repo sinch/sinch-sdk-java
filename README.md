@@ -356,24 +356,7 @@ You can find a complete example in [examples/sinch-events](https://github.com/si
 
 > **Note:** Support for the Voice API v2 is currently in preview.
 
-The Voice API v2 uses project authentication, so it works with the [common client](#client-initialization) shown above. Its services are available under `client.voice().v2()`. The region is optional and defaults to a global region:
-
-```java
-import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.domains.voice.models.v2.VoiceContext;
-import com.sinch.sdk.domains.voice.models.v2.VoiceRegion;
-import com.sinch.sdk.models.Configuration;
-
-Configuration configuration =
-    Configuration.builder()
-        .setProjectId(PROJECT_ID)
-        .setKeyId(KEY_ID)
-        .setKeySecret(KEY_SECRET)
-        .setVoiceV2Context(VoiceContext.builder().setVoiceRegion(VoiceRegion.EUROPE).build())
-        .build();
-
-SinchClient client = new SinchClient(configuration);
-```
+The Voice API v2 needs no extra parameters, use the [common client](#client-initialization) shown above.
 
 
 ### Your first request

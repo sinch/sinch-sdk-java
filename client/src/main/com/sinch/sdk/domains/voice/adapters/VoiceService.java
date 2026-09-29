@@ -21,13 +21,6 @@ public class VoiceService implements com.sinch.sdk.domains.voice.VoiceService {
 
   public VoiceService(
       ApplicationCredentials credentials,
-      VoiceContext context,
-      Supplier<HttpClient> httpClientSupplier) {
-    this(credentials, null, context, null, null, httpClientSupplier);
-  }
-
-  public VoiceService(
-      ApplicationCredentials credentials,
       UnifiedCredentials unifiedCredentials,
       VoiceContext context,
       com.sinch.sdk.domains.voice.models.v2.VoiceContext v2Context,

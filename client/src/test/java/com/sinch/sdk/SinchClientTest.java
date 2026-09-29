@@ -267,6 +267,32 @@ class SinchClientTest {
     assertEquals("my foo url", client.getConfiguration().getVoiceV2Context().get().getVoiceUrl());
   }
 
+  @Test
+  void voiceV2UrlFromRegionShortcut() {
+    Configuration configuration =
+        Configuration.builder()
+            .setVoiceV2Region(com.sinch.sdk.domains.voice.models.v2.VoiceRegion.AUSTRALIA)
+            .build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        "https://au1.voice.api.sinch.com",
+        client.getConfiguration().getVoiceV2Context().get().getVoiceUrl());
+  }
+
+  @Test
+  void voiceV2UrlFromUrlShortcut() {
+    Configuration configuration =
+        Configuration.builder()
+            .setVoiceV2Region(com.sinch.sdk.domains.voice.models.v2.VoiceRegion.EUROPE)
+            .setVoiceV2Url("my foo url")
+            .build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        com.sinch.sdk.domains.voice.models.v2.VoiceRegion.EUROPE,
+        client.getConfiguration().getVoiceV2Context().get().getVoiceRegion());
+    assertEquals("my foo url", client.getConfiguration().getVoiceV2Context().get().getVoiceUrl());
+  }
+
   // The V1 and V2 regions are separate settings: one must not leak into the other.
   @Test
   void voiceV1RegionDoesNotChangeVoiceV2Url() {

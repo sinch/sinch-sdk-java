@@ -34,24 +34,23 @@ public interface StreamOptions {
 
   /** Gets or Sets sampleRate */
   public class SampleRateEnum extends EnumDynamic<Integer, SampleRateEnum> {
-    public static final SampleRateEnum NUMBER_8000 = new SampleRateEnum(8000);
+    public static final SampleRateEnum HZ_8000 = new SampleRateEnum(8000);
 
-    public static final SampleRateEnum NUMBER_16000 = new SampleRateEnum(16000);
+    public static final SampleRateEnum HZ_16000 = new SampleRateEnum(16000);
 
-    public static final SampleRateEnum NUMBER_24000 = new SampleRateEnum(24000);
+    public static final SampleRateEnum HZ_24000 = new SampleRateEnum(24000);
 
-    public static final SampleRateEnum NUMBER_44100 = new SampleRateEnum(44100);
+    public static final SampleRateEnum HZ_44100 = new SampleRateEnum(44100);
 
-    public static final SampleRateEnum NUMBER_48000 = new SampleRateEnum(48000);
+    public static final SampleRateEnum HZ_48000 = new SampleRateEnum(48000);
 
-    public static final SampleRateEnum NUMBER_96000 = new SampleRateEnum(96000);
+    public static final SampleRateEnum HZ_96000 = new SampleRateEnum(96000);
 
     private static final EnumSupportDynamic<Integer, SampleRateEnum> ENUM_SUPPORT =
         new EnumSupportDynamic<>(
             SampleRateEnum.class,
             SampleRateEnum::new,
-            Arrays.asList(
-                NUMBER_8000, NUMBER_16000, NUMBER_24000, NUMBER_44100, NUMBER_48000, NUMBER_96000));
+            Arrays.asList(HZ_8000, HZ_16000, HZ_24000, HZ_44100, HZ_48000, HZ_96000));
 
     private SampleRateEnum(Integer value) {
       super(value);

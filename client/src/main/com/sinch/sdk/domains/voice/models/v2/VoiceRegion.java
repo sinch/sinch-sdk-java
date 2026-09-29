@@ -3,6 +3,9 @@ package com.sinch.sdk.domains.voice.models.v2;
 import com.sinch.sdk.core.utils.EnumDynamic;
 import com.sinch.sdk.core.utils.EnumSupportDynamic;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Stream;
 
 /**
@@ -39,6 +42,18 @@ public class VoiceRegion extends EnumDynamic<String, VoiceRegion> {
           VoiceRegion::new,
           Arrays.asList(GLOBAL, NORTH_AMERICA, SOUTH_AMERICA, EUROPE, ASIA_PACIFIC, AUSTRALIA));
 
+  // Lets end users store the region by its constant name (e.g. "AUSTRALIA") instead of its value
+  private static final Map<String, VoiceRegion> BY_NAME = new HashMap<>();
+
+  static {
+    BY_NAME.put("GLOBAL", GLOBAL);
+    BY_NAME.put("NORTH_AMERICA", NORTH_AMERICA);
+    BY_NAME.put("SOUTH_AMERICA", SOUTH_AMERICA);
+    BY_NAME.put("EUROPE", EUROPE);
+    BY_NAME.put("ASIA_PACIFIC", ASIA_PACIFIC);
+    BY_NAME.put("AUSTRALIA", AUSTRALIA);
+  }
+
   private VoiceRegion(String value) {
     super(value);
   }
@@ -55,11 +70,18 @@ public class VoiceRegion extends EnumDynamic<String, VoiceRegion> {
   /**
    * Get value from a string
    *
-   * @param value String identifier
+   * <p>The string can be either the constant name (e.g. <code>AUSTRALIA</code>, case insensitive)
+   * or the region value (e.g. <code>au1</code>).
+   *
+   * @param value Constant name or region value
    * @return Dynamic enum from value. A new enum is created if value is not yet registered
    */
   public static VoiceRegion from(String value) {
-    return ENUM_SUPPORT.from(value);
+    if (null == value) {
+      return null;
+    }
+    VoiceRegion byName = BY_NAME.get(value.trim().toUpperCase(Locale.ROOT));
+    return null != byName ? byName : ENUM_SUPPORT.from(value);
   }
 
   /**

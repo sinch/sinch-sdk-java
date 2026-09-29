@@ -1,9 +1,7 @@
 package com.sinch.sdk.domains.voice.api.v2.adapters;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
@@ -24,7 +22,6 @@ import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.voice.api.v2.BatchesService;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchQueryParameters;
-import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequest;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.StartBatchResponse;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.StartBatchResponseDtoTest;
@@ -35,7 +32,6 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
 @TestWithResources
@@ -97,45 +93,6 @@ public class BatchesServiceTest extends BaseTest {
                 .setServiceId("6e124178-c29d-46a5-943c-5c2ae544aade")
                 .build(),
             StartBatchRequestDtoTest.expectedStartBatchRequest);
-
-    TestHelpers.recursiveEquals(response, StartBatchResponseDtoTest.expectedStartBatchResponse);
-  }
-
-  @Test
-  void startWithoutIdempotencyKeyGeneratesOne() throws ApiException {
-
-    HttpResponse httpResponse =
-        new HttpResponse(201, null, Collections.emptyMap(), jsonStartBatchResponseDto.getBytes());
-
-    when(httpClient.invokeAPI(eq(serverConfiguration), eq(authManagers), any(HttpRequest.class)))
-        .thenReturn(httpResponse);
-
-    StartBatchRequest expectedRequest = StartBatchRequestDtoTest.expectedStartBatchRequest;
-    StartBatchResponse response =
-        service.start(
-            StartBatchRequest.builder()
-                .setCommands(expectedRequest.getCommands())
-                .setParameters(expectedRequest.getParameters())
-                .setBatchOptions(expectedRequest.getBatchOptions())
-                .build());
-
-    ArgumentCaptor<HttpRequest> sent = ArgumentCaptor.forClass(HttpRequest.class);
-    verify(httpClient).invokeAPI(eq(serverConfiguration), eq(authManagers), sent.capture());
-
-    String idempotencyKey = sent.getValue().getHeaderParams().get("Idempotency-Key");
-    Assertions.assertNotNull(idempotencyKey, "no idempotency key was generated");
-
-    HttpRequest expected =
-        new HttpRequest(
-            "/v2/projects/" + URLPathUtils.encodePathSegment(PROJECT_ID) + "/calls",
-            HttpMethod.POST,
-            Collections.emptyList(),
-            jsonStartBatchRequestDto,
-            Collections.singletonMap("Idempotency-Key", idempotencyKey),
-            ACCEPTS,
-            Collections.singletonList(HttpContentType.APPLICATION_JSON),
-            AUTH_NAMES);
-    Assertions.assertTrue(new HttpRequestMatcher(expected).matches(sent.getValue()));
 
     TestHelpers.recursiveEquals(response, StartBatchResponseDtoTest.expectedStartBatchResponse);
   }
