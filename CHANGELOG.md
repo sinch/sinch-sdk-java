@@ -26,6 +26,8 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 ### Voice
 - **[test]** Extend `SinchEventsService.validateAuthenticationHeader` coverage
 
+### Build
+- **[dependency]** Bump `jackson.version` to `2.21.6`
 
 ## v2.2.0 - 2026-09-17
 
