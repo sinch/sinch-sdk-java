@@ -17,7 +17,6 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.models.HttpProxyConfiguration;
-import com.sinch.sdk.models.TransportSettings;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -73,40 +72,6 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
   private volatile CloseableHttpClient client;
 
   private final RetryManager retryManager;
-
-  /**
-   * @deprecated Use {@link #HttpClientApache(HttpProxyConfiguration, RetryManager, int)}, which
-   *     takes the transport settings explicitly. This one builds a direct connection with no retry
-   *     and {@link TransportSettings#DEFAULT_TIMEOUT_SECONDS}.
-   */
-  @Deprecated
-  public HttpClientApache() {
-    this(null, null, TransportSettings.DEFAULT_TIMEOUT_SECONDS);
-  }
-
-  /**
-   * @param proxyConfiguration Proxy to route through, or {@code null} for a direct connection
-   * @deprecated Use {@link #HttpClientApache(HttpProxyConfiguration, RetryManager, int)}, which
-   *     takes the transport settings explicitly. This one applies no retry and {@link
-   *     TransportSettings#DEFAULT_TIMEOUT_SECONDS}.
-   */
-  @Deprecated
-  public HttpClientApache(HttpProxyConfiguration proxyConfiguration) {
-    this(proxyConfiguration, null, TransportSettings.DEFAULT_TIMEOUT_SECONDS);
-  }
-
-  /**
-   * @param proxyConfiguration Proxy to route through, or {@code null} for a direct connection
-   * @param retryManager Manager applied to rate-limited responses, or {@code null} to retry nothing
-   * @since 2.2
-   * @deprecated Use {@link #HttpClientApache(HttpProxyConfiguration, RetryManager, int)}, which
-   *     takes the transport settings explicitly. This one applies {@link
-   *     TransportSettings#DEFAULT_TIMEOUT_SECONDS}.
-   */
-  @Deprecated
-  public HttpClientApache(HttpProxyConfiguration proxyConfiguration, RetryManager retryManager) {
-    this(proxyConfiguration, retryManager, TransportSettings.DEFAULT_TIMEOUT_SECONDS);
-  }
 
   /**
    * @param proxyConfiguration Proxy to route through, or {@code null} for a direct connection

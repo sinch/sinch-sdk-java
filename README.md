@@ -550,7 +550,7 @@ SinchClient client = new SinchClient(configuration);
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `timeoutSeconds` | `int` | `60` | HTTP I/O timeout in seconds. Pass `0` to disable the timeout. Negative values are rejected. |
-| `useSinchAuth` | `boolean` | `true` | When `true`, OAuth-capable APIs fetch a Sinch access token. Set `false` to skip the token exchange: the SDK adds no `Authorization` header and the caller authorizes the requests. In that mode only `projectId` is required. |
+| `useSinchAuth` | `boolean` | `true` | When `true`, OAuth-capable APIs fetch a Sinch access token. Set `false` to disable Sinch authentication: no token is fetched and no `Authorization` header is added. With unified credentials only `projectId` is then required. Has no effect with SMS service plan credentials. |
 
 ### Timeout
 
@@ -574,7 +574,7 @@ SinchClient client = new SinchClient(configuration);
 
 ```java
 Configuration configuration = Configuration.builder()
-        .setProjectId(PARAM_PROJECT_ID)
+        ...
         .setTransportSettings(
                 TransportSettings.builder()
                         .setUseSinchAuth(false)
