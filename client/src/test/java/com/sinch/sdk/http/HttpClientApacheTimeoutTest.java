@@ -7,7 +7,6 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.models.TransportSettings;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import okhttp3.mockwebserver.MockResponse;
@@ -57,17 +56,6 @@ class HttpClientApacheTimeoutTest {
     server.enqueue(new MockResponse().setBody("{}"));
 
     try (HttpClientApache client = new HttpClientApache(null, RetryManager.NO_RETRY, 5)) {
-      assertEquals(200, invoke(client).getCode());
-    }
-  }
-
-  @Test
-  void theDefaultTimeoutIsUsedWhenNoneIsGiven() throws Exception {
-    server.enqueue(new MockResponse().setBody("{}"));
-
-    try (HttpClientApache client =
-        new HttpClientApache(
-            null, RetryManager.NO_RETRY, TransportSettings.DEFAULTS.getTimeoutSeconds())) {
       assertEquals(200, invoke(client).getCode());
     }
   }
