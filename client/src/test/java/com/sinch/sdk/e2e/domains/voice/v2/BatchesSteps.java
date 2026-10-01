@@ -61,7 +61,6 @@ public class BatchesSteps {
                     .build())
             .build();
 
-    // No Idempotency-Key set: the mock requires one, so this also checks the SDK generates it.
     startResponse =
         service.start(
             StartBatchRequest.builder()
@@ -71,6 +70,7 @@ public class BatchesSteps {
                         Collections.singletonMap("toNumber", "+12017777777"),
                         Collections.singletonMap("toNumber", "+12018888888")))
                 .setBatchOptions(BatchOptions.builder().setMaxCps(5).setTtlSeconds(600).build())
+                .setIdempotencyKey("7b2e9d41-5c6a-4f80-b3d2-9e1a4c7f6b05")
                 .build());
   }
 

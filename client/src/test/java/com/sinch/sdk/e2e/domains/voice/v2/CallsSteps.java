@@ -64,10 +64,12 @@ public class CallsSteps {
                 CallEvents.builder().setOnAnswer(Collections.singletonList(notification)).build())
             .build();
 
-    // No Idempotency-Key set: the mock requires one, so this also checks the SDK generates it.
     startResponse =
         service.start(
-            StartCallRequest.builder().setCommands(Collections.singletonList(dial)).build());
+            StartCallRequest.builder()
+                .setCommands(Collections.singletonList(dial))
+                .setIdempotencyKey("3f1c7a52-8d3e-4b9a-9c0e-2f6d1b7a4e21")
+                .build());
   }
 
   @Then("^the response contains the information about the call started$")

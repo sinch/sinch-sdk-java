@@ -35,9 +35,7 @@ public interface StartCallRequest {
    * minutes, the server returns the cached response from the original request. Using a random UUID
    * (v4) is strongly recommended.
    *
-   * <p>Sent as the <code>Idempotency-Key</code> header. If not set, the SDK generates a random UUID
-   * for each call. Whether set or generated, the same key is sent on every automatic retry of that
-   * call.
+   * <p>Sent as the <code>Idempotency-Key</code> header.
    *
    * @return idempotencyKey
    */

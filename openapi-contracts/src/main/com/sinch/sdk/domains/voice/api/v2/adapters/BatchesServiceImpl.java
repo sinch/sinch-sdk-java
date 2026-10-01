@@ -10,12 +10,10 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
-import com.sinch.sdk.core.http.IdempotencyKey;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequest;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.StartBatchResponse;
@@ -118,14 +116,9 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Ba
           true);
     }
 
-    // Without a key from the caller, one is generated here, once per call. The HTTP client
-    // re-sends this same request on every retry, so the key does not change between attempts.
-    String idempotencyKey = startBatchRequest.getIdempotencyKey();
-    if (StringUtil.isEmpty(idempotencyKey)) {
-      idempotencyKey = IdempotencyKey.generate();
-    }
     Map<String, String> localVarHeaderParams = new HashMap<>();
-    localVarHeaderParams.put(IdempotencyKey.HEADER, idempotencyKey);
+    if (startBatchRequest.getIdempotencyKey() != null)
+      localVarHeaderParams.put("Idempotency-Key", startBatchRequest.getIdempotencyKey());
 
     final Collection<String> localVarAccepts =
         Arrays.asList("application/json", "application/problem+json");
