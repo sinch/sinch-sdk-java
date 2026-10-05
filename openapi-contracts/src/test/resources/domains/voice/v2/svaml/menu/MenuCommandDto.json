@@ -1,0 +1,56 @@
+{
+  "command": "menu",
+  "startMenu": "main",
+  "menus": {
+    "main": {
+      "prompt": {
+        "allowBargeIn": false,
+        "messages": [
+          {
+            "type": "SAY",
+            "say": {
+              "text": "Hello, your call is now connected.",
+              "format": "TEXT",
+              "voiceName": "Emma"
+            }
+          }
+        ]
+      },
+      "repeatPrompt": {
+        "allowBargeIn": false,
+        "messages": [
+          {
+            "type": "SAY",
+            "say": {
+              "text": "Hello, your call is now connected.",
+              "format": "TEXT",
+              "voiceName": "Emma"
+            }
+          }
+        ]
+      },
+      "inputTimeoutDurationSeconds": 10,
+      "repeatCount": 3,
+      "minimumInputLength": 1,
+      "maximumInputLength": 4,
+      "terminatingSequence": "#",
+      "inputMethods": [
+        "DTMF"
+      ],
+      "matches": {
+        "1": [
+          {
+            "command": "gotoMenu",
+            "menuName": "main"
+          }
+        ]
+      },
+      "onFail": [
+        {
+          "command": "hangup",
+          "callName": "origin"
+        }
+      ]
+    }
+  }
+}

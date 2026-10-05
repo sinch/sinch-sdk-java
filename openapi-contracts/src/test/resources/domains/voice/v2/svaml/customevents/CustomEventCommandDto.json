@@ -1,0 +1,6 @@
+{
+  "command": "webhook",
+  "webhookName": "my.custom.event",
+  "url": "https://example.com/events",
+  "fallbackUrl": "https://fallback.example.com/events"
+}

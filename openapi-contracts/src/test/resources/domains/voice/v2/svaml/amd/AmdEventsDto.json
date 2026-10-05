@@ -1,0 +1,50 @@
+{
+  "onHuman": [
+    {
+      "command": "messages",
+      "messagesName": "my-messages",
+      "messages": [
+        {
+          "type": "SAY",
+          "say": {
+            "text": "Hello, your call is now connected.",
+            "format": "TEXT",
+            "voiceName": "Emma"
+          }
+        },
+        {
+          "type": "PLAY",
+          "play": {
+            "url": "https://example.com/audio/welcome.mp3"
+          }
+        }
+      ],
+      "events": {
+        "onFinish": [
+          {
+            "command": "hangup",
+            "callName": "origin"
+          }
+        ]
+      }
+    }
+  ],
+  "onMachine": [
+    {
+      "command": "hangup",
+      "callName": "origin"
+    }
+  ],
+  "onBeep": [
+    {
+      "command": "pause",
+      "durationMilliseconds": 1500
+    }
+  ],
+  "onUnknown": [
+    {
+      "command": "hangup",
+      "callName": "origin"
+    }
+  ]
+}

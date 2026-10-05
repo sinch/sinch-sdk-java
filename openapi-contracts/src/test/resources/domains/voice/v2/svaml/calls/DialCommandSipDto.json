@@ -1,0 +1,24 @@
+{
+  "command": "dial",
+  "callName": "origin",
+  "from": {
+    "type": "SIP",
+    "sip": {
+      "endpoint": "sip:alice@sip.example.com",
+      "displayName": "Alice"
+    }
+  },
+  "to": {
+    "type": "SIP",
+    "sip": {
+      "endpoint": "sips:bob@sip.example.com",
+      "transport": "TLS",
+      "callHeaders": [
+        {
+          "key": "X-Custom-Header",
+          "value": "custom-value"
+        }
+      ]
+    }
+  }
+}

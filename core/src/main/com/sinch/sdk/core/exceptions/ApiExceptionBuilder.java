@@ -34,6 +34,11 @@ public class ApiExceptionBuilder {
     }
 
     exception = getExceptionFromVerificationError(mappedResponse);
+    if (exception.isPresent()) {
+      return exception.get();
+    }
+
+    exception = getExceptionFromVoiceV2Error(code, mappedResponse);
 
     return exception.orElseGet(() -> new ApiException(code, message));
   }
@@ -127,6 +132,29 @@ public class ApiExceptionBuilder {
     return Optional.of(
         new ApiException(
             codeValue, String.format("%s (reference=%s)", messageValue, referenceValue)));
+  }
+
+  private static Optional<ApiException> getExceptionFromVoiceV2Error(
+      int intCode, Map<?, ?> mappedResponse) {
+
+    // excepted Voice V2 API errors have following form (RFC 9457 Problem Details)
+    //    "type": string,
+    //    "title": string,
+    //    "detail": string,
+    //    "instance": string
+
+    if (null == mappedResponse) {
+      return Optional.empty();
+    }
+
+    Object title = mappedResponse.get("title");
+    Object detail = mappedResponse.get("detail");
+
+    if (null == title || null == detail) {
+      return Optional.empty();
+    }
+
+    return Optional.of(new ApiException(intCode, String.format("%s: %s", title, detail)));
   }
 
   private static String extractErrorDetails(Map<?, ?> errorContent) {

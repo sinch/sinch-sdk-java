@@ -107,6 +107,7 @@ Note: The `${sdk.version}` needs to be set according to the released version to 
 | Messaging       | [Conversation API](https://developers.sinch.com/docs/conversation/)          |
 |                 | [SMS API](https://developers.sinch.com/docs/sms/)                            |
 | Voice and Video | [Voice API](https://developers.sinch.com/docs/voice/)                        |
+|                 | [Voice API v2](https://developers.sinch.com/docs/voice-2.0) (preview)        |
 | Numbers         | [Numbers API](https://developers.sinch.com/docs/numbers/)                    |
 | Verification    | [Verification API](https://developers.sinch.com/docs/verification/)          |
 |                 | [Number Lookup API](https://developers.sinch.com/docs/number-lookup-api-v2/) |
@@ -316,7 +317,7 @@ You can find a complete example in [examples/sinch-events](https://github.com/si
 
 ### Voice API
 
-The Voice API uses application credentials. Set `applicationKey` and `applicationSecret` (both available on the [Apps dashboard](https://dashboard.sinch.com/voice/apps)); `voiceRegion` is optional and defaults to a global region:
+The Voice API v1 uses application credentials. Set `applicationKey` and `applicationSecret` (both available on the [Apps dashboard](https://dashboard.sinch.com/voice/apps)); `voiceRegion` is optional and defaults to a global region:
 
 ```java
 import com.sinch.sdk.SinchClient;
@@ -335,7 +336,7 @@ SinchClient client = new SinchClient(configuration);
 
 #### Sinch Events
 
-The Voice API delivers synchronous Sinch Events to the Event Destination URL configured for your app. Requests are signed with your application credentials, so validation requires the HTTP verb and URI of the controller handling the request, in addition to the `headers` and raw `body`:
+The Voice API v1 delivers synchronous Sinch Events to the Event Destination URL configured for your app. Requests are signed with your application credentials, so validation requires the HTTP verb and URI of the controller handling the request, in addition to the `headers` and raw `body`:
 
 ```java
 import com.sinch.sdk.domains.voice.api.v1.SinchEventsService;
@@ -350,6 +351,12 @@ var event = sinchEvents.parseEvent(body);
 Some events (for example an incoming call) expect a SVAML response: build it from the business layer and serialize it with `sinchEvents.serializeResponse(response)` before returning it to Sinch.
 
 You can find a complete example in [examples/sinch-events](https://github.com/sinch/sinch-sdk-java/tree/main/examples/sinch-events).
+
+#### Voice API v2
+
+> **Note:** Support for the Voice API v2 is currently in preview.
+
+The Voice API v2 needs no extra parameters, use the [common client](#client-initialization) shown above.
 
 
 ### Your first request

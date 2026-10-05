@@ -1,0 +1,6 @@
+{
+  "type": "PLAY",
+  "play": {
+    "url": "https://example.com/audio/welcome.mp3"
+  }
+}

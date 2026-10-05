@@ -17,4 +17,13 @@ public interface VoiceService {
    * @since 1.1
    */
   com.sinch.sdk.domains.voice.api.v1.VoiceService v1();
+
+  /**
+   * Voice Service V2
+   *
+   * @return V2 service instance for project
+   * @see <a href="https://developers.sinch.com/docs/voice-2.0">Documentation</a>
+   * @since 2.3
+   */
+  com.sinch.sdk.domains.voice.api.v2.VoiceService v2();
 }
