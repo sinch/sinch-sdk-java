@@ -15,6 +15,7 @@ import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.CallEvents;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.DialCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.HangupCommand;
+import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessageEvents;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessagesCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.SayMessage;
 import com.sinch.sdk.models.Configuration;
@@ -55,7 +56,7 @@ public class Start {
 
     BatchesService batchesService = client.voice().v2().batches();
 
-    // Played to each recipient once their call is answered
+    // Played to each recipient once their call is answered, then the call is hung up
     MessagesCommand greeting =
         MessagesCommand.builder()
             .setMessages(
@@ -64,6 +65,10 @@ public class Start {
                         .setText("Hello, your call is now connected.")
                         .setVoiceName("Emma")
                         .build()))
+            .setEvents(
+                MessageEvents.builder()
+                    .setOnFinish(Collections.singletonList(HangupCommand.HANGUP_COMMAND))
+                    .build())
             .build();
 
     // "@toNumber" is a placeholder, replaced in each call by that call's parameter value
@@ -73,10 +78,7 @@ public class Start {
             .setFrom(Phone.builder().setNumber(sinchPhoneNumber).build())
             .setTo(Phone.builder().setNumber("@toNumber").build())
             .setEvents(
-                CallEvents.builder()
-                    .setOnAnswer(Collections.singletonList(greeting))
-                    .setOnHangup(Collections.singletonList(HangupCommand.builder().build()))
-                    .build())
+                CallEvents.builder().setOnAnswer(Collections.singletonList(greeting)).build())
             .build();
 
     StartBatchRequest request =
