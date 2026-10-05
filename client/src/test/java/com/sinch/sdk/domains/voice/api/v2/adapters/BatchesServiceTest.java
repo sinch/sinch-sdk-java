@@ -23,6 +23,8 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.voice.api.v2.BatchesService;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequestDtoTest;
+import com.sinch.sdk.domains.voice.models.v2.batches.response.BatchSummary;
+import com.sinch.sdk.domains.voice.models.v2.batches.response.BatchSummaryDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.StartBatchResponse;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.StartBatchResponseDtoTest;
 import java.util.Arrays;
@@ -53,6 +55,9 @@ public class BatchesServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/voice/v2/batches/response/StartBatchResponseDto.json")
   String jsonStartBatchResponseDto;
+
+  @GivenTextResource("/domains/voice/v2/batches/response/BatchSummaryDto.json")
+  String jsonBatchSummaryDto;
 
   @BeforeEach
   public void initMocks() {
@@ -117,6 +122,59 @@ public class BatchesServiceTest extends BaseTest {
             ApiException.class,
             () ->
                 serviceWithoutProjectId.start(StartBatchRequestDtoTest.expectedStartBatchRequest));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void get() throws ApiException {
+
+    String batchId = BatchSummaryDtoTest.expectedBatchSummary.getBatchId();
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v2/projects/"
+                + URLPathUtils.encodePathSegment(PROJECT_ID)
+                + "/batches/"
+                + URLPathUtils.encodePathSegment(batchId),
+            HttpMethod.GET,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            ACCEPTS,
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonBatchSummaryDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    BatchSummary response = service.get(batchId);
+
+    TestHelpers.recursiveEquals(response, BatchSummaryDtoTest.expectedBatchSummary);
+  }
+
+  @Test
+  void getMissingBatchIdThrows() {
+
+    ApiException thrown = Assertions.assertThrows(ApiException.class, () -> service.get(null));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void getMissingProjectIdThrows() {
+
+    BatchesService serviceWithoutProjectId =
+        new BatchesServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), null);
+
+    ApiException thrown =
+        Assertions.assertThrows(
+            ApiException.class, () -> serviceWithoutProjectId.get("01BX5ZZKBKACTAV9WEVGEMMVRC"));
 
     Assertions.assertEquals(400, thrown.getCode());
   }

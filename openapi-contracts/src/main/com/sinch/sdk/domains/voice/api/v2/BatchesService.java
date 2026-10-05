@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.voice.api.v2;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequest;
+import com.sinch.sdk.domains.voice.models.v2.batches.response.BatchSummary;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.StartBatchResponse;
 
 /** Batches Service */
@@ -41,4 +42,17 @@ public interface BatchesService {
   StartBatchResponse start(
       StartBatchQueryParameters queryParameter, StartBatchRequest startBatchRequest)
       throws ApiException;
+
+  /**
+   * Get a batch summary
+   *
+   * <p>Retrieve a summary of a batch call operation, including statistics on completed,
+   * in-progress, queued and expired call sessions.
+   *
+   * @param batchId The ID of the batch, as returned by {@link #start} (required)
+   * @return BatchSummary
+   * @throws ApiException if fails to make API call
+   * @since 2.3
+   */
+  BatchSummary get(String batchId) throws ApiException;
 }

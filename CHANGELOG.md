@@ -21,8 +21,10 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[feature]** Support [Voice API v2](https://developers.sinch.com/docs/voice-2.0), exposed under `voice().v2()`
 - **[feature]** Voice V2 Calls API: `start` operation to create an outbound call
 - **[feature]** Voice V2 Batches API: `start` operation to create a batch of outbound calls
+- **[feature]** Voice V2 Batches API: `get` operation to retrieve a batch summary
 - **[doc]** New `voice/v2/calls/Start` snippet
 - **[doc]** New `voice/v2/batches/Start` snippet
+- **[doc]** New `voice/v2/batches/Get` snippet
 
 
 ## v2.2.0 - 2026-09-17

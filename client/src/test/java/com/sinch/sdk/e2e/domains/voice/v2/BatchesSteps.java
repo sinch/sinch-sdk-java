@@ -4,6 +4,7 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.api.v2.BatchesService;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.BatchOptions;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequest;
+import com.sinch.sdk.domains.voice.models.v2.batches.response.BatchSummary;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.StartBatchResponse;
 import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.CallEvents;
@@ -16,6 +17,7 @@ import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
 import org.junit.jupiter.api.Assertions;
@@ -24,6 +26,7 @@ public class BatchesSteps {
 
   BatchesService service;
   StartBatchResponse startResponse;
+  BatchSummary getResponse;
 
   @Given("^the Voice-V2 service \"Batches\" is available$")
   public void serviceAvailable() {
@@ -84,5 +87,28 @@ public class BatchesSteps {
             .build();
 
     TestHelpers.recursiveEquals(startResponse, expected);
+  }
+
+  @When("^I send a request to get a batch call summary$")
+  public void get() {
+    getResponse = service.get("01M144V4N3GSTNVJ3V32TD7H9A");
+  }
+
+  @Then("^the response contains the batch call summary$")
+  public void getResult() {
+    BatchSummary expected =
+        BatchSummary.builder()
+            .setBatchId("01M144V4N3GSTNVJ3V32TD7H9A")
+            .setSessionCount(2)
+            .setEndTime(Instant.parse("2026-08-28T12:17:49Z"))
+            .setQueued(0)
+            .setInProgress(0)
+            .setCompleted(2)
+            .setExpired(0)
+            .setTtlSeconds(1800)
+            .setRequestedCps(5)
+            .build();
+
+    TestHelpers.recursiveEquals(getResponse, expected);
   }
 }
