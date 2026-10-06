@@ -4,6 +4,7 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.api.v2.BatchesService;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.BatchOptions;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequest;
+import com.sinch.sdk.domains.voice.models.v2.batches.response.BatchStopResponse;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.BatchSummary;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.StartBatchResponse;
 import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
@@ -27,6 +28,7 @@ public class BatchesSteps {
   BatchesService service;
   StartBatchResponse startResponse;
   BatchSummary getResponse;
+  BatchStopResponse stopResponse;
 
   @Given("^the Voice-V2 service \"Batches\" is available$")
   public void serviceAvailable() {
@@ -110,5 +112,18 @@ public class BatchesSteps {
             .build();
 
     TestHelpers.recursiveEquals(getResponse, expected);
+  }
+
+  @When("^I send a request to stop batch processing$")
+  public void stop() {
+    stopResponse = service.stop("01M144V4N3GSTNVJ3V32TD7H9A");
+  }
+
+  @Then("^the response confirms the batch stop request was accepted$")
+  public void stopResult() {
+    BatchStopResponse expected =
+        BatchStopResponse.builder().setResult(BatchStopResponse.ResultEnum.STOP_REQUESTED).build();
+
+    TestHelpers.recursiveEquals(stopResponse, expected);
   }
 }

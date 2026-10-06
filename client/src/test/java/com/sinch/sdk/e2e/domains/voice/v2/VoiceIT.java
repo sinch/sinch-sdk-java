@@ -26,6 +26,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.sinch.sdk.e2e.domains.voice.v2")
 @ConfigurationParameter(
     key = FILTER_NAME_PROPERTY_NAME,
-    value = "^\\[Start\\].*|^\\[Get\\] get a batch call summary$")
+    value =
+        "^\\[Start\\].*|^\\[Get\\] get a batch call summary$|^\\[Stop\\] stop batch processing$")
 @ConfigurationParameter(key = PARALLEL_EXECUTION_ENABLED_PROPERTY_NAME, value = "true")
 public class VoiceIT {}
