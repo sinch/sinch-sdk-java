@@ -2,8 +2,11 @@ package com.sinch.sdk.e2e.domains.voice.v2;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.api.v2.BatchesService;
+import com.sinch.sdk.domains.voice.models.v2.SessionState;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.BatchOptions;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequest;
+import com.sinch.sdk.domains.voice.models.v2.batches.response.BatchDetails;
+import com.sinch.sdk.domains.voice.models.v2.batches.response.BatchSessionSummary;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.BatchStopResponse;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.BatchSummary;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.StartBatchResponse;
@@ -28,6 +31,7 @@ public class BatchesSteps {
   BatchesService service;
   StartBatchResponse startResponse;
   BatchSummary getResponse;
+  BatchDetails getDetailsResponse;
   BatchStopResponse stopResponse;
 
   @Given("^the Voice-V2 service \"Batches\" is available$")
@@ -112,6 +116,30 @@ public class BatchesSteps {
             .build();
 
     TestHelpers.recursiveEquals(getResponse, expected);
+  }
+
+  @When("^I send a request to get batch call details$")
+  public void getDetails() {
+    getDetailsResponse = service.getDetails("01M144V4N3GSTNVJ3V32TD7H9A");
+  }
+
+  @Then("^the response contains the batch call details$")
+  public void getDetailsResult() {
+    BatchDetails expected =
+        BatchDetails.builder()
+            .setSessions(
+                Arrays.asList(
+                    BatchSessionSummary.builder()
+                        .setId("01M144V4PE5KTSVY2AX19QC332")
+                        .setState(SessionState.IN_PROGRESS)
+                        .build(),
+                    BatchSessionSummary.builder()
+                        .setId("01M144V4PEH22EHB1SHMJRXBXA")
+                        .setState(SessionState.COMPLETED)
+                        .build()))
+            .build();
+
+    TestHelpers.recursiveEquals(getDetailsResponse, expected);
   }
 
   @When("^I send a request to stop batch processing$")

@@ -16,6 +16,7 @@ import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequest;
+import com.sinch.sdk.domains.voice.models.v2.batches.response.BatchDetails;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.BatchStopResponse;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.BatchSummary;
 import com.sinch.sdk.domains.voice.models.v2.batches.response.StartBatchResponse;
@@ -176,6 +177,71 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Ba
 
     String localVarPath =
         "/v2/projects/{projectId}/batches/{batchId}"
+            .replaceAll(
+                "\\{" + "projectId" + "\\}",
+                URLPathUtils.encodePathSegment(this.projectId.toString()))
+            .replaceAll(
+                "\\{" + "batchId" + "\\}", URLPathUtils.encodePathSegment(batchId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts =
+        Arrays.asList("application/json", "application/problem+json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth", "SinchOAuth2");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public BatchDetails getDetails(String batchId) throws ApiException {
+
+    LOGGER.finest("[getDetails]" + " " + "batchId: " + batchId);
+
+    HttpRequest httpRequest = getDetailsRequestBuilder(batchId);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return mapper.deserialize(response, new TypeReference<BatchDetails>() {});
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest getDetailsRequestBuilder(String batchId) throws ApiException {
+    // verify the required parameter 'this.projectId' is set
+    if (this.projectId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.projectId' when calling getDetails");
+    }
+    // verify the required parameter 'batchId' is set
+    if (batchId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'batchId' when calling getDetails");
+    }
+
+    String localVarPath =
+        "/v2/projects/{projectId}/batches/{batchId}/details"
             .replaceAll(
                 "\\{" + "projectId" + "\\}",
                 URLPathUtils.encodePathSegment(this.projectId.toString()))
