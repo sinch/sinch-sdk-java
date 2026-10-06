@@ -30,3 +30,5 @@ See main [README.md](../../../../README.md) for how to execute snippets
     - [voice/v2/batches/Get](./v2/batches/Get.java)
     - [voice/v2/batches/GetDetails](./v2/batches/GetDetails.java)
     - [voice/v2/batches/Stop](./v2/batches/Stop.java)
+  - Sessions
+    - [voice/v2/sessions/Get](./v2/sessions/Get.java)
