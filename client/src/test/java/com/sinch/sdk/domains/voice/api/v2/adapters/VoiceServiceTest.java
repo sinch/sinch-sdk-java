@@ -17,4 +17,9 @@ class VoiceServiceTest {
   void checkCredentialsBatches() {
     CredentialsValidationHelper.checkCredentials(() -> httpClient, VoiceService::batches);
   }
+
+  @Test
+  void checkCredentialsSessions() {
+    CredentialsValidationHelper.checkCredentials(() -> httpClient, VoiceService::sessions);
+  }
 }

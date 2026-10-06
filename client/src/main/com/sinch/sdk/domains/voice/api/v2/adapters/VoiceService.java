@@ -8,6 +8,7 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.voice.api.v2.BatchesService;
 import com.sinch.sdk.domains.voice.api.v2.CallsService;
+import com.sinch.sdk.domains.voice.api.v2.SessionsService;
 import com.sinch.sdk.domains.voice.models.v2.VoiceContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
@@ -33,6 +34,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
 
   private volatile CallsService calls;
   private volatile BatchesService batches;
+  private volatile SessionsService sessions;
 
   public VoiceService(
       UnifiedCredentials credentials,
@@ -79,6 +81,24 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
       }
     }
     return this.batches;
+  }
+
+  public SessionsService sessions() {
+    if (null == this.sessions) {
+      synchronized (this) {
+        if (null == this.sessions) {
+          instanceLazyInit();
+          this.sessions =
+              new SessionsServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getVoiceServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
+    }
+    return this.sessions;
   }
 
   private void instanceLazyInit() {
