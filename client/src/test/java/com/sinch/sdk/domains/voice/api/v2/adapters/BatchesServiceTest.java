@@ -48,6 +48,7 @@ public class BatchesServiceTest extends BaseTest {
   @Mock Map<String, AuthManager> authManagers;
 
   static final String PROJECT_ID = "test_project_id";
+  static final String BATCH_ID = "01BX5ZZKBKACTAV9WEVGEMMVRC";
   static final Collection<String> AUTH_NAMES = Arrays.asList("BasicAuth", "SinchOAuth2");
   static final Collection<String> ACCEPTS =
       Arrays.asList(HttpContentType.APPLICATION_JSON, "application/problem+json");
@@ -139,13 +140,12 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void get() throws ApiException {
 
-    String batchId = BatchSummaryDtoTest.expectedBatchSummary.getBatchId();
     HttpRequest httpRequest =
         new HttpRequest(
             "/v2/projects/"
                 + URLPathUtils.encodePathSegment(PROJECT_ID)
                 + "/batches/"
-                + URLPathUtils.encodePathSegment(batchId),
+                + URLPathUtils.encodePathSegment(BATCH_ID),
             HttpMethod.GET,
             Collections.emptyList(),
             (String) null,
@@ -162,7 +162,7 @@ public class BatchesServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    BatchSummary response = service.get(batchId);
+    BatchSummary response = service.get(BATCH_ID);
 
     TestHelpers.recursiveEquals(response, BatchSummaryDtoTest.expectedBatchSummary);
   }
@@ -183,8 +183,7 @@ public class BatchesServiceTest extends BaseTest {
             httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), null);
 
     ApiException thrown =
-        Assertions.assertThrows(
-            ApiException.class, () -> serviceWithoutProjectId.get("01BX5ZZKBKACTAV9WEVGEMMVRC"));
+        Assertions.assertThrows(ApiException.class, () -> serviceWithoutProjectId.get(BATCH_ID));
 
     Assertions.assertEquals(400, thrown.getCode());
   }
@@ -192,13 +191,12 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void getDetails() throws ApiException {
 
-    String batchId = "01BX5ZZKBKACTAV9WEVGEMMVRC";
     HttpRequest httpRequest =
         new HttpRequest(
             "/v2/projects/"
                 + URLPathUtils.encodePathSegment(PROJECT_ID)
                 + "/batches/"
-                + URLPathUtils.encodePathSegment(batchId)
+                + URLPathUtils.encodePathSegment(BATCH_ID)
                 + "/details",
             HttpMethod.GET,
             Collections.emptyList(),
@@ -216,7 +214,7 @@ public class BatchesServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    BatchDetails response = service.getDetails(batchId);
+    BatchDetails response = service.getDetails(BATCH_ID);
 
     TestHelpers.recursiveEquals(response, BatchDetailsDtoTest.expectedBatchDetails);
   }
@@ -239,8 +237,7 @@ public class BatchesServiceTest extends BaseTest {
 
     ApiException thrown =
         Assertions.assertThrows(
-            ApiException.class,
-            () -> serviceWithoutProjectId.getDetails("01BX5ZZKBKACTAV9WEVGEMMVRC"));
+            ApiException.class, () -> serviceWithoutProjectId.getDetails(BATCH_ID));
 
     Assertions.assertEquals(400, thrown.getCode());
   }
@@ -248,13 +245,12 @@ public class BatchesServiceTest extends BaseTest {
   @Test
   void stop() throws ApiException {
 
-    String batchId = "01BX5ZZKBKACTAV9WEVGEMMVRC";
     HttpRequest httpRequest =
         new HttpRequest(
             "/v2/projects/"
                 + URLPathUtils.encodePathSegment(PROJECT_ID)
                 + "/batches/"
-                + URLPathUtils.encodePathSegment(batchId),
+                + URLPathUtils.encodePathSegment(BATCH_ID),
             HttpMethod.DELETE,
             Collections.emptyList(),
             (String) null,
@@ -271,7 +267,7 @@ public class BatchesServiceTest extends BaseTest {
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
 
-    BatchStopResponse response = service.stop(batchId);
+    BatchStopResponse response = service.stop(BATCH_ID);
 
     TestHelpers.recursiveEquals(response, BatchStopResponseDtoTest.expectedBatchStopResponse);
   }
@@ -292,8 +288,7 @@ public class BatchesServiceTest extends BaseTest {
             httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), null);
 
     ApiException thrown =
-        Assertions.assertThrows(
-            ApiException.class, () -> serviceWithoutProjectId.stop("01BX5ZZKBKACTAV9WEVGEMMVRC"));
+        Assertions.assertThrows(ApiException.class, () -> serviceWithoutProjectId.stop(BATCH_ID));
 
     Assertions.assertEquals(400, thrown.getCode());
   }
