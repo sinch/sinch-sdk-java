@@ -24,11 +24,13 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @SelectClasspathResource("features/voice-v2/calls.feature")
 @SelectClasspathResource("features/voice-v2/batches.feature")
 @SelectClasspathResource("features/voice-v2/sessions.feature")
+@SelectClasspathResource("features/voice-v2/webhooks-events.feature")
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.sinch.sdk.e2e.domains.voice.v2")
 @ConfigurationParameter(
     key = FILTER_NAME_PROPERTY_NAME,
     value =
         "^\\[Start\\].*|^\\[Get\\] get a batch call summary$|^\\[GetDetails\\] get batch call"
-            + " details$|^\\[Stop\\] stop batch processing$|^\\[Get\\] get a session$")
+            + " details$|^\\[Stop\\] stop batch processing$|^\\[Get\\] get a session$"
+            + "|^\\[(Incoming Call|Answered Call|Answer Webhook) Event\\].*")
 @ConfigurationParameter(key = PARALLEL_EXECUTION_ENABLED_PROPERTY_NAME, value = "true")
 public class VoiceIT {}

@@ -32,4 +32,14 @@ public interface VoiceService {
    * @since 2.3
    */
   SessionsService sessions();
+
+  /**
+   * Sinch Events Service instance
+   *
+   * <p>Requires no credentials from the client configuration.
+   *
+   * @return service instance
+   * @since 2.3
+   */
+  SinchEventsService sinchEvents();
 }
