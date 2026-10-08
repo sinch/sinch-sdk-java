@@ -24,6 +24,7 @@ public class ServicesSteps {
   ServiceResponse createResponse;
   ServiceResponse getResponse;
   ServiceResponse updateResponse;
+  Boolean deletePassed;
   ServicesListResponse listOnePageResponse;
 
   @Given("^the Voice-V2 service \"Services\" is available$")
@@ -107,6 +108,17 @@ public class ServicesSteps {
             .build();
 
     TestHelpers.recursiveEquals(updateResponse, expected);
+  }
+
+  @When("^I send a request to delete a Voice-V2 service$")
+  public void delete() {
+    service.delete("3c4d5e6f-7a8b-4901-c234-d5e6f7a8b901");
+    deletePassed = true;
+  }
+
+  @Then("^the response confirms the Voice-V2 service was deleted$")
+  public void deleteResult() {
+    Assertions.assertTrue(deletePassed);
   }
 
   private static EventDestinationCallBehavior webhookCallBehavior() {

@@ -33,6 +33,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[feature]** Voice V2 Services API: `get` operation to retrieve a voice service by its ID
 - **[feature]** Voice V2 Services API: `list` operation to list and filter the voice services of a project
 - **[feature]** Voice V2 Services API: `update` operation to partially update a voice service
+- **[feature]** Voice V2 Services API: `delete` operation to delete a voice service by its ID
 - **[feature]** Voice V2 Sinch Events: `validateAuthenticationHeader`, `parseEvent` and `serializeResponse` operations to handle the events sent by Sinch
 - **[doc]** New `voice/v2/calls/Start` snippet
 - **[doc]** New `voice/v2/calls/Get` snippet
@@ -48,6 +49,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[doc]** New `voice/v2/services/Get` snippet
 - **[doc]** New `voice/v2/services/List` snippet
 - **[doc]** New `voice/v2/services/Update` snippet
+- **[doc]** New `voice/v2/services/Delete` snippet
 - **[doc]** `sinch-events` example: new Voice V2 Sinch Events controller on `/VoiceV2Event`
 
 

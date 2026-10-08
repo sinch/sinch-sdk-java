@@ -39,6 +39,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
             + "|^\\[Create\\] create a Voice-V2 service$"
             + "|^\\[Get\\] get Voice-V2 service details$"
             + "|^\\[Update\\] update a Voice-V2 service$"
+            + "|^\\[Delete\\] delete a Voice-V2 service$"
             + "|^\\[List\\] list (a page of|all the) Voice-V2 services.*$"
             + "|^\\[(Incoming Call|Answered Call|Answer Webhook) Event\\].*")
 @ConfigurationParameter(key = PARALLEL_EXECUTION_ENABLED_PROPERTY_NAME, value = "true")

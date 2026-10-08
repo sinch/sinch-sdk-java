@@ -23,6 +23,21 @@ public interface ServicesService {
   ServiceResponse create(CreateServiceRequest createServiceRequest) throws ApiException;
 
   /**
+   * Delete a voice service by ID
+   *
+   * <p>Deletes a service permanently.
+   *
+   * <p><strong>Important:</strong> The default service cannot be deleted. To delete the current
+   * default service, a different service must first be designated as the default using the PATCH
+   * endpoint.
+   *
+   * @param serviceId The ID of the service. (required)
+   * @throws ApiException if fails to make API call
+   * @since 2.3
+   */
+  void delete(String serviceId) throws ApiException;
+
+  /**
    * Retrieve a voice service by ID
    *
    * <p>Retrieve the full details of a specific voice service by its <code>serviceId</code>.

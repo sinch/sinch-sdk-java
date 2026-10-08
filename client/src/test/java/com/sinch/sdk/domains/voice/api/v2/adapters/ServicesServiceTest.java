@@ -170,6 +170,56 @@ public class ServicesServiceTest extends BaseTest {
   }
 
   @Test
+  void delete() throws ApiException {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v2/projects/"
+                + URLPathUtils.encodePathSegment(PROJECT_ID)
+                + "/services/"
+                + URLPathUtils.encodePathSegment("6e124178-c29d-46a5-943c-5c2ae544aade"),
+            HttpMethod.DELETE,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            ACCEPTS,
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse = new HttpResponse(204, null, Collections.emptyMap(), null);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    service.delete("6e124178-c29d-46a5-943c-5c2ae544aade");
+  }
+
+  @Test
+  void deleteMissingServiceIdThrows() {
+
+    ApiException thrown = Assertions.assertThrows(ApiException.class, () -> service.delete(null));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void deleteMissingProjectIdThrows() {
+
+    ServicesService serviceWithoutProjectId =
+        new ServicesServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), null);
+
+    ApiException thrown =
+        Assertions.assertThrows(
+            ApiException.class,
+            () -> serviceWithoutProjectId.delete("6e124178-c29d-46a5-943c-5c2ae544aade"));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
   void get() throws ApiException {
 
     HttpRequest httpRequest =

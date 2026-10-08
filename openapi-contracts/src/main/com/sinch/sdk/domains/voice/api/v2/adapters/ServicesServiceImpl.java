@@ -120,6 +120,70 @@ public class ServicesServiceImpl implements com.sinch.sdk.domains.voice.api.v2.S
   }
 
   @Override
+  public void delete(String serviceId) throws ApiException {
+
+    LOGGER.finest("[delete]" + " " + "serviceId: " + serviceId);
+
+    HttpRequest httpRequest = deleteRequestBuilder(serviceId);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return;
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest deleteRequestBuilder(String serviceId) throws ApiException {
+    // verify the required parameter 'this.projectId' is set
+    if (this.projectId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.projectId' when calling delete");
+    }
+    // verify the required parameter 'serviceId' is set
+    if (serviceId == null) {
+      throw new ApiException(400, "Missing the required parameter 'serviceId' when calling delete");
+    }
+
+    String localVarPath =
+        "/v2/projects/{projectId}/services/{serviceId}"
+            .replaceAll(
+                "\\{" + "projectId" + "\\}",
+                URLPathUtils.encodePathSegment(this.projectId.toString()))
+            .replaceAll(
+                "\\{" + "serviceId" + "\\}", URLPathUtils.encodePathSegment(serviceId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts =
+        Arrays.asList("application/json", "application/problem+json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth", "SinchOAuth2");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.DELETE,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
   public ServiceResponse get(String serviceId) throws ApiException {
 
     LOGGER.finest("[get]" + " " + "serviceId: " + serviceId);
