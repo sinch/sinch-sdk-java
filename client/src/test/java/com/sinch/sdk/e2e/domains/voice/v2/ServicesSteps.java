@@ -4,12 +4,15 @@ import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.api.v2.ServicesService;
 import com.sinch.sdk.domains.voice.models.v2.services.NoneCallBehavior;
 import com.sinch.sdk.domains.voice.models.v2.services.request.CreateServiceRequest;
+import com.sinch.sdk.domains.voice.models.v2.services.request.ListServicesQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.services.response.ServiceResponse;
+import com.sinch.sdk.domains.voice.models.v2.services.response.ServicesListResponse;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.time.Instant;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Assertions;
 
 public class ServicesSteps {
@@ -17,6 +20,7 @@ public class ServicesSteps {
   ServicesService service;
   ServiceResponse createResponse;
   ServiceResponse getResponse;
+  ServicesListResponse listOnePageResponse;
 
   @Given("^the Voice-V2 service \"Services\" is available$")
   public void serviceAvailable() {
@@ -70,5 +74,50 @@ public class ServicesSteps {
             .build();
 
     TestHelpers.recursiveEquals(getResponse, expected);
+  }
+
+  @When("^I send a request to list Voice-V2 services$")
+  public void listOnePage() {
+    listOnePageResponse =
+        service.list(ListServicesQueryParameters.builder().setPageSize(2).build());
+  }
+
+  @When("^I send a request to list all the Voice-V2 services$")
+  public void listAll() {
+    listOnePageResponse =
+        service.list(ListServicesQueryParameters.builder().setPageSize(2).build());
+  }
+
+  @When("^I iterate manually over the Voice-V2 services pages$")
+  public void listAllByPage() {
+    listOnePageResponse =
+        service.list(ListServicesQueryParameters.builder().setPageSize(2).build());
+  }
+
+  @Then("the response contains \"{int}\" Voice-V2 services")
+  public void onePageResult(int expected) {
+
+    Assertions.assertEquals(expected, listOnePageResponse.getContent().size());
+  }
+
+  @Then("the services list contains \"{int}\" Voice-V2 services")
+  public void listAllResult(int expected) {
+
+    AtomicInteger count = new AtomicInteger();
+    listOnePageResponse.iterator().forEachRemaining(_unused -> count.getAndIncrement());
+
+    Assertions.assertEquals(expected, count.get());
+  }
+
+  @Then("the services iteration result contains the data from \"{int}\" Voice-V2 service pages")
+  public void listAllByPageResult(int expected) {
+
+    int count = listOnePageResponse.getContent().isEmpty() ? 0 : 1;
+    ServicesListResponse currentPage = listOnePageResponse;
+    while (currentPage.hasNextPage()) {
+      count++;
+      currentPage = currentPage.nextPage();
+    }
+    Assertions.assertEquals(expected, count);
   }
 }

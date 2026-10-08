@@ -38,6 +38,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
             + "|^\\[InteractByCallName\\] interact with an ongoing call by call name$"
             + "|^\\[Create\\] create a Voice-V2 service$"
             + "|^\\[Get\\] get Voice-V2 service details$"
+            + "|^\\[List\\] list (a page of|all the) Voice-V2 services.*$"
             + "|^\\[(Incoming Call|Answered Call|Answer Webhook) Event\\].*")
 @ConfigurationParameter(key = PARALLEL_EXECUTION_ENABLED_PROPERTY_NAME, value = "true")
 public class VoiceIT {}

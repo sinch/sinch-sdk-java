@@ -17,17 +17,24 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpRequestTest.HttpRequestMatcher;
 import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.voice.api.v2.ServicesService;
 import com.sinch.sdk.domains.voice.models.v2.services.NoneCallBehavior;
 import com.sinch.sdk.domains.voice.models.v2.services.request.CreateServiceRequest;
 import com.sinch.sdk.domains.voice.models.v2.services.request.CreateServiceRequestDtoTest;
+import com.sinch.sdk.domains.voice.models.v2.services.request.ListServicesQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.services.response.ServiceResponse;
 import com.sinch.sdk.domains.voice.models.v2.services.response.ServiceResponseDtoTest;
+import com.sinch.sdk.domains.voice.models.v2.services.response.ServiceShortResponse;
+import com.sinch.sdk.domains.voice.models.v2.services.response.ServicesListResponse;
+import com.sinch.sdk.domains.voice.models.v2.services.response.internal.ServicesListResponseInternalDtoTest;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,6 +49,7 @@ public class ServicesServiceTest extends BaseTest {
   @Mock Map<String, AuthManager> authManagers;
 
   static final String PROJECT_ID = "test_project_id";
+  static final String CONFIGURED_SERVER_URL = "https://configured.server.com";
   static final Collection<String> AUTH_NAMES = Arrays.asList("BasicAuth", "SinchOAuth2");
   static final Collection<String> ACCEPTS =
       Arrays.asList(HttpContentType.APPLICATION_JSON, "application/problem+json");
@@ -53,6 +61,14 @@ public class ServicesServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/voice/v2/services/response/ServiceResponseDto.json")
   String jsonServiceResponseDto;
+
+  @GivenTextResource(
+      "/domains/voice/v2/services/response/internal/ServicesListResponseInternalDto.json")
+  String jsonServicesListResponseDto;
+
+  @GivenTextResource(
+      "/domains/voice/v2/services/response/internal/ServicesListResponseInternalLastPageDto.json")
+  String jsonServicesListLastPageResponseDto;
 
   @BeforeEach
   public void initMocks() {
@@ -184,5 +200,122 @@ public class ServicesServiceTest extends BaseTest {
     ApiException thrown = Assertions.assertThrows(ApiException.class, () -> service.get(null));
 
     Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void list() throws ApiException {
+
+    List<URLParameter> urlParameters =
+        Arrays.asList(
+            new URLParameter("filter", "Service", URLParameter.form, true),
+            new URLParameter("isDefault", false, URLParameter.form, true),
+            new URLParameter("pageSize", 2, URLParameter.form, true),
+            new URLParameter("page", 1, URLParameter.form, true));
+
+    mockListPage(urlParameters, jsonServicesListResponseDto);
+    mockNextListPage(jsonServicesListLastPageResponseDto);
+
+    ListServicesQueryParameters queryParameters =
+        ListServicesQueryParameters.builder()
+            .setFilter("Service")
+            .setIsDefault(false)
+            .setPageSize(2)
+            .setPage(1)
+            .build();
+
+    ServicesListResponse response = service.list(queryParameters);
+
+    TestHelpers.recursiveEquals(
+        new ArrayList<>(response.getContent()),
+        new ArrayList<>(
+            ServicesListResponseInternalDtoTest.expectedServicesListResponse.getServices()));
+    Assertions.assertTrue(response.hasNextPage());
+
+    ServicesListResponse nextResponse = response.nextPage();
+
+    TestHelpers.recursiveEquals(
+        new ArrayList<>(nextResponse.getContent()),
+        new ArrayList<>(
+            ServicesListResponseInternalDtoTest.expectedServicesListLastPageResponse
+                .getServices()));
+    Assertions.assertFalse(nextResponse.hasNextPage());
+  }
+
+  @Test
+  void listIteratesOverAllPages() throws ApiException {
+
+    mockListPage(Collections.emptyList(), jsonServicesListResponseDto);
+    mockNextListPage(jsonServicesListLastPageResponseDto);
+
+    ServicesListResponse response = service.list();
+
+    List<ServiceShortResponse> services = new ArrayList<>();
+    response.iterator().forEachRemaining(services::add);
+
+    List<ServiceShortResponse> expected =
+        new ArrayList<>(
+            ServicesListResponseInternalDtoTest.expectedServicesListResponse.getServices());
+    expected.addAll(
+        ServicesListResponseInternalDtoTest.expectedServicesListLastPageResponse.getServices());
+    TestHelpers.recursiveEquals(services, expected);
+  }
+
+  @Test
+  void listMissingProjectIdThrows() {
+
+    ServicesService serviceWithoutProjectId =
+        new ServicesServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), null);
+
+    ApiException thrown =
+        Assertions.assertThrows(ApiException.class, () -> serviceWithoutProjectId.list());
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  // The "next" link served by the fixture targets https://voice.api.sinch.com: its path and query
+  // are expected to be sent to the configured server instead
+  private void mockNextListPage(String jsonResponse) {
+    when(serverConfiguration.getUrl()).thenReturn(CONFIGURED_SERVER_URL);
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            CONFIGURED_SERVER_URL
+                + "/v2/projects/5c5bf2b1-35ae-4825-ab89-457e07bb60e6/services?page=2&pageSize=2",
+            HttpMethod.GET,
+            (String) null,
+            Collections.emptyMap(),
+            ACCEPTS,
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonResponse.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+  }
+
+  private void mockListPage(List<URLParameter> urlParameters, String jsonResponse) {
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v2/projects/" + URLPathUtils.encodePathSegment(PROJECT_ID) + "/services",
+            HttpMethod.GET,
+            urlParameters,
+            (String) null,
+            Collections.emptyMap(),
+            ACCEPTS,
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonResponse.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
   }
 }

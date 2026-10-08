@@ -11,10 +11,16 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.URLParameter;
+import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.core.models.pagination.Page;
+import com.sinch.sdk.core.models.pagination.PageNavigator;
 import com.sinch.sdk.domains.voice.models.v2.services.request.CreateServiceRequest;
+import com.sinch.sdk.domains.voice.models.v2.services.request.ListServicesQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.services.response.ServiceResponse;
+import com.sinch.sdk.domains.voice.models.v2.services.response.ServicesListResponse;
+import com.sinch.sdk.domains.voice.models.v2.services.response.internal.ServicesListResponseInternal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -154,6 +160,108 @@ public class ServicesServiceImpl implements com.sinch.sdk.domains.voice.api.v2.S
                 "\\{" + "serviceId" + "\\}", URLPathUtils.encodePathSegment(serviceId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts =
+        Arrays.asList("application/json", "application/problem+json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth", "SinchOAuth2");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public ServicesListResponse list() throws ApiException {
+
+    return list((ListServicesQueryParameters) null);
+  }
+
+  @Override
+  public ServicesListResponse list(ListServicesQueryParameters queryParameter) throws ApiException {
+
+    LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
+
+    HttpRequest httpRequest = listRequestBuilder(queryParameter);
+    return _fetchListPage(httpRequest);
+  }
+
+  private ServicesListResponse _fetchListPage(HttpRequest httpRequest) throws ApiException {
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      ServicesListResponseInternal deserialized =
+          mapper.deserialize(response, new TypeReference<ServicesListResponseInternal>() {});
+
+      final HttpRequest nextHttpRequest =
+          PaginationLinksHelper.nextPageRequest(this.serverConfiguration, deserialized.getLinks());
+
+      return new ServicesListResponse(
+          () -> _fetchListPage(nextHttpRequest),
+          new Page<>(deserialized.getServices(), new PageNavigator<>(nextHttpRequest)));
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest listRequestBuilder(ListServicesQueryParameters queryParameter)
+      throws ApiException {
+    // verify the required parameter 'this.projectId' is set
+    if (this.projectId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.projectId' when calling list");
+    }
+
+    String localVarPath =
+        "/v2/projects/{projectId}/services"
+            .replaceAll(
+                "\\{" + "projectId" + "\\}",
+                URLPathUtils.encodePathSegment(this.projectId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+    if (null != queryParameter) {
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getFilter(), "filter", URLParameter.form, null, localVarQueryParams, true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getIsDefault(),
+          "isDefault",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPageSize(),
+          "pageSize",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
+    }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 
