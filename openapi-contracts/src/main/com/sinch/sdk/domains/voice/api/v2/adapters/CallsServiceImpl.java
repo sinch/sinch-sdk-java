@@ -20,6 +20,7 @@ import com.sinch.sdk.core.models.pagination.PageNavigator;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.voice.models.v2.Call;
 import com.sinch.sdk.domains.voice.models.v2.PaginationLinks;
+import com.sinch.sdk.domains.voice.models.v2.calls.request.CallPatchRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.ListCallsQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
@@ -383,6 +384,87 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Call
     return new HttpRequest(
         localVarPath,
         HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public void interactByCallId(String callId, CallPatchRequest callPatchRequest)
+      throws ApiException {
+
+    LOGGER.finest(
+        "[interactByCallId]"
+            + " "
+            + "callId: "
+            + callId
+            + ", "
+            + "callPatchRequest: "
+            + callPatchRequest);
+
+    HttpRequest httpRequest = interactByCallIdRequestBuilder(callId, callPatchRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return;
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest interactByCallIdRequestBuilder(
+      String callId, CallPatchRequest callPatchRequest) throws ApiException {
+    // verify the required parameter 'this.projectId' is set
+    if (this.projectId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.projectId' when calling interactByCallId");
+    }
+    // verify the required parameter 'callId' is set
+    if (callId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'callId' when calling interactByCallId");
+    }
+    // verify the required parameter 'callPatchRequest' is set
+    if (callPatchRequest == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'callPatchRequest' when calling interactByCallId");
+    }
+
+    String localVarPath =
+        "/v2/projects/{projectId}/calls/{callId}"
+            .replaceAll(
+                "\\{" + "projectId" + "\\}",
+                URLPathUtils.encodePathSegment(this.projectId.toString()))
+            .replaceAll(
+                "\\{" + "callId" + "\\}", URLPathUtils.encodePathSegment(callId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+    if (callPatchRequest.getIdempotencyKey() != null)
+      localVarHeaderParams.put("Idempotency-Key", callPatchRequest.getIdempotencyKey());
+
+    final Collection<String> localVarAccepts =
+        Arrays.asList("application/json", "application/problem+json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList("application/json");
+
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth", "SinchOAuth2");
+    final String serializedBody = mapper.serialize(localVarContentTypes, callPatchRequest);
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.PATCH,
         localVarQueryParams,
         serializedBody,
         localVarHeaderParams,

@@ -22,6 +22,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[feature]** Voice V2 Calls API: `start` operation to create an outbound call
 - **[feature]** Voice V2 Calls API: `get` operation to retrieve a call
 - **[feature]** Voice V2 Calls API: `list` operation to list and filter calls
+- **[feature]** Voice V2 Calls API: `interactByCallId` operation to send SVAML commands to an ongoing call
 - **[feature]** Voice V2 Batches API: `start` operation to create a batch of outbound calls
 - **[feature]** Voice V2 Batches API: `get` operation to retrieve a batch summary
 - **[feature]** Voice V2 Batches API: `getDetails` operation to retrieve the per-session details of a batch
@@ -31,6 +32,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[doc]** New `voice/v2/calls/Start` snippet
 - **[doc]** New `voice/v2/calls/Get` snippet
 - **[doc]** New `voice/v2/calls/List` snippet
+- **[doc]** New `voice/v2/calls/InteractByCallId` snippet
 - **[doc]** New `voice/v2/batches/Start` snippet
 - **[doc]** New `voice/v2/batches/Get` snippet
 - **[doc]** New `voice/v2/batches/GetDetails` snippet

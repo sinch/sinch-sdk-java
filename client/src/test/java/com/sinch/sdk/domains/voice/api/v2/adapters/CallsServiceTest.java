@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.voice.api.v2.adapters;
 
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
@@ -26,6 +27,7 @@ import com.sinch.sdk.domains.voice.models.v2.CallDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.CallReason;
 import com.sinch.sdk.domains.voice.models.v2.CallResult;
 import com.sinch.sdk.domains.voice.models.v2.CallType;
+import com.sinch.sdk.domains.voice.models.v2.calls.request.CallPatchRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.ListCallsQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequestDtoTest;
@@ -62,6 +64,9 @@ public class CallsServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/voice/v2/calls/request/StartCallRequestDto.json")
   String jsonStartCallRequestDto;
+
+  @GivenTextResource("/domains/voice/v2/calls/request/CallPatchRequestDto.json")
+  String jsonCallPatchRequestDto;
 
   @GivenTextResource("/domains/voice/v2/calls/response/StartCallResponseDto.json")
   String jsonStartCallResponseDto;
@@ -321,5 +326,80 @@ public class CallsServiceTest extends BaseTest {
             eq(authManagers),
             argThat(new HttpRequestMatcher(httpRequest))))
         .thenReturn(httpResponse);
+  }
+
+  @Test
+  void interactByCallId() throws ApiException {
+
+    String callId = "01ARZ3NDEKTSV4RRFFQ69G5FAA";
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v2/projects/"
+                + URLPathUtils.encodePathSegment(PROJECT_ID)
+                + "/calls/"
+                + URLPathUtils.encodePathSegment(callId),
+            HttpMethod.PATCH,
+            Collections.emptyList(),
+            jsonCallPatchRequestDto,
+            Collections.singletonMap(
+                "Idempotency-Key",
+                CallPatchRequestDtoTest.expectedCallPatchRequest.getIdempotencyKey()),
+            ACCEPTS,
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse = new HttpResponse(202, null, Collections.emptyMap(), null);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    service.interactByCallId(callId, CallPatchRequestDtoTest.expectedCallPatchRequest);
+
+    verify(httpClient)
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest)));
+  }
+
+  @Test
+  void interactByCallIdMissingCallIdThrows() {
+
+    ApiException thrown =
+        Assertions.assertThrows(
+            ApiException.class,
+            () -> service.interactByCallId(null, CallPatchRequestDtoTest.expectedCallPatchRequest));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void interactByCallIdMissingRequestThrows() {
+
+    ApiException thrown =
+        Assertions.assertThrows(
+            ApiException.class, () -> service.interactByCallId("01ARZ3NDEKTSV4RRFFQ69G5FAA", null));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void interactByCallIdMissingProjectIdThrows() {
+
+    CallsService serviceWithoutProjectId =
+        new CallsServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), null);
+
+    ApiException thrown =
+        Assertions.assertThrows(
+            ApiException.class,
+            () ->
+                serviceWithoutProjectId.interactByCallId(
+                    "01ARZ3NDEKTSV4RRFFQ69G5FAA",
+                    CallPatchRequestDtoTest.expectedCallPatchRequest));
+
+    Assertions.assertEquals(400, thrown.getCode());
   }
 }

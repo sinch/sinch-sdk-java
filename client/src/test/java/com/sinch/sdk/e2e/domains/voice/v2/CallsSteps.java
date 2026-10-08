@@ -9,6 +9,7 @@ import com.sinch.sdk.domains.voice.models.v2.CallResult;
 import com.sinch.sdk.domains.voice.models.v2.CallType;
 import com.sinch.sdk.domains.voice.models.v2.Money;
 import com.sinch.sdk.domains.voice.models.v2.OriginationType;
+import com.sinch.sdk.domains.voice.models.v2.calls.request.CallPatchRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.ListCallsQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.CallsListResponse;
@@ -37,6 +38,7 @@ public class CallsSteps {
   StartCallResponse startResponse;
   Call getResponse;
   CallsListResponse listOnePageResponse;
+  boolean interactionAccepted;
 
   @Given("^the Voice-V2 service \"Calls\" is available$")
   public void serviceAvailable() {
@@ -170,5 +172,35 @@ public class CallsSteps {
       currentPage = currentPage.nextPage();
     }
     Assertions.assertEquals(expected, count);
+  }
+
+  @When("^I send a request to interact with an ongoing call by call ID$")
+  public void interactByCallId() {
+    MessagesCommand messages =
+        MessagesCommand.builder()
+            .setMessages(
+                Collections.singletonList(
+                    SayMessage.builder()
+                        .setText("Hello, your call is now connected.")
+                        .setVoiceName("Emma")
+                        .build()))
+            .setEvents(
+                MessageEvents.builder()
+                    .setOnFinish(Collections.singletonList(HangupCommand.builder().build()))
+                    .build())
+            .build();
+
+    service.interactByCallId(
+        "01HZXK8FQNPMR8VD3JW9YF2C5A",
+        CallPatchRequest.builder()
+            .setCommands(Collections.singletonList(messages))
+            .setIdempotencyKey("5d8f2a6c-1e4b-4c9d-8a3f-7b6e0c2d9f14")
+            .build());
+    interactionAccepted = true;
+  }
+
+  @Then("^the response confirms the interaction request was accepted$")
+  public void interactResult() {
+    Assertions.assertTrue(interactionAccepted);
   }
 }
