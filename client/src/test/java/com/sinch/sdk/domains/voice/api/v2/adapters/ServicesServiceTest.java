@@ -25,6 +25,8 @@ import com.sinch.sdk.domains.voice.models.v2.services.NoneCallBehavior;
 import com.sinch.sdk.domains.voice.models.v2.services.request.CreateServiceRequest;
 import com.sinch.sdk.domains.voice.models.v2.services.request.CreateServiceRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.services.request.ListServicesQueryParameters;
+import com.sinch.sdk.domains.voice.models.v2.services.request.UpdateServiceRequest;
+import com.sinch.sdk.domains.voice.models.v2.services.request.UpdateServiceRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.services.response.ServiceResponse;
 import com.sinch.sdk.domains.voice.models.v2.services.response.ServiceResponseDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.services.response.ServiceShortResponse;
@@ -58,6 +60,9 @@ public class ServicesServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/voice/v2/services/request/CreateServiceRequestDto.json")
   String jsonCreateServiceRequestDto;
+
+  @GivenTextResource("/domains/voice/v2/services/request/UpdateServiceRequestDto.json")
+  String jsonUpdateServiceRequestDto;
 
   @GivenTextResource("/domains/voice/v2/services/response/ServiceResponseDto.json")
   String jsonServiceResponseDto;
@@ -198,6 +203,95 @@ public class ServicesServiceTest extends BaseTest {
   void getMissingServiceIdThrows() {
 
     ApiException thrown = Assertions.assertThrows(ApiException.class, () -> service.get(null));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void update() throws ApiException {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v2/projects/"
+                + URLPathUtils.encodePathSegment(PROJECT_ID)
+                + "/services/"
+                + URLPathUtils.encodePathSegment("6e124178-c29d-46a5-943c-5c2ae544aade"),
+            HttpMethod.PATCH,
+            Collections.emptyList(),
+            jsonUpdateServiceRequestDto,
+            Collections.singletonMap(
+                "Idempotency-Key",
+                UpdateServiceRequestDtoTest.expectedUpdateServiceRequest.getIdempotencyKey()),
+            ACCEPTS,
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonServiceResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    ServiceResponse response =
+        service.update(
+            "6e124178-c29d-46a5-943c-5c2ae544aade",
+            UpdateServiceRequestDtoTest.expectedUpdateServiceRequest);
+
+    TestHelpers.recursiveEquals(response, ServiceResponseDtoTest.expectedServiceResponse);
+  }
+
+  @Test
+  void updateWithoutIdempotencyKeySendsNoHeader() throws ApiException {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v2/projects/"
+                + URLPathUtils.encodePathSegment(PROJECT_ID)
+                + "/services/"
+                + URLPathUtils.encodePathSegment("6e124178-c29d-46a5-943c-5c2ae544aade"),
+            HttpMethod.PATCH,
+            Collections.emptyList(),
+            "{\"isDefault\":true}",
+            Collections.emptyMap(),
+            ACCEPTS,
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonServiceResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    ServiceResponse response =
+        service.update(
+            "6e124178-c29d-46a5-943c-5c2ae544aade",
+            UpdateServiceRequest.builder().setIsDefault(true).build());
+
+    TestHelpers.recursiveEquals(response, ServiceResponseDtoTest.expectedServiceResponse);
+  }
+
+  @Test
+  void updateMissingServiceIdThrows() {
+
+    ApiException thrown =
+        Assertions.assertThrows(
+            ApiException.class,
+            () -> service.update(null, UpdateServiceRequestDtoTest.expectedUpdateServiceRequest));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void updateMissingRequestThrows() {
+
+    ApiException thrown =
+        Assertions.assertThrows(
+            ApiException.class, () -> service.update("6e124178-c29d-46a5-943c-5c2ae544aade", null));
 
     Assertions.assertEquals(400, thrown.getCode());
   }

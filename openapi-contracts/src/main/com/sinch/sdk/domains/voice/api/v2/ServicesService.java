@@ -3,6 +3,7 @@ package com.sinch.sdk.domains.voice.api.v2;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.voice.models.v2.services.request.CreateServiceRequest;
 import com.sinch.sdk.domains.voice.models.v2.services.request.ListServicesQueryParameters;
+import com.sinch.sdk.domains.voice.models.v2.services.request.UpdateServiceRequest;
 import com.sinch.sdk.domains.voice.models.v2.services.response.ServiceResponse;
 import com.sinch.sdk.domains.voice.models.v2.services.response.ServicesListResponse;
 
@@ -69,4 +70,24 @@ public interface ServicesService {
    * @since 2.3
    */
   ServicesListResponse list(ListServicesQueryParameters queryParameter) throws ApiException;
+
+  /**
+   * Update a voice service
+   *
+   * <p>Updates an existing service resource with the provided properties. Only the fields included
+   * in the request body will be modified; omitted fields remain unchanged.
+   *
+   * <p>To set a service as the default for the project, set <code>isDefault</code> to <code>true
+   * </code>. Each project can have only one default service: setting a new default automatically
+   * removes the default status from the previously designated service. <code>isDefault</code> set
+   * to <code>false</code> is invalid and will not be accepted by the API.
+   *
+   * @param serviceId The ID of the service. (required)
+   * @param updateServiceRequest The properties to update (required)
+   * @return ServiceResponse
+   * @throws ApiException if fails to make API call
+   * @since 2.3
+   */
+  ServiceResponse update(String serviceId, UpdateServiceRequest updateServiceRequest)
+      throws ApiException;
 }

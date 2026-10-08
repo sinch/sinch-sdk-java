@@ -2,9 +2,12 @@ package com.sinch.sdk.e2e.domains.voice.v2;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.api.v2.ServicesService;
+import com.sinch.sdk.domains.voice.models.v2.services.EventDestinationCallBehavior;
+import com.sinch.sdk.domains.voice.models.v2.services.EventDestinationConfiguration;
 import com.sinch.sdk.domains.voice.models.v2.services.NoneCallBehavior;
 import com.sinch.sdk.domains.voice.models.v2.services.request.CreateServiceRequest;
 import com.sinch.sdk.domains.voice.models.v2.services.request.ListServicesQueryParameters;
+import com.sinch.sdk.domains.voice.models.v2.services.request.UpdateServiceRequest;
 import com.sinch.sdk.domains.voice.models.v2.services.response.ServiceResponse;
 import com.sinch.sdk.domains.voice.models.v2.services.response.ServicesListResponse;
 import com.sinch.sdk.e2e.Config;
@@ -20,6 +23,7 @@ public class ServicesSteps {
   ServicesService service;
   ServiceResponse createResponse;
   ServiceResponse getResponse;
+  ServiceResponse updateResponse;
   ServicesListResponse listOnePageResponse;
 
   @Given("^the Voice-V2 service \"Services\" is available$")
@@ -74,6 +78,45 @@ public class ServicesSteps {
             .build();
 
     TestHelpers.recursiveEquals(getResponse, expected);
+  }
+
+  @When("^I send a request to update a Voice-V2 service$")
+  public void update() {
+    updateResponse =
+        service.update(
+            "3c4d5e6f-7a8b-4901-c234-d5e6f7a8b901",
+            UpdateServiceRequest.builder()
+                .setDescription("Service with webhooks")
+                .setCallBehavior(webhookCallBehavior())
+                .setIdempotencyKey("5d8a1f3c-6e2b-4c9d-a7f0-3b1e8c4d2a96")
+                .build());
+  }
+
+  @Then("^the response contains the information about the Voice-V2 service updated$")
+  public void updateResult() {
+    ServiceResponse expected =
+        ServiceResponse.builder()
+            .setServiceId("3c4d5e6f-7a8b-4901-c234-d5e6f7a8b901")
+            .setProjectId("c3d4e5f6-a7b8-4901-c234-d5e6f7a8b901")
+            .setCreateTime(Instant.parse("2026-09-16T10:47:36Z"))
+            .setUpdateTime(Instant.parse("2026-09-16T10:51:55Z"))
+            .setName("Example service 2")
+            .setDescription("Service with webhooks")
+            .setIsDefault(false)
+            .setCallBehavior(webhookCallBehavior())
+            .build();
+
+    TestHelpers.recursiveEquals(updateResponse, expected);
+  }
+
+  private static EventDestinationCallBehavior webhookCallBehavior() {
+    return EventDestinationCallBehavior.builder()
+        .setEventDestination(
+            EventDestinationConfiguration.builder()
+                .setUrl("https://example.com/webhook")
+                .setFallbackUrl("https://example.com/fallback")
+                .build())
+        .build();
   }
 
   @When("^I send a request to list Voice-V2 services$")

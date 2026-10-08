@@ -40,3 +40,4 @@ See main [README.md](../../../../README.md) for how to execute snippets
     - [voice/v2/services/Create](./v2/services/Create.java)
     - [voice/v2/services/Get](./v2/services/Get.java)
     - [voice/v2/services/List](./v2/services/List.java)
+    - [voice/v2/services/Update](./v2/services/Update.java)
