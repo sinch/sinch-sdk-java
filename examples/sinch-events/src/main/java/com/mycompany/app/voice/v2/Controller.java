@@ -4,7 +4,7 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.voice.api.v2.SinchEventsService;
 import com.sinch.sdk.domains.voice.models.v2.sinchevents.SinchEventType;
 import com.sinch.sdk.domains.voice.models.v2.sinchevents.VoiceSinchEvent;
-import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlInput;
+import com.sinch.sdk.domains.voice.models.v2.sinchevents.VoiceSinchEventResponse;
 import java.util.Map;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +82,7 @@ public class Controller {
 
     // let business layer process the request
     SinchEventType type = event.getEvent();
-    SvamlInput response;
+    VoiceSinchEventResponse response;
     if (SinchEventType.CALL_INCOMING.equals(type)) {
       response = serverBusinessLogic.incoming(event);
     } else if (SinchEventType.CALL_ANSWERED.equals(type)) {

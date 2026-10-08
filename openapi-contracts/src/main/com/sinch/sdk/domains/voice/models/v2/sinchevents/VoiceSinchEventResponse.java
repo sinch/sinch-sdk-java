@@ -1,14 +1,19 @@
-package com.sinch.sdk.domains.voice.models.v2.svaml;
+package com.sinch.sdk.domains.voice.models.v2.sinchevents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sinch.sdk.domains.voice.models.v2.svaml.IncomingCallResponseEvents;
+import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlCommand;
 import java.util.List;
 
 /**
- * A SVAML v2 (Sinch Voice Application Markup Language) document describing a call flow. Contains
- * the ordered list of commands to execute, an optional call name, and optional event handlers.
+ * A SVAML document returned in response to a Sinch Event.
+ *
+ * <p><strong>Note:</strong> <code>callName</code> and <code>events</code> only take effect in
+ * responses to events triggered by an incoming call. In responses to other event types, they are
+ * ignored.
  */
-@JsonDeserialize(builder = SvamlInputImpl.Builder.class)
-public interface SvamlInput {
+@JsonDeserialize(builder = VoiceSinchEventResponseImpl.Builder.class)
+public interface VoiceSinchEventResponse {
 
   /**
    * The ordered list of SVAML commands to execute. Contains at least one command.
@@ -35,12 +40,18 @@ public interface SvamlInput {
    *
    * <p>Must be 1-32 characters, without whitespace.
    *
+   * <p><strong>Note:</strong> only takes effect in responses to events triggered by an incoming
+   * call. In responses to other event types, it is ignored.
+   *
    * @return callName
    */
   String getCallName();
 
   /**
    * Commands to execute on specific events for this call.
+   *
+   * <p><strong>Note:</strong> only takes effect in responses to events triggered by an incoming
+   * call. In responses to other event types, it is ignored.
    *
    * @return events
    */
@@ -52,7 +63,7 @@ public interface SvamlInput {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new SvamlInputImpl.Builder();
+    return new VoiceSinchEventResponseImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -90,6 +101,6 @@ public interface SvamlInput {
      *
      * @return The instance build with current builder values
      */
-    SvamlInput build();
+    VoiceSinchEventResponse build();
   }
 }

@@ -11,20 +11,20 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @TestWithResources
-public class SvamlInputEventsDtoTest extends BaseTest {
+public class IncomingCallResponseEventsDtoTest extends BaseTest {
 
-  public static final SvamlInputEvents expectedSvamlInputEvents =
-      SvamlInputEvents.builder()
+  public static final IncomingCallResponseEvents expectedIncomingCallResponseEvents =
+      IncomingCallResponseEvents.builder()
           .setOnHangup(Arrays.asList(HangupCommandDtoTest.expectedHangupCommand))
           .build();
 
-  @GivenTextResource("/domains/voice/v2/svaml/SvamlInputEventsDto.json")
-  String jsonSvamlInputEvents;
+  @GivenTextResource("/domains/voice/v2/svaml/IncomingCallResponseEventsDto.json")
+  String jsonIncomingCallResponseEvents;
 
   @Test
   void serialize() throws JsonProcessingException, JSONException {
-    String serializedString = objectMapper.writeValueAsString(expectedSvamlInputEvents);
+    String serializedString = objectMapper.writeValueAsString(expectedIncomingCallResponseEvents);
 
-    JSONAssert.assertEquals(jsonSvamlInputEvents, serializedString, true);
+    JSONAssert.assertEquals(jsonIncomingCallResponseEvents, serializedString, true);
   }
 }

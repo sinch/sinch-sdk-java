@@ -2,7 +2,7 @@ package com.sinch.sdk.domains.voice.api.v2;
 
 import com.sinch.sdk.core.exceptions.ApiMappingException;
 import com.sinch.sdk.domains.voice.models.v2.sinchevents.VoiceSinchEvent;
-import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlInput;
+import com.sinch.sdk.domains.voice.models.v2.sinchevents.VoiceSinchEventResponse;
 import java.util.Map;
 
 /**
@@ -79,13 +79,12 @@ public interface SinchEventsService {
   VoiceSinchEvent parseEvent(String jsonPayload) throws ApiMappingException;
 
   /**
-   * This function can be called to serialize the SVAML document to be sent in response to a Sinch
-   * Event
+   * This function can be called to serialize the response to a Sinch Event
    *
    * @param response The response to be serialized
    * @return The JSON string to be sent
    * @throws ApiMappingException if the response cannot be serialized
    * @since 2.3
    */
-  String serializeResponse(SvamlInput response) throws ApiMappingException;
+  String serializeResponse(VoiceSinchEventResponse response) throws ApiMappingException;
 }

@@ -10,19 +10,19 @@ import com.sinch.sdk.core.models.OptionalValue;
 import java.util.List;
 import java.util.Objects;
 
-@JsonPropertyOrder({SvamlInputEventsImpl.JSON_PROPERTY_ON_HANGUP})
+@JsonPropertyOrder({IncomingCallResponseEventsImpl.JSON_PROPERTY_ON_HANGUP})
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class SvamlInputEventsImpl implements SvamlInputEvents {
+public class IncomingCallResponseEventsImpl implements IncomingCallResponseEvents {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_ON_HANGUP = "onHangup";
 
   private OptionalValue<List<SvamlCommand>> onHangup;
 
-  public SvamlInputEventsImpl() {}
+  public IncomingCallResponseEventsImpl() {}
 
-  protected SvamlInputEventsImpl(OptionalValue<List<SvamlCommand>> onHangup) {
+  protected IncomingCallResponseEventsImpl(OptionalValue<List<SvamlCommand>> onHangup) {
     this.onHangup = onHangup;
   }
 
@@ -37,7 +37,7 @@ public class SvamlInputEventsImpl implements SvamlInputEvents {
     return onHangup;
   }
 
-  /** Return true if this SvamlInputEvents object is equal to o. */
+  /** Return true if this IncomingCallResponseEvents object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -46,8 +46,8 @@ public class SvamlInputEventsImpl implements SvamlInputEvents {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SvamlInputEventsImpl svamlInputEvents = (SvamlInputEventsImpl) o;
-    return Objects.equals(this.onHangup, svamlInputEvents.onHangup);
+    IncomingCallResponseEventsImpl incomingCallResponseEvents = (IncomingCallResponseEventsImpl) o;
+    return Objects.equals(this.onHangup, incomingCallResponseEvents.onHangup);
   }
 
   @Override
@@ -58,7 +58,7 @@ public class SvamlInputEventsImpl implements SvamlInputEvents {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SvamlInputEventsImpl {\n");
+    sb.append("class IncomingCallResponseEventsImpl {\n");
     sb.append("    onHangup: ").append(toIndentedString(onHangup)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -75,7 +75,7 @@ public class SvamlInputEventsImpl implements SvamlInputEvents {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements SvamlInputEvents.Builder {
+  static class Builder implements IncomingCallResponseEvents.Builder {
     OptionalValue<List<SvamlCommand>> onHangup = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ON_HANGUP)
@@ -84,8 +84,8 @@ public class SvamlInputEventsImpl implements SvamlInputEvents {
       return this;
     }
 
-    public SvamlInputEvents build() {
-      return new SvamlInputEventsImpl(onHangup);
+    public IncomingCallResponseEvents build() {
+      return new IncomingCallResponseEventsImpl(onHangup);
     }
   }
 }

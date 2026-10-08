@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
 /** Commands to execute on specific events for this call. */
-@JsonDeserialize(builder = SvamlInputEventsImpl.Builder.class)
-public interface SvamlInputEvents {
+@JsonDeserialize(builder = IncomingCallResponseEventsImpl.Builder.class)
+public interface IncomingCallResponseEvents {
 
   /**
    * SVAML commands to be executed when the call is hung up.
@@ -20,7 +20,7 @@ public interface SvamlInputEvents {
    * @return New Builder instance
    */
   static Builder builder() {
-    return new SvamlInputEventsImpl.Builder();
+    return new IncomingCallResponseEventsImpl.Builder();
   }
 
   /** Dedicated Builder */
@@ -40,6 +40,6 @@ public interface SvamlInputEvents {
      *
      * @return The instance build with current builder values
      */
-    SvamlInputEvents build();
+    IncomingCallResponseEvents build();
   }
 }

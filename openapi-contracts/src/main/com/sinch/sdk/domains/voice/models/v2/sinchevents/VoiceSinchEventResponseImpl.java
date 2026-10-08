@@ -1,4 +1,4 @@
-package com.sinch.sdk.domains.voice.models.v2.svaml;
+package com.sinch.sdk.domains.voice.models.v2.sinchevents;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,17 +7,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
+import com.sinch.sdk.domains.voice.models.v2.svaml.IncomingCallResponseEvents;
+import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlCommand;
 import java.util.List;
 import java.util.Objects;
 
 @JsonPropertyOrder({
-  SvamlInputImpl.JSON_PROPERTY_COMMANDS,
-  SvamlInputImpl.JSON_PROPERTY_CALL_NAME,
-  SvamlInputImpl.JSON_PROPERTY_EVENTS
+  VoiceSinchEventResponseImpl.JSON_PROPERTY_COMMANDS,
+  VoiceSinchEventResponseImpl.JSON_PROPERTY_CALL_NAME,
+  VoiceSinchEventResponseImpl.JSON_PROPERTY_EVENTS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
-public class SvamlInputImpl implements SvamlInput {
+public class VoiceSinchEventResponseImpl implements VoiceSinchEventResponse {
   private static final long serialVersionUID = 1L;
 
   public static final String JSON_PROPERTY_COMMANDS = "commands";
@@ -32,9 +34,9 @@ public class SvamlInputImpl implements SvamlInput {
 
   private OptionalValue<IncomingCallResponseEvents> events;
 
-  public SvamlInputImpl() {}
+  public VoiceSinchEventResponseImpl() {}
 
-  protected SvamlInputImpl(
+  protected VoiceSinchEventResponseImpl(
       OptionalValue<List<SvamlCommand>> commands,
       OptionalValue<String> callName,
       OptionalValue<IncomingCallResponseEvents> events) {
@@ -76,7 +78,7 @@ public class SvamlInputImpl implements SvamlInput {
     return events;
   }
 
-  /** Return true if this SvamlInput object is equal to o. */
+  /** Return true if this VoiceSinchEventResponse object is equal to o. */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -85,10 +87,10 @@ public class SvamlInputImpl implements SvamlInput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SvamlInputImpl svamlInput = (SvamlInputImpl) o;
-    return Objects.equals(this.commands, svamlInput.commands)
-        && Objects.equals(this.callName, svamlInput.callName)
-        && Objects.equals(this.events, svamlInput.events);
+    VoiceSinchEventResponseImpl voiceSinchEventResponse = (VoiceSinchEventResponseImpl) o;
+    return Objects.equals(this.commands, voiceSinchEventResponse.commands)
+        && Objects.equals(this.callName, voiceSinchEventResponse.callName)
+        && Objects.equals(this.events, voiceSinchEventResponse.events);
   }
 
   @Override
@@ -99,7 +101,7 @@ public class SvamlInputImpl implements SvamlInput {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SvamlInputImpl {\n");
+    sb.append("class VoiceSinchEventResponseImpl {\n");
     sb.append("    commands: ").append(toIndentedString(commands)).append("\n");
     sb.append("    callName: ").append(toIndentedString(callName)).append("\n");
     sb.append("    events: ").append(toIndentedString(events)).append("\n");
@@ -118,7 +120,7 @@ public class SvamlInputImpl implements SvamlInput {
   }
 
   @JsonPOJOBuilder(withPrefix = "set")
-  static class Builder implements SvamlInput.Builder {
+  static class Builder implements VoiceSinchEventResponse.Builder {
     OptionalValue<List<SvamlCommand>> commands = OptionalValue.empty();
     OptionalValue<String> callName = OptionalValue.empty();
     OptionalValue<IncomingCallResponseEvents> events = OptionalValue.empty();
@@ -141,8 +143,8 @@ public class SvamlInputImpl implements SvamlInput {
       return this;
     }
 
-    public SvamlInput build() {
-      return new SvamlInputImpl(commands, callName, events);
+    public VoiceSinchEventResponse build() {
+      return new VoiceSinchEventResponseImpl(commands, callName, events);
     }
   }
 }

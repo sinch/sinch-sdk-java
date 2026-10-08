@@ -11,7 +11,7 @@ import com.sinch.sdk.domains.voice.models.v2.OriginationType;
 import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
 import com.sinch.sdk.domains.voice.models.v2.sinchevents.SinchEventType;
 import com.sinch.sdk.domains.voice.models.v2.sinchevents.VoiceSinchEvent;
-import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlInput;
+import com.sinch.sdk.domains.voice.models.v2.sinchevents.VoiceSinchEventResponse;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.HangupCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessageEvents;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessagesCommand;
@@ -95,8 +95,8 @@ public class SinchEventsSteps {
             .build());
   }
 
-  static final SvamlInput onAnswerResponse =
-      SvamlInput.builder()
+  static final VoiceSinchEventResponse onAnswerResponse =
+      VoiceSinchEventResponse.builder()
           .setCommands(
               Collections.singletonList(
                   MessagesCommand.builder()

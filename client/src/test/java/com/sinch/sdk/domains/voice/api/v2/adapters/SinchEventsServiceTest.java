@@ -10,7 +10,7 @@ import com.sinch.sdk.domains.voice.models.v2.CallDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.sinchevents.SinchEventType;
 import com.sinch.sdk.domains.voice.models.v2.sinchevents.VoiceSinchEvent;
 import com.sinch.sdk.domains.voice.models.v2.sinchevents.VoiceSinchEventDtoTest;
-import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlInputDtoTest;
+import com.sinch.sdk.domains.voice.models.v2.sinchevents.VoiceSinchEventResponseDtoTest;
 import java.util.HashMap;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -36,8 +36,8 @@ class SinchEventsServiceTest extends BaseTest {
   @GivenTextResource("/domains/voice/v2/sinchevents/VoiceSinchEventCustomEventDto.json")
   String jsonVoiceSinchEventCustomEvent;
 
-  @GivenTextResource("/domains/voice/v2/svaml/SvamlInputDto.json")
-  String jsonSvamlInput;
+  @GivenTextResource("/domains/voice/v2/sinchevents/VoiceSinchEventResponseDto.json")
+  String jsonVoiceSinchEventResponse;
 
   SinchEventsService service;
 
@@ -246,8 +246,9 @@ class SinchEventsServiceTest extends BaseTest {
 
   @Test
   void serializeResponse() throws ApiMappingException, JSONException {
-    String serialized = service.serializeResponse(SvamlInputDtoTest.expectedSvamlInput);
+    String serialized =
+        service.serializeResponse(VoiceSinchEventResponseDtoTest.expectedVoiceSinchEventResponse);
 
-    JSONAssert.assertEquals(jsonSvamlInput, serialized, true);
+    JSONAssert.assertEquals(jsonVoiceSinchEventResponse, serialized, true);
   }
 }

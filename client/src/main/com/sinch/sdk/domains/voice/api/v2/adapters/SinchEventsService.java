@@ -10,7 +10,7 @@ import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import com.sinch.sdk.domains.voice.models.v2.sinchevents.VoiceSinchEvent;
-import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlInput;
+import com.sinch.sdk.domains.voice.models.v2.sinchevents.VoiceSinchEventResponse;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Locale;
@@ -116,7 +116,7 @@ public class SinchEventsService implements com.sinch.sdk.domains.voice.api.v2.Si
   }
 
   @Override
-  public String serializeResponse(SvamlInput response) throws ApiMappingException {
+  public String serializeResponse(VoiceSinchEventResponse response) throws ApiMappingException {
     try {
       return Mapper.getInstance().writeValueAsString(response);
     } catch (JsonProcessingException e) {
