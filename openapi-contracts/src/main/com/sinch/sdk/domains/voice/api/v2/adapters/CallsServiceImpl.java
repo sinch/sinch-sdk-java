@@ -472,4 +472,96 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Call
         localVarContentTypes,
         localVarAuthNames);
   }
+
+  @Override
+  public void interactByCallName(
+      String sessionId, String callName, CallPatchRequest callPatchRequest) throws ApiException {
+
+    LOGGER.finest(
+        "[interactByCallName]"
+            + " "
+            + "sessionId: "
+            + sessionId
+            + ", "
+            + "callName: "
+            + callName
+            + ", "
+            + "callPatchRequest: "
+            + callPatchRequest);
+
+    HttpRequest httpRequest =
+        interactByCallNameRequestBuilder(sessionId, callName, callPatchRequest);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return;
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest interactByCallNameRequestBuilder(
+      String sessionId, String callName, CallPatchRequest callPatchRequest) throws ApiException {
+    // verify the required parameter 'this.projectId' is set
+    if (this.projectId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.projectId' when calling interactByCallName");
+    }
+    // verify the required parameter 'sessionId' is set
+    if (sessionId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'sessionId' when calling interactByCallName");
+    }
+    // verify the required parameter 'callName' is set
+    if (callName == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'callName' when calling interactByCallName");
+    }
+    // verify the required parameter 'callPatchRequest' is set
+    if (callPatchRequest == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'callPatchRequest' when calling interactByCallName");
+    }
+
+    String localVarPath =
+        "/v2/projects/{projectId}/sessions/{sessionId}/calls/{callName}"
+            .replaceAll(
+                "\\{" + "projectId" + "\\}",
+                URLPathUtils.encodePathSegment(this.projectId.toString()))
+            .replaceAll(
+                "\\{" + "sessionId" + "\\}", URLPathUtils.encodePathSegment(sessionId.toString()))
+            .replaceAll(
+                "\\{" + "callName" + "\\}", URLPathUtils.encodePathSegment(callName.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+    if (callPatchRequest.getIdempotencyKey() != null)
+      localVarHeaderParams.put("Idempotency-Key", callPatchRequest.getIdempotencyKey());
+
+    final Collection<String> localVarAccepts =
+        Arrays.asList("application/json", "application/problem+json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList("application/json");
+
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth", "SinchOAuth2");
+    final String serializedBody = mapper.serialize(localVarContentTypes, callPatchRequest);
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.PATCH,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
 }

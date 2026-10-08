@@ -85,4 +85,21 @@ public interface CallsService {
    * @since 2.3
    */
   void interactByCallId(String callId, CallPatchRequest callPatchRequest) throws ApiException;
+
+  /**
+   * Patch an ongoing call by session ID and call name
+   *
+   * <p>Interact with an ongoing call identified by its session and call name by submitting a set of
+   * SVAML commands. Use this to force disconnect, play messages, bridge with another call, or
+   * perform other call control actions.
+   *
+   * @param sessionId The ID of the session. (required)
+   * @param callName The name of the call leg within the session, as assigned by the <code>callName
+   *     </code> property in the <code>dial</code> command. (required)
+   * @param callPatchRequest The SVAML commands to apply to the call (required)
+   * @throws ApiException if fails to make API call
+   * @since 2.3
+   */
+  void interactByCallName(String sessionId, String callName, CallPatchRequest callPatchRequest)
+      throws ApiException;
 }

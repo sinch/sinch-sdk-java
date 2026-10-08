@@ -199,6 +199,32 @@ public class CallsSteps {
     interactionAccepted = true;
   }
 
+  @When("^I send a request to interact with an ongoing call by call name$")
+  public void interactByCallName() {
+    MessagesCommand messages =
+        MessagesCommand.builder()
+            .setMessages(
+                Collections.singletonList(
+                    SayMessage.builder()
+                        .setText("Hello, your call is now connected.")
+                        .setVoiceName("Emma")
+                        .build()))
+            .setEvents(
+                MessageEvents.builder()
+                    .setOnFinish(Collections.singletonList(HangupCommand.builder().build()))
+                    .build())
+            .build();
+
+    service.interactByCallName(
+        "01HZXK8FQNPMR8VD3JW9YF2C5B",
+        "origin",
+        CallPatchRequest.builder()
+            .setCommands(Collections.singletonList(messages))
+            .setIdempotencyKey("7c1e9b4a-3f2d-4e8a-9b6c-0d5f8a2e1c37")
+            .build());
+    interactionAccepted = true;
+  }
+
   @Then("^the response confirms the interaction request was accepted$")
   public void interactResult() {
     Assertions.assertTrue(interactionAccepted);

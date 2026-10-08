@@ -402,4 +402,102 @@ public class CallsServiceTest extends BaseTest {
 
     Assertions.assertEquals(400, thrown.getCode());
   }
+
+  @Test
+  void interactByCallName() throws ApiException {
+
+    String sessionId = "01ARZ3NDEKTSV4RRFFQ69G5FAV";
+    String callName = "origin";
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v2/projects/"
+                + URLPathUtils.encodePathSegment(PROJECT_ID)
+                + "/sessions/"
+                + URLPathUtils.encodePathSegment(sessionId)
+                + "/calls/"
+                + URLPathUtils.encodePathSegment(callName),
+            HttpMethod.PATCH,
+            Collections.emptyList(),
+            jsonCallPatchRequestDto,
+            Collections.singletonMap(
+                "Idempotency-Key",
+                CallPatchRequestDtoTest.expectedCallPatchRequest.getIdempotencyKey()),
+            ACCEPTS,
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse = new HttpResponse(202, null, Collections.emptyMap(), null);
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    service.interactByCallName(
+        sessionId, callName, CallPatchRequestDtoTest.expectedCallPatchRequest);
+
+    verify(httpClient)
+        .invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest)));
+  }
+
+  @Test
+  void interactByCallNameMissingSessionIdThrows() {
+
+    ApiException thrown =
+        Assertions.assertThrows(
+            ApiException.class,
+            () ->
+                service.interactByCallName(
+                    null, "origin", CallPatchRequestDtoTest.expectedCallPatchRequest));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void interactByCallNameMissingCallNameThrows() {
+
+    ApiException thrown =
+        Assertions.assertThrows(
+            ApiException.class,
+            () ->
+                service.interactByCallName(
+                    "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+                    null,
+                    CallPatchRequestDtoTest.expectedCallPatchRequest));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void interactByCallNameMissingRequestThrows() {
+
+    ApiException thrown =
+        Assertions.assertThrows(
+            ApiException.class,
+            () -> service.interactByCallName("01ARZ3NDEKTSV4RRFFQ69G5FAV", "origin", null));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void interactByCallNameMissingProjectIdThrows() {
+
+    CallsService serviceWithoutProjectId =
+        new CallsServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), null);
+
+    ApiException thrown =
+        Assertions.assertThrows(
+            ApiException.class,
+            () ->
+                serviceWithoutProjectId.interactByCallName(
+                    "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+                    "origin",
+                    CallPatchRequestDtoTest.expectedCallPatchRequest));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
 }
