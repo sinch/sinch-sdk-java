@@ -24,6 +24,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @SelectClasspathResource("features/voice-v2/calls.feature")
 @SelectClasspathResource("features/voice-v2/batches.feature")
 @SelectClasspathResource("features/voice-v2/sessions.feature")
+@SelectClasspathResource("features/voice-v2/services.feature")
 @SelectClasspathResource("features/voice-v2/webhooks-events.feature")
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.sinch.sdk.e2e.domains.voice.v2")
 @ConfigurationParameter(
@@ -35,6 +36,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
             + "|^\\[List\\] list (a page of|all the) calls.*$"
             + "|^\\[InteractByCallId\\] interact with an ongoing call by call ID$"
             + "|^\\[InteractByCallName\\] interact with an ongoing call by call name$"
+            + "|^\\[Create\\] create a Voice-V2 service$"
             + "|^\\[(Incoming Call|Answered Call|Answer Webhook) Event\\].*")
 @ConfigurationParameter(key = PARALLEL_EXECUTION_ENABLED_PROPERTY_NAME, value = "true")
 public class VoiceIT {}
