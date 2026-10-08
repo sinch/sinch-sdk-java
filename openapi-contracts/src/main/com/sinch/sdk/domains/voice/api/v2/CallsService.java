@@ -2,8 +2,10 @@ package com.sinch.sdk.domains.voice.api.v2;
 
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.voice.models.v2.Call;
+import com.sinch.sdk.domains.voice.models.v2.calls.request.ListCallsQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
+import com.sinch.sdk.domains.voice.models.v2.calls.response.CallsListResponse;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
 
 /** Calls Service */
@@ -46,4 +48,27 @@ public interface CallsService {
    * @since 2.3
    */
   Call get(String callId) throws ApiException;
+
+  /**
+   * List calls made with Sinch Voice API
+   *
+   * <p>List and filter calls made with Sinch
+   *
+   * @return CallsListResponse
+   * @throws ApiException if fails to make API call
+   * @since 2.3
+   */
+  CallsListResponse list() throws ApiException;
+
+  /**
+   * List calls made with Sinch Voice API
+   *
+   * <p>List and filter calls made with Sinch
+   *
+   * @param queryParameter (optional)
+   * @return CallsListResponse
+   * @throws ApiException if fails to make API call
+   * @since 2.3
+   */
+  CallsListResponse list(ListCallsQueryParameters queryParameter) throws ApiException;
 }

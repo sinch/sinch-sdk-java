@@ -9,7 +9,9 @@ import com.sinch.sdk.domains.voice.models.v2.CallResult;
 import com.sinch.sdk.domains.voice.models.v2.CallType;
 import com.sinch.sdk.domains.voice.models.v2.Money;
 import com.sinch.sdk.domains.voice.models.v2.OriginationType;
+import com.sinch.sdk.domains.voice.models.v2.calls.request.ListCallsQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
+import com.sinch.sdk.domains.voice.models.v2.calls.response.CallsListResponse;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
 import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.CallEvents;
@@ -26,6 +28,7 @@ import io.cucumber.java.en.When;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Assertions;
 
 public class CallsSteps {
@@ -33,6 +36,7 @@ public class CallsSteps {
   CallsService service;
   StartCallResponse startResponse;
   Call getResponse;
+  CallsListResponse listOnePageResponse;
 
   @Given("^the Voice-V2 service \"Calls\" is available$")
   public void serviceAvailable() {
@@ -124,5 +128,47 @@ public class CallsSteps {
             .build();
 
     TestHelpers.recursiveEquals(getResponse, expected);
+  }
+
+  @When("^I send a request to list calls$")
+  public void listOnePage() {
+    listOnePageResponse = service.list(ListCallsQueryParameters.builder().setPageSize(2).build());
+  }
+
+  @When("^I send a request to list all the calls$")
+  public void listAll() {
+    listOnePageResponse = service.list(ListCallsQueryParameters.builder().setPageSize(2).build());
+  }
+
+  @When("^I iterate manually over the calls pages$")
+  public void listAllByPage() {
+    listOnePageResponse = service.list(ListCallsQueryParameters.builder().setPageSize(2).build());
+  }
+
+  @Then("the response content contains \"{int}\" calls")
+  public void onePageResult(int expected) {
+
+    Assertions.assertEquals(expected, listOnePageResponse.getContent().size());
+  }
+
+  @Then("the calls list contains \"{int}\" calls")
+  public void listAllResult(int expected) {
+
+    AtomicInteger count = new AtomicInteger();
+    listOnePageResponse.iterator().forEachRemaining(_unused -> count.getAndIncrement());
+
+    Assertions.assertEquals(expected, count.get());
+  }
+
+  @Then("the calls iteration result contains the data from \"{int}\" pages")
+  public void listAllByPageResult(int expected) {
+
+    int count = listOnePageResponse.getContent().isEmpty() ? 0 : 1;
+    CallsListResponse currentPage = listOnePageResponse;
+    while (currentPage.hasNextPage()) {
+      count++;
+      currentPage = currentPage.nextPage();
+    }
+    Assertions.assertEquals(expected, count);
   }
 }

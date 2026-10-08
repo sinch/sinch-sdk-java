@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.voice.api.v2.adapters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.sinch.sdk.core.databind.query_parameter.InstantToIso8601Serializer;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiExceptionBuilder;
 import com.sinch.sdk.core.http.AuthManager;
@@ -14,10 +15,19 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.core.models.pagination.Page;
+import com.sinch.sdk.core.models.pagination.PageNavigator;
+import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.voice.models.v2.Call;
+import com.sinch.sdk.domains.voice.models.v2.PaginationLinks;
+import com.sinch.sdk.domains.voice.models.v2.calls.request.ListCallsQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
+import com.sinch.sdk.domains.voice.models.v2.calls.response.CallsListResponse;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
+import com.sinch.sdk.domains.voice.models.v2.calls.response.internal.CallsListResponseInternal;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -182,6 +192,183 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Call
                 "\\{" + "callId" + "\\}", URLPathUtils.encodePathSegment(callId.toString()));
 
     List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts =
+        Arrays.asList("application/json", "application/problem+json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth", "SinchOAuth2");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public CallsListResponse list() throws ApiException {
+
+    return list((ListCallsQueryParameters) null);
+  }
+
+  @Override
+  public CallsListResponse list(ListCallsQueryParameters queryParameter) throws ApiException {
+
+    LOGGER.finest("[list]" + " " + "queryParameter: " + queryParameter);
+
+    HttpRequest httpRequest = listRequestBuilder(queryParameter);
+    return _fetchListPage(httpRequest);
+  }
+
+  private CallsListResponse _fetchListPage(HttpRequest httpRequest) throws ApiException {
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+
+      CallsListResponseInternal deserialized =
+          mapper.deserialize(response, new TypeReference<CallsListResponseInternal>() {});
+
+      PaginationLinks links = deserialized.getLinks();
+      String nextLink = null != links ? links.getNext() : null;
+      final HttpRequest nextHttpRequest =
+          StringUtil.isEmpty(nextLink) ? null : nextPageRequestBuilder(nextLink);
+
+      return new CallsListResponse(
+          () -> _fetchListPage(nextHttpRequest),
+          new Page<>(deserialized.getCalls(), new PageNavigator<>(nextHttpRequest)));
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  // The API serves "next" as an absolute URL: its path and query are followed as they are, but
+  // against the configured server, so that credentials are never sent to a host taken from a
+  // response
+  private HttpRequest nextPageRequestBuilder(String nextLink) throws ApiException {
+    URI next;
+    URI server;
+    try {
+      next = new URI(nextLink);
+      server = new URI(this.serverConfiguration.getUrl());
+    } catch (URISyntaxException e) {
+      throw new ApiException("Invalid next page link: " + nextLink, e);
+    }
+
+    String fullUrl =
+        server.getScheme()
+            + "://"
+            + server.getRawAuthority()
+            + next.getRawPath()
+            + (null != next.getRawQuery() ? "?" + next.getRawQuery() : "");
+
+    return new HttpRequest(
+        fullUrl,
+        HttpMethod.GET,
+        null,
+        new HashMap<>(),
+        Arrays.asList("application/json", "application/problem+json"),
+        Arrays.asList(),
+        Arrays.asList("BasicAuth", "SinchOAuth2"));
+  }
+
+  private HttpRequest listRequestBuilder(ListCallsQueryParameters queryParameter)
+      throws ApiException {
+    // verify the required parameter 'this.projectId' is set
+    if (this.projectId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.projectId' when calling list");
+    }
+
+    String localVarPath =
+        "/v2/projects/{projectId}/calls"
+            .replaceAll(
+                "\\{" + "projectId" + "\\}",
+                URLPathUtils.encodePathSegment(this.projectId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+    if (null != queryParameter) {
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getServiceId(),
+          "serviceId",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getFrom(), "from", URLParameter.form, null, localVarQueryParams, true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getTo(), "to", URLParameter.form, null, localVarQueryParams, true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getCallType(),
+          "callType",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getStartTime(),
+          "startTime",
+          URLParameter.form,
+          InstantToIso8601Serializer.getInstance(),
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getEndTime(),
+          "endTime",
+          URLParameter.form,
+          InstantToIso8601Serializer.getInstance(),
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getCallResult(),
+          "callResult",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getCallReason(),
+          "callReason",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPageSize(),
+          "pageSize",
+          URLParameter.form,
+          null,
+          localVarQueryParams,
+          true);
+
+      URLParameterUtils.addQueryParam(
+          queryParameter.getPage(), "page", URLParameter.form, null, localVarQueryParams, true);
+    }
 
     Map<String, String> localVarHeaderParams = new HashMap<>();
 

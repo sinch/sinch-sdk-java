@@ -32,6 +32,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
         "^\\[Start\\].*|^\\[Get\\] get a batch call summary$|^\\[GetDetails\\] get batch call"
             + " details$|^\\[Stop\\] stop batch processing$|^\\[Get\\] get a session$"
             + "|^\\[Get\\] get call details$"
+            + "|^\\[List\\] list (a page of|all the) calls.*$"
             + "|^\\[(Incoming Call|Answered Call|Answer Webhook) Event\\].*")
 @ConfigurationParameter(key = PARALLEL_EXECUTION_ENABLED_PROPERTY_NAME, value = "true")
 public class VoiceIT {}
