@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.voice.api.v2;
 
 import com.sinch.sdk.core.exceptions.ApiException;
+import com.sinch.sdk.domains.voice.models.v2.Call;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
@@ -33,4 +34,16 @@ public interface CallsService {
   StartCallResponse start(
       StartCallQueryParameters queryParameter, StartCallRequest startCallRequest)
       throws ApiException;
+
+  /**
+   * Retrieve call details by call ID
+   *
+   * <p>Retrieve detailed information about a specific call using its unique identifier.
+   *
+   * @param callId The ID of the call. (required)
+   * @return Call
+   * @throws ApiException if fails to make API call
+   * @since 2.3
+   */
+  Call get(String callId) throws ApiException;
 }

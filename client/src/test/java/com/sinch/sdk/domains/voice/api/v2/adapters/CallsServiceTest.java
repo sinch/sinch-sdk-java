@@ -21,6 +21,8 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.voice.api.v2.CallsService;
+import com.sinch.sdk.domains.voice.models.v2.Call;
+import com.sinch.sdk.domains.voice.models.v2.CallDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
@@ -53,6 +55,9 @@ public class CallsServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/voice/v2/calls/response/StartCallResponseDto.json")
   String jsonStartCallResponseDto;
+
+  @GivenTextResource("/domains/voice/v2/CallDto.json")
+  String jsonCallDto;
 
   @BeforeEach
   public void initMocks() {
@@ -116,6 +121,59 @@ public class CallsServiceTest extends BaseTest {
         Assertions.assertThrows(
             ApiException.class,
             () -> serviceWithoutProjectId.start(StartCallRequestDtoTest.expectedStartCallRequest));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void get() throws ApiException {
+
+    String callId = "01ARZ3NDEKTSV4RRFFQ69G5FAA";
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v2/projects/"
+                + URLPathUtils.encodePathSegment(PROJECT_ID)
+                + "/calls/"
+                + URLPathUtils.encodePathSegment(callId),
+            HttpMethod.GET,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            ACCEPTS,
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonCallDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    Call response = service.get(callId);
+
+    TestHelpers.recursiveEquals(response, CallDtoTest.expectedCall);
+  }
+
+  @Test
+  void getMissingCallIdThrows() {
+
+    ApiException thrown = Assertions.assertThrows(ApiException.class, () -> service.get(null));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void getMissingProjectIdThrows() {
+
+    CallsService serviceWithoutProjectId =
+        new CallsServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), null);
+
+    ApiException thrown =
+        Assertions.assertThrows(
+            ApiException.class, () -> serviceWithoutProjectId.get("01ARZ3NDEKTSV4RRFFQ69G5FAA"));
 
     Assertions.assertEquals(400, thrown.getCode());
   }

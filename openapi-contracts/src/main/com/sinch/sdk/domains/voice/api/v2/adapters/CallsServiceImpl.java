@@ -14,6 +14,7 @@ import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.URLParameterUtils;
 import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.domains.voice.models.v2.Call;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
@@ -131,6 +132,70 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Call
     return new HttpRequest(
         localVarPath,
         HttpMethod.POST,
+        localVarQueryParams,
+        serializedBody,
+        localVarHeaderParams,
+        localVarAccepts,
+        localVarContentTypes,
+        localVarAuthNames);
+  }
+
+  @Override
+  public Call get(String callId) throws ApiException {
+
+    LOGGER.finest("[get]" + " " + "callId: " + callId);
+
+    HttpRequest httpRequest = getRequestBuilder(callId);
+    HttpResponse response =
+        httpClient.invokeAPI(
+            this.serverConfiguration, this.authManagersByOasSecuritySchemes, httpRequest);
+
+    if (HttpStatus.isSuccessfulStatus(response.getCode())) {
+      return mapper.deserialize(response, new TypeReference<Call>() {});
+    }
+    // fallback to default errors handling:
+    // all error cases definition are not required from specs: will try some "hardcoded" content
+    // parsing
+    throw ApiExceptionBuilder.build(
+        response.getMessage(),
+        response.getCode(),
+        mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
+  }
+
+  private HttpRequest getRequestBuilder(String callId) throws ApiException {
+    // verify the required parameter 'this.projectId' is set
+    if (this.projectId == null) {
+      throw new ApiException(
+          400, "Missing the required parameter 'this.projectId' when calling get");
+    }
+    // verify the required parameter 'callId' is set
+    if (callId == null) {
+      throw new ApiException(400, "Missing the required parameter 'callId' when calling get");
+    }
+
+    String localVarPath =
+        "/v2/projects/{projectId}/calls/{callId}"
+            .replaceAll(
+                "\\{" + "projectId" + "\\}",
+                URLPathUtils.encodePathSegment(this.projectId.toString()))
+            .replaceAll(
+                "\\{" + "callId" + "\\}", URLPathUtils.encodePathSegment(callId.toString()));
+
+    List<URLParameter> localVarQueryParams = new ArrayList<>();
+
+    Map<String, String> localVarHeaderParams = new HashMap<>();
+
+    final Collection<String> localVarAccepts =
+        Arrays.asList("application/json", "application/problem+json");
+
+    final Collection<String> localVarContentTypes = Arrays.asList();
+
+    final Collection<String> localVarAuthNames = Arrays.asList("BasicAuth", "SinchOAuth2");
+    final String serializedBody = null;
+
+    return new HttpRequest(
+        localVarPath,
+        HttpMethod.GET,
         localVarQueryParams,
         serializedBody,
         localVarHeaderParams,

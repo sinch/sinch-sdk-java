@@ -2,6 +2,13 @@ package com.sinch.sdk.e2e.domains.voice.v2;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.api.v2.CallsService;
+import com.sinch.sdk.domains.voice.models.v2.Call;
+import com.sinch.sdk.domains.voice.models.v2.CallDirection;
+import com.sinch.sdk.domains.voice.models.v2.CallReason;
+import com.sinch.sdk.domains.voice.models.v2.CallResult;
+import com.sinch.sdk.domains.voice.models.v2.CallType;
+import com.sinch.sdk.domains.voice.models.v2.Money;
+import com.sinch.sdk.domains.voice.models.v2.OriginationType;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
 import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
@@ -16,6 +23,7 @@ import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
 import org.junit.jupiter.api.Assertions;
@@ -24,6 +32,7 @@ public class CallsSteps {
 
   CallsService service;
   StartCallResponse startResponse;
+  Call getResponse;
 
   @Given("^the Voice-V2 service \"Calls\" is available$")
   public void serviceAvailable() {
@@ -82,5 +91,38 @@ public class CallsSteps {
             .build();
 
     TestHelpers.recursiveEquals(startResponse, expected);
+  }
+
+  @When("^I send a request to get call details$")
+  public void get() {
+    getResponse = service.get("01HZXK8FQNPMR8VD3JW9YF2C5A");
+  }
+
+  @Then("^the response contains the call details$")
+  public void getResult() {
+    Call expected =
+        Call.builder()
+            .setCallId("01HZXK8FQNPMR8VD3JW9YF2C5A")
+            .setServiceId("f9e8d7c6-b5a4-4321-9876-c5d4e3f2a1b0")
+            .setProjectId("a1b2c3d4-e5f6-4789-a012-b3c4d5e6f789")
+            .setCallName("audio-notification")
+            .setSessionId("01HZXK7QNPMR8VD3JW9YF2C4TB")
+            .setFrom(Phone.builder().setNumber("+12015555555").build())
+            .setTo(Phone.builder().setNumber("+12017777777").build())
+            .setDirection(CallDirection.OUTBOUND)
+            .setCallResult(CallResult.NO_ANSWER)
+            .setCallType(CallType.PHONE)
+            .setOriginationType(OriginationType.SERVER)
+            .setStartTime(Instant.parse("2026-09-14T10:24:34Z"))
+            .setEndTime(Instant.parse("2026-09-14T10:24:49Z"))
+            .setUpdateTime(Instant.parse("2026-09-14T10:24:49Z"))
+            .setCallDurationSeconds(0)
+            .setCallRate(Money.builder().setCurrencyCode("EUR").setAmount("0.4085").build())
+            .setCallReason(CallReason.NOT_AVAILABLE)
+            .setCallResourceUrl(
+                "https://eu1.voice.api.sinch.com/v2/projects/a1b2c3d4-e5f6-4789-a012-b3c4d5e6f789/calls/01HZXK8FQNPMR8VD3JW9YF2C5A")
+            .build();
+
+    TestHelpers.recursiveEquals(getResponse, expected);
   }
 }
