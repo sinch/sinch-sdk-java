@@ -147,4 +147,42 @@ public class ServicesServiceTest extends BaseTest {
 
     Assertions.assertEquals(400, thrown.getCode());
   }
+
+  @Test
+  void get() throws ApiException {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v2/projects/"
+                + URLPathUtils.encodePathSegment(PROJECT_ID)
+                + "/services/"
+                + URLPathUtils.encodePathSegment("6e124178-c29d-46a5-943c-5c2ae544aade"),
+            HttpMethod.GET,
+            Collections.emptyList(),
+            (String) null,
+            Collections.emptyMap(),
+            ACCEPTS,
+            Collections.emptyList(),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(200, null, Collections.emptyMap(), jsonServiceResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    ServiceResponse response = service.get("6e124178-c29d-46a5-943c-5c2ae544aade");
+
+    TestHelpers.recursiveEquals(response, ServiceResponseDtoTest.expectedServiceResponse);
+  }
+
+  @Test
+  void getMissingServiceIdThrows() {
+
+    ApiException thrown = Assertions.assertThrows(ApiException.class, () -> service.get(null));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
 }

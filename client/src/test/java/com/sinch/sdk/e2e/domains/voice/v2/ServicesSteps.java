@@ -2,6 +2,7 @@ package com.sinch.sdk.e2e.domains.voice.v2;
 
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.api.v2.ServicesService;
+import com.sinch.sdk.domains.voice.models.v2.services.NoneCallBehavior;
 import com.sinch.sdk.domains.voice.models.v2.services.request.CreateServiceRequest;
 import com.sinch.sdk.domains.voice.models.v2.services.response.ServiceResponse;
 import com.sinch.sdk.e2e.Config;
@@ -15,6 +16,7 @@ public class ServicesSteps {
 
   ServicesService service;
   ServiceResponse createResponse;
+  ServiceResponse getResponse;
 
   @Given("^the Voice-V2 service \"Services\" is available$")
   public void serviceAvailable() {
@@ -46,5 +48,27 @@ public class ServicesSteps {
             .build();
 
     TestHelpers.recursiveEquals(createResponse, expected);
+  }
+
+  @When("^I send a request to get Voice-V2 service details$")
+  public void get() {
+    getResponse = service.get("3c4d5e6f-7a8b-4901-c234-d5e6f7a8b901");
+  }
+
+  @Then("^the response contains the Voice-V2 service details$")
+  public void getResult() {
+    ServiceResponse expected =
+        ServiceResponse.builder()
+            .setServiceId("3c4d5e6f-7a8b-4901-c234-d5e6f7a8b901")
+            .setProjectId("c3d4e5f6-a7b8-4901-c234-d5e6f7a8b901")
+            .setCreateTime(Instant.parse("2026-09-16T10:47:36Z"))
+            .setUpdateTime(Instant.parse("2026-09-16T10:47:36Z"))
+            .setName("Example service 2")
+            .setDescription("")
+            .setIsDefault(false)
+            .setCallBehavior(NoneCallBehavior.NONE_CALL_BEHAVIOR)
+            .build();
+
+    TestHelpers.recursiveEquals(getResponse, expected);
   }
 }
