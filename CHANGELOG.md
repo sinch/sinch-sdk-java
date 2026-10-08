@@ -25,12 +25,14 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[feature]** Voice V2 Batches API: `getDetails` operation to retrieve the per-session details of a batch
 - **[feature]** Voice V2 Batches API: `stop` operation to stop processing a batch of calls
 - **[feature]** Voice V2 Sessions API: `get` operation to retrieve a session and its calls
+- **[feature]** Voice V2 Sinch Events: `validateAuthenticationHeader`, `parseEvent` and `serializeResponse` operations to handle the events sent by Sinch
 - **[doc]** New `voice/v2/calls/Start` snippet
 - **[doc]** New `voice/v2/batches/Start` snippet
 - **[doc]** New `voice/v2/batches/Get` snippet
 - **[doc]** New `voice/v2/batches/GetDetails` snippet
 - **[doc]** New `voice/v2/batches/Stop` snippet
 - **[doc]** New `voice/v2/sessions/Get` snippet
+- **[doc]** `sinch-events` example: new Voice V2 Sinch Events controller on `/VoiceV2Event`
 
 
 ## v2.2.0 - 2026-09-17

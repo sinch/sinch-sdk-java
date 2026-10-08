@@ -35,6 +35,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
   private volatile CallsService calls;
   private volatile BatchesService batches;
   private volatile SessionsService sessions;
+  private volatile SinchEventsService sinchEvents;
 
   public VoiceService(
       UnifiedCredentials credentials,
@@ -99,6 +100,18 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
       }
     }
     return this.sessions;
+  }
+
+  public SinchEventsService sinchEvents() {
+    // no lazy init: validating a Sinch Event takes service credentials on each call
+    if (null == this.sinchEvents) {
+      synchronized (this) {
+        if (null == this.sinchEvents) {
+          this.sinchEvents = new SinchEventsService();
+        }
+      }
+    }
+    return this.sinchEvents;
   }
 
   private void instanceLazyInit() {
