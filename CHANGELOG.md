@@ -52,6 +52,9 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[doc]** New `voice/v2/services/Delete` snippet
 - **[doc]** `sinch-events` example: new Voice V2 Sinch Events controller on `/VoiceV2Event`
 
+### SDK
+- **[feature]** `Idempotency-Key` support: for the operations that accept the header, the SDK generates a key when none is set and sends the same key on the `HTTP 429` retries of a call
+
 
 ## v2.2.0 - 2026-09-17
 

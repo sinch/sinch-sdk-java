@@ -35,7 +35,9 @@ public interface CallPatchRequest {
    * minutes, the server returns the cached response from the original request. Using a random UUID
    * (v4) is strongly recommended.
    *
-   * <p>Sent as the <code>Idempotency-Key</code> header.
+   * <p>Sent as the <code>Idempotency-Key</code> header. If not set, the SDK generates one for the
+   * call and sends it again on the retries of that call. Set your own key if you need to retry the
+   * call yourself, since the generated one is not returned.
    *
    * @return idempotencyKey
    */
