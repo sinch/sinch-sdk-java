@@ -17,9 +17,7 @@ import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.models.pagination.Page;
 import com.sinch.sdk.core.models.pagination.PageNavigator;
-import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.voice.models.v2.Call;
-import com.sinch.sdk.domains.voice.models.v2.PaginationLinks;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.CallPatchRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.ListCallsQueryParameters;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallQueryParameters;
@@ -27,8 +25,6 @@ import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.CallsListResponse;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.internal.CallsListResponseInternal;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -240,10 +236,8 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Call
       CallsListResponseInternal deserialized =
           mapper.deserialize(response, new TypeReference<CallsListResponseInternal>() {});
 
-      PaginationLinks links = deserialized.getLinks();
-      String nextLink = null != links ? links.getNext() : null;
       final HttpRequest nextHttpRequest =
-          StringUtil.isEmpty(nextLink) ? null : nextPageRequestBuilder(nextLink);
+          PaginationLinksHelper.nextPageRequest(this.serverConfiguration, deserialized.getLinks());
 
       return new CallsListResponse(
           () -> _fetchListPage(nextHttpRequest),
@@ -256,36 +250,6 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Call
         response.getMessage(),
         response.getCode(),
         mapper.deserialize(response, new TypeReference<HashMap<String, ?>>() {}));
-  }
-
-  // The API serves "next" as an absolute URL: its path and query are followed as they are, but
-  // against the configured server, so that credentials are never sent to a host taken from a
-  // response
-  private HttpRequest nextPageRequestBuilder(String nextLink) throws ApiException {
-    URI next;
-    URI server;
-    try {
-      next = new URI(nextLink);
-      server = new URI(this.serverConfiguration.getUrl());
-    } catch (URISyntaxException e) {
-      throw new ApiException("Invalid next page link: " + nextLink, e);
-    }
-
-    String fullUrl =
-        server.getScheme()
-            + "://"
-            + server.getRawAuthority()
-            + next.getRawPath()
-            + (null != next.getRawQuery() ? "?" + next.getRawQuery() : "");
-
-    return new HttpRequest(
-        fullUrl,
-        HttpMethod.GET,
-        null,
-        new HashMap<>(),
-        Arrays.asList("application/json", "application/problem+json"),
-        Arrays.asList(),
-        Arrays.asList("BasicAuth", "SinchOAuth2"));
   }
 
   private HttpRequest listRequestBuilder(ListCallsQueryParameters queryParameter)

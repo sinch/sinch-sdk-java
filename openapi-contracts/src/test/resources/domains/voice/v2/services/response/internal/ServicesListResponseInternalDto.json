@@ -1,0 +1,30 @@
+{
+  "services": [
+    {
+      "serviceId": "6e124178-c29d-46a5-943c-5c2ae544aade",
+      "projectId": "5c5bf2b1-35ae-4825-ab89-457e07bb60e6",
+      "createTime": "2025-01-01T00:00:00Z",
+      "updateTime": "2025-02-15T10:30:00Z",
+      "name": "Primary Service",
+      "description": "Main service with webhook call behavior",
+      "isDefault": true
+    },
+    {
+      "serviceId": "7f235289-d3ae-57b6-a54d-6d3bf655bbdf",
+      "projectId": "5c5bf2b1-35ae-4825-ab89-457e07bb60e6",
+      "createTime": "2025-02-15T10:30:00Z",
+      "name": "Secondary Service",
+      "isDefault": false
+    }
+  ],
+  "links": {
+    "first": "https://voice.api.sinch.com/v2/projects/5c5bf2b1-35ae-4825-ab89-457e07bb60e6/services?page=1&pageSize=2",
+    "last": "https://voice.api.sinch.com/v2/projects/5c5bf2b1-35ae-4825-ab89-457e07bb60e6/services?page=2&pageSize=2",
+    "next": "https://voice.api.sinch.com/v2/projects/5c5bf2b1-35ae-4825-ab89-457e07bb60e6/services?page=2&pageSize=2",
+    "self": "https://voice.api.sinch.com/v2/projects/5c5bf2b1-35ae-4825-ab89-457e07bb60e6/services?page=1&pageSize=2"
+  },
+  "meta": {
+    "totalCount": 3,
+    "pageCount": 2
+  }
+}
