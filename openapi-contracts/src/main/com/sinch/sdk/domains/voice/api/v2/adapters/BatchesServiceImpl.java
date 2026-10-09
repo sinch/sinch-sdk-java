@@ -139,7 +139,8 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Ba
         localVarHeaderParams,
         localVarAccepts,
         localVarContentTypes,
-        localVarAuthNames);
+        localVarAuthNames,
+        true);
   }
 
   @Override

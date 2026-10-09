@@ -93,7 +93,8 @@ public class BatchesServiceTest extends BaseTest {
                 StartBatchRequestDtoTest.expectedStartBatchRequest.getIdempotencyKey()),
             ACCEPTS,
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
-            AUTH_NAMES);
+            AUTH_NAMES,
+            true);
     HttpResponse httpResponse =
         new HttpResponse(201, null, Collections.emptyMap(), jsonStartBatchResponseDto.getBytes());
 

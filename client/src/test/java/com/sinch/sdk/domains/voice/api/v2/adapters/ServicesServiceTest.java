@@ -96,7 +96,8 @@ public class ServicesServiceTest extends BaseTest {
                 CreateServiceRequestDtoTest.expectedCreateServiceRequest.getIdempotencyKey()),
             ACCEPTS,
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
-            AUTH_NAMES);
+            AUTH_NAMES,
+            true);
     HttpResponse httpResponse =
         new HttpResponse(201, null, Collections.emptyMap(), jsonServiceResponseDto.getBytes());
 
@@ -113,7 +114,7 @@ public class ServicesServiceTest extends BaseTest {
   }
 
   @Test
-  void createWithoutIdempotencyKeySendsNoHeader() throws ApiException {
+  void createWithoutIdempotencyKeyLeavesItToTransport() throws ApiException {
 
     HttpRequest httpRequest =
         new HttpRequest(
@@ -124,7 +125,8 @@ public class ServicesServiceTest extends BaseTest {
             Collections.emptyMap(),
             ACCEPTS,
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
-            AUTH_NAMES);
+            AUTH_NAMES,
+            true);
     HttpResponse httpResponse =
         new HttpResponse(201, null, Collections.emptyMap(), jsonServiceResponseDto.getBytes());
 
@@ -274,7 +276,8 @@ public class ServicesServiceTest extends BaseTest {
                 UpdateServiceRequestDtoTest.expectedUpdateServiceRequest.getIdempotencyKey()),
             ACCEPTS,
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
-            AUTH_NAMES);
+            AUTH_NAMES,
+            true);
     HttpResponse httpResponse =
         new HttpResponse(200, null, Collections.emptyMap(), jsonServiceResponseDto.getBytes());
 
@@ -293,7 +296,7 @@ public class ServicesServiceTest extends BaseTest {
   }
 
   @Test
-  void updateWithoutIdempotencyKeySendsNoHeader() throws ApiException {
+  void updateWithoutIdempotencyKeyLeavesItToTransport() throws ApiException {
 
     HttpRequest httpRequest =
         new HttpRequest(
@@ -307,7 +310,8 @@ public class ServicesServiceTest extends BaseTest {
             Collections.emptyMap(),
             ACCEPTS,
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
-            AUTH_NAMES);
+            AUTH_NAMES,
+            true);
     HttpResponse httpResponse =
         new HttpResponse(200, null, Collections.emptyMap(), jsonServiceResponseDto.getBytes());
 

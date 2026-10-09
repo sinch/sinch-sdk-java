@@ -104,7 +104,8 @@ public class CallsServiceTest extends BaseTest {
                 StartCallRequestDtoTest.expectedStartCallRequest.getIdempotencyKey()),
             ACCEPTS,
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
-            AUTH_NAMES);
+            AUTH_NAMES,
+            true);
     HttpResponse httpResponse =
         new HttpResponse(201, null, Collections.emptyMap(), jsonStartCallResponseDto.getBytes());
 
@@ -346,7 +347,8 @@ public class CallsServiceTest extends BaseTest {
                 CallPatchRequestDtoTest.expectedCallPatchRequest.getIdempotencyKey()),
             ACCEPTS,
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
-            AUTH_NAMES);
+            AUTH_NAMES,
+            true);
     HttpResponse httpResponse = new HttpResponse(202, null, Collections.emptyMap(), null);
 
     when(httpClient.invokeAPI(
@@ -424,7 +426,8 @@ public class CallsServiceTest extends BaseTest {
                 CallPatchRequestDtoTest.expectedCallPatchRequest.getIdempotencyKey()),
             ACCEPTS,
             Collections.singletonList(HttpContentType.APPLICATION_JSON),
-            AUTH_NAMES);
+            AUTH_NAMES,
+            true);
     HttpResponse httpResponse = new HttpResponse(202, null, Collections.emptyMap(), null);
 
     when(httpClient.invokeAPI(

@@ -144,7 +144,8 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Call
         localVarHeaderParams,
         localVarAccepts,
         localVarContentTypes,
-        localVarAuthNames);
+        localVarAuthNames,
+        true);
   }
 
   @Override
@@ -434,7 +435,8 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Call
         localVarHeaderParams,
         localVarAccepts,
         localVarContentTypes,
-        localVarAuthNames);
+        localVarAuthNames,
+        true);
   }
 
   @Override
@@ -526,6 +528,7 @@ public class CallsServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Call
         localVarHeaderParams,
         localVarAccepts,
         localVarContentTypes,
-        localVarAuthNames);
+        localVarAuthNames,
+        true);
   }
 }
