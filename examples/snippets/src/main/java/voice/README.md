@@ -42,3 +42,6 @@ See main [README.md](../../../../README.md) for how to execute snippets
     - [voice/v2/services/Get](./v2/services/Get.java)
     - [voice/v2/services/List](./v2/services/List.java)
     - [voice/v2/services/Update](./v2/services/Update.java)
+  - Svaml
+    - [voice/v2/svaml/Describe](./v2/svaml/Describe.java)
+    - [voice/v2/svaml/Validate](./v2/svaml/Validate.java)

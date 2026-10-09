@@ -42,6 +42,14 @@ public interface VoiceService {
   ServicesService services();
 
   /**
+   * Svaml Service instance
+   *
+   * @return service instance for project
+   * @since 2.3
+   */
+  SvamlService svaml();
+
+  /**
    * Sinch Events Service instance
    *
    * <p>Requires no credentials from the client configuration.
