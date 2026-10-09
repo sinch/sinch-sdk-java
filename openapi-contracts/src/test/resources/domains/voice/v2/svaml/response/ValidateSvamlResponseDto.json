@@ -1,0 +1,7 @@
+{
+  "isValid": false,
+  "errors": [
+    "Invalid dial command. Missing destination.",
+    "Invalid say command. Missing voice name."
+  ]
+}

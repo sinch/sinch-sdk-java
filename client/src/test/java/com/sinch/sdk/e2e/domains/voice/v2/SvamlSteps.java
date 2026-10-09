@@ -12,7 +12,9 @@ import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessagesCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.PlayMessage;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.SayMessage;
 import com.sinch.sdk.domains.voice.models.v2.svaml.request.DescribeSvamlRequest;
+import com.sinch.sdk.domains.voice.models.v2.svaml.request.ValidateSvamlRequest;
 import com.sinch.sdk.domains.voice.models.v2.svaml.response.SvamlDescriptionResponse;
+import com.sinch.sdk.domains.voice.models.v2.svaml.response.ValidateSvamlResponse;
 import com.sinch.sdk.e2e.Config;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -24,6 +26,7 @@ import org.junit.jupiter.api.Assertions;
 public class SvamlSteps {
 
   SvamlService service;
+  ValidateSvamlResponse validateResponse;
   SvamlDescriptionResponse describeResponse;
 
   @Given("^the Voice-V2 service \"Svaml\" is available$")
@@ -32,8 +35,44 @@ public class SvamlSteps {
     Assertions.assertNotNull(service, "Voice V2 Svaml service is not available");
   }
 
+  @When("^I send a request to validate a SVAML payload$")
+  public void validate() {
+    validateResponse =
+        service.validate(ValidateSvamlRequest.builder().setSvaml(svamlPayload()).build());
+  }
+
+  @Then("^the response confirms the SVAML payload is valid$")
+  public void validateResult() {
+    ValidateSvamlResponse expected = ValidateSvamlResponse.builder().setIsValid(true).build();
+
+    TestHelpers.recursiveEquals(validateResponse, expected);
+  }
+
   @When("^I send a request to describe a SVAML payload$")
   public void describe() {
+    describeResponse =
+        service.describe(DescribeSvamlRequest.builder().setSvaml(svamlPayload()).build());
+  }
+
+  @Then("^the response contains the description of the SVAML payload$")
+  public void describeResult() {
+    SvamlDescriptionResponse expected =
+        SvamlDescriptionResponse.builder()
+            .setDescription(
+                "1. A new call with name 'audio-notification' will be initiated to number"
+                    + " +12017777777 with max duration set to 5 minutes.\n"
+                    + " * on answer:\n"
+                    + "     1. An audio file will be played from"
+                    + " https://samplelib.com/mp3/sample-12s.mp3.\n"
+                    + "     1. A TTS message will be played using the voice Emma.\n"
+                    + "      * on finish:\n"
+                    + "          1. The call will be disconnected")
+            .build();
+
+    TestHelpers.recursiveEquals(describeResponse, expected);
+  }
+
+  private static SvamlInput svamlPayload() {
     MessagesCommand notification =
         MessagesCommand.builder()
             .setMessagesName("notification")
@@ -65,28 +104,6 @@ public class SvamlSteps {
                 CallEvents.builder().setOnAnswer(Collections.singletonList(notification)).build())
             .build();
 
-    describeResponse =
-        service.describe(
-            DescribeSvamlRequest.builder()
-                .setSvaml(SvamlInput.builder().setCommands(Collections.singletonList(dial)).build())
-                .build());
-  }
-
-  @Then("^the response contains the description of the SVAML payload$")
-  public void describeResult() {
-    SvamlDescriptionResponse expected =
-        SvamlDescriptionResponse.builder()
-            .setDescription(
-                "1. A new call with name 'audio-notification' will be initiated to number"
-                    + " +12017777777 with max duration set to 5 minutes.\n"
-                    + " * on answer:\n"
-                    + "     1. An audio file will be played from"
-                    + " https://samplelib.com/mp3/sample-12s.mp3.\n"
-                    + "     1. A TTS message will be played using the voice Emma.\n"
-                    + "      * on finish:\n"
-                    + "          1. The call will be disconnected")
-            .build();
-
-    TestHelpers.recursiveEquals(describeResponse, expected);
+    return SvamlInput.builder().setCommands(Collections.singletonList(dial)).build();
   }
 }

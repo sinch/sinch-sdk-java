@@ -21,8 +21,11 @@ import com.sinch.sdk.core.http.URLPathUtils;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.domains.voice.api.v2.SvamlService;
 import com.sinch.sdk.domains.voice.models.v2.svaml.request.DescribeSvamlRequestDtoTest;
+import com.sinch.sdk.domains.voice.models.v2.svaml.request.ValidateSvamlRequestDtoTest;
 import com.sinch.sdk.domains.voice.models.v2.svaml.response.SvamlDescriptionResponse;
 import com.sinch.sdk.domains.voice.models.v2.svaml.response.SvamlDescriptionResponseDtoTest;
+import com.sinch.sdk.domains.voice.models.v2.svaml.response.ValidateSvamlResponse;
+import com.sinch.sdk.domains.voice.models.v2.svaml.response.ValidateSvamlResponseDtoTest;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -51,6 +54,12 @@ public class SvamlServiceTest extends BaseTest {
 
   @GivenTextResource("/domains/voice/v2/svaml/response/SvamlDescriptionResponseDto.json")
   String jsonSvamlDescriptionResponseDto;
+
+  @GivenTextResource("/domains/voice/v2/svaml/request/ValidateSvamlRequestDto.json")
+  String jsonValidateSvamlRequestDto;
+
+  @GivenTextResource("/domains/voice/v2/svaml/response/ValidateSvamlResponseDto.json")
+  String jsonValidateSvamlResponseDto;
 
   @BeforeEach
   public void initMocks() {
@@ -110,6 +119,61 @@ public class SvamlServiceTest extends BaseTest {
             () ->
                 serviceWithoutProjectId.describe(
                     DescribeSvamlRequestDtoTest.expectedDescribeSvamlRequest));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void validate() throws ApiException {
+
+    HttpRequest httpRequest =
+        new HttpRequest(
+            "/v2/projects/" + URLPathUtils.encodePathSegment(PROJECT_ID) + "/svaml/validate",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            jsonValidateSvamlRequestDto,
+            Collections.emptyMap(),
+            ACCEPTS,
+            Collections.singletonList(HttpContentType.APPLICATION_JSON),
+            AUTH_NAMES);
+    HttpResponse httpResponse =
+        new HttpResponse(
+            200, null, Collections.emptyMap(), jsonValidateSvamlResponseDto.getBytes());
+
+    when(httpClient.invokeAPI(
+            eq(serverConfiguration),
+            eq(authManagers),
+            argThat(new HttpRequestMatcher(httpRequest))))
+        .thenReturn(httpResponse);
+
+    ValidateSvamlResponse response =
+        service.validate(ValidateSvamlRequestDtoTest.expectedValidateSvamlRequest);
+
+    TestHelpers.recursiveEquals(
+        response, ValidateSvamlResponseDtoTest.expectedValidateSvamlResponse);
+  }
+
+  @Test
+  void validateMissingRequestThrows() {
+
+    ApiException thrown = Assertions.assertThrows(ApiException.class, () -> service.validate(null));
+
+    Assertions.assertEquals(400, thrown.getCode());
+  }
+
+  @Test
+  void validateMissingProjectIdThrows() {
+
+    SvamlService serviceWithoutProjectId =
+        new SvamlServiceImpl(
+            httpClient, serverConfiguration, authManagers, HttpMapper.getInstance(), null);
+
+    ApiException thrown =
+        Assertions.assertThrows(
+            ApiException.class,
+            () ->
+                serviceWithoutProjectId.validate(
+                    ValidateSvamlRequestDtoTest.expectedValidateSvamlRequest));
 
     Assertions.assertEquals(400, thrown.getCode());
   }
