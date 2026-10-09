@@ -15,8 +15,8 @@ import org.junit.platform.suite.api.SuiteDisplayName;
  * as the other Voice V2 operations land.
  *
  * <p>The filter matches scenario names across all features, and they share the same {@code [Get]}
- * prefix. Batches' and sessions' {@code [Get]} are therefore matched by their full name, so that
- * the calls {@code [Get]} scenario (not implemented yet) stays out.
+ * prefix. Each {@code [Get]} is therefore matched by its full name, so that a {@code [Get]}
+ * scenario of an operation not implemented yet stays out.
  */
 @Suite
 @SuiteDisplayName("Voice V2")
@@ -31,6 +31,10 @@ import org.junit.platform.suite.api.SuiteDisplayName;
     value =
         "^\\[Start\\].*|^\\[Get\\] get a batch call summary$|^\\[GetDetails\\] get batch call"
             + " details$|^\\[Stop\\] stop batch processing$|^\\[Get\\] get a session$"
+            + "|^\\[Get\\] get call details$"
+            + "|^\\[List\\] list (a page of|all the) calls.*$"
+            + "|^\\[InteractByCallId\\] interact with an ongoing call by call ID$"
+            + "|^\\[InteractByCallName\\] interact with an ongoing call by call name$"
             + "|^\\[(Incoming Call|Answered Call|Answer Webhook) Event\\].*")
 @ConfigurationParameter(key = PARALLEL_EXECUTION_ENABLED_PROPERTY_NAME, value = "true")
 public class VoiceIT {}
