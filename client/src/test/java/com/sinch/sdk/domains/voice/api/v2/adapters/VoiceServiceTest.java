@@ -32,6 +32,11 @@ class VoiceServiceTest {
   }
 
   @Test
+  void checkCredentialsSvaml() {
+    CredentialsValidationHelper.checkCredentials(() -> httpClient, VoiceService::svaml);
+  }
+
+  @Test
   void sinchEventsRequireNoCredentials() {
     Assertions.assertNotNull(
         new SinchClient(Configuration.builder().build()).voice().v2().sinchEvents());

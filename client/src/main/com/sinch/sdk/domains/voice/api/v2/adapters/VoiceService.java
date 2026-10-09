@@ -10,6 +10,7 @@ import com.sinch.sdk.domains.voice.api.v2.BatchesService;
 import com.sinch.sdk.domains.voice.api.v2.CallsService;
 import com.sinch.sdk.domains.voice.api.v2.ServicesService;
 import com.sinch.sdk.domains.voice.api.v2.SessionsService;
+import com.sinch.sdk.domains.voice.api.v2.SvamlService;
 import com.sinch.sdk.domains.voice.models.v2.VoiceContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
@@ -37,6 +38,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
   private volatile BatchesService batches;
   private volatile SessionsService sessions;
   private volatile ServicesService services;
+  private volatile SvamlService svaml;
   private volatile SinchEventsService sinchEvents;
 
   public VoiceService(
@@ -120,6 +122,24 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
       }
     }
     return this.services;
+  }
+
+  public SvamlService svaml() {
+    if (null == this.svaml) {
+      synchronized (this) {
+        if (null == this.svaml) {
+          instanceLazyInit();
+          this.svaml =
+              new SvamlServiceImpl(
+                  httpClientSupplier.get(),
+                  context.getVoiceServer(),
+                  authManagers,
+                  HttpMapper.getInstance(),
+                  uriUUID);
+        }
+      }
+    }
+    return this.svaml;
   }
 
   public SinchEventsService sinchEvents() {
