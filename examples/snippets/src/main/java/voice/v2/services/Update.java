@@ -27,7 +27,7 @@ public class Update {
 
     // The ID of the service to update
     String serviceId = "SERVICE_ID";
-    String name = "Updated service name";
+    String name = "Updated from Java SDK snippet";
 
     Configuration configuration =
         Configuration.builder()

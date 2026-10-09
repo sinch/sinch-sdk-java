@@ -320,7 +320,7 @@ public class ServicesServiceTest extends BaseTest {
     ServiceResponse response =
         service.update(
             "6e124178-c29d-46a5-943c-5c2ae544aade",
-            UpdateServiceRequest.builder().setIsDefault(true).build());
+            UpdateServiceRequest.builder().setAsDefault().build());
 
     TestHelpers.recursiveEquals(response, ServiceResponseDtoTest.expectedServiceResponse);
   }

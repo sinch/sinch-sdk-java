@@ -173,8 +173,13 @@ public class UpdateServiceRequestImpl implements UpdateServiceRequest {
       return this;
     }
 
+    public Builder setAsDefault() {
+      return setIsDefault(true);
+    }
+
+    // used by Jackson only: the public builder exposes setAsDefault()
     @JsonProperty(JSON_PROPERTY_IS_DEFAULT)
-    public Builder setIsDefault(Boolean isDefault) {
+    Builder setIsDefault(Boolean isDefault) {
       this.isDefault = OptionalValue.of(isDefault);
       return this;
     }

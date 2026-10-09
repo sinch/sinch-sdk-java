@@ -86,13 +86,14 @@ public interface UpdateServiceRequest {
     Builder setDescription(String description);
 
     /**
-     * see getter
+     * Set this service as the default for the project
      *
-     * @param isDefault see getter
+     * <p>The API does not accept <code>false</code> on update, so there is no value to pass
+     *
      * @return Current builder
      * @see #getIsDefault
      */
-    Builder setIsDefault(Boolean isDefault);
+    Builder setAsDefault();
 
     /**
      * see getter

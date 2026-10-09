@@ -25,7 +25,7 @@ public class Create {
     String keyId = Settings.getKeyId().orElse("MY_KEY_ID");
     String keySecret = Settings.getKeySecret().orElse("MY_KEY_SECRET");
 
-    String name = "Example service";
+    String name = "Created from Java SDK snippet";
 
     Configuration configuration =
         Configuration.builder()
