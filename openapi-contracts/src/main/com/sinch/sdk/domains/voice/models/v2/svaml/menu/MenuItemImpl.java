@@ -22,7 +22,7 @@ import java.util.Objects;
   MenuItemImpl.JSON_PROPERTY_TERMINATING_SEQUENCE,
   MenuItemImpl.JSON_PROPERTY_INPUT_METHODS,
   MenuItemImpl.JSON_PROPERTY_MATCHES,
-  MenuItemImpl.JSON_PROPERTY_ON_FAIL
+  MenuItemImpl.JSON_PROPERTY_ON_FAILURE
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -66,9 +66,9 @@ public class MenuItemImpl implements MenuItem {
 
   private OptionalValue<Map<String, List<SvamlCommand>>> matches;
 
-  public static final String JSON_PROPERTY_ON_FAIL = "onFail";
+  public static final String JSON_PROPERTY_ON_FAILURE = "onFailure";
 
-  private OptionalValue<List<SvamlCommand>> onFail;
+  private OptionalValue<List<SvamlCommand>> onFailure;
 
   public MenuItemImpl() {}
 
@@ -82,7 +82,7 @@ public class MenuItemImpl implements MenuItem {
       OptionalValue<String> terminatingSequence,
       OptionalValue<List<InputMethodsEnum>> inputMethods,
       OptionalValue<Map<String, List<SvamlCommand>>> matches,
-      OptionalValue<List<SvamlCommand>> onFail) {
+      OptionalValue<List<SvamlCommand>> onFailure) {
     this.prompt = prompt;
     this.repeatPrompt = repeatPrompt;
     this.inputTimeoutDurationSeconds = inputTimeoutDurationSeconds;
@@ -92,7 +92,7 @@ public class MenuItemImpl implements MenuItem {
     this.terminatingSequence = terminatingSequence;
     this.inputMethods = inputMethods;
     this.matches = matches;
-    this.onFail = onFail;
+    this.onFailure = onFailure;
   }
 
   @JsonIgnore
@@ -195,14 +195,14 @@ public class MenuItemImpl implements MenuItem {
   }
 
   @JsonIgnore
-  public List<SvamlCommand> getOnFail() {
-    return onFail.orElse(null);
+  public List<SvamlCommand> getOnFailure() {
+    return onFailure.orElse(null);
   }
 
-  @JsonProperty(JSON_PROPERTY_ON_FAIL)
+  @JsonProperty(JSON_PROPERTY_ON_FAILURE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public OptionalValue<List<SvamlCommand>> onFail() {
-    return onFail;
+  public OptionalValue<List<SvamlCommand>> onFailure() {
+    return onFailure;
   }
 
   /** Return true if this MenuItem object is equal to o. */
@@ -224,7 +224,7 @@ public class MenuItemImpl implements MenuItem {
         && Objects.equals(this.terminatingSequence, menuItem.terminatingSequence)
         && Objects.equals(this.inputMethods, menuItem.inputMethods)
         && Objects.equals(this.matches, menuItem.matches)
-        && Objects.equals(this.onFail, menuItem.onFail);
+        && Objects.equals(this.onFailure, menuItem.onFailure);
   }
 
   @Override
@@ -239,7 +239,7 @@ public class MenuItemImpl implements MenuItem {
         terminatingSequence,
         inputMethods,
         matches,
-        onFail);
+        onFailure);
   }
 
   @Override
@@ -259,7 +259,7 @@ public class MenuItemImpl implements MenuItem {
         .append("\n");
     sb.append("    inputMethods: ").append(toIndentedString(inputMethods)).append("\n");
     sb.append("    matches: ").append(toIndentedString(matches)).append("\n");
-    sb.append("    onFail: ").append(toIndentedString(onFail)).append("\n");
+    sb.append("    onFailure: ").append(toIndentedString(onFailure)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -285,7 +285,7 @@ public class MenuItemImpl implements MenuItem {
     OptionalValue<String> terminatingSequence = OptionalValue.empty();
     OptionalValue<List<InputMethodsEnum>> inputMethods = OptionalValue.empty();
     OptionalValue<Map<String, List<SvamlCommand>>> matches = OptionalValue.empty();
-    OptionalValue<List<SvamlCommand>> onFail = OptionalValue.empty();
+    OptionalValue<List<SvamlCommand>> onFailure = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_PROMPT)
     public Builder setPrompt(MenuPrompt prompt) {
@@ -341,9 +341,9 @@ public class MenuItemImpl implements MenuItem {
       return this;
     }
 
-    @JsonProperty(JSON_PROPERTY_ON_FAIL)
-    public Builder setOnFail(List<SvamlCommand> onFail) {
-      this.onFail = OptionalValue.of(onFail);
+    @JsonProperty(JSON_PROPERTY_ON_FAILURE)
+    public Builder setOnFailure(List<SvamlCommand> onFailure) {
+      this.onFailure = OptionalValue.of(onFailure);
       return this;
     }
 
@@ -358,7 +358,7 @@ public class MenuItemImpl implements MenuItem {
           terminatingSequence,
           inputMethods,
           matches,
-          onFail);
+          onFailure);
     }
   }
 }

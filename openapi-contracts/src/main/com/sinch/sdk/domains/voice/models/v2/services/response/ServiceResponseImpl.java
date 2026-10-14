@@ -13,6 +13,7 @@ import java.util.Objects;
 
 @JsonPropertyOrder({
   ServiceResponseImpl.JSON_PROPERTY_SERVICE_ID,
+  ServiceResponseImpl.JSON_PROPERTY_SERVICE_SECRET,
   ServiceResponseImpl.JSON_PROPERTY_PROJECT_ID,
   ServiceResponseImpl.JSON_PROPERTY_CREATE_TIME,
   ServiceResponseImpl.JSON_PROPERTY_UPDATE_TIME,
@@ -29,6 +30,10 @@ public class ServiceResponseImpl implements ServiceResponse {
   public static final String JSON_PROPERTY_SERVICE_ID = "serviceId";
 
   private OptionalValue<String> serviceId;
+
+  public static final String JSON_PROPERTY_SERVICE_SECRET = "serviceSecret";
+
+  private OptionalValue<String> serviceSecret;
 
   public static final String JSON_PROPERTY_PROJECT_ID = "projectId";
 
@@ -62,6 +67,7 @@ public class ServiceResponseImpl implements ServiceResponse {
 
   protected ServiceResponseImpl(
       OptionalValue<String> serviceId,
+      OptionalValue<String> serviceSecret,
       OptionalValue<String> projectId,
       OptionalValue<Instant> createTime,
       OptionalValue<Instant> updateTime,
@@ -70,6 +76,7 @@ public class ServiceResponseImpl implements ServiceResponse {
       OptionalValue<Boolean> isDefault,
       OptionalValue<CallBehavior> callBehavior) {
     this.serviceId = serviceId;
+    this.serviceSecret = serviceSecret;
     this.projectId = projectId;
     this.createTime = createTime;
     this.updateTime = updateTime;
@@ -88,6 +95,17 @@ public class ServiceResponseImpl implements ServiceResponse {
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public OptionalValue<String> serviceId() {
     return serviceId;
+  }
+
+  @JsonIgnore
+  public String getServiceSecret() {
+    return serviceSecret.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_SERVICE_SECRET)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public OptionalValue<String> serviceSecret() {
+    return serviceSecret;
   }
 
   @JsonIgnore
@@ -176,6 +194,7 @@ public class ServiceResponseImpl implements ServiceResponse {
     }
     ServiceResponseImpl serviceResponse = (ServiceResponseImpl) o;
     return Objects.equals(this.serviceId, serviceResponse.serviceId)
+        && Objects.equals(this.serviceSecret, serviceResponse.serviceSecret)
         && Objects.equals(this.projectId, serviceResponse.projectId)
         && Objects.equals(this.createTime, serviceResponse.createTime)
         && Objects.equals(this.updateTime, serviceResponse.updateTime)
@@ -188,7 +207,15 @@ public class ServiceResponseImpl implements ServiceResponse {
   @Override
   public int hashCode() {
     return Objects.hash(
-        serviceId, projectId, createTime, updateTime, name, description, isDefault, callBehavior);
+        serviceId,
+        serviceSecret,
+        projectId,
+        createTime,
+        updateTime,
+        name,
+        description,
+        isDefault,
+        callBehavior);
   }
 
   @Override
@@ -196,6 +223,7 @@ public class ServiceResponseImpl implements ServiceResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class ServiceResponseImpl {\n");
     sb.append("    serviceId: ").append(toIndentedString(serviceId)).append("\n");
+    sb.append("    serviceSecret: ").append(toIndentedString(serviceSecret)).append("\n");
     sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
     sb.append("    createTime: ").append(toIndentedString(createTime)).append("\n");
     sb.append("    updateTime: ").append(toIndentedString(updateTime)).append("\n");
@@ -220,6 +248,7 @@ public class ServiceResponseImpl implements ServiceResponse {
   @JsonPOJOBuilder(withPrefix = "set")
   static class Builder implements ServiceResponse.Builder {
     OptionalValue<String> serviceId = OptionalValue.empty();
+    OptionalValue<String> serviceSecret = OptionalValue.empty();
     OptionalValue<String> projectId = OptionalValue.empty();
     OptionalValue<Instant> createTime = OptionalValue.empty();
     OptionalValue<Instant> updateTime = OptionalValue.empty();
@@ -231,6 +260,12 @@ public class ServiceResponseImpl implements ServiceResponse {
     @JsonProperty(value = JSON_PROPERTY_SERVICE_ID, required = true)
     public Builder setServiceId(String serviceId) {
       this.serviceId = OptionalValue.of(serviceId);
+      return this;
+    }
+
+    @JsonProperty(value = JSON_PROPERTY_SERVICE_SECRET, required = true)
+    public Builder setServiceSecret(String serviceSecret) {
+      this.serviceSecret = OptionalValue.of(serviceSecret);
       return this;
     }
 
@@ -278,7 +313,15 @@ public class ServiceResponseImpl implements ServiceResponse {
 
     public ServiceResponse build() {
       return new ServiceResponseImpl(
-          serviceId, projectId, createTime, updateTime, name, description, isDefault, callBehavior);
+          serviceId,
+          serviceSecret,
+          projectId,
+          createTime,
+          updateTime,
+          name,
+          description,
+          isDefault,
+          callBehavior);
     }
   }
 }

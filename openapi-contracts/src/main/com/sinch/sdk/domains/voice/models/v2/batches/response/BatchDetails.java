@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
 /**
- * Detailed per-session view of a batch call operation. Contains one entry for each call session in
- * the batch, including the session identifier and its current execution state.
+ * Detailed per-session view of a batch. Contains one entry for each call session in the batch,
+ * including the session identifier and its current execution state.
  */
 @JsonDeserialize(builder = BatchDetailsImpl.Builder.class)
 public interface BatchDetails {

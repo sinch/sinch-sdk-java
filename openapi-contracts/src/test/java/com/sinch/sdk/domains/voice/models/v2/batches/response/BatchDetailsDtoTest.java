@@ -7,6 +7,7 @@ import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.models.v2.SessionState;
 import java.util.Arrays;
+import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -20,6 +21,7 @@ public class BatchDetailsDtoTest extends BaseTest {
                   BatchSessionSummary.builder()
                       .setId("01F8Z5J4X2G9Y3J4X2G9Y3J4X5YJ")
                       .setState(SessionState.IN_PROGRESS)
+                      .setParameters(Collections.singletonMap("numberB", "+15559876544"))
                       .build(),
                   BatchSessionSummary.builder()
                       .setId("01F8Z5J4X2G9Y3J4X2G9Y3J4X9QK")

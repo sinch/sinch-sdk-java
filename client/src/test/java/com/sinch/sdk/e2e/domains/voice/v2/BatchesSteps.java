@@ -132,10 +132,12 @@ public class BatchesSteps {
                     BatchSessionSummary.builder()
                         .setId("01M144V4PE5KTSVY2AX19QC332")
                         .setState(SessionState.IN_PROGRESS)
+                        .setParameters(Collections.singletonMap("toNumber", "+12017777777"))
                         .build(),
                     BatchSessionSummary.builder()
                         .setId("01M144V4PEH22EHB1SHMJRXBXA")
                         .setState(SessionState.COMPLETED)
+                        .setParameters(Collections.singletonMap("toNumber", "+12018888888"))
                         .build()))
             .build();
 

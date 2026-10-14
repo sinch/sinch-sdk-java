@@ -5,7 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 /**
  * Response returned after starting a batch of outbound calls.
  *
- * <p>Contains the ID of the created batch and of the project and service it belongs to.
+ * <p>Contains the ID of the created batch and of the project and service it belongs to. The IDs of
+ * the individual call sessions are not included: they are part of the batch details.
  */
 @JsonDeserialize(builder = StartBatchResponseImpl.Builder.class)
 public interface StartBatchResponse {

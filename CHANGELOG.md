@@ -37,6 +37,8 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[feature]** Voice V2 Svaml API: `describe` operation to get a human-readable description of the call flow of a SVAML payload
 - **[feature]** Voice V2 Svaml API: `validate` operation to check a SVAML payload against the expected schema and rules, in `NORMAL` or `STRICT` mode
 - **[feature]** Voice V2 Sinch Events: `validateAuthenticationHeader`, `parseEvent` and `serializeResponse` operations to handle the events sent by Sinch
+- **[feature]** Voice V2 `ServiceResponse` exposes `serviceSecret`, returned by `services().create`, `services().get` and `services().update`
+- **[design]** Voice V2 menu items: `onFail` is renamed to `onFailure` in `MenuItem` (`getOnFailure()` / `setOnFailure()`), following the API specification
 - **[doc]** New `voice/v2/calls/Start` snippet
 - **[doc]** New `voice/v2/calls/Get` snippet
 - **[doc]** New `voice/v2/calls/List` snippet

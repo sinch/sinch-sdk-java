@@ -28,7 +28,7 @@ public class MenuItemDtoTest extends BaseTest {
           .setMatches(
               Collections.singletonMap(
                   "1", Arrays.asList(GotoMenuCommandDtoTest.expectedGotoMenuCommand)))
-          .setOnFail(Arrays.asList(HangupCommandDtoTest.expectedHangupCommand))
+          .setOnFailure(Arrays.asList(HangupCommandDtoTest.expectedHangupCommand))
           .build();
 
   @GivenTextResource("/domains/voice/v2/svaml/menu/MenuItemDto.json")

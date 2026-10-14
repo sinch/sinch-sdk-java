@@ -45,7 +45,7 @@
           }
         ]
       },
-      "onFail": [
+      "onFailure": [
         {
           "command": "hangup",
           "callName": "origin"

@@ -15,6 +15,7 @@ public class ServiceResponseDtoTest extends BaseTest {
   public static final ServiceResponse expectedServiceResponse =
       ServiceResponse.builder()
           .setServiceId("6e124178-c29d-46a5-943c-5c2ae544aade")
+          .setServiceSecret("9+MXX5u6dky5aATA7ZfIRg==")
           .setProjectId("5c5bf2b1-35ae-4825-ab89-457e07bb60e6")
           .setCreateTime(Instant.parse("2025-01-01T00:00:00Z"))
           .setUpdateTime(Instant.parse("2025-02-15T10:30:00Z"))
@@ -27,6 +28,7 @@ public class ServiceResponseDtoTest extends BaseTest {
   public static final ServiceResponse expectedServiceResponseMinimal =
       ServiceResponse.builder()
           .setServiceId("7f235289-d3ae-57b6-a54d-6d3bf655bbdf")
+          .setServiceSecret("Jq4Rz2s8VnYkL0pT7wXc1A==")
           .setProjectId("5c5bf2b1-35ae-4825-ab89-457e07bb60e6")
           .setCreateTime(Instant.parse("2025-02-15T10:30:00Z"))
           .setName("Secondary Service")

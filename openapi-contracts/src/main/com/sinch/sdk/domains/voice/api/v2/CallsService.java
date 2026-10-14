@@ -13,7 +13,7 @@ import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
 public interface CallsService {
 
   /**
-   * Create and initiate a new outbound voice call, associated to the project's default service
+   * Create and initiate a new outbound call session, associated to the project's default service
    *
    * @param startCallRequest The call to start (required)
    * @return StartCallResponse
@@ -23,10 +23,10 @@ public interface CallsService {
   StartCallResponse start(StartCallRequest startCallRequest) throws ApiException;
 
   /**
-   * Create and initiate a new outbound voice call
+   * Create and initiate a new outbound call session
    *
-   * <p>Create a new outbound call associated to the project's default service or to the service
-   * specified by {@link StartCallQueryParameters#getServiceId()}.
+   * <p>Create a new outbound call session associated to the project's default service or to the
+   * service specified by {@link StartCallQueryParameters#getServiceId()}.
    *
    * @param queryParameter (optional)
    * @param startCallRequest The call to start (required)
