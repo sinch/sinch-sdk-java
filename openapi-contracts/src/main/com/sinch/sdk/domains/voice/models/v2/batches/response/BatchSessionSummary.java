@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.voice.models.v2.batches.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.voice.models.v2.SessionState;
+import java.util.Map;
 
 /** Identifier and current execution state of a call session within a batch. */
 @JsonDeserialize(builder = BatchSessionSummaryImpl.Builder.class)
@@ -24,6 +25,15 @@ public interface BatchSessionSummary {
    * @return state
    */
   SessionState getState();
+
+  /**
+   * Plain key-value set of parameters from the {@link
+   * com.sinch.sdk.domains.voice.models.v2.batches.request.StartBatchRequest#getParameters()
+   * parameters} entry that was used to initiate this call session.
+   *
+   * @return parameters
+   */
+  Map<String, String> getParameters();
 
   /**
    * Getting builder
@@ -54,6 +64,15 @@ public interface BatchSessionSummary {
      * @see #getState
      */
     Builder setState(SessionState state);
+
+    /**
+     * see getter
+     *
+     * @param parameters see getter
+     * @return Current builder
+     * @see #getParameters
+     */
+    Builder setParameters(Map<String, String> parameters);
 
     /**
      * Create instance

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.core.TestHelpers;
 import com.sinch.sdk.domains.voice.models.v2.SessionState;
+import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 @TestWithResources
@@ -15,6 +16,7 @@ public class BatchSessionSummaryDtoTest extends BaseTest {
       BatchSessionSummary.builder()
           .setId("01F8Z5J4X2G9Y3J4X2G9Y3J4X2G9")
           .setState(SessionState.COMPLETED)
+          .setParameters(Collections.singletonMap("numberB", "+15559876543"))
           .build();
 
   @GivenTextResource("/domains/voice/v2/batches/response/BatchSessionSummaryDto.json")

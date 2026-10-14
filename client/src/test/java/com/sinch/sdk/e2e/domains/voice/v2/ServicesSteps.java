@@ -48,6 +48,7 @@ public class ServicesSteps {
     ServiceResponse expected =
         ServiceResponse.builder()
             .setServiceId("1a2b3c4d-5e6f-4789-a012-b3c4d5e6f789")
+            .setServiceSecret("9+MXX5u6dky5aATA7ZfIRg==")
             .setProjectId("c3d4e5f6-a7b8-4901-c234-d5e6f7a8b901")
             .setCreateTime(Instant.parse("2026-09-16T10:44:09Z"))
             .setUpdateTime(Instant.parse("2026-09-16T10:44:09Z"))
@@ -69,6 +70,7 @@ public class ServicesSteps {
     ServiceResponse expected =
         ServiceResponse.builder()
             .setServiceId("3c4d5e6f-7a8b-4901-c234-d5e6f7a8b901")
+            .setServiceSecret("9+MXX5u6dky5aATA7ZfIRg==")
             .setProjectId("c3d4e5f6-a7b8-4901-c234-d5e6f7a8b901")
             .setCreateTime(Instant.parse("2026-09-16T10:47:36Z"))
             .setUpdateTime(Instant.parse("2026-09-16T10:47:36Z"))
@@ -98,6 +100,7 @@ public class ServicesSteps {
     ServiceResponse expected =
         ServiceResponse.builder()
             .setServiceId("3c4d5e6f-7a8b-4901-c234-d5e6f7a8b901")
+            .setServiceSecret("9+MXX5u6dky5aATA7ZfIRg==")
             .setProjectId("c3d4e5f6-a7b8-4901-c234-d5e6f7a8b901")
             .setCreateTime(Instant.parse("2026-09-16T10:47:36Z"))
             .setUpdateTime(Instant.parse("2026-09-16T10:51:55Z"))

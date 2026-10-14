@@ -20,6 +20,15 @@ public interface ServiceResponse {
   String getServiceId();
 
   /**
+   * The secret of the service used.
+   *
+   * <p>Field is required
+   *
+   * @return serviceSecret
+   */
+  String getServiceSecret();
+
+  /**
    * The ID of the project associated with the call.
    *
    * <p>Field is required
@@ -101,6 +110,15 @@ public interface ServiceResponse {
      * @see #getServiceId
      */
     Builder setServiceId(String serviceId);
+
+    /**
+     * see getter
+     *
+     * @param serviceSecret see getter
+     * @return Current builder
+     * @see #getServiceSecret
+     */
+    Builder setServiceSecret(String serviceSecret);
 
     /**
      * see getter

@@ -103,7 +103,7 @@ public class BatchesServiceImpl implements com.sinch.sdk.domains.voice.api.v2.Ba
     }
 
     String localVarPath =
-        "/v2/projects/{projectId}/calls"
+        "/v2/projects/{projectId}/batches"
             .replaceAll(
                 "\\{" + "projectId" + "\\}",
                 URLPathUtils.encodePathSegment(this.projectId.toString()));

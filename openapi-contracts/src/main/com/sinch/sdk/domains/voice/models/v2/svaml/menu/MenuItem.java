@@ -14,10 +14,11 @@ import java.util.stream.Stream;
  * and failure handling.
  *
  * <p>Each collected input is matched against the values in the <code>matches</code> property. If no
- * match succeeds, the <code>onFail</code> commands are executed.
+ * match succeeds, the <code>onFailure</code> commands are executed.
  *
- * <p>If neither <code>matches</code> nor <code>onFail</code> is defined and the service call
- * behavior is set to <code>WEBHOOK</code>, a webhook request is sent including the collected input.
+ * <p>If no match succeeds and <code>onFailure</code> is not defined, a <code>call.menu</code> event
+ * including the collected input is sent to the event destination when the service call behavior is
+ * {@link com.sinch.sdk.domains.voice.models.v2.services.EventDestinationCallBehavior}.
  */
 @JsonDeserialize(builder = MenuItemImpl.Builder.class)
 public interface MenuItem {
@@ -134,9 +135,9 @@ public interface MenuItem {
    * <p>This handler runs after the repeat limit is reached without any input matching a menu match
    * item.
    *
-   * @return onFail
+   * @return onFailure
    */
-  List<SvamlCommand> getOnFail();
+  List<SvamlCommand> getOnFailure();
 
   /**
    * Getting builder
@@ -234,11 +235,11 @@ public interface MenuItem {
     /**
      * see getter
      *
-     * @param onFail see getter
+     * @param onFailure see getter
      * @return Current builder
-     * @see #getOnFail
+     * @see #getOnFailure
      */
-    Builder setOnFail(List<SvamlCommand> onFail);
+    Builder setOnFailure(List<SvamlCommand> onFailure);
 
     /**
      * Create instance

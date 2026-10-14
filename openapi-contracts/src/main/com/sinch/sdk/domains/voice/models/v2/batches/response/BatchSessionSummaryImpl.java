@@ -8,11 +8,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.sinch.sdk.core.models.OptionalValue;
 import com.sinch.sdk.domains.voice.models.v2.SessionState;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonPropertyOrder({
   BatchSessionSummaryImpl.JSON_PROPERTY_ID,
-  BatchSessionSummaryImpl.JSON_PROPERTY_STATE
+  BatchSessionSummaryImpl.JSON_PROPERTY_STATE,
+  BatchSessionSummaryImpl.JSON_PROPERTY_PARAMETERS
 })
 @JsonFilter("uninitializedFilter")
 @JsonInclude(value = JsonInclude.Include.CUSTOM)
@@ -27,11 +29,19 @@ public class BatchSessionSummaryImpl implements BatchSessionSummary {
 
   private OptionalValue<SessionState> state;
 
+  public static final String JSON_PROPERTY_PARAMETERS = "parameters";
+
+  private OptionalValue<Map<String, String>> parameters;
+
   public BatchSessionSummaryImpl() {}
 
-  protected BatchSessionSummaryImpl(OptionalValue<String> id, OptionalValue<SessionState> state) {
+  protected BatchSessionSummaryImpl(
+      OptionalValue<String> id,
+      OptionalValue<SessionState> state,
+      OptionalValue<Map<String, String>> parameters) {
     this.id = id;
     this.state = state;
+    this.parameters = parameters;
   }
 
   @JsonIgnore
@@ -56,6 +66,17 @@ public class BatchSessionSummaryImpl implements BatchSessionSummary {
     return state;
   }
 
+  @JsonIgnore
+  public Map<String, String> getParameters() {
+    return parameters.orElse(null);
+  }
+
+  @JsonProperty(JSON_PROPERTY_PARAMETERS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public OptionalValue<Map<String, String>> parameters() {
+    return parameters;
+  }
+
   /** Return true if this BatchSessionSummary object is equal to o. */
   @Override
   public boolean equals(Object o) {
@@ -67,12 +88,13 @@ public class BatchSessionSummaryImpl implements BatchSessionSummary {
     }
     BatchSessionSummaryImpl batchSessionSummary = (BatchSessionSummaryImpl) o;
     return Objects.equals(this.id, batchSessionSummary.id)
-        && Objects.equals(this.state, batchSessionSummary.state);
+        && Objects.equals(this.state, batchSessionSummary.state)
+        && Objects.equals(this.parameters, batchSessionSummary.parameters);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, state);
+    return Objects.hash(id, state, parameters);
   }
 
   @Override
@@ -81,6 +103,7 @@ public class BatchSessionSummaryImpl implements BatchSessionSummary {
     sb.append("class BatchSessionSummaryImpl {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
+    sb.append("    parameters: ").append(toIndentedString(parameters)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -99,6 +122,7 @@ public class BatchSessionSummaryImpl implements BatchSessionSummary {
   static class Builder implements BatchSessionSummary.Builder {
     OptionalValue<String> id = OptionalValue.empty();
     OptionalValue<SessionState> state = OptionalValue.empty();
+    OptionalValue<Map<String, String>> parameters = OptionalValue.empty();
 
     @JsonProperty(JSON_PROPERTY_ID)
     public Builder setId(String id) {
@@ -112,8 +136,14 @@ public class BatchSessionSummaryImpl implements BatchSessionSummary {
       return this;
     }
 
+    @JsonProperty(JSON_PROPERTY_PARAMETERS)
+    public Builder setParameters(Map<String, String> parameters) {
+      this.parameters = OptionalValue.of(parameters);
+      return this;
+    }
+
     public BatchSessionSummary build() {
-      return new BatchSessionSummaryImpl(id, state);
+      return new BatchSessionSummaryImpl(id, state, parameters);
     }
   }
 }

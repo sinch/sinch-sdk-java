@@ -82,7 +82,7 @@ public class BatchesServiceTest extends BaseTest {
 
     HttpRequest httpRequest =
         new HttpRequest(
-            "/v2/projects/" + URLPathUtils.encodePathSegment(PROJECT_ID) + "/calls",
+            "/v2/projects/" + URLPathUtils.encodePathSegment(PROJECT_ID) + "/batches",
             HttpMethod.POST,
             Collections.singletonList(
                 new URLParameter(

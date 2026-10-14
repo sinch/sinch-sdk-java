@@ -68,7 +68,14 @@ public class SinchEventType extends EnumDynamic<String, SinchEventType> {
   public static final SinchEventType CALL_RECORDING_FAILED =
       new SinchEventType("call.recording.failed");
 
-  /** Triggered when a menu completes and input is received from the user or the menu fails. */
+  /**
+   * Triggered when a menu fails to collect a matching input and no <code>onFailure</code> commands
+   * are defined for that menu.
+   *
+   * <p>Input that matches a menu match item does not trigger this event; a {@link
+   * com.sinch.sdk.domains.voice.models.v2.svaml.customevents.CustomEventCommand} within the menu
+   * <code>matches</code> can be used to send an event for a specific input.
+   */
   public static final SinchEventType CALL_MENU = new SinchEventType("call.menu");
 
   private static final EnumSupportDynamic<String, SinchEventType> ENUM_SUPPORT =

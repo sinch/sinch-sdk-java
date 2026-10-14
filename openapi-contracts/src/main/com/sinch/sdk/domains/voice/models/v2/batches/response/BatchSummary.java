@@ -3,17 +3,12 @@ package com.sinch.sdk.domains.voice.models.v2.batches.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.Instant;
 
-/**
- * Summary of a batch call operation, including counts of call sessions by state and overall
- * progress.
- */
+/** Summary of a batch, including counts of call sessions by state and overall progress. */
 @JsonDeserialize(builder = BatchSummaryImpl.Builder.class)
 public interface BatchSummary {
 
   /**
-   * Unique identifier of the batch call operation (ULID).
-   *
-   * <p>Use this value to retrieve the batch details or stop processing the batch.
+   * Unique identifier of the batch (ULID).
    *
    * <p>Field is required
    *
