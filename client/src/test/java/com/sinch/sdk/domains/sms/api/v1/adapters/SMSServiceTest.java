@@ -32,11 +32,12 @@ class SMSServiceTest {
 
   @Test
   void checkCredentialsSinchEvents() {
-    assertDoesNotThrow(() -> new SMSService(null, null, null, null).sinchEvents(), "Init passed");
+    assertDoesNotThrow(
+        () -> new SMSService(null, null, null, null, true).sinchEvents(), "Init passed");
   }
 
   @Test
   void passInitWithoutSettings() {
-    assertDoesNotThrow(() -> new SMSService(null, null, null, null), "Init passed");
+    assertDoesNotThrow(() -> new SMSService(null, null, null, null, true), "Init passed");
   }
 }

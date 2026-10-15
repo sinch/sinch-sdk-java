@@ -38,11 +38,14 @@ import org.apache.hc.client5.http.ClientProtocolException;
 import org.apache.hc.client5.http.HttpResponseException;
 import org.apache.hc.client5.http.auth.AuthScope;
 import org.apache.hc.client5.http.auth.CredentialsProvider;
+import org.apache.hc.client5.http.config.ConnectionConfig;
+import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.auth.CredentialsProviderBuilder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.ClassicHttpResponse;
@@ -53,6 +56,7 @@ import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
 import org.apache.hc.core5.http.support.AbstractMessageBuilder;
+import org.apache.hc.core5.util.Timeout;
 
 public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, RetryCapable {
 
@@ -70,21 +74,15 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
 
   private final RetryManager retryManager;
 
-  public HttpClientApache() {
-    this(null);
-  }
-
-  public HttpClientApache(HttpProxyConfiguration proxyConfiguration) {
-    this(proxyConfiguration, null);
-  }
-
   /**
    * @param proxyConfiguration Proxy to route through, or {@code null} for a direct connection
    * @param retryManager Manager applied to rate-limited responses, or {@code null} to retry nothing
-   * @since 2.2
+   * @param timeoutSeconds Timeout applied to I/O operations, zero to disable it
+   * @since 2.3
    */
-  public HttpClientApache(HttpProxyConfiguration proxyConfiguration, RetryManager retryManager) {
-    this.client = buildHttpClient(proxyConfiguration);
+  public HttpClientApache(
+      HttpProxyConfiguration proxyConfiguration, RetryManager retryManager, int timeoutSeconds) {
+    this.client = buildHttpClient(proxyConfiguration, timeoutSeconds);
     this.retryManager = null != retryManager ? retryManager : RetryManager.NO_RETRY;
   }
 
@@ -93,17 +91,35 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
     return Optional.ofNullable(retryManager);
   }
 
-  private static CloseableHttpClient buildHttpClient(HttpProxyConfiguration proxyConfiguration) {
+  private static CloseableHttpClient buildHttpClient(
+      HttpProxyConfiguration proxyConfiguration, int timeoutSeconds) {
+
+    Timeout timeout = Timeout.ofSeconds(timeoutSeconds);
+
+    HttpClientBuilder builder =
+        HttpClients.custom()
+            .disableAutomaticRetries()
+            .setDefaultRequestConfig(
+                RequestConfig.custom()
+                    .setConnectionRequestTimeout(timeout)
+                    .setResponseTimeout(timeout)
+                    .build())
+            .setConnectionManager(
+                PoolingHttpClientConnectionManagerBuilder.create()
+                    .setDefaultConnectionConfig(
+                        ConnectionConfig.custom()
+                            .setConnectTimeout(timeout)
+                            .setSocketTimeout(timeout)
+                            .build())
+                    .build());
+
     if (proxyConfiguration == null) {
-      return HttpClients.custom().disableAutomaticRetries().build();
+      return builder.build();
     }
 
     HttpHost proxyHost =
         new HttpHost(proxyConfiguration.getHostname(), proxyConfiguration.getPort());
-    HttpClientBuilder builder =
-        HttpClients.custom()
-            .disableAutomaticRetries()
-            .setRoutePlanner(new DefaultProxyRoutePlanner(proxyHost));
+    builder.setRoutePlanner(new DefaultProxyRoutePlanner(proxyHost));
 
     if (proxyConfiguration.getUsername().isPresent()) {
       // getPassword() returns a defensive copy of the internal array; HC5 receives that copy and

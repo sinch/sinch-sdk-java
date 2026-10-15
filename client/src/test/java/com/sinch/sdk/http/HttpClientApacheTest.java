@@ -11,6 +11,7 @@ import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.models.RetryConfiguration;
 import com.sinch.sdk.models.RetryPolicy;
+import com.sinch.sdk.models.TransportSettings;
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -35,7 +36,7 @@ class HttpClientApacheTest {
     mockAuthManager = mock(AuthManager.class);
 
     // Create an instance of HttpClientApache and inject the mock HTTP client
-    client = spy(new HttpClientApache());
+    client = spy(new HttpClientApache(null, null, TransportSettings.DEFAULT_TIMEOUT_SECONDS));
     Field clientField = HttpClientApache.class.getDeclaredField("client");
     clientField.setAccessible(true);
     clientField.set(client, mockApacheClient);
@@ -152,7 +153,8 @@ class HttpClientApacheTest {
 
   @Test
   void aClientCarryingNoManagerRetriesNothing() throws Exception {
-    try (HttpClientApache noRetries = new HttpClientApache(null, null)) {
+    try (HttpClientApache noRetries =
+        new HttpClientApache(null, null, TransportSettings.DEFAULT_TIMEOUT_SECONDS)) {
       assertSame(RetryManager.NO_RETRY, noRetries.getRetryManager().get());
     }
   }
@@ -163,7 +165,8 @@ class HttpClientApacheTest {
         RetryConfiguration.builder().setRetryPolicy(RetryPolicy.BACKOFF).build();
 
     try (HttpClientApache configuredClient =
-        new HttpClientApache(null, new DefaultRetryManager(configured))) {
+        new HttpClientApache(
+            null, new DefaultRetryManager(configured), TransportSettings.DEFAULT_TIMEOUT_SECONDS)) {
       assertEquals(
           RetryPolicy.BACKOFF,
           configuredClient.getRetryManager().get().getRetryConfiguration().getRetryPolicy());

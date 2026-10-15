@@ -30,6 +30,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[test]** Extend V1 `SinchEventsService.validateAuthenticationHeader` coverage
 
 ### SDK
+- **[feature]** `SinchClient` transport level settings: `TransportSettings` (`timeoutSeconds`, `useSinchAuth`)
 - **[feature]** `Idempotency-Key` support: for the operations that accept the header, the SDK generates a key when none is set and sends the same key on the `HTTP 429` retries of a call
 - **[test]** Extend `ApplicationAuthManager` signed request validation coverage
 

@@ -12,6 +12,7 @@ import com.sinch.sdk.domains.numberlookup.models.v2.response.NumberLookupRespons
 import com.sinch.sdk.models.NumberLookupContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -29,6 +30,7 @@ public class NumberLookupService
   private final NumberLookupContext context;
   private final ServerConfiguration oAuthServer;
   private final Supplier<HttpClient> httpClientSupplier;
+  private final boolean useSinchAuth;
 
   private volatile String uriUUID;
   private volatile Map<String, AuthManager> authManagers;
@@ -39,11 +41,13 @@ public class NumberLookupService
       UnifiedCredentials credentials,
       NumberLookupContext context,
       ServerConfiguration oAuthServer,
-      Supplier<HttpClient> httpClientSupplier) {
+      Supplier<HttpClient> httpClientSupplier,
+      boolean useSinchAuth) {
     this.credentials = credentials;
     this.context = context;
     this.oAuthServer = oAuthServer;
     this.httpClientSupplier = httpClientSupplier;
+    this.useSinchAuth = useSinchAuth;
   }
 
   NumberLookupServiceFacade getLookupFacade() {
@@ -73,10 +77,13 @@ public class NumberLookupService
         Objects.requireNonNull(
             credentials, "Number Lookup service requires unified credentials to be defined");
         Objects.requireNonNull(context, "Number Lookup service requires context to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getKeyId(), "Number Lookup service requires 'keyId' to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getKeySecret(), "Number Lookup service requires 'keySecret' to be defined");
+        if (useSinchAuth) {
+          StringUtil.requireNonEmpty(
+              credentials.getKeyId(), "Number Lookup service requires 'keyId' to be defined");
+          StringUtil.requireNonEmpty(
+              credentials.getKeySecret(),
+              "Number Lookup service requires 'keySecret' to be defined");
+        }
         StringUtil.requireNonEmpty(
             credentials.getProjectId(), "Number Lookup service requires 'projectId' to be defined");
         StringUtil.requireNonEmpty(
@@ -88,16 +95,21 @@ public class NumberLookupService
                 + context.getNumberLookupServer().getUrl()
                 + "'");
 
-        AuthManager authManager =
-            new OAuthManager(
-                credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
-
         uriUUID = credentials.getProjectId();
-        authManagers =
-            Stream.of(
-                    new AbstractMap.SimpleEntry<>(
-                        SECURITY_SCHEME_KEYWORD_NUMBER_LOOKUP, authManager))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        if (useSinchAuth) {
+          AuthManager authManager =
+              new OAuthManager(
+                  credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
+
+          authManagers =
+              Stream.of(
+                      new AbstractMap.SimpleEntry<>(
+                          SECURITY_SCHEME_KEYWORD_NUMBER_LOOKUP, authManager))
+                  .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        } else {
+          authManagers = Collections.emptyMap();
+        }
       }
     }
   }

@@ -14,6 +14,7 @@ import com.sinch.sdk.domains.conversation.templates.models.v2.TemplateTranslatio
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -33,6 +34,7 @@ public class TemplatesService
 
   private final ConversationContext context;
   private final Supplier<HttpClient> httpClientSupplier;
+  private final boolean useSinchAuth;
 
   private volatile Map<String, AuthManager> authManagers;
   private volatile TemplatesV2Service v2;
@@ -45,13 +47,15 @@ public class TemplatesService
       UnifiedCredentials credentials,
       ConversationContext context,
       ServerConfiguration oAuthServer,
-      Supplier<HttpClient> httpClientSupplier) {
+      Supplier<HttpClient> httpClientSupplier,
+      boolean useSinchAuth) {
 
     this.uriUUID = null != credentials ? credentials.getProjectId() : null;
     this.context = context;
     this.credentials = credentials;
     this.oAuthServer = oAuthServer;
     this.httpClientSupplier = httpClientSupplier;
+    this.useSinchAuth = useSinchAuth;
   }
 
   public TemplatesV2Service v2() {
@@ -80,10 +84,12 @@ public class TemplatesService
       if (null == this.authManagers) {
         Objects.requireNonNull(credentials, "Templates service requires credentials to be defined");
         Objects.requireNonNull(context, "Templates service requires context to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getKeyId(), "Templates service requires 'keyId' to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getKeySecret(), "Templates service requires 'keySecret' to be defined");
+        if (useSinchAuth) {
+          StringUtil.requireNonEmpty(
+              credentials.getKeyId(), "Templates service requires 'keyId' to be defined");
+          StringUtil.requireNonEmpty(
+              credentials.getKeySecret(), "Templates service requires 'keySecret' to be defined");
+        }
         StringUtil.requireNonEmpty(
             credentials.getProjectId(), "Templates service requires 'projectId' to be defined");
         Objects.requireNonNull(
@@ -94,12 +100,16 @@ public class TemplatesService
             context.getTemplateManagementUrl(),
             "Templates service requires 'templateManagementUrl' to be defined");
 
-        OAuthManager authManager =
-            new OAuthManager(
-                credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
-        authManagers =
-            Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_, authManager))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        if (useSinchAuth) {
+          OAuthManager authManager =
+              new OAuthManager(
+                  credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
+          authManagers =
+              Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_, authManager))
+                  .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        } else {
+          authManagers = Collections.emptyMap();
+        }
 
         LOGGER.fine(
             String.format(

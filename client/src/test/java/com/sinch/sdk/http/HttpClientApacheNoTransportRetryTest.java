@@ -8,6 +8,7 @@ import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.models.RetryConfiguration;
 import com.sinch.sdk.models.RetryPolicy;
+import com.sinch.sdk.models.TransportSettings;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import okhttp3.mockwebserver.MockResponse;
@@ -62,7 +63,10 @@ class HttpClientApacheNoTransportRetryTest {
     RetryConfiguration noSdkRetries =
         RetryConfiguration.builder().setRetryPolicy(RetryPolicy.NONE).build();
     try (HttpClientApache client =
-        new HttpClientApache(null, new DefaultRetryManager(noSdkRetries))) {
+        new HttpClientApache(
+            null,
+            new DefaultRetryManager(noSdkRetries),
+            TransportSettings.DEFAULT_TIMEOUT_SECONDS)) {
       HttpResponse response =
           client.invokeAPI(
               new ServerConfiguration(server.url("/").toString()),

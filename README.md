@@ -24,6 +24,7 @@ To use Sinch services, you'll need a Sinch account and access keys. You can sign
 - [Handling Exceptions](#handling-exceptions)
 - [Proxy configuration](#proxy-configuration)
 - [Retry configuration](#retry-configuration)
+- [Transport settings](#transport-settings)
 - [Third-party dependencies](#third-party-dependencies)
 - [Examples](#examples)
 - [Changelog and Migration](#changelog--migration)
@@ -554,6 +555,46 @@ Configuration configuration = Configuration.builder()
         .setRetryConfiguration(
                 RetryConfiguration.builder()
                         .setRetryPolicy(RetryPolicy.NONE)
+                        .build())
+        .build();
+SinchClient client = new SinchClient(configuration);
+```
+
+## Transport settings
+
+`SinchClient` accepts optional transport-level settings alongside credentials. They apply to product API calls and to OAuth token fetches.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `timeoutSeconds` | `int` | `60` | HTTP I/O timeout in seconds. Pass `0` to disable the timeout. Negative values are rejected. |
+| `useSinchAuth` | `boolean` | `true` | When `true`, OAuth-capable APIs fetch a Sinch access token. Set `false` to disable Sinch authentication: no token is fetched and no `Authorization` header is added. With unified credentials only `projectId` is then required. Has no effect with SMS service plan credentials. |
+
+### Timeout
+
+```java
+import com.sinch.sdk.SinchClient;
+import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.TransportSettings;
+
+...
+Configuration configuration = Configuration.builder()
+        ...
+        .setTransportSettings(
+                TransportSettings.builder()
+                        .setTimeoutSeconds(30)
+                        .build())
+        .build();
+SinchClient client = new SinchClient(configuration);
+```
+
+### Disable Sinch OAuth
+
+```java
+Configuration configuration = Configuration.builder()
+        ...
+        .setTransportSettings(
+                TransportSettings.builder()
+                        .setUseSinchAuth(false)
                         .build())
         .build();
 SinchClient client = new SinchClient(configuration);

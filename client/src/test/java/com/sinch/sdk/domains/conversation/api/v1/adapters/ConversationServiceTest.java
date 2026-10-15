@@ -56,11 +56,11 @@ class ConversationServiceTest {
   @Test
   void checkCredentialsSinchEvents() {
     assertDoesNotThrow(
-        () -> new ConversationService(null, null, null, null).sinchEvents(), "Init passed");
+        () -> new ConversationService(null, null, null, null, true).sinchEvents(), "Init passed");
   }
 
   @Test
   void passInitWithoutSettings() {
-    assertDoesNotThrow(() -> new ConversationService(null, null, null, null), "Init passed");
+    assertDoesNotThrow(() -> new ConversationService(null, null, null, null, true), "Init passed");
   }
 }

@@ -36,7 +36,8 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new NumbersService(credentials, context, oAuthServer, httpClientSupplier)));
+                    new NumbersService(
+                        credentials, context, oAuthServer, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("keyId"));
   }
 
@@ -51,7 +52,8 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new NumbersService(credentials, context, oAuthServer, httpClientSupplier)));
+                    new NumbersService(
+                        credentials, context, oAuthServer, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("keySecret"));
   }
 
@@ -66,7 +68,8 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new NumbersService(credentials, context, oAuthServer, httpClientSupplier)));
+                    new NumbersService(
+                        credentials, context, oAuthServer, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("projectId"));
   }
 
@@ -84,7 +87,7 @@ class CredentialsValidationHelper {
             NullPointerException.class,
             () ->
                 service.accept(
-                    new NumbersService(credentials, null, oAuthServer, httpClientSupplier)));
+                    new NumbersService(credentials, null, oAuthServer, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("Numbers service requires context to be defined"));
   }
 
@@ -103,7 +106,8 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new NumbersService(credentials, context, oAuthServer, httpClientSupplier)));
+                    new NumbersService(
+                        credentials, context, oAuthServer, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("numbersUrl"));
   }
 
@@ -120,7 +124,7 @@ class CredentialsValidationHelper {
     assertDoesNotThrow(
         () ->
             service.accept(
-                new NumbersService(credentials, context, oAuthServer, httpClientSupplier)),
+                new NumbersService(credentials, context, oAuthServer, httpClientSupplier, true)),
         "Init passed");
   }
 }

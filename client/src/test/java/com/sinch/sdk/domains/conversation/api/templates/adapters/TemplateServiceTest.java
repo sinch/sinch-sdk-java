@@ -18,6 +18,6 @@ class TemplateServiceTest {
 
   @Test
   void passInitWithoutSettings() {
-    assertDoesNotThrow(() -> new TemplatesService(null, null, null, null), "Init passed");
+    assertDoesNotThrow(() -> new TemplatesService(null, null, null, null, true), "Init passed");
   }
 }

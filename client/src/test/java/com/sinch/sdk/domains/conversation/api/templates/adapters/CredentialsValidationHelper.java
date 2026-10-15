@@ -41,7 +41,7 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new TemplatesService(credentials, context, server, httpClientSupplier)));
+                    new TemplatesService(credentials, context, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("keyId"));
   }
 
@@ -56,7 +56,7 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new TemplatesService(credentials, context, server, httpClientSupplier)));
+                    new TemplatesService(credentials, context, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("keySecret"));
   }
 
@@ -72,7 +72,7 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new TemplatesService(credentials, context, server, httpClientSupplier)));
+                    new TemplatesService(credentials, context, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("projectId"));
   }
 
@@ -83,7 +83,9 @@ class CredentialsValidationHelper {
     Exception exception =
         assertThrows(
             NullPointerException.class,
-            () -> service.accept(new TemplatesService(null, context, server, httpClientSupplier)));
+            () ->
+                service.accept(
+                    new TemplatesService(null, context, server, httpClientSupplier, true)));
     assertTrue(
         exception.getMessage().contains("Templates service requires credentials to be defined"));
   }
@@ -102,7 +104,7 @@ class CredentialsValidationHelper {
             NullPointerException.class,
             () ->
                 service.accept(
-                    new TemplatesService(credentials, null, server, httpClientSupplier)));
+                    new TemplatesService(credentials, null, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("Templates service requires context to be defined"));
   }
 
@@ -122,7 +124,7 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new TemplatesService(credentials, context, server, httpClientSupplier)));
+                    new TemplatesService(credentials, context, server, httpClientSupplier, true)));
     assertTrue(
         exception
             .getMessage()
@@ -145,7 +147,7 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new TemplatesService(credentials, context, server, httpClientSupplier)));
+                    new TemplatesService(credentials, context, server, httpClientSupplier, true)));
     assertTrue(
         exception
             .getMessage()
@@ -167,7 +169,7 @@ class CredentialsValidationHelper {
             NullPointerException.class,
             () ->
                 service.accept(
-                    new TemplatesService(credentials, context, server, httpClientSupplier)));
+                    new TemplatesService(credentials, context, server, httpClientSupplier, true)));
     assertTrue(
         exception.getMessage().contains("Templates service requires 'region' to be defined"));
   }
@@ -188,7 +190,7 @@ class CredentialsValidationHelper {
             IllegalArgumentException.class,
             () ->
                 service.accept(
-                    new TemplatesService(credentials, context, server, httpClientSupplier)));
+                    new TemplatesService(credentials, context, server, httpClientSupplier, true)));
     assertTrue(
         exception.getMessage().contains("Templates service requires 'region' to be defined"));
   }
@@ -209,7 +211,8 @@ class CredentialsValidationHelper {
     ServerConfiguration server = new ServerConfiguration("foo");
     assertDoesNotThrow(
         () ->
-            service.accept(new TemplatesService(credentials, context, server, httpClientSupplier)),
+            service.accept(
+                new TemplatesService(credentials, context, server, httpClientSupplier, true)),
         "Init passed");
   }
 }
