@@ -30,6 +30,9 @@ class ApiExceptionBuilderTest extends BaseTest {
   @GivenTextResource("/domains/verification/v1/error-response.json")
   String verificationError;
 
+  @GivenTextResource("/domains/voice/v2/error-response.json")
+  String voiceV2Error;
+
   @Test
   void buildFromObject() throws JsonProcessingException {
     ApiException e =
@@ -80,5 +83,17 @@ class ApiExceptionBuilderTest extends BaseTest {
                 .readValue(verificationError, new TypeReference<HashMap<String, ?>>() {}));
     assertEquals("Requested resource was not found. (reference=a reference)", e.getMessage());
     assertEquals(40400, e.getCode());
+  }
+
+  @Test
+  void voiceV2Error() throws JsonProcessingException {
+    ApiException e =
+        ApiExceptionBuilder.build(
+            "message",
+            400,
+            Mapper.getInstance()
+                .readValue(voiceV2Error, new TypeReference<HashMap<String, ?>>() {}));
+    assertEquals("Bad Request: The request body is invalid or malformed.", e.getMessage());
+    assertEquals(400, e.getCode());
   }
 }

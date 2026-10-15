@@ -1,0 +1,7 @@
+{
+  "type": "WEBHOOK",
+  "webhook": {
+    "url": "https://example.com/webhook",
+    "fallbackUrl": "https://example.com/fallback"
+  }
+}

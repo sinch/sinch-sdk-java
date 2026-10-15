@@ -3,8 +3,10 @@ package com.sinch.sdk.e2e.domains;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,19 @@ public class WebhooksHelper {
     response.rawPayload = byteArrayOutputStream.toString("UTF-8");
     response.event = parseEvent.apply(response.rawPayload);
     return response;
+  }
+
+  /** Send a response payload back to the mock server; returns the HTTP status code */
+  public static int postJson(URL url, String jsonPayload) throws IOException {
+
+    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+    con.setRequestMethod("POST");
+    con.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+    con.setDoOutput(true);
+    try (OutputStream outputStream = con.getOutputStream()) {
+      outputStream.write(jsonPayload.getBytes(StandardCharsets.UTF_8));
+    }
+    return con.getResponseCode();
   }
 
   static Map<String, String> transformHeaders(Map<String, List<String>> headers) {

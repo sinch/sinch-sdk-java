@@ -13,6 +13,7 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
+import com.sinch.sdk.core.http.IdempotencyKey;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.Pair;
@@ -184,7 +185,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
 
       String body = httpRequest.getBody();
       Map<String, Object> formParams = httpRequest.getFormParams();
-      Map<String, String> headerParams = httpRequest.getHeaderParams();
+      Map<String, String> headerParams = withIdempotencyKey(httpRequest);
       Collection<String> accept = httpRequest.getAccept();
       Collection<String> contentType = httpRequest.getContentType();
       Collection<String> authNames = httpRequest.getAuthNames();
@@ -386,6 +387,20 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
     if (null != values && !values.isEmpty()) {
       requestBuilder.setHeader(header, String.join(",", values));
     }
+  }
+
+  // The key is added once, before the request goes through the retry policy, so that every attempt
+  // of the request sends the same key
+  private static Map<String, String> withIdempotencyKey(HttpRequest httpRequest) {
+    Map<String, String> headers = httpRequest.getHeaderParams();
+    if (!httpRequest.isIdempotent()
+        || (null != headers
+            && headers.keySet().stream().anyMatch(IdempotencyKey.HEADER::equalsIgnoreCase))) {
+      return headers;
+    }
+    Map<String, String> withKey = null == headers ? new HashMap<>() : new HashMap<>(headers);
+    withKey.put(IdempotencyKey.HEADER, IdempotencyKey.generate());
+    return withKey;
   }
 
   private void addHeaders(ClassicRequestBuilder requestBuilder, Map<String, String> headers) {

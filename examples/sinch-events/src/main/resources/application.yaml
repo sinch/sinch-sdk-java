@@ -50,3 +50,11 @@ sms:
     # Secret value set for Sms Sinch Events calls validation
     # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/sms/Controller.java) is set to true
     secret:
+
+voice:
+  v2:
+    sinchevents:
+      # Service ID and secret used for Voice V2 Sinch Events calls validation
+      # Used when "ensureValidAuthentication" within [Controller.java](../java/com/mycompany/app/voice/v2/Controller.java) is set to true
+      service-id:
+      service-secret:

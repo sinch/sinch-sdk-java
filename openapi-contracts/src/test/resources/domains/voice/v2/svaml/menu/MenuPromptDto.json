@@ -1,0 +1,13 @@
+{
+  "allowBargeIn": false,
+  "messages": [
+    {
+      "type": "SAY",
+      "say": {
+        "text": "Hello, your call is now connected.",
+        "format": "TEXT",
+        "voiceName": "Emma"
+      }
+    }
+  ]
+}

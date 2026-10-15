@@ -46,6 +46,7 @@ public class SinchClient {
   private static final String VOICE_REGION_KEY = "voice-region";
   private static final String VOICE_APPLICATION_MANAGEMENT_SERVER_KEY =
       "voice-application-management-server";
+  private static final String VOICE_V2_REGION_KEY = "voice-v2-region";
 
   private static final String VERIFICATION_SERVER_KEY = "verification-server";
 
@@ -94,6 +95,7 @@ public class SinchClient {
     handleDefaultSmsSettings(configurationGuard, props, builder);
     handleDefaultVerificationSettings(configurationGuard, props, builder);
     handleDefaultVoiceSettings(configurationGuard, props, builder);
+    handleDefaultVoiceV2Settings(configurationGuard, props, builder);
     handleDefaultConversationSettings(configurationGuard, props, builder);
     handleDefaultNumberLookupSettings(configurationGuard, props, builder);
 
@@ -206,6 +208,45 @@ public class SinchClient {
               .setVoiceRegion(region)
               .setVoiceUrl(voiceUrl)
               .setVoiceApplicationMngmtUrl(voiceApplicationManagementUrl)
+              .build());
+    }
+  }
+
+  private void handleDefaultVoiceV2Settings(
+      Configuration configuration, Properties props, Configuration.Builder builder) {
+
+    com.sinch.sdk.domains.voice.models.v2.VoiceRegion region =
+        configuration
+            .getVoiceV2Context()
+            .map(com.sinch.sdk.domains.voice.models.v2.VoiceContext::getVoiceRegion)
+            .orElse(null);
+
+    String voiceUrl =
+        configuration
+            .getVoiceV2Context()
+            .map(com.sinch.sdk.domains.voice.models.v2.VoiceContext::getVoiceUrl)
+            .orElse(null);
+
+    // default region to be used ?
+    if (null == region && props.containsKey(VOICE_V2_REGION_KEY)) {
+      region =
+          com.sinch.sdk.domains.voice.models.v2.VoiceRegion.from(
+              props.getProperty(VOICE_V2_REGION_KEY));
+    }
+
+    // server is not defined: use the region to set to an existing one and use "global" as a default
+    // fallback
+    if (StringUtil.isEmpty(voiceUrl)) {
+      com.sinch.sdk.domains.voice.models.v2.VoiceRegion regionForFormat =
+          null == region ? com.sinch.sdk.domains.voice.models.v2.VoiceRegion.GLOBAL : region;
+      voiceUrl = props.getProperty(String.format("voice-v2-server-%s", regionForFormat.value()));
+    }
+
+    if (null != region || null != voiceUrl) {
+      builder.setVoiceV2Context(
+          com.sinch.sdk.domains.voice.models.v2.VoiceContext.builder()
+              .setVoiceRegion(region)
+              .setVoiceUrl(voiceUrl)
               .build());
     }
   }
@@ -414,7 +455,10 @@ public class SinchClient {
   private VoiceService voiceInit() {
     return new com.sinch.sdk.domains.voice.adapters.VoiceService(
         getConfiguration().getApplicationCredentials().orElse(null),
+        getConfiguration().getUnifiedCredentials().orElse(null),
         getConfiguration().getVoiceContext().orElse(null),
+        getConfiguration().getVoiceV2Context().orElse(null),
+        getConfiguration().getOAuthServer(),
         this::getHttpClient);
   }
 

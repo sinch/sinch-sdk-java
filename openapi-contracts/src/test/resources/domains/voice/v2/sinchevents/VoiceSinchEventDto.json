@@ -1,0 +1,44 @@
+{
+  "event": "call.menu",
+  "call": {
+    "callId": "01ARZ3NDEKTSV4RRFFQ69G5FAA",
+    "projectId": "5c5bf2b1-35ae-4825-ab89-457e07bb60e6",
+    "serviceId": "6e124178-c29d-46a5-943c-5c2ae544aade",
+    "sessionId": "01BX5ZZKBKACTAV9WEVGEMMVRB",
+    "callName": "origin",
+    "bridgeName": "my-bridge",
+    "batchId": "01BX5ZZKBKACTAV9WEVGEMMVRC",
+    "from": {
+      "type": "SIP",
+      "sip": {
+        "endpoint": "sip:alice@sip.example.com",
+        "displayName": "Alice"
+      }
+    },
+    "to": {
+      "type": "PHONE",
+      "phone": {
+        "number": "+15551234567"
+      }
+    },
+    "startTime": "2025-02-10T09:00:00Z",
+    "updateTime": "2025-02-10T09:00:47Z",
+    "callType": "PHONE",
+    "direction": "INBOUND",
+    "answerTime": "2025-02-10T09:00:05Z",
+    "endTime": "2025-02-10T09:00:47Z",
+    "callDurationSeconds": 42,
+    "callResult": "COMPLETED",
+    "callReason": "CALLEE_HANGUP",
+    "originationType": "SIP",
+    "callRate": {
+      "currencyCode": "USD",
+      "amount": "0.0123"
+    },
+    "callResourceUrl": "https://voice.api.sinch.com/v2/projects/5c5bf2b1-35ae-4825-ab89-457e07bb60e6/calls/01ARZ3NDEKTSV4RRFFQ69G5FAA"
+  },
+  "menu": {
+    "menuName": "main",
+    "input": "1234"
+  }
+}
