@@ -39,6 +39,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 
 ### Build
 - **[dependency]** Bump `jackson.version` to `2.21.7` to solve denial-of-service and unsafe deserialization vulnerabilities in `jackson-databind` (CVE-2026-19032, CVE-2026-68497, CVE-2026-83557, CVE-2026-91776 and CVE-2026-91777).
+- **[releasing]** Bump `central-publishing-maven-plugin` to `0.12.0`: Maven Central rejected the release bundle built with Apache Maven 3.10.0
 
 ## v2.2.0 - 2026-09-17
 
