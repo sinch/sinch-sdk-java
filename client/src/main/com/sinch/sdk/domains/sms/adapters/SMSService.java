@@ -17,11 +17,12 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
       UnifiedCredentials credentials,
       SmsContext context,
       ServerConfiguration oAuthServer,
-      Supplier<HttpClient> httpClientSupplier) {
+      Supplier<HttpClient> httpClientSupplier,
+      boolean useSinchAuth) {
     this.v1Initializer =
         () ->
             new com.sinch.sdk.domains.sms.api.v1.adapters.SMSService(
-                credentials, context, oAuthServer, httpClientSupplier);
+                credentials, context, oAuthServer, httpClientSupplier, useSinchAuth);
   }
 
   public SMSService(

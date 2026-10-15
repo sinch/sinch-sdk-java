@@ -12,6 +12,7 @@ public class NumberLookupService implements com.sinch.sdk.domains.numberlookup.N
   private final NumberLookupContext context;
   private final ServerConfiguration oAuthServer;
   private final Supplier<HttpClient> httpClientSupplier;
+  private final boolean useSinchAuth;
 
   private volatile com.sinch.sdk.domains.numberlookup.api.v2.NumberLookupService v2;
 
@@ -19,11 +20,13 @@ public class NumberLookupService implements com.sinch.sdk.domains.numberlookup.N
       UnifiedCredentials credentials,
       NumberLookupContext context,
       ServerConfiguration oAuthServer,
-      Supplier<HttpClient> httpClientSupplier) {
+      Supplier<HttpClient> httpClientSupplier,
+      boolean useSinchAuth) {
     this.credentials = credentials;
     this.context = context;
     this.oAuthServer = oAuthServer;
     this.httpClientSupplier = httpClientSupplier;
+    this.useSinchAuth = useSinchAuth;
   }
 
   @Override
@@ -33,7 +36,7 @@ public class NumberLookupService implements com.sinch.sdk.domains.numberlookup.N
         if (null == this.v2) {
           this.v2 =
               new com.sinch.sdk.domains.numberlookup.api.v2.adapters.NumberLookupService(
-                  credentials, context, oAuthServer, httpClientSupplier);
+                  credentials, context, oAuthServer, httpClientSupplier, useSinchAuth);
         }
       }
     }

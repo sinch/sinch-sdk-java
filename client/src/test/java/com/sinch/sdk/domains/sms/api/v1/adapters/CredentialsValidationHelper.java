@@ -46,7 +46,9 @@ class CredentialsValidationHelper {
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> service.accept(new SMSService(credentials, context, server, httpClientSupplier)));
+            () ->
+                service.accept(
+                    new SMSService(credentials, context, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("keyId"));
   }
 
@@ -60,7 +62,9 @@ class CredentialsValidationHelper {
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> service.accept(new SMSService(credentials, context, server, httpClientSupplier)));
+            () ->
+                service.accept(
+                    new SMSService(credentials, context, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("keySecret"));
   }
 
@@ -75,7 +79,9 @@ class CredentialsValidationHelper {
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> service.accept(new SMSService(credentials, context, server, httpClientSupplier)));
+            () ->
+                service.accept(
+                    new SMSService(credentials, context, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("projectId"));
   }
 
@@ -88,7 +94,7 @@ class CredentialsValidationHelper {
     Exception exception =
         assertThrows(
             NullPointerException.class,
-            () -> service.accept(new SMSService(null, context, server, httpClientSupplier)));
+            () -> service.accept(new SMSService(null, context, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("Credentials must be defined"));
   }
 
@@ -104,7 +110,9 @@ class CredentialsValidationHelper {
     Exception exception =
         assertThrows(
             NullPointerException.class,
-            () -> service.accept(new SMSService(credentials, null, server, httpClientSupplier)));
+            () ->
+                service.accept(
+                    new SMSService(credentials, null, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("Context must be defined"));
   }
 
@@ -121,7 +129,9 @@ class CredentialsValidationHelper {
     Exception exception =
         assertThrows(
             IllegalArgumentException.class,
-            () -> service.accept(new SMSService(credentials, context, server, httpClientSupplier)));
+            () ->
+                service.accept(
+                    new SMSService(credentials, context, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("SMS Url"));
   }
 
@@ -138,7 +148,9 @@ class CredentialsValidationHelper {
     Exception exception =
         assertThrows(
             NullPointerException.class,
-            () -> service.accept(new SMSService(credentials, context, server, httpClientSupplier)));
+            () ->
+                service.accept(
+                    new SMSService(credentials, context, server, httpClientSupplier, true)));
     assertTrue(exception.getMessage().contains("SMS Region"));
   }
 
@@ -156,7 +168,8 @@ class CredentialsValidationHelper {
     ServerConfiguration server = new ServerConfiguration("https://oauth.foo.url");
 
     assertDoesNotThrow(
-        () -> service.accept(new SMSService(credentials, context, server, httpClientSupplier)),
+        () ->
+            service.accept(new SMSService(credentials, context, server, httpClientSupplier, true)),
         "Init passed");
   }
 

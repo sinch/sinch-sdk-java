@@ -16,6 +16,7 @@ public class HttpRequest {
   private final Collection<String> contentType;
   private final Collection<String> authNames;
   private final Map<String, Object> formParams;
+  private final boolean idempotent;
 
   public HttpRequest(
       String fullUrl,
@@ -35,6 +36,7 @@ public class HttpRequest {
     this.contentType = contentType;
     this.authNames = authNames;
     this.formParams = null;
+    this.idempotent = false;
   }
 
   public HttpRequest(
@@ -46,6 +48,34 @@ public class HttpRequest {
       Collection<String> accept,
       Collection<String> contentType,
       Collection<String> authNames) {
+    this(path, method, queryParameters, body, headerParams, accept, contentType, authNames, false);
+  }
+
+  /**
+   * Request to an operation that accepts an <code>Idempotency-Key</code> header
+   *
+   * @param path Path of the operation
+   * @param method HTTP method
+   * @param queryParameters Query parameters
+   * @param body Serialized body
+   * @param headerParams Headers, with the key set by the user if any
+   * @param accept Accepted content types
+   * @param contentType Content type of the body
+   * @param authNames Authentication schemes
+   * @param idempotent <code>true</code> when the operation accepts an <code>Idempotency-Key
+   *     </code> header: the transport then generates one if the user did not set it
+   * @since 2.3
+   */
+  public HttpRequest(
+      String path,
+      HttpMethod method,
+      Collection<URLParameter> queryParameters,
+      String body,
+      Map<String, String> headerParams,
+      Collection<String> accept,
+      Collection<String> contentType,
+      Collection<String> authNames,
+      boolean idempotent) {
     this.fullUrl = null;
     this.path = path;
     this.method = method;
@@ -56,6 +86,7 @@ public class HttpRequest {
     this.contentType = contentType;
     this.authNames = authNames;
     this.formParams = null;
+    this.idempotent = idempotent;
   }
 
   public HttpRequest(
@@ -77,6 +108,7 @@ public class HttpRequest {
     this.contentType = contentType;
     this.authNames = authNames;
     this.body = null;
+    this.idempotent = false;
   }
 
   public Optional<String> getFullUrl() {
@@ -117,5 +149,15 @@ public class HttpRequest {
 
   public Map<String, Object> getFormParams() {
     return formParams;
+  }
+
+  /**
+   * Whether the operation accepts an <code>Idempotency-Key</code> header
+   *
+   * @return <code>true</code> when the transport has to generate a key if none is set
+   * @since 2.3
+   */
+  public boolean isIdempotent() {
+    return idempotent;
   }
 }

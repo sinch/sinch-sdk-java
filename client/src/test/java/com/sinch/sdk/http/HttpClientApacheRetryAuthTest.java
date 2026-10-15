@@ -8,6 +8,7 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.models.RetryConfiguration;
+import com.sinch.sdk.models.TransportSettings;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -50,7 +51,8 @@ class HttpClientApacheRetryAuthTest {
     try (HttpClientApache client =
         new HttpClientApache(
             null,
-            new DefaultRetryManager(RetryConfiguration.builder().setMaxRetryCount(1).build()))) {
+            new DefaultRetryManager(RetryConfiguration.builder().setMaxRetryCount(1).build()),
+            TransportSettings.DEFAULT_TIMEOUT_SECONDS)) {
       client.invokeAPI(
           new ServerConfiguration(server.url("/").toString()),
           auth,

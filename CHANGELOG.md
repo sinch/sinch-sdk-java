@@ -15,6 +15,32 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 > - `[tech]` — technical improvement
 
 ---
+## v2.3.0 - 2026-10-15
+
+### Voice
+- **[feature]** Support [Voice API v2](https://developers.sinch.com/docs/voice-2.0), exposed under `voice().v2()`
+- **[feature]** Support V2 `Calls` API: `start`, `get`, `list`, `interactByCallId` and `interactByCallName` endpoints
+- **[feature]** Support V2 `Batches` API: `start`, `get`, `getDetails` and `stop` endpoints
+- **[feature]** Support V2 `Sessions` API: `get` endpoint
+- **[feature]** Support V2 `Services` API: `create`, `get`, `list`, `update` and `delete` endpoints
+- **[feature]** Support V2 `SVAML` API: `describe` and `validate` endpoints
+- **[feature]** Support V2 Sinch Events: `validateAuthenticationHeader`, `parseEvent` and `serializeResponse`
+- **[doc]** Snippets for every Voice V2 endpoint, under `voice/v2/`
+- **[doc]** `sinch-events` example: new Voice V2 Sinch Events controller on `/VoiceV2Event`
+- **[test]** Extend V1 `SinchEventsService.validateAuthenticationHeader` coverage
+
+### SDK
+- **[feature]** `SinchClient` transport level settings: `TransportSettings` (`timeoutSeconds`, `useSinchAuth`)
+- **[feature]** `Idempotency-Key` support: for the operations that accept the header, the SDK generates a key when none is set and sends the same key on the `HTTP 429` retries of a call
+- **[test]** Extend `ApplicationAuthManager` signed request validation coverage
+
+### Verification
+- **[test]** Extend `SinchEventsService.validateAuthenticationHeader` coverage
+
+### Build
+- **[dependency]** Bump `jackson.version` to `2.21.7` to solve denial-of-service and unsafe deserialization vulnerabilities in `jackson-databind` (CVE-2026-19032, CVE-2026-68497, CVE-2026-83557, CVE-2026-91776 and CVE-2026-91777).
+- **[releasing]** Bump `central-publishing-maven-plugin` to `0.12.0`: Maven Central rejected the release bundle built with Apache Maven 3.10.0
+
 ## v2.2.0 - 2026-09-17
 
 ### SDK

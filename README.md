@@ -24,6 +24,7 @@ To use Sinch services, you'll need a Sinch account and access keys. You can sign
 - [Handling Exceptions](#handling-exceptions)
 - [Proxy configuration](#proxy-configuration)
 - [Retry configuration](#retry-configuration)
+- [Transport settings](#transport-settings)
 - [Third-party dependencies](#third-party-dependencies)
 - [Examples](#examples)
 - [Changelog and Migration](#changelog--migration)
@@ -107,6 +108,7 @@ Note: The `${sdk.version}` needs to be set according to the released version to 
 | Messaging       | [Conversation API](https://developers.sinch.com/docs/conversation/)          |
 |                 | [SMS API](https://developers.sinch.com/docs/sms/)                            |
 | Voice and Video | [Voice API](https://developers.sinch.com/docs/voice/)                        |
+|                 | [Voice API v2](https://developers.sinch.com/docs/voice-2.0)                  |
 | Numbers         | [Numbers API](https://developers.sinch.com/docs/numbers/)                    |
 | Verification    | [Verification API](https://developers.sinch.com/docs/verification/)          |
 |                 | [Number Lookup API](https://developers.sinch.com/docs/number-lookup-api-v2/) |
@@ -316,7 +318,17 @@ You can find a complete example in [examples/sinch-events](https://github.com/si
 
 ### Voice API
 
-The Voice API uses application credentials. Set `applicationKey` and `applicationSecret` (both available on the [Apps dashboard](https://dashboard.sinch.com/voice/apps)); `voiceRegion` is optional and defaults to a global region:
+**Note:** For all new projects, please use Voice API v2. This is especially important for projects involving:
+
+- AI capabilities like Streams and Voice Relay
+- Voice campaigns like Batch calling
+
+You should only use the older Voice API v1 if one of the following is a strict requirement:
+
+- The project must be in General Availability (GA).
+- The project requires In-App voice or Conferencing (until these features are available in v2).
+
+The Voice API v1 uses application credentials. Set `applicationKey` and `applicationSecret` (both available on the [Apps dashboard](https://dashboard.sinch.com/voice/apps)); `voiceRegion` is optional and defaults to a global region:
 
 ```java
 import com.sinch.sdk.SinchClient;
@@ -335,7 +347,7 @@ SinchClient client = new SinchClient(configuration);
 
 #### Sinch Events
 
-The Voice API delivers synchronous Sinch Events to the Event Destination URL configured for your app. Requests are signed with your application credentials, so validation requires the HTTP verb and URI of the controller handling the request, in addition to the `headers` and raw `body`:
+The Voice API v1 delivers synchronous Sinch Events to the Event Destination URL configured for your app. Requests are signed with your application credentials, so validation requires the HTTP verb and URI of the controller handling the request, in addition to the `headers` and raw `body`:
 
 ```java
 import com.sinch.sdk.domains.voice.api.v1.SinchEventsService;
@@ -350,6 +362,12 @@ var event = sinchEvents.parseEvent(body);
 Some events (for example an incoming call) expect a SVAML response: build it from the business layer and serialize it with `sinchEvents.serializeResponse(response)` before returning it to Sinch.
 
 You can find a complete example in [examples/sinch-events](https://github.com/sinch/sinch-sdk-java/tree/main/examples/sinch-events).
+
+#### Voice API v2
+
+> **Note:** Support for the Voice API v2 is currently in preview.
+
+The Voice API v2 needs no extra parameters, use the [common client](#client-initialization) shown above.
 
 
 ### Your first request
@@ -537,6 +555,46 @@ Configuration configuration = Configuration.builder()
         .setRetryConfiguration(
                 RetryConfiguration.builder()
                         .setRetryPolicy(RetryPolicy.NONE)
+                        .build())
+        .build();
+SinchClient client = new SinchClient(configuration);
+```
+
+## Transport settings
+
+`SinchClient` accepts optional transport-level settings alongside credentials. They apply to product API calls and to OAuth token fetches.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `timeoutSeconds` | `int` | `60` | HTTP I/O timeout in seconds. Pass `0` to disable the timeout. Negative values are rejected. |
+| `useSinchAuth` | `boolean` | `true` | When `true`, OAuth-capable APIs fetch a Sinch access token. Set `false` to disable Sinch authentication: no token is fetched and no `Authorization` header is added. With unified credentials only `projectId` is then required. Has no effect with SMS service plan credentials. |
+
+### Timeout
+
+```java
+import com.sinch.sdk.SinchClient;
+import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.TransportSettings;
+
+...
+Configuration configuration = Configuration.builder()
+        ...
+        .setTransportSettings(
+                TransportSettings.builder()
+                        .setTimeoutSeconds(30)
+                        .build())
+        .build();
+SinchClient client = new SinchClient(configuration);
+```
+
+### Disable Sinch OAuth
+
+```java
+Configuration configuration = Configuration.builder()
+        ...
+        .setTransportSettings(
+                TransportSettings.builder()
+                        .setUseSinchAuth(false)
                         .build())
         .build();
 SinchClient client = new SinchClient(configuration);

@@ -15,6 +15,7 @@ import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.http.HttpClientApache;
+import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -54,7 +55,8 @@ class HttpClientTest extends BaseTest {
   String serverUrl = String.format("http://localhost:%s", mockBackEnd.getPort());
   UnifiedCredentials credentials = UnifiedCredentials.builder().build();
   ServerConfiguration server = new ServerConfiguration(String.format("%s/auth", serverUrl));
-  HttpClientApache httpClient = new HttpClientApache();
+  HttpClientApache httpClient =
+      new HttpClientApache(null, null, TransportSettings.DEFAULT_TIMEOUT_SECONDS);
 
   AuthManager basicAuthManager = new BasicAuthManager(credentials);
   OAuthManager oAuthManager =

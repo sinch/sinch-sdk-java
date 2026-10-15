@@ -14,10 +14,12 @@ public class Configuration {
   private final SmsContext smsContext;
   private final VerificationContext verificationContext;
   private final VoiceContext voiceContext;
+  private final com.sinch.sdk.domains.voice.models.v2.VoiceContext voiceV2Context;
   private final ConversationContext conversationContext;
   private final HttpProxyConfiguration httpProxyConfiguration;
   private final NumberLookupContext numberLookupContext;
   private final RetryConfiguration retryConfiguration;
+  private final TransportSettings transportSettings;
 
   private Configuration(
       UnifiedCredentials unifiedCredentials,
@@ -29,9 +31,11 @@ public class Configuration {
       SmsContext smsContext,
       VerificationContext verificationContext,
       VoiceContext voiceContext,
+      com.sinch.sdk.domains.voice.models.v2.VoiceContext voiceV2Context,
       ConversationContext conversationContext,
       NumberLookupContext numberLookupContext,
-      RetryConfiguration retryConfiguration) {
+      RetryConfiguration retryConfiguration,
+      TransportSettings transportSettings) {
     this.unifiedCredentials = unifiedCredentials;
     this.applicationCredentials = applicationCredentials;
     this.smsServicePlanCredentials = smsServicePlanCredentials;
@@ -39,11 +43,13 @@ public class Configuration {
     this.numbersContext = numbersContext;
     this.smsContext = smsContext;
     this.voiceContext = voiceContext;
+    this.voiceV2Context = voiceV2Context;
     this.verificationContext = verificationContext;
     this.conversationContext = conversationContext;
     this.numberLookupContext = numberLookupContext;
     this.httpProxyConfiguration = httpProxyConfiguration;
     this.retryConfiguration = retryConfiguration;
+    this.transportSettings = transportSettings;
   }
 
   @Override
@@ -60,6 +66,8 @@ public class Configuration {
         + verificationContext
         + ", voiceContext="
         + voiceContext
+        + ", voiceV2Context="
+        + voiceV2Context
         + ", conversationContext="
         + conversationContext
         + ", numberLookupContext="
@@ -68,6 +76,8 @@ public class Configuration {
         + httpProxyConfiguration
         + ", retryConfiguration="
         + retryConfiguration
+        + ", transportSettings="
+        + transportSettings
         + "}";
   }
 
@@ -153,6 +163,16 @@ public class Configuration {
   }
 
   /**
+   * Get Voice V2 domain related execution context
+   *
+   * @return Current Voice V2 context
+   * @since 2.3
+   */
+  public Optional<com.sinch.sdk.domains.voice.models.v2.VoiceContext> getVoiceV2Context() {
+    return Optional.ofNullable(voiceV2Context);
+  }
+
+  /**
    * Credentials to be used for Verification and Voice services
    *
    * @return Application credentials
@@ -207,6 +227,17 @@ public class Configuration {
   }
 
   /**
+   * Get the transport level settings
+   *
+   * @return Transport settings, or empty when none was set and {@link TransportSettings#DEFAULTS}
+   *     apply
+   * @since 2.3
+   */
+  public Optional<TransportSettings> getTransportSettings() {
+    return Optional.ofNullable(transportSettings);
+  }
+
+  /**
    * Getting Builder
    *
    * @return New Builder instance
@@ -242,10 +273,12 @@ public class Configuration {
     SmsContext.Builder smsContext;
     VerificationContext.Builder verificationContext;
     VoiceContext.Builder voiceContext;
+    com.sinch.sdk.domains.voice.models.v2.VoiceContext.Builder voiceV2Context;
     ConversationContext.Builder conversationContext;
     NumberLookupContext.Builder numberLookupContext;
     HttpProxyConfiguration httpProxyConfiguration;
     RetryConfiguration retryConfiguration;
+    TransportSettings transportSettings;
 
     protected Builder() {}
 
@@ -275,12 +308,18 @@ public class Configuration {
       this.verificationContext =
           configuration.getVerificationContext().map(VerificationContext::builder).orElse(null);
       this.voiceContext = configuration.getVoiceContext().map(VoiceContext::builder).orElse(null);
+      this.voiceV2Context =
+          configuration
+              .getVoiceV2Context()
+              .map(com.sinch.sdk.domains.voice.models.v2.VoiceContext::builder)
+              .orElse(null);
       this.conversationContext =
           configuration.getConversationContext().map(ConversationContext::builder).orElse(null);
       this.numberLookupContext =
           configuration.getNumberLookupContext().map(NumberLookupContext::builder).orElse(null);
       this.httpProxyConfiguration = configuration.getHttpProxyConfiguration().orElse(null);
       this.retryConfiguration = configuration.getRetryConfiguration().orElse(null);
+      this.transportSettings = configuration.getTransportSettings().orElse(null);
     }
 
     /**
@@ -484,6 +523,53 @@ public class Configuration {
     }
 
     /**
+     * Set Voice V2 related region
+     *
+     * @param region {@link com.sinch.sdk.domains.voice.models.v2.VoiceContext#getVoiceRegion()
+     *     getter}
+     * @return Current builder
+     * @since 2.3
+     */
+    public Builder setVoiceV2Region(com.sinch.sdk.domains.voice.models.v2.VoiceRegion region) {
+      if (null == this.voiceV2Context) {
+        this.voiceV2Context = com.sinch.sdk.domains.voice.models.v2.VoiceContext.builder();
+      }
+      this.voiceV2Context.setVoiceRegion(region);
+      return this;
+    }
+
+    /**
+     * Set Voice V2 API URL
+     *
+     * @param voiceUrl {@link com.sinch.sdk.domains.voice.models.v2.VoiceContext#getVoiceUrl()
+     *     getter}
+     * @return Current builder
+     * @since 2.3
+     */
+    public Builder setVoiceV2Url(String voiceUrl) {
+      if (null == this.voiceV2Context) {
+        this.voiceV2Context = com.sinch.sdk.domains.voice.models.v2.VoiceContext.builder();
+      }
+      this.voiceV2Context.setVoiceUrl(voiceUrl);
+      return this;
+    }
+
+    /**
+     * Set Voice V2 related context
+     *
+     * @param context {@link #getVoiceV2Context() getter}
+     * @return Current builder
+     * @since 2.3
+     */
+    public Builder setVoiceV2Context(com.sinch.sdk.domains.voice.models.v2.VoiceContext context) {
+      this.voiceV2Context =
+          null != context
+              ? com.sinch.sdk.domains.voice.models.v2.VoiceContext.builder(context)
+              : null;
+      return this;
+    }
+
+    /**
      * Set Conversation Region to be used
      *
      * @param conversationRegion Conversation Region
@@ -586,6 +672,19 @@ public class Configuration {
     }
 
     /**
+     * Set the transport level settings
+     *
+     * @param transportSettings Transport settings, or {@code null} to restore the defaults
+     * @return Current builder
+     * @see Configuration#getTransportSettings() getter
+     * @since 2.3
+     */
+    public Builder setTransportSettings(TransportSettings transportSettings) {
+      this.transportSettings = transportSettings;
+      return this;
+    }
+
+    /**
      * Build a Configuration instance from builder current state
      *
      * @return Configuration instance build from current builder state
@@ -603,9 +702,11 @@ public class Configuration {
           null != smsContext ? smsContext.build() : null,
           null != verificationContext ? verificationContext.build() : null,
           null != voiceContext ? voiceContext.build() : null,
+          null != voiceV2Context ? voiceV2Context.build() : null,
           null != conversationContext ? conversationContext.build() : null,
           null != numberLookupContext ? numberLookupContext.build() : null,
-          retryConfiguration);
+          retryConfiguration,
+          transportSettings);
     }
   }
 }

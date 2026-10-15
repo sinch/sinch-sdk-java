@@ -1,0 +1,7 @@
+{
+  "type": "SIP",
+  "sip": {
+    "endpoint": "sip:alice@sip.example.com",
+    "displayName": "Alice"
+  }
+}

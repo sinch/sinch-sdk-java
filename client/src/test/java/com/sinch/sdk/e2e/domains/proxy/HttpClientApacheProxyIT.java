@@ -9,6 +9,7 @@ import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.e2e.Config;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.models.HttpProxyConfiguration;
+import com.sinch.sdk.models.TransportSettings;
 import org.junit.jupiter.api.Test;
 
 class HttpClientApacheProxyIT {
@@ -28,7 +29,8 @@ class HttpClientApacheProxyIT {
             .setPort(Config.PROXY_UNAUTHENTICATED_PORT)
             .build();
 
-    try (HttpClientApache client = new HttpClientApache(proxyConfig)) {
+    try (HttpClientApache client =
+        new HttpClientApache(proxyConfig, null, TransportSettings.DEFAULT_TIMEOUT_SECONDS)) {
       HttpResponse response =
           client.invokeAPI(new ServerConfiguration(TARGET_URL), null, simpleGetRequest());
 
@@ -46,7 +48,8 @@ class HttpClientApacheProxyIT {
             .setPassword("password")
             .build();
 
-    try (HttpClientApache client = new HttpClientApache(proxyConfig)) {
+    try (HttpClientApache client =
+        new HttpClientApache(proxyConfig, null, TransportSettings.DEFAULT_TIMEOUT_SECONDS)) {
       HttpResponse response =
           client.invokeAPI(new ServerConfiguration(TARGET_URL), null, simpleGetRequest());
 
@@ -64,7 +67,8 @@ class HttpClientApacheProxyIT {
             .setPassword("wrong-pass")
             .build();
 
-    try (HttpClientApache client = new HttpClientApache(proxyConfig)) {
+    try (HttpClientApache client =
+        new HttpClientApache(proxyConfig, null, TransportSettings.DEFAULT_TIMEOUT_SECONDS)) {
       HttpResponse response =
           client.invokeAPI(new ServerConfiguration(TARGET_URL), null, simpleGetRequest());
 

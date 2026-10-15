@@ -34,6 +34,6 @@ class NumbersServiceTest {
   @Test
   void checkCredentialsSinchEvents() {
     assertDoesNotThrow(
-        () -> new NumbersService(null, null, null, null).sinchEvents(), "Init passed");
+        () -> new NumbersService(null, null, null, null, true).sinchEvents(), "Init passed");
   }
 }

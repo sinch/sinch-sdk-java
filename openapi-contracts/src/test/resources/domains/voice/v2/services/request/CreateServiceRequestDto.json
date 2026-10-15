@@ -1,0 +1,12 @@
+{
+  "name": "Example service",
+  "description": "Service with webhooks",
+  "isDefault": true,
+  "callBehavior": {
+    "type": "WEBHOOK",
+    "webhook": {
+      "url": "https://example.com/webhook",
+      "fallbackUrl": "https://example.com/fallback"
+    }
+  }
+}

@@ -27,10 +27,11 @@ Use these keys when request authentication is enabled in each controller (`ensur
 - `conversation.sinchevents.secret` for Conversation callbacks
 - `numbers.sinchevents.secret` for Numbers callbacks
 - `sms.sinchevents.secret` for SMS callbacks
+- `voice.v2.sinchevents.service-id` and `voice.v2.sinchevents.service-secret` for Voice V2 callbacks: the ID and secret of the service the events are sent for
 
 ### Voice and Verification authentication
 
-Voice and Verification callback validation uses application credentials:
+Voice (V1) and Verification callback validation uses application credentials:
 
 - `credentials.application-api-key`
 - `credentials.application-api-secret`
@@ -65,6 +66,7 @@ When the server is running, controllers listen on:
 | [SMS](https://developers.sinch.com/docs/sms/api-reference/sms/tag/Webhooks/#tag/Webhooks/section/Callbacks) | `/SmsEvent` |
 | [Verification](https://developers.sinch.com/docs/verification/api-reference/verification/tag/Verification-callbacks/) | `/VerificationEvent` |
 | [Voice](https://developers.sinch.com/docs/voice/api-reference/voice/tag/Callbacks/) | `/VoiceEvent` |
+| [Voice V2](https://developers.sinch.com/docs/voice-2.0) | `/VoiceV2Event` |
 
 ## Expose local server with ngrok
 
@@ -89,5 +91,6 @@ Example callback URLs:
 - `https://<your-ngrok-domain>/SmsEvent`
 - `https://<your-ngrok-domain>/VerificationEvent`
 - `https://<your-ngrok-domain>/VoiceEvent`
+- `https://<your-ngrok-domain>/VoiceV2Event`
 
 Dashboard: [Sinch Dashboard](https://dashboard.sinch.com)

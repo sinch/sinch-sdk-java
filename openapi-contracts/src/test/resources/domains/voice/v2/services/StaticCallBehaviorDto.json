@@ -1,0 +1,20 @@
+{
+  "type": "STATIC",
+  "static": {
+    "commands": [
+      {
+        "command": "hangup",
+        "callName": "origin"
+      }
+    ],
+    "callName": "incoming",
+    "events": {
+      "onHangup": [
+        {
+          "command": "hangup",
+          "callName": "origin"
+        }
+      ]
+    }
+  }
+}

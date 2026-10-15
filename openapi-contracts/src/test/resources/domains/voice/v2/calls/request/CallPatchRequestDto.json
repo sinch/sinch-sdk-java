@@ -1,0 +1,36 @@
+{
+  "commands": [
+    {
+      "command": "messages",
+      "messagesName": "my-messages",
+      "messages": [
+        {
+          "type": "SAY",
+          "say": {
+            "text": "Hello, your call is now connected.",
+            "format": "TEXT",
+            "voiceName": "Emma"
+          }
+        },
+        {
+          "type": "PLAY",
+          "play": {
+            "url": "https://example.com/audio/welcome.mp3"
+          }
+        }
+      ],
+      "events": {
+        "onFinish": [
+          {
+            "command": "hangup",
+            "callName": "origin"
+          }
+        ]
+      }
+    },
+    {
+      "command": "hangup",
+      "callName": "origin"
+    }
+  ]
+}

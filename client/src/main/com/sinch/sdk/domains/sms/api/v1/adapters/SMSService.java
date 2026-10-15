@@ -17,6 +17,7 @@ import com.sinch.sdk.models.SmsContext;
 import com.sinch.sdk.models.SmsServicePlanCredentials;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -33,6 +34,7 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
   private final SmsContext context;
   private final ServerConfiguration oAuthServer;
   private final Supplier<HttpClient> httpClientSupplier;
+  private final boolean useSinchAuth;
   private volatile String uriUUID;
   private volatile Map<String, AuthManager> authManagers;
 
@@ -46,11 +48,13 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
       UnifiedCredentials credentials,
       SmsContext context,
       ServerConfiguration oAuthServer,
-      Supplier<HttpClient> httpClientSupplier) {
+      Supplier<HttpClient> httpClientSupplier,
+      boolean useSinchAuth) {
     this.credentials = credentials;
     this.oAuthServer = oAuthServer;
     this.context = context;
     this.httpClientSupplier = httpClientSupplier;
+    this.useSinchAuth = useSinchAuth;
   }
 
   public SMSService(
@@ -61,6 +65,8 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
     this.context = context;
     this.httpClientSupplier = httpClientSupplier;
     this.oAuthServer = null;
+    // Sinch OAuth does not apply to service plan credentials
+    this.useSinchAuth = false;
   }
 
   @Override
@@ -166,17 +172,21 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
 
         if (credentials instanceof UnifiedCredentials) {
           UnifiedCredentials unifiedCredentials = (UnifiedCredentials) credentials;
-          StringUtil.requireNonEmpty(unifiedCredentials.getKeyId(), "'keyId' must be defined");
-          StringUtil.requireNonEmpty(
-              unifiedCredentials.getKeySecret(), "'keySecret' must be defined");
+          if (useSinchAuth) {
+            StringUtil.requireNonEmpty(unifiedCredentials.getKeyId(), "'keyId' must be defined");
+            StringUtil.requireNonEmpty(
+                unifiedCredentials.getKeySecret(), "'keySecret' must be defined");
+          }
           StringUtil.requireNonEmpty(
               unifiedCredentials.getProjectId(), "'projectId' must be defined");
           LOGGER.fine("Activate SMS API with server='" + context.getSmsServer().getUrl() + "'");
 
           uriUUID = unifiedCredentials.getProjectId();
-          oAuthManager =
-              new OAuthManager(
-                  unifiedCredentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
+          if (useSinchAuth) {
+            oAuthManager =
+                new OAuthManager(
+                    unifiedCredentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
+          }
 
         } else if (credentials instanceof SmsServicePlanCredentials) {
           SmsServicePlanCredentials servicePlanCredentials =
@@ -194,8 +204,11 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
         }
 
         this.authManagers =
-            Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, oAuthManager))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            null == oAuthManager
+                ? Collections.emptyMap()
+                : Stream.of(
+                        new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_SMS, oAuthManager))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
       }
     }
   }
