@@ -1,0 +1,8 @@
+{
+  "onHangup": [
+    {
+      "command": "hangup",
+      "callName": "origin"
+    }
+  ]
+}

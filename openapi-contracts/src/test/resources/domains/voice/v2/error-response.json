@@ -1,0 +1,6 @@
+{
+  "type": "https://api.sinch.com/docs/errors/bad-request",
+  "title": "Bad Request",
+  "detail": "The request body is invalid or malformed.",
+  "instance": "/v2/projects/5c5bf2b1-35ae-4825-ab89-457e07bb60e6/calls"
+}

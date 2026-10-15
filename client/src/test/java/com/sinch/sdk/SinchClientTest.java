@@ -218,6 +218,98 @@ class SinchClientTest {
   }
 
   @Test
+  void defaultVoiceV2Region() {
+    Configuration configuration = Configuration.builder().build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        com.sinch.sdk.domains.voice.models.v2.VoiceRegion.GLOBAL,
+        client.getConfiguration().getVoiceV2Context().get().getVoiceRegion());
+  }
+
+  @Test
+  void defaultVoiceV2Url() {
+    Configuration configuration = Configuration.builder().build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        "https://voice.api.sinch.com",
+        client.getConfiguration().getVoiceV2Context().get().getVoiceUrl());
+  }
+
+  @Test
+  void voiceV2UrlFromRegion() {
+    Configuration configuration =
+        Configuration.builder()
+            .setVoiceV2Context(
+                com.sinch.sdk.domains.voice.models.v2.VoiceContext.builder()
+                    .setVoiceRegion(com.sinch.sdk.domains.voice.models.v2.VoiceRegion.EUROPE)
+                    .build())
+            .build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        "https://eu1.voice.api.sinch.com",
+        client.getConfiguration().getVoiceV2Context().get().getVoiceUrl());
+  }
+
+  @Test
+  void voiceV2UrlFromUrl() {
+    Configuration configuration =
+        Configuration.builder()
+            .setVoiceV2Context(
+                com.sinch.sdk.domains.voice.models.v2.VoiceContext.builder()
+                    .setVoiceRegion(com.sinch.sdk.domains.voice.models.v2.VoiceRegion.EUROPE)
+                    .setVoiceUrl("my foo url")
+                    .build())
+            .build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        com.sinch.sdk.domains.voice.models.v2.VoiceRegion.EUROPE,
+        client.getConfiguration().getVoiceV2Context().get().getVoiceRegion());
+    assertEquals("my foo url", client.getConfiguration().getVoiceV2Context().get().getVoiceUrl());
+  }
+
+  @Test
+  void voiceV2UrlFromRegionShortcut() {
+    Configuration configuration =
+        Configuration.builder()
+            .setVoiceV2Region(com.sinch.sdk.domains.voice.models.v2.VoiceRegion.AUSTRALIA)
+            .build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        "https://au1.voice.api.sinch.com",
+        client.getConfiguration().getVoiceV2Context().get().getVoiceUrl());
+  }
+
+  @Test
+  void voiceV2UrlFromUrlShortcut() {
+    Configuration configuration =
+        Configuration.builder()
+            .setVoiceV2Region(com.sinch.sdk.domains.voice.models.v2.VoiceRegion.EUROPE)
+            .setVoiceV2Url("my foo url")
+            .build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        com.sinch.sdk.domains.voice.models.v2.VoiceRegion.EUROPE,
+        client.getConfiguration().getVoiceV2Context().get().getVoiceRegion());
+    assertEquals("my foo url", client.getConfiguration().getVoiceV2Context().get().getVoiceUrl());
+  }
+
+  // The V1 and V2 regions are separate settings: one must not leak into the other.
+  @Test
+  void voiceV1RegionDoesNotChangeVoiceV2Url() {
+    Configuration configuration =
+        Configuration.builder()
+            .setVoiceContext(VoiceContext.builder().setVoiceRegion(VoiceRegion.EUROPE).build())
+            .build();
+    SinchClient client = new SinchClient(configuration);
+    assertEquals(
+        "https://calling-euc1.api.sinch.com",
+        client.getConfiguration().getVoiceContext().get().getVoiceUrl());
+    assertEquals(
+        "https://voice.api.sinch.com",
+        client.getConfiguration().getVoiceV2Context().get().getVoiceUrl());
+  }
+
+  @Test
   void voiceApplicationManagementUrlFromUrl() {
     Configuration configuration =
         Configuration.builder()

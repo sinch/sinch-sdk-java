@@ -1,0 +1,11 @@
+{
+  "batchId": "01BX5ZZKBKACTAV9WEVGEMMVRC",
+  "sessionCount": 3,
+  "endTime": "2026-08-28T12:17:49Z",
+  "queued": 1,
+  "inProgress": 1,
+  "completed": 1,
+  "expired": 0,
+  "ttlSeconds": 3600,
+  "requestedCps": 10
+}
