@@ -317,6 +317,16 @@ You can find a complete example in [examples/sinch-events](https://github.com/si
 
 ### Voice API
 
+**Note:** For all new projects, please use Voice API v2. This is especially important for projects involving:
+
+- AI capabilities like Streams and Voice Relay
+- Voice campaigns like Batch calling
+
+You should only use the older Voice API v1 if one of the following is a strict requirement:
+
+- The project must be in General Availability (GA).
+- The project requires In-App voice or Conferencing (until these features are available in v2).
+
 The Voice API v1 uses application credentials. Set `applicationKey` and `applicationSecret` (both available on the [Apps dashboard](https://dashboard.sinch.com/voice/apps)); `voiceRegion` is optional and defaults to a global region:
 
 ```java
