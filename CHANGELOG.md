@@ -15,50 +15,29 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 > - `[tech]` — technical improvement
 
 ---
-## v2.3.0 - Unreleased
+## v2.3.0 - 2026-10-15
 
 ### Voice
 - **[feature]** Support [Voice API v2](https://developers.sinch.com/docs/voice-2.0), exposed under `voice().v2()`
-- **[feature]** Voice V2 Calls API: `start` operation to create an outbound call
-- **[feature]** Voice V2 Calls API: `get` operation to retrieve a call
-- **[feature]** Voice V2 Calls API: `list` operation to list and filter calls
-- **[feature]** Voice V2 Calls API: `interactByCallId` operation to send SVAML commands to an ongoing call
-- **[feature]** Voice V2 Calls API: `interactByCallName` operation to send SVAML commands to an ongoing call identified by session ID and call name
-- **[feature]** Voice V2 Batches API: `start` operation to create a batch of outbound calls
-- **[feature]** Voice V2 Batches API: `get` operation to retrieve a batch summary
-- **[feature]** Voice V2 Batches API: `getDetails` operation to retrieve the per-session details of a batch
-- **[feature]** Voice V2 Batches API: `stop` operation to stop processing a batch of calls
-- **[feature]** Voice V2 Sessions API: `get` operation to retrieve a session and its calls
-- **[feature]** Voice V2 Services API: `create` operation to create a voice service
-- **[feature]** Voice V2 Services API: `get` operation to retrieve a voice service by its ID
-- **[feature]** Voice V2 Services API: `list` operation to list and filter the voice services of a project
-- **[feature]** Voice V2 Services API: `update` operation to partially update a voice service
-- **[feature]** Voice V2 Services API: `delete` operation to delete a voice service by its ID
-- **[feature]** Voice V2 Svaml API: `describe` operation to get a human-readable description of the call flow of a SVAML payload
-- **[feature]** Voice V2 Svaml API: `validate` operation to check a SVAML payload against the expected schema and rules, in `NORMAL` or `STRICT` mode
-- **[feature]** Voice V2 Sinch Events: `validateAuthenticationHeader`, `parseEvent` and `serializeResponse` operations to handle the events sent by Sinch
-- **[doc]** New `voice/v2/calls/Start` snippet
-- **[doc]** New `voice/v2/calls/Get` snippet
-- **[doc]** New `voice/v2/calls/List` snippet
-- **[doc]** New `voice/v2/calls/InteractByCallId` snippet
-- **[doc]** New `voice/v2/calls/InteractByCallName` snippet
-- **[doc]** New `voice/v2/batches/Start` snippet
-- **[doc]** New `voice/v2/batches/Get` snippet
-- **[doc]** New `voice/v2/batches/GetDetails` snippet
-- **[doc]** New `voice/v2/batches/Stop` snippet
-- **[doc]** New `voice/v2/sessions/Get` snippet
-- **[doc]** New `voice/v2/services/Create` snippet
-- **[doc]** New `voice/v2/services/Get` snippet
-- **[doc]** New `voice/v2/services/List` snippet
-- **[doc]** New `voice/v2/services/Update` snippet
-- **[doc]** New `voice/v2/services/Delete` snippet
-- **[doc]** New `voice/v2/svaml/Describe` snippet
-- **[doc]** New `voice/v2/svaml/Validate` snippet
+- **[feature]** Support V2 `Calls` API: `start`, `get`, `list`, `interactByCallId` and `interactByCallName` endpoints
+- **[feature]** Support V2 `Batches` API: `start`, `get`, `getDetails` and `stop` endpoints
+- **[feature]** Support V2 `Sessions` API: `get` endpoint
+- **[feature]** Support V2 `Services` API: `create`, `get`, `list`, `update` and `delete` endpoints
+- **[feature]** Support V2 `SVAML` API: `describe` and `validate` endpoints
+- **[feature]** Support V2 Sinch Events: `validateAuthenticationHeader`, `parseEvent` and `serializeResponse`
+- **[doc]** Snippets for every Voice V2 endpoint, under `voice/v2/`
 - **[doc]** `sinch-events` example: new Voice V2 Sinch Events controller on `/VoiceV2Event`
+- **[test]** Extend V1 `SinchEventsService.validateAuthenticationHeader` coverage
 
 ### SDK
 - **[feature]** `Idempotency-Key` support: for the operations that accept the header, the SDK generates a key when none is set and sends the same key on the `HTTP 429` retries of a call
+- **[test]** Extend `ApplicationAuthManager` signed request validation coverage
 
+### Verification
+- **[test]** Extend `SinchEventsService.validateAuthenticationHeader` coverage
+
+### Build
+- **[dependency]** Bump `jackson.version` to `2.21.6`
 
 ## v2.2.0 - 2026-09-17
 
