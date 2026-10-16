@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.voice.models.v2.helpers;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.sinch.sdk.domains.voice.models.v2.destination.CallDestination;
 import com.sinch.sdk.domains.voice.models.v2.destination.CallOrigin;
 import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
@@ -13,6 +14,7 @@ import java.util.Objects;
  * Factory helpers for the <code>to</code> and <code>from</code> values of a Voice V2 call
  *
  * <p><code>to</code> takes a {@link CallDestination} and <code>from</code> a {@link CallOrigin}.
+ * {@link #of(String)} returns a {@link BaseDestination}, accepted by both.
  *
  * <p>Each factory only sets the required fields. Use the model builders ({@link Sip#builder()},
  * {@link SipFrom#builder()}, {@link Stream#builder()}, {@link VoiceRelay#builder()}) to set the
@@ -30,63 +32,34 @@ public final class Destination {
   private Destination() {}
 
   /**
-   * Create a call destination from a string, detecting its type from the prefix
+   * Create a call endpoint from a string, detecting its type from the prefix
    *
    * <ul>
-   *   <li><code>sip:</code> and <code>sips:</code>: {@link Sip} destination, the endpoint is kept
-   *       as given
-   *   <li><code>stream:</code>: {@link Stream} destination, the prefix is removed
-   *   <li><code>phone:</code>: {@link Phone} destination, the prefix is removed
-   *   <li>Anything else: {@link Phone} destination, the value is kept as given (e.g. a batch
-   *       placeholder such as <code>@toNumber</code>)
+   *   <li><code>sip:</code> and <code>sips:</code>: SIP endpoint, the URI is kept as given
+   *   <li><code>stream:</code>: stream endpoint (only valid as <code>to</code>), prefix removed
+   *   <li><code>phone:</code>: phone number, the prefix is removed
+   *   <li>Anything else: phone number, the value is kept as given (e.g. a batch placeholder such as
+   *       <code>@toNumber</code>)
    * </ul>
    *
-   * <p>A voice relay destination is not built here: it requires a TTS voice and an STT language,
-   * see {@link #voiceRelay(String, String, String)}.
+   * <p>The result is accepted as both <code>to</code> and <code>from</code>. It only carries the
+   * fields found in the string: use the dedicated factories, or the model builders, to set optional
+   * fields. A voice relay destination is not built here: it requires a TTS voice and an STT
+   * language, see {@link #voiceRelay(String, String, String)}.
    *
-   * @param destination Destination, optionally prefixed with its type
-   * @return The phone, SIP or stream destination
-   * @see #originOf(String)
+   * @param value Endpoint, optionally prefixed with its type
+   * @return The phone, SIP or stream endpoint
    * @since 2.4
    */
-  public static CallDestination of(String destination) {
-    Objects.requireNonNull(destination, "destination must not be null");
-    if (isSip(destination)) {
-      return sip(destination);
+  public static BaseDestination of(String value) {
+    Objects.requireNonNull(value, "value must not be null");
+    if (isSip(value)) {
+      return new Endpoint(sip(value));
     }
-    if (destination.startsWith(STREAM_PREFIX)) {
-      return stream(destination.substring(STREAM_PREFIX.length()));
+    if (value.startsWith(STREAM_PREFIX)) {
+      return new Endpoint(stream(value.substring(STREAM_PREFIX.length())));
     }
-    return phone(withoutPhonePrefix(destination));
-  }
-
-  /**
-   * Create a call origin from a string, detecting its type from the prefix
-   *
-   * <ul>
-   *   <li><code>sip:</code> and <code>sips:</code>: {@link SipFrom} origin, the endpoint is kept as
-   *       given
-   *   <li><code>phone:</code>: {@link Phone} origin, the prefix is removed
-   *   <li>Anything else: {@link Phone} origin, the value is kept as given
-   * </ul>
-   *
-   * @param origin Origin, optionally prefixed with its type
-   * @return The phone or SIP origin
-   * @throws IllegalArgumentException if <code>origin</code> is a <code>stream:</code> endpoint: a
-   *     stream can only be a call destination
-   * @see #of(String)
-   * @since 2.4
-   */
-  public static CallOrigin originOf(String origin) {
-    Objects.requireNonNull(origin, "origin must not be null");
-    if (isSip(origin)) {
-      return sipFrom(origin);
-    }
-    if (origin.startsWith(STREAM_PREFIX)) {
-      throw new IllegalArgumentException(
-          "A stream endpoint can only be a call destination, not an origin: " + origin);
-    }
-    return phone(withoutPhonePrefix(origin));
+    return new Endpoint(phone(withoutPhonePrefix(value)));
   }
 
   /**
@@ -168,5 +141,44 @@ public final class Destination {
 
   private static String withoutPhonePrefix(String value) {
     return value.startsWith(PHONE_PREFIX) ? value.substring(PHONE_PREFIX.length()) : value;
+  }
+
+  /**
+   * {@link BaseDestination} around a generated destination model. Serialized as the wrapped model,
+   * so the JSON is the one of the {@link Phone}, {@link Sip} or {@link Stream} it holds.
+   */
+  static final class Endpoint implements BaseDestination {
+
+    private final Object destination;
+
+    Endpoint(Object destination) {
+      this.destination = destination;
+    }
+
+    @JsonValue
+    Object getDestination() {
+      return destination;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
+      return destination.equals(((Endpoint) o).destination);
+    }
+
+    @Override
+    public int hashCode() {
+      return destination.hashCode();
+    }
+
+    @Override
+    public String toString() {
+      return destination.toString();
+    }
   }
 }

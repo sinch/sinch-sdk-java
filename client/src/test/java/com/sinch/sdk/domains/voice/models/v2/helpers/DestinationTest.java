@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.voice.models.v2.helpers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.destination.CallDestination;
 import com.sinch.sdk.domains.voice.models.v2.destination.CallOrigin;
 import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
@@ -10,6 +11,7 @@ import com.sinch.sdk.domains.voice.models.v2.destination.SipFrom;
 import com.sinch.sdk.domains.voice.models.v2.destination.Stream;
 import com.sinch.sdk.domains.voice.models.v2.destination.VoiceRelay;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.DialCommand;
+import java.util.Collections;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -84,103 +86,101 @@ class DestinationTest extends BaseTest {
 
   @Test
   void ofUntaggedIsPhone() throws JsonProcessingException, JSONException {
-    CallDestination destination = Destination.of("+15551234567");
-
-    Assertions.assertThat(destination).isInstanceOf(Phone.class);
-    assertJson(destination, PHONE_JSON);
+    assertJson(Destination.of("+15551234567"), PHONE_JSON);
   }
 
   @Test
   void ofStripsPhoneTag() throws JsonProcessingException, JSONException {
-    CallDestination destination = Destination.of("phone:+15551234567");
-
-    Assertions.assertThat(destination).isInstanceOf(Phone.class);
-    assertJson(destination, PHONE_JSON);
+    assertJson(Destination.of("phone:+15551234567"), PHONE_JSON);
   }
 
   @Test
   void ofKeepsSipEndpoint() throws JsonProcessingException, JSONException {
-    CallDestination destination = Destination.of("sip:user@example.com");
-
-    Assertions.assertThat(destination).isInstanceOf(Sip.class);
-    assertJson(destination, SIP_JSON);
+    assertJson(Destination.of("sip:user@example.com"), SIP_JSON);
   }
 
   @Test
   void ofKeepsSipsEndpoint() throws JsonProcessingException, JSONException {
-    CallDestination destination = Destination.of("sips:user@example.com");
-
-    Assertions.assertThat(destination).isInstanceOf(Sip.class);
-    assertJson(destination, SIPS_JSON);
+    assertJson(Destination.of("sips:user@example.com"), SIPS_JSON);
   }
 
   @Test
   void ofStripsStreamTag() throws JsonProcessingException, JSONException {
-    CallDestination destination = Destination.of("stream:wss://example.com/audio");
-
-    Assertions.assertThat(destination).isInstanceOf(Stream.class);
-    assertJson(destination, STREAM_JSON);
+    assertJson(Destination.of("stream:wss://example.com/audio"), STREAM_JSON);
   }
 
   @Test
   void ofKeepsUnknownPrefixAsPhoneNumber() throws JsonProcessingException, JSONException {
-    CallDestination destination = Destination.of("tel:+15551234567");
-
-    Assertions.assertThat(destination).isInstanceOf(Phone.class);
-    assertJson(destination, "{\"type\":\"PHONE\",\"phone\":{\"number\":\"tel:+15551234567\"}}");
+    assertJson(
+        Destination.of("tel:+15551234567"),
+        "{\"type\":\"PHONE\",\"phone\":{\"number\":\"tel:+15551234567\"}}");
   }
 
   @Test
   void ofKeepsBatchPlaceholderAsPhoneNumber() throws JsonProcessingException, JSONException {
-    CallDestination destination = Destination.of("@toNumber");
-
-    assertJson(destination, "{\"type\":\"PHONE\",\"phone\":{\"number\":\"@toNumber\"}}");
+    assertJson(
+        Destination.of("@toNumber"), "{\"type\":\"PHONE\",\"phone\":{\"number\":\"@toNumber\"}}");
   }
 
   @Test
-  void originOfUntaggedIsPhone() throws JsonProcessingException, JSONException {
-    CallOrigin origin = Destination.originOf("+15551234567");
+  void ofIsBothCallOriginAndCallDestination() {
+    BaseDestination endpoint = Destination.of("sip:user@example.com");
 
-    Assertions.assertThat(origin).isInstanceOf(Phone.class);
-    assertJson(origin, PHONE_JSON);
+    Assertions.assertThat(endpoint).isInstanceOf(CallOrigin.class);
+    Assertions.assertThat(endpoint).isInstanceOf(CallDestination.class);
   }
 
   @Test
-  void originOfStripsPhoneTag() throws JsonProcessingException, JSONException {
-    CallOrigin origin = Destination.originOf("phone:+15551234567");
-
-    Assertions.assertThat(origin).isInstanceOf(Phone.class);
-    assertJson(origin, PHONE_JSON);
+  void ofComparesByValue() {
+    Assertions.assertThat(Destination.of("phone:+15551234567"))
+        .isEqualTo(Destination.of("+15551234567"))
+        .hasSameHashCodeAs(Destination.of("+15551234567"))
+        .isNotEqualTo(Destination.of("sip:user@example.com"));
   }
 
   @Test
-  void originOfKeepsSipEndpoint() throws JsonProcessingException, JSONException {
-    CallOrigin origin = Destination.originOf("sip:user@example.com");
-
-    Assertions.assertThat(origin).isInstanceOf(SipFrom.class);
-    assertJson(origin, SIP_JSON);
+  void ofToStringIsTheWrappedModel() {
+    Assertions.assertThat(Destination.of("+15551234567"))
+        .hasToString(Destination.phone("+15551234567").toString());
   }
 
   @Test
-  void originOfKeepsSipsEndpoint() throws JsonProcessingException, JSONException {
-    CallOrigin origin = Destination.originOf("sips:user@example.com");
+  void ofValuesAreAcceptedAsDialFromAndTo() throws JsonProcessingException, JSONException {
+    DialCommand dial =
+        DialCommand.builder()
+            .setFrom(Destination.of("sip:15550001111@sip.sinch.com"))
+            .setTo(Destination.of("sip:15550002222@sip.sinch.com"))
+            .build();
 
-    Assertions.assertThat(origin).isInstanceOf(SipFrom.class);
-    assertJson(origin, SIPS_JSON);
+    assertJson(
+        dial,
+        "{\"command\":\"dial\","
+            + "\"from\":{\"type\":\"SIP\",\"sip\":{\"endpoint\":\"sip:15550001111@sip.sinch.com\"}},"
+            + "\"to\":{\"type\":\"SIP\",\"sip\":{\"endpoint\":\"sip:15550002222@sip.sinch.com\"}}}");
   }
 
   @Test
-  void originOfRejectsStream() {
-    Assertions.assertThatThrownBy(() -> Destination.originOf("stream:wss://example.com/audio"))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessageContaining("stream:wss://example.com/audio");
+  void ofValuesAreSerializedInStartCallRequest() throws JsonProcessingException, JSONException {
+    StartCallRequest request =
+        StartCallRequest.builder()
+            .setCommands(
+                Collections.singletonList(
+                    DialCommand.builder()
+                        .setFrom(Destination.of("+15550001111"))
+                        .setTo(Destination.of("stream:wss://example.com/audio"))
+                        .build()))
+            .build();
+
+    assertJson(
+        request,
+        "{\"commands\":[{\"command\":\"dial\","
+            + "\"from\":{\"type\":\"PHONE\",\"phone\":{\"number\":\"+15550001111\"}},"
+            + "\"to\":{\"type\":\"STREAM\",\"stream\":{\"endpoint\":\"wss://example.com/audio\"}}}]}");
   }
 
   @Test
   void rejectsNullValues() {
     Assertions.assertThatThrownBy(() -> Destination.of(null))
-        .isInstanceOf(NullPointerException.class);
-    Assertions.assertThatThrownBy(() -> Destination.originOf(null))
         .isInstanceOf(NullPointerException.class);
     Assertions.assertThatThrownBy(() -> Destination.phone(null))
         .isInstanceOf(NullPointerException.class);
@@ -192,20 +192,5 @@ class DestinationTest extends BaseTest {
         .isInstanceOf(NullPointerException.class);
     Assertions.assertThatThrownBy(() -> Destination.voiceRelay("wss://example.com", "Emma", null))
         .isInstanceOf(NullPointerException.class);
-  }
-
-  @Test
-  void parsedValuesAreAcceptedAsDialFromAndTo() throws JsonProcessingException, JSONException {
-    DialCommand dial =
-        DialCommand.builder()
-            .setFrom(Destination.originOf("sip:15550001111@sip.sinch.com"))
-            .setTo(Destination.of("sip:15550002222@sip.sinch.com"))
-            .build();
-
-    assertJson(
-        dial,
-        "{\"command\":\"dial\","
-            + "\"from\":{\"type\":\"SIP\",\"sip\":{\"endpoint\":\"sip:15550001111@sip.sinch.com\"}},"
-            + "\"to\":{\"type\":\"SIP\",\"sip\":{\"endpoint\":\"sip:15550002222@sip.sinch.com\"}}}");
   }
 }
