@@ -15,6 +15,12 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 > - `[tech]` — technical improvement
 
 ---
+## v2.4.0 - Unreleased
+
+### Voice
+- **[feature]** V2 helpers: `Destination` factories for call destinations and origins (`of`, `phone`, `sip`, `sipFrom`, `stream` and `voiceRelay`). `of` returns a `BaseDestination`, accepted as both `to` and `from`
+
+---
 ## v2.3.0 - 2026-10-15
 
 ### Voice
