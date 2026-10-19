@@ -1,0 +1,78 @@
+package com.sinch.sdk.domains.voice.models.v2.helpers;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.assertj.core.api.Assertions;
+import org.json.JSONException;
+import org.junit.jupiter.api.Test;
+
+class MessagesTest extends HelpersBaseTest {
+
+  static final String SAY_JSON =
+      "{\"type\":\"SAY\",\"say\":{\"text\":\"Hello\",\"voiceName\":\"Emma\"}}";
+  static final String PLAY_JSON =
+      "{\"type\":\"PLAY\",\"play\":{\"url\":\"https://example.com/a.mp3\"}}";
+
+  @Test
+  void textLeavesFormatUnset() throws JsonProcessingException, JSONException {
+    assertJson(
+        Messages.text("Hello", "Emma"),
+        "{\"command\":\"messages\",\"messages\":[" + SAY_JSON + "]}");
+  }
+
+  @Test
+  void ssml() throws JsonProcessingException, JSONException {
+    assertJson(
+        Messages.ssml("<speak>Hello</speak>", "Emma"),
+        "{\"command\":\"messages\",\"messages\":[{\"type\":\"SAY\",\"say\":"
+            + "{\"text\":\"<speak>Hello</speak>\",\"voiceName\":\"Emma\",\"format\":\"SSML\"}}]}");
+  }
+
+  @Test
+  void play() throws JsonProcessingException, JSONException {
+    assertJson(
+        Messages.play("https://example.com/a.mp3"),
+        "{\"command\":\"messages\",\"messages\":[" + PLAY_JSON + "]}");
+  }
+
+  @Test
+  void startKeepsMessagesInOrder() throws JsonProcessingException, JSONException {
+    assertJson(
+        Messages.start()
+            .text("Hello", "Emma")
+            .play("https://example.com/a.mp3")
+            .name("greeting")
+            .onFinish(Calls.hangup())
+            .build(),
+        "{\"command\":\"messages\",\"messagesName\":\"greeting\",\"messages\":["
+            + SAY_JSON
+            + ","
+            + PLAY_JSON
+            + "],\"events\":{\"onFinish\":["
+            + HANGUP_JSON
+            + "]}}");
+  }
+
+  @Test
+  void startRequiresAMessage() {
+    Assertions.assertThatThrownBy(() -> Messages.start().name("greeting").build())
+        .isInstanceOf(IllegalStateException.class);
+  }
+
+  @Test
+  void stop() throws JsonProcessingException, JSONException {
+    assertJson(
+        Messages.stop("greeting"), "{\"command\":\"stopMessages\",\"messagesName\":\"greeting\"}");
+  }
+
+  @Test
+  void rejectsNullValues() {
+    Assertions.assertThatThrownBy(() -> Messages.text(null, "Emma"))
+        .isInstanceOf(NullPointerException.class);
+    Assertions.assertThatThrownBy(() -> Messages.text("Hello", null))
+        .isInstanceOf(NullPointerException.class);
+    Assertions.assertThatThrownBy(() -> Messages.play(null))
+        .isInstanceOf(NullPointerException.class);
+    Assertions.assertThatThrownBy(() -> Messages.stop(null))
+        .isInstanceOf(NullPointerException.class);
+  }
+}
