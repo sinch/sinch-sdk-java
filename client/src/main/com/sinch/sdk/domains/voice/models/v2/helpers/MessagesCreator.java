@@ -13,8 +13,8 @@ import java.util.Objects;
 /**
  * Fluent creator of a <code>messages</code> command, returned by {@link Messages#start()}
  *
- * <p>Messages are played in the order they are added. Calling {@link #onFinish} more than once
- * appends the commands.
+ * <p>Messages are played in the order they are added, at most 10. Calling {@link #onFinish} more
+ * than once appends the commands.
  *
  * @since 2.4
  */
