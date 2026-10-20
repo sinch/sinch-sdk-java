@@ -5,6 +5,7 @@ import com.sinch.sdk.domains.voice.models.v2.svaml.amd.AmdCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.amd.AmdEvents;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Fluent creator of an <code>amd</code> command, returned by {@link Amd#activate()}
@@ -47,6 +48,18 @@ public final class AmdCreator {
   }
 
   /**
+   * Add commands to run when a human answers
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public AmdCreator onHuman(Consumer<CommandsSequenceCreator> sequence) {
+    onHuman = Commands.append(onHuman, sequence);
+    return this;
+  }
+
+  /**
    * Add commands to run when a machine answers
    *
    * @param commands Commands to append
@@ -67,6 +80,18 @@ public final class AmdCreator {
    */
   public AmdCreator onMachine(Collection<? extends SvamlCommand> commands) {
     onMachine = Commands.append(onMachine, commands);
+    return this;
+  }
+
+  /**
+   * Add commands to run when a machine answers
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public AmdCreator onMachine(Consumer<CommandsSequenceCreator> sequence) {
+    onMachine = Commands.append(onMachine, sequence);
     return this;
   }
 
@@ -95,6 +120,18 @@ public final class AmdCreator {
   }
 
   /**
+   * Add commands to run when a beep is detected
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public AmdCreator onBeep(Consumer<CommandsSequenceCreator> sequence) {
+    onBeep = Commands.append(onBeep, sequence);
+    return this;
+  }
+
+  /**
    * Add commands to run when the result is unknown
    *
    * @param commands Commands to append
@@ -115,6 +152,18 @@ public final class AmdCreator {
    */
   public AmdCreator onUnknown(Collection<? extends SvamlCommand> commands) {
     onUnknown = Commands.append(onUnknown, commands);
+    return this;
+  }
+
+  /**
+   * Add commands to run when the result is unknown
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public AmdCreator onUnknown(Consumer<CommandsSequenceCreator> sequence) {
+    onUnknown = Commands.append(onUnknown, sequence);
     return this;
   }
 

@@ -11,6 +11,7 @@ import com.sinch.sdk.domains.voice.models.v2.svaml.recording.TranscriptionOption
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * Fluent creator of a <code>startRecording</code> command
@@ -127,6 +128,18 @@ public final class RecordingCreator {
   }
 
   /**
+   * Add commands to run when the recording is stopped
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public RecordingCreator onFinish(Consumer<CommandsSequenceCreator> sequence) {
+    onFinish = Commands.append(onFinish, sequence);
+    return this;
+  }
+
+  /**
    * Add commands to run when the recording fails to start
    *
    * @param commands Commands to append
@@ -147,6 +160,18 @@ public final class RecordingCreator {
    */
   public RecordingCreator onFailure(Collection<? extends SvamlCommand> commands) {
     onFailure = Commands.append(onFailure, commands);
+    return this;
+  }
+
+  /**
+   * Add commands to run when the recording fails to start
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public RecordingCreator onFailure(Consumer<CommandsSequenceCreator> sequence) {
+    onFailure = Commands.append(onFailure, sequence);
     return this;
   }
 

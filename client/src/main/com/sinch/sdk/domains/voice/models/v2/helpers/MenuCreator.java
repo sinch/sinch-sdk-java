@@ -108,7 +108,8 @@ public final class MenuCreator {
   /**
    * A <code>gotoMenu</code> target must be an item of the enclosing menu. Nested event handlers are
    * searched too. A nested <code>menu</code> is checked against its own items, so one built without
-   * this creator (e.g. with {@link MenuCommand#builder()}) is checked as well.
+   * this creator (e.g. with {@link MenuCommand#builder()}) is checked as well. With no names, the
+   * commands are outside any menu, where <code>gotoMenu</code> is not valid.
    */
   static void checkGotoTargets(List<SvamlCommand> commands, Set<String> names) {
     if (null == commands) {
@@ -117,6 +118,10 @@ public final class MenuCreator {
     for (SvamlCommand command : commands) {
       if (command instanceof GotoMenuCommand) {
         String target = ((GotoMenuCommand) command).getMenuName();
+        if (names.isEmpty()) {
+          throw new IllegalStateException(
+              String.format("gotoMenu \"%s\" is only valid within a menu", target));
+        }
         if (!names.contains(target)) {
           throw new IllegalStateException(String.format("gotoMenu \"%s\" is not defined", target));
         }

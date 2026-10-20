@@ -205,6 +205,20 @@ public final class MenuItemCreator {
   }
 
   /**
+   * Add commands to run when the input matches
+   *
+   * @param input Literal string or regular expression, see {@link #match(String, SvamlCommand...)}
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public MenuItemCreator match(String input, Consumer<CommandsSequenceCreator> sequence) {
+    Objects.requireNonNull(input, "input must not be null");
+    matches.put(input, Commands.append(matches.get(input), sequence));
+    return this;
+  }
+
+  /**
    * Add commands to run when no input matches once the repeat limit is reached
    *
    * @param commands Commands to append
@@ -225,6 +239,18 @@ public final class MenuItemCreator {
    */
   public MenuItemCreator onFailure(Collection<? extends SvamlCommand> commands) {
     onFailure = Commands.append(onFailure, commands);
+    return this;
+  }
+
+  /**
+   * Add commands to run when no input matches once the repeat limit is reached
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public MenuItemCreator onFailure(Consumer<CommandsSequenceCreator> sequence) {
+    onFailure = Commands.append(onFailure, sequence);
     return this;
   }
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * Fluent creator of a <code>messages</code> command, returned by {@link Messages#start()}
@@ -98,6 +99,18 @@ public final class MessagesCreator {
    */
   public MessagesCreator onFinish(Collection<? extends SvamlCommand> commands) {
     onFinish = Commands.append(onFinish, commands);
+    return this;
+  }
+
+  /**
+   * Add commands to run when all the messages have been played
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public MessagesCreator onFinish(Consumer<CommandsSequenceCreator> sequence) {
+    onFinish = Commands.append(onFinish, sequence);
     return this;
   }
 

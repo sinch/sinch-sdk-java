@@ -8,6 +8,7 @@ import com.sinch.sdk.domains.voice.models.v2.svaml.calls.DialCommand;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * Fluent creator of a <code>dial</code> command, returned by {@link Calls#dial(CallDestination)}
@@ -118,6 +119,18 @@ public final class DialCreator {
   }
 
   /**
+   * Add commands to run when the call is answered
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public DialCreator onAnswer(Consumer<CommandsSequenceCreator> sequence) {
+    onAnswer = Commands.append(onAnswer, sequence);
+    return this;
+  }
+
+  /**
    * Add commands to run when the callee is busy
    *
    * @param commands Commands to append
@@ -138,6 +151,18 @@ public final class DialCreator {
    */
   public DialCreator onBusy(Collection<? extends SvamlCommand> commands) {
     onBusy = Commands.append(onBusy, commands);
+    return this;
+  }
+
+  /**
+   * Add commands to run when the callee is busy
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public DialCreator onBusy(Consumer<CommandsSequenceCreator> sequence) {
+    onBusy = Commands.append(onBusy, sequence);
     return this;
   }
 
@@ -166,6 +191,18 @@ public final class DialCreator {
   }
 
   /**
+   * Add commands to run when the call is rejected
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public DialCreator onReject(Consumer<CommandsSequenceCreator> sequence) {
+    onReject = Commands.append(onReject, sequence);
+    return this;
+  }
+
+  /**
    * Add commands to run when the call is not answered in time
    *
    * @param commands Commands to append
@@ -186,6 +223,18 @@ public final class DialCreator {
    */
   public DialCreator onTimeout(Collection<? extends SvamlCommand> commands) {
     onTimeout = Commands.append(onTimeout, commands);
+    return this;
+  }
+
+  /**
+   * Add commands to run when the call is not answered in time
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public DialCreator onTimeout(Consumer<CommandsSequenceCreator> sequence) {
+    onTimeout = Commands.append(onTimeout, sequence);
     return this;
   }
 
@@ -214,6 +263,18 @@ public final class DialCreator {
   }
 
   /**
+   * Add commands to run when the call is hung up
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public DialCreator onHangup(Consumer<CommandsSequenceCreator> sequence) {
+    onHangup = Commands.append(onHangup, sequence);
+    return this;
+  }
+
+  /**
    * Add commands to run when the call fails
    *
    * @param commands Commands to append
@@ -234,6 +295,18 @@ public final class DialCreator {
    */
   public DialCreator onFailure(Collection<? extends SvamlCommand> commands) {
     onFailure = Commands.append(onFailure, commands);
+    return this;
+  }
+
+  /**
+   * Add commands to run when the call fails
+   *
+   * @param sequence Lambda adding the commands to append
+   * @return This creator
+   * @since 2.4
+   */
+  public DialCreator onFailure(Consumer<CommandsSequenceCreator> sequence) {
+    onFailure = Commands.append(onFailure, sequence);
     return this;
   }
 

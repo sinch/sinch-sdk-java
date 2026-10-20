@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /** Collects the commands given to the event handlers of the creators */
 final class Commands {
@@ -29,6 +30,15 @@ final class Commands {
       list.add(Objects.requireNonNull(command, "command must not be null"));
     }
     return list;
+  }
+
+  /** Append the commands added by a lambda to a new sequence */
+  static List<SvamlCommand> append(
+      List<SvamlCommand> current, Consumer<CommandsSequenceCreator> sequence) {
+    Objects.requireNonNull(sequence, "sequence must not be null");
+    CommandsSequenceCreator creator = new CommandsSequenceCreator();
+    sequence.accept(creator);
+    return append(current, creator.commands());
   }
 
   /** Copy taken at build time, so a creator reused after <code>build()</code> does not alias it */
