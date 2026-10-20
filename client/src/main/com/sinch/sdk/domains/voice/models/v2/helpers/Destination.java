@@ -47,6 +47,10 @@ public final class Destination {
    * fields. A voice relay destination is not built here: it requires a TTS voice and an STT
    * language, see {@link #voiceRelay(String, String, String)}.
    *
+   * <p>The result is meant to build requests. It wraps the generated model and serializes as it,
+   * but it is neither an instance of {@link Phone}, {@link Sip} or {@link Stream}, nor equal to the
+   * model returned by the dedicated factories. Use them when the typed model is needed.
+   *
    * @param value Endpoint, optionally prefixed with its type
    * @return The phone, SIP or stream endpoint
    * @since 2.4

@@ -27,6 +27,9 @@ import java.util.function.Consumer;
  */
 public final class RecordingCreator {
 
+  // Options given as is: sent unchanged unless an optional field is overridden
+  private final RecordingOptions options;
+  private boolean overridden;
   private final RecordingDestinationType destination;
   private final String url;
   private final String credentials;
@@ -38,13 +41,14 @@ public final class RecordingCreator {
   private List<SvamlCommand> onFailure;
 
   RecordingCreator(RecordingDestinationType destination, String url, String credentials) {
+    this.options = null;
     this.destination = Objects.requireNonNull(destination, "destination must not be null");
     this.url = Objects.requireNonNull(url, "url must not be null");
     this.credentials = Objects.requireNonNull(credentials, "credentials must not be null");
   }
 
   RecordingCreator(RecordingOptions options) {
-    Objects.requireNonNull(options, "options must not be null");
+    this.options = Objects.requireNonNull(options, "options must not be null");
     this.destination = options.getDestination();
     this.url = options.getDestinationUrl();
     this.credentials = options.getCredentials();
@@ -62,6 +66,7 @@ public final class RecordingCreator {
    */
   public RecordingCreator format(RecordingFormatType format) {
     this.format = Objects.requireNonNull(format, "format must not be null");
+    overridden = true;
     return this;
   }
 
@@ -74,6 +79,7 @@ public final class RecordingCreator {
    */
   public RecordingCreator recordingType(RecordingType recordingType) {
     this.recordingType = Objects.requireNonNull(recordingType, "recordingType must not be null");
+    overridden = true;
     return this;
   }
 
@@ -87,6 +93,7 @@ public final class RecordingCreator {
   public RecordingCreator transcriptionOptions(TranscriptionOptions transcriptionOptions) {
     this.transcriptionOptions =
         Objects.requireNonNull(transcriptionOptions, "transcriptionOptions must not be null");
+    overridden = true;
     return this;
   }
 
@@ -202,6 +209,9 @@ public final class RecordingCreator {
 
   /** Only the fields that have a value are set, so unset ones are left to the API defaults */
   private RecordingOptions buildOptions() {
+    if (null != options && !overridden) {
+      return options;
+    }
     RecordingOptions.Builder builder = RecordingOptions.builder();
     if (null != destination) {
       builder.setDestination(destination);

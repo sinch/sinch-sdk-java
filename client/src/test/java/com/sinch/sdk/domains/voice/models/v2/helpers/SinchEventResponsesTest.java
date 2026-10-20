@@ -68,8 +68,17 @@ class SinchEventResponsesTest extends HelpersBaseTest {
   }
 
   @Test
-  void rejectsGotoMenuOutsideAMenu() {
-    Assertions.assertThatThrownBy(() -> SinchEventResponses.response(Menu.gotoMenu("main")))
+  void responseAcceptsGotoMenu() throws JsonProcessingException, JSONException {
+    // the event may have been triggered within a menu, where gotoMenu is valid
+    assertJson(
+        SinchEventResponses.response(Menu.gotoMenu("main")),
+        "{\"commands\":[{\"command\":\"gotoMenu\",\"menuName\":\"main\"}]}");
+  }
+
+  @Test
+  void incomingCallResponseRejectsGotoMenuOutsideAMenu() {
+    Assertions.assertThatThrownBy(
+            () -> SinchEventResponses.incomingCallResponse(Menu.gotoMenu("main")).build())
         .isInstanceOf(IllegalStateException.class)
         .hasMessageContaining("only valid within a menu");
     Assertions.assertThatThrownBy(

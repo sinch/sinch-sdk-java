@@ -326,6 +326,29 @@ class CommandsSequenceCreatorTest extends HelpersBaseTest {
   }
 
   @Test
+  void messageShortcutsAcceptNameAndOnFinish() throws JsonProcessingException, JSONException {
+    assertSameJson(
+        CommandsSequenceCreator.create()
+            .text("Hello", "Emma", m -> m.name("greeting").onFinish(Calls.hangup()))
+            .ssml("<speak>Hi</speak>", "Emma", m -> m.name("ssml"))
+            .play("https://example.com/a.mp3", m -> m.onFinish(s -> s.hangup()))
+            .build(),
+        Arrays.asList(
+            Messages.text("Hello", "Emma", m -> m.name("greeting").onFinish(Calls.hangup())),
+            Messages.ssml("<speak>Hi</speak>", "Emma", m -> m.name("ssml")),
+            Messages.play("https://example.com/a.mp3", m -> m.onFinish(Calls.hangup()))));
+  }
+
+  @Test
+  void commandAcceptsACollection() throws JsonProcessingException, JSONException {
+    assertSameJson(
+        CommandsSequenceCreator.create()
+            .command(Arrays.asList(Calls.answer(), Calls.hangup()))
+            .build(),
+        Arrays.asList(Calls.answer(), Calls.hangup()));
+  }
+
+  @Test
   void rejectsNullValues() {
     Assertions.assertThatThrownBy(() -> CommandsSequenceCreator.create().amd(null))
         .isInstanceOf(NullPointerException.class);

@@ -33,8 +33,11 @@ public final class Menu {
    * Jump to another item of the enclosing menu
    *
    * <p>Only valid within a menu: in the <code>match</code> or <code>onFailure</code> commands of an
-   * item, including their nested event handlers. The target must be an item of that menu, which
-   * {@link MenuCreator#build()} checks.
+   * item, including their nested event handlers. The target must be an item of that menu.
+   *
+   * <p>The target is checked when one of these is built: a menu ({@link MenuCreator}), a sequence
+   * ({@link CommandsSequenceCreator}), a static call behavior or a response to an incoming call.
+   * Building another creator alone, e.g. {@link DialCreator}, does not check it.
    *
    * <p>Named after the API command: <code>goto</code> is a reserved word in Java.
    *

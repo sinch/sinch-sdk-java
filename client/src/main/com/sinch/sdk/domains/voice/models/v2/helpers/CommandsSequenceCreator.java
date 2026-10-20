@@ -5,6 +5,7 @@ import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.recording.RecordingDestinationType;
 import com.sinch.sdk.domains.voice.models.v2.svaml.recording.RecordingOptions;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -14,8 +15,11 @@ import java.util.function.Consumer;
  * Fluent creator of an ordered sequence of SVAML commands, e.g. the <code>commands</code> of a call
  * or of a Sinch Event response
  *
- * <p>Each method adds one command, built as the helper of the same name would. The creators of the
- * commands with events are given to a lambda, so no intermediate <code>build()</code> is needed:
+ * <p>Each method adds one command, built with the matching helper: e.g. <code>amd</code> uses
+ * {@link Amd} and <code>recording</code> uses {@link Recording}.
+ *
+ * <p>The creators of the commands with events are given to a lambda, so they need no intermediate
+ * build:
  *
  * <pre>{@code
  * List<SvamlCommand> commands =
@@ -211,6 +215,52 @@ public final class CommandsSequenceCreator {
   }
 
   /**
+   * Add a <code>messages</code> command playing a text-to-speech message in plain text, with a name
+   * or commands run once it is played
+   *
+   * @param text Text to synthesize
+   * @param voiceName Voice used for speech synthesis
+   * @param messages Lambda setting the name, the commands run once played, or more messages
+   * @return This creator
+   * @see Messages#text(String, String, Consumer)
+   * @since 2.4
+   */
+  public CommandsSequenceCreator text(
+      String text, String voiceName, Consumer<MessagesCreator> messages) {
+    return command(Messages.text(text, voiceName, messages));
+  }
+
+  /**
+   * Add a <code>messages</code> command playing a text-to-speech message in SSML, with a name or
+   * commands run once it is played
+   *
+   * @param ssml SSML document to synthesize
+   * @param voiceName Voice used for speech synthesis
+   * @param messages Lambda setting the name, the commands run once played, or more messages
+   * @return This creator
+   * @see Messages#ssml(String, String, Consumer)
+   * @since 2.4
+   */
+  public CommandsSequenceCreator ssml(
+      String ssml, String voiceName, Consumer<MessagesCreator> messages) {
+    return command(Messages.ssml(ssml, voiceName, messages));
+  }
+
+  /**
+   * Add a <code>messages</code> command playing an audio file, with a name or commands run once it
+   * is played
+   *
+   * @param url URL of the media to play
+   * @param messages Lambda setting the name, the commands run once played, or more messages
+   * @return This creator
+   * @see Messages#play(String, Consumer)
+   * @since 2.4
+   */
+  public CommandsSequenceCreator play(String url, Consumer<MessagesCreator> messages) {
+    return command(Messages.play(url, messages));
+  }
+
+  /**
    * Add a <code>messages</code> command
    *
    * @param messages Lambda adding the messages, the name and the events
@@ -374,6 +424,18 @@ public final class CommandsSequenceCreator {
    * @since 2.4
    */
   public CommandsSequenceCreator command(SvamlCommand... commands) {
+    Commands.append(this.commands, commands);
+    return this;
+  }
+
+  /**
+   * Add commands built by other means, e.g. with the model builders
+   *
+   * @param commands Commands to add
+   * @return This creator
+   * @since 2.4
+   */
+  public CommandsSequenceCreator command(Collection<? extends SvamlCommand> commands) {
     Commands.append(this.commands, commands);
     return this;
   }

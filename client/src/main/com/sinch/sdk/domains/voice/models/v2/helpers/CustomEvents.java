@@ -18,8 +18,10 @@ public final class CustomEvents {
    *
    * <p>The sequence waits for the backend answer before running the next command.
    *
-   * @param name Name of the custom event, sent as <code>webhookName</code>. The event received by
-   *     the backend is named <code>call.customEvent.&lt;name&gt;</code>
+   * <p>The backend receives a <code>call.webhook.&lt;name&gt;</code> event. Once parsed by the SDK,
+   * its type is <code>call.customEvent.&lt;name&gt;</code>.
+   *
+   * @param name Name of the custom event, sent as <code>webhookName</code>
    * @param url URL the event is sent to
    * @return The <code>customEvent</code> command
    * @since 2.4

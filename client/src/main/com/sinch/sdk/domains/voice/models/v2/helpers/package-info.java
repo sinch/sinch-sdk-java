@@ -10,6 +10,9 @@
  *   <li>Sinch Event responses: {@link SinchEventResponses}
  * </ul>
  *
+ * <p>The limits of the API (lengths, ranges, number of items) are documented on the methods but not
+ * checked by the helpers: the API checks them.
+ *
  * @since 2.4
  */
 package com.sinch.sdk.domains.voice.models.v2.helpers;

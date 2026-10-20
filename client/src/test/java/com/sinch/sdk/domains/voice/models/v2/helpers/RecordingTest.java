@@ -124,6 +124,41 @@ class RecordingTest extends HelpersBaseTest {
   }
 
   @Test
+  void givenOptionsAreSentUnchangedWithoutOverride() {
+    RecordingOptions options =
+        RecordingOptions.builder()
+            .setDestination(RecordingDestinationType.AWS)
+            .setDestinationUrl("s3://b")
+            .setCredentials("c")
+            .setTranscriptionOptions(TranscriptionOptions.builder().setIsEnabled(true).build())
+            .build();
+
+    Assertions.assertThat(Recording.start(options).name("rec").build().getRecordingOptions())
+        .isSameAs(options);
+    Assertions.assertThat(
+            Recording.start(options).format(RecordingFormatType.WAV).build().getRecordingOptions())
+        .isNotSameAs(options);
+  }
+
+  /**
+   * RecordingCreator copies every field of the given options when one is overridden: a new field in
+   * RecordingOptions must be copied too
+   */
+  @Test
+  void recordingOptionsFieldsAreAllCopied() {
+    Assertions.assertThat(RecordingOptions.class.getDeclaredMethods())
+        .filteredOn(method -> method.getName().startsWith("get"))
+        .extracting(java.lang.reflect.Method::getName)
+        .containsExactlyInAnyOrder(
+            "getFormat",
+            "getRecordingType",
+            "getDestination",
+            "getDestinationUrl",
+            "getCredentials",
+            "getTranscriptionOptions");
+  }
+
+  @Test
   void rejectsNullValues() {
     Assertions.assertThatThrownBy(() -> Recording.options(null, "s3://b", "c"))
         .isInstanceOf(NullPointerException.class);

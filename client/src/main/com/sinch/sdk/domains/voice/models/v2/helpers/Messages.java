@@ -5,13 +5,14 @@ import com.sinch.sdk.domains.voice.models.v2.svaml.playback.PlayMessage;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.SayMessage;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.StopMessagesCommand;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * Helpers to build the message playback SVAML commands
  *
  * <p>{@link #text}, {@link #ssml} and {@link #play} are shortcuts for a <code>messages</code>
- * command with a single message. Use {@link #start()} to play several messages, or to set a name or
- * the commands to run once they have been played.
+ * command with a single message. Their lambda overloads also set a name or the commands to run once
+ * played. Use {@link #start()} to play several messages.
  *
  * @since 2.4
  */
@@ -52,6 +53,51 @@ public final class Messages {
    */
   public static MessagesCommand play(String url) {
     return start().play(url).build();
+  }
+
+  /**
+   * Play a text-to-speech message in plain text, with a name or commands run once it is played
+   *
+   * @param text Text to synthesize
+   * @param voiceName Voice used for speech synthesis
+   * @param messages Lambda setting the name, the commands run once played, or more messages
+   * @return The <code>messages</code> command
+   * @since 2.4
+   */
+  public static MessagesCommand text(
+      String text, String voiceName, Consumer<MessagesCreator> messages) {
+    return fill(start().text(text, voiceName), messages);
+  }
+
+  /**
+   * Play a text-to-speech message in SSML, with a name or commands run once it is played
+   *
+   * @param ssml SSML document (<code>&lt;speak&gt;...&lt;/speak&gt;</code>) to synthesize
+   * @param voiceName Voice used for speech synthesis
+   * @param messages Lambda setting the name, the commands run once played, or more messages
+   * @return The <code>messages</code> command
+   * @since 2.4
+   */
+  public static MessagesCommand ssml(
+      String ssml, String voiceName, Consumer<MessagesCreator> messages) {
+    return fill(start().ssml(ssml, voiceName), messages);
+  }
+
+  /**
+   * Play an audio file, with a name or commands run once it is played
+   *
+   * @param url URL of the media to play
+   * @param messages Lambda setting the name, the commands run once played, or more messages
+   * @return The <code>messages</code> command
+   * @since 2.4
+   */
+  public static MessagesCommand play(String url, Consumer<MessagesCreator> messages) {
+    return fill(start().play(url), messages);
+  }
+
+  private static MessagesCommand fill(MessagesCreator creator, Consumer<MessagesCreator> messages) {
+    Objects.requireNonNull(messages, "messages must not be null").accept(creator);
+    return creator.build();
   }
 
   /**

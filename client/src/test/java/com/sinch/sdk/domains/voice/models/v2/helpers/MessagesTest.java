@@ -65,6 +65,44 @@ class MessagesTest extends HelpersBaseTest {
   }
 
   @Test
+  void shortcutsAcceptNameAndOnFinish() throws JsonProcessingException, JSONException {
+    assertJson(
+        Messages.text("Hello", "Emma", m -> m.name("greeting").onFinish(Calls.hangup())),
+        "{\"command\":\"messages\",\"messagesName\":\"greeting\",\"messages\":["
+            + SAY_JSON
+            + "],\"events\":{\"onFinish\":["
+            + HANGUP_JSON
+            + "]}}");
+    assertJson(
+        Messages.ssml("<speak>Hello</speak>", "Emma", m -> m.name("greeting")),
+        "{\"command\":\"messages\",\"messagesName\":\"greeting\",\"messages\":[{\"type\":\"SAY\","
+            + "\"say\":{\"text\":\"<speak>Hello</speak>\",\"voiceName\":\"Emma\","
+            + "\"format\":\"SSML\"}}]}");
+    assertJson(
+        Messages.play("https://example.com/a.mp3", m -> m.onFinish(s -> s.hangup())),
+        "{\"command\":\"messages\",\"messages\":["
+            + PLAY_JSON
+            + "],\"events\":{\"onFinish\":["
+            + HANGUP_JSON
+            + "]}}");
+  }
+
+  @Test
+  void shortcutLambdaCanAddMessages() throws JsonProcessingException, JSONException {
+    assertJson(
+        Messages.text("Hello", "Emma", m -> m.play("https://example.com/a.mp3")),
+        "{\"command\":\"messages\",\"messages\":[" + SAY_JSON + "," + PLAY_JSON + "]}");
+  }
+
+  @Test
+  void rejectsNullShortcutLambda() {
+    Assertions.assertThatThrownBy(() -> Messages.text("Hello", "Emma", null))
+        .isInstanceOf(NullPointerException.class);
+    Assertions.assertThatThrownBy(() -> Messages.play("https://example.com/a.mp3", null))
+        .isInstanceOf(NullPointerException.class);
+  }
+
+  @Test
   void rejectsNullValues() {
     Assertions.assertThatThrownBy(() -> Messages.text(null, "Emma"))
         .isInstanceOf(NullPointerException.class);
