@@ -64,13 +64,10 @@ public class Start {
                                 .from(sinchPhoneNumber)
                                 .onAnswer(
                                     answered ->
-                                        answered.messages(
-                                            messages ->
-                                                messages
-                                                    .text(
-                                                        "Hello, your call is now connected.",
-                                                        "Emma")
-                                                    .onFinish(Calls.hangup()))))
+                                        answered.text(
+                                            "Hello, your call is now connected.",
+                                            "Emma",
+                                            greeting -> greeting.onFinish(Calls.hangup()))))
                     .build())
             .setParameters(parameters)
             .build();

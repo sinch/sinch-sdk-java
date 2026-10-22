@@ -4,6 +4,7 @@ import com.sinch.sdk.domains.voice.models.v2.svaml.recording.RecordingDestinatio
 import com.sinch.sdk.domains.voice.models.v2.svaml.recording.RecordingOptions;
 import com.sinch.sdk.domains.voice.models.v2.svaml.recording.StopRecordingCommand;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * Helpers to build the call recording SVAML commands
@@ -17,8 +18,9 @@ public final class Recording {
   /**
    * Create the options to store a recording in a third party storage
    *
-   * <p>Only the required fields are set. Set the format, the recording type and the transcription
-   * on the creator returned by {@link #start(RecordingOptions)}.
+   * <p>Only the required fields are set. To set the format, the recording type or the
+   * transcription, use {@link #options(RecordingDestinationType, String, String, Consumer)}, or the
+   * creator returned by {@link #start(RecordingDestinationType, String, String)}.
    *
    * @param destination Third party storage the recording is delivered to
    * @param url Destination URL, sent as <code>destinationUrl</code>. Its scheme depends on the
@@ -29,14 +31,37 @@ public final class Recording {
    */
   public static RecordingOptions options(
       RecordingDestinationType destination, String url, String credentials) {
+    return options(destination, url, credentials, options -> {});
+  }
+
+  /**
+   * Create the options to store a recording in a third party storage, with optional fields, e.g. to
+   * share them between several recordings
+   *
+   * @param destination Third party storage the recording is delivered to
+   * @param url Destination URL, sent as <code>destinationUrl</code>. Its scheme depends on the
+   *     destination: <code>s3</code>, <code>gs</code> or <code>azure</code>
+   * @param credentials Credentials to the third party storage
+   * @param options Lambda setting the optional fields (format, recording type, transcription) on
+   *     the model builder, which already holds the required ones
+   * @return The recording options
+   * @since 2.4
+   */
+  public static RecordingOptions options(
+      RecordingDestinationType destination,
+      String url,
+      String credentials,
+      Consumer<RecordingOptions.Builder> options) {
     Objects.requireNonNull(destination, "destination must not be null");
     Objects.requireNonNull(url, "url must not be null");
     Objects.requireNonNull(credentials, "credentials must not be null");
-    return RecordingOptions.builder()
-        .setDestination(destination)
-        .setDestinationUrl(url)
-        .setCredentials(credentials)
-        .build();
+    RecordingOptions.Builder builder =
+        RecordingOptions.builder()
+            .setDestination(destination)
+            .setDestinationUrl(url)
+            .setCredentials(credentials);
+    Objects.requireNonNull(options, "options must not be null").accept(builder);
+    return builder.build();
   }
 
   /**

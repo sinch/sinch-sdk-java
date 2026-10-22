@@ -4,11 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.destination.CallDestination;
+import com.sinch.sdk.domains.voice.models.v2.destination.CallHeader;
 import com.sinch.sdk.domains.voice.models.v2.destination.CallOrigin;
 import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
 import com.sinch.sdk.domains.voice.models.v2.destination.Sip;
+import com.sinch.sdk.domains.voice.models.v2.destination.SipCallHeader;
 import com.sinch.sdk.domains.voice.models.v2.destination.SipFrom;
 import com.sinch.sdk.domains.voice.models.v2.destination.Stream;
+import com.sinch.sdk.domains.voice.models.v2.destination.StreamOptions;
 import com.sinch.sdk.domains.voice.models.v2.destination.VoiceRelay;
 import com.sinch.sdk.domains.voice.models.v2.svaml.calls.DialCommand;
 import java.util.Collections;
@@ -176,6 +179,92 @@ class DestinationTest extends BaseTest {
         "{\"commands\":[{\"command\":\"dial\","
             + "\"from\":{\"type\":\"PHONE\",\"phone\":{\"number\":\"+15550001111\"}},"
             + "\"to\":{\"type\":\"STREAM\",\"stream\":{\"endpoint\":\"wss://example.com/audio\"}}}]}");
+  }
+
+  @Test
+  void sipWithOptionalFields() throws JsonProcessingException, JSONException {
+    Sip destination =
+        Destination.sip(
+            "sip:user@example.com",
+            sip ->
+                sip.setTransport(Sip.TransportEnum.TCP)
+                    .setCallHeaders(
+                        Collections.singletonList(
+                            SipCallHeader.builder().setKey("X-Id").setValue("1").build())));
+
+    assertJson(
+        destination,
+        "{\"type\":\"SIP\",\"sip\":{\"endpoint\":\"sip:user@example.com\",\"transport\":\"TCP\","
+            + "\"callHeaders\":[{\"key\":\"X-Id\",\"value\":\"1\"}]}}");
+  }
+
+  @Test
+  void sipFromWithOptionalFields() throws JsonProcessingException, JSONException {
+    SipFrom origin =
+        Destination.sipFrom("sip:user@example.com", sip -> sip.setDisplayName("Alice"));
+
+    assertJson(
+        origin,
+        "{\"type\":\"SIP\",\"sip\":{\"endpoint\":\"sip:user@example.com\","
+            + "\"displayName\":\"Alice\"}}");
+  }
+
+  @Test
+  void streamWithOptionalFields() throws JsonProcessingException, JSONException {
+    Stream destination =
+        Destination.stream(
+            "wss://example.com/audio",
+            stream ->
+                stream
+                    .setStreamOptions(
+                        StreamOptions.builder()
+                            .setSampleRate(StreamOptions.SampleRateEnum.HZ_16000)
+                            .build())
+                    .setCallHeaders(
+                        Collections.singletonList(
+                            CallHeader.builder().setKey("X-Id").setValue("1").build())));
+
+    assertJson(
+        destination,
+        "{\"type\":\"STREAM\",\"stream\":{\"endpoint\":\"wss://example.com/audio\","
+            + "\"streamOptions\":{\"sampleRate\":16000},"
+            + "\"callHeaders\":[{\"key\":\"X-Id\",\"value\":\"1\"}]}}");
+  }
+
+  @Test
+  void voiceRelayWithOptionalFields() throws JsonProcessingException, JSONException {
+    VoiceRelay destination =
+        Destination.voiceRelay(
+            "wss://example.com/agent",
+            "Emma",
+            "en-US",
+            relay -> relay.setEnableInterruptions(false));
+
+    assertJson(
+        destination,
+        "{\"type\":\"VOICE_RELAY\",\"voiceRelay\":{\"endpoint\":\"wss://example.com/agent\","
+            + "\"ttsVoice\":\"Emma\",\"sttLanguage\":\"en-US\",\"enableInterruptions\":false}}");
+  }
+
+  @Test
+  void emptyLambdaIsTheSameAsTheSimpleFactory() {
+    Assertions.assertThat(Destination.sip("sip:user@example.com", sip -> {}))
+        .isEqualTo(Destination.sip("sip:user@example.com"));
+    Assertions.assertThat(Destination.stream("wss://example.com/audio", stream -> {}))
+        .isEqualTo(Destination.stream("wss://example.com/audio"));
+  }
+
+  @Test
+  void rejectsNullLambda() {
+    Assertions.assertThatThrownBy(() -> Destination.sip("sip:user@example.com", null))
+        .isInstanceOf(NullPointerException.class);
+    Assertions.assertThatThrownBy(() -> Destination.sipFrom("sip:user@example.com", null))
+        .isInstanceOf(NullPointerException.class);
+    Assertions.assertThatThrownBy(() -> Destination.stream("wss://example.com/audio", null))
+        .isInstanceOf(NullPointerException.class);
+    Assertions.assertThatThrownBy(
+            () -> Destination.voiceRelay("wss://example.com", "Emma", "en-US", null))
+        .isInstanceOf(NullPointerException.class);
   }
 
   @Test

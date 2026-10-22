@@ -159,6 +159,45 @@ class RecordingTest extends HelpersBaseTest {
   }
 
   @Test
+  void optionsWithOptionalFields() throws JsonProcessingException, JSONException {
+    RecordingOptions options =
+        Recording.options(
+            RecordingDestinationType.AWS,
+            "s3://voice-recordings/support",
+            "key:secret:eu-west-1",
+            o ->
+                o.setFormat(RecordingFormatType.WAV)
+                    .setRecordingType(RecordingType.INBOUND)
+                    .setTranscriptionOptions(
+                        TranscriptionOptions.builder().setIsEnabled(true).build()));
+
+    assertJson(
+        options,
+        "{\"destination\":\"AWS\",\"destinationUrl\":\"s3://voice-recordings/support\","
+            + "\"credentials\":\"key:secret:eu-west-1\",\"format\":\"WAV\","
+            + "\"recordingType\":\"INBOUND\",\"transcriptionOptions\":{\"isEnabled\":true}}");
+  }
+
+  @Test
+  void sharedOptionsWithOptionalFieldsAreSentUnchanged() {
+    RecordingOptions shared =
+        Recording.options(
+            RecordingDestinationType.AWS, "s3://b", "c", o -> o.setFormat(RecordingFormatType.WAV));
+
+    Assertions.assertThat(Recording.start(shared).name("first").build().getRecordingOptions())
+        .isSameAs(shared);
+    Assertions.assertThat(Recording.start(shared).name("second").build().getRecordingOptions())
+        .isSameAs(shared);
+  }
+
+  @Test
+  void rejectsNullOptionsLambda() {
+    Assertions.assertThatThrownBy(
+            () -> Recording.options(RecordingDestinationType.AWS, "s3://b", "c", null))
+        .isInstanceOf(NullPointerException.class);
+  }
+
+  @Test
   void rejectsNullValues() {
     Assertions.assertThatThrownBy(() -> Recording.options(null, "s3://b", "c"))
         .isInstanceOf(NullPointerException.class);

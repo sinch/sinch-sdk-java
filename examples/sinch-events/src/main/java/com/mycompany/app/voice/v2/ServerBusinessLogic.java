@@ -23,11 +23,10 @@ public class ServerBusinessLogic {
     // the call name only takes effect in responses to "call.incoming" events
     return SinchEventResponses.incomingCallResponse(
             commands ->
-                commands.messages(
-                    messages ->
-                        messages
-                            .text("Thank you for calling. Goodbye.", "Emma")
-                            .onFinish(Calls.hangup())))
+                commands.text(
+                    "Thank you for calling. Goodbye.",
+                    "Emma",
+                    goodbye -> goodbye.onFinish(Calls.hangup())))
         .name("incoming")
         .build();
   }
