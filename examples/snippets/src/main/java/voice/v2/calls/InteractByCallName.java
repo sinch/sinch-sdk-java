@@ -10,9 +10,8 @@ package voice.v2.calls;
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.voice.api.v2.CallsService;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.CallPatchRequest;
-import com.sinch.sdk.domains.voice.models.v2.svaml.calls.HangupCommand;
+import com.sinch.sdk.domains.voice.models.v2.helpers.Calls;
 import com.sinch.sdk.models.Configuration;
-import java.util.Collections;
 import java.util.logging.Logger;
 import utils.Settings;
 
@@ -43,10 +42,7 @@ public class InteractByCallName {
 
     CallsService callsService = client.voice().v2().calls();
 
-    CallPatchRequest request =
-        CallPatchRequest.builder()
-            .setCommands(Collections.singletonList(HangupCommand.HANGUP_COMMAND))
-            .build();
+    CallPatchRequest request = CallPatchRequest.builder().setCommands(Calls.hangup()).build();
 
     LOGGER.info(
         String.format("Interact with call named '%s' in session '%s'", callName, sessionId));

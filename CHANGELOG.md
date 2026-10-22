@@ -18,7 +18,11 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 ## v2.4.0 - Unreleased
 
 ### Voice
-- **[feature]** V2 helpers: `Destination` factories for call destinations and origins (`of`, `phone`, `sip`, `sipFrom`, `stream` and `voiceRelay`). `of` returns a `BaseDestination`, accepted as both `to` and `from`
+- **[feature]** V2 helpers: `Destination`, SVAML commands (`Calls`, `Amd`, `Messages`, `Recording`, `CustomEvents`, `Menu`) and `CommandsSequenceCreator`. Event handlers accept a sequence lambda
+- **[feature]** V2 helpers: `CallBehaviorHelper` for services and `SinchEventResponses` for Sinch Events
+- **[feature]** V2 helpers: `VoiceName` catalog of text-to-speech voices
+- **[feature]** V2 `setCommands(...)` accepts one or more commands
+- **[doc]** V2 snippets, `sinch-events` example and README use the helpers
 
 ---
 ## v2.3.0 - 2026-10-15
