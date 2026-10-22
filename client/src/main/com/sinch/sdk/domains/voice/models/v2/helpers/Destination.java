@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.voice.models.v2.helpers;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.sinch.sdk.domains.voice.models.v2.VoiceName;
 import com.sinch.sdk.domains.voice.models.v2.destination.CallDestination;
 import com.sinch.sdk.domains.voice.models.v2.destination.CallOrigin;
 import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
@@ -183,6 +184,19 @@ public final class Destination {
   }
 
   /**
+   * Create a Voice Relay call destination
+   *
+   * @param endpoint URL of the server accepting the WebSocket request
+   * @param ttsVoice Default voice for speech synthesis, from the catalog
+   * @param sttLanguage BCP-47 language tag used to transcribe the inbound audio
+   * @return The Voice Relay destination
+   * @since 2.4
+   */
+  public static VoiceRelay voiceRelay(String endpoint, VoiceName ttsVoice, String sttLanguage) {
+    return voiceRelay(endpoint, VoiceName.valueOf(ttsVoice), sttLanguage);
+  }
+
+  /**
    * Create a Voice Relay call destination with optional fields, e.g. the interruptions or the call
    * headers
    *
@@ -209,6 +223,26 @@ public final class Destination {
             .setSttLanguage(sttLanguage);
     Objects.requireNonNull(voiceRelay, "voiceRelay must not be null").accept(builder);
     return builder.build();
+  }
+
+  /**
+   * Create a Voice Relay call destination with optional fields, e.g. the interruptions or the call
+   * headers
+   *
+   * @param endpoint URL of the server accepting the WebSocket request
+   * @param ttsVoice Default voice for speech synthesis, from the catalog
+   * @param sttLanguage BCP-47 language tag used to transcribe the inbound audio
+   * @param voiceRelay Lambda setting the optional fields on the model builder, which already holds
+   *     the required ones
+   * @return The Voice Relay destination
+   * @since 2.4
+   */
+  public static VoiceRelay voiceRelay(
+      String endpoint,
+      VoiceName ttsVoice,
+      String sttLanguage,
+      Consumer<VoiceRelay.Builder> voiceRelay) {
+    return voiceRelay(endpoint, VoiceName.valueOf(ttsVoice), sttLanguage, voiceRelay);
   }
 
   private static boolean isSip(String value) {

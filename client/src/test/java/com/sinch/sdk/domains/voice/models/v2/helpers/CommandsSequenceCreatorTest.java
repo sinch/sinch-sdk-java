@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.voice.models.v2.helpers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sinch.sdk.domains.voice.models.v2.VoiceName;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.menu.MenuCommand;
@@ -346,6 +347,23 @@ class CommandsSequenceCreatorTest extends HelpersBaseTest {
             .command(Arrays.asList(Calls.answer(), Calls.hangup()))
             .build(),
         Arrays.asList(Calls.answer(), Calls.hangup()));
+  }
+
+  @Test
+  void messageShortcutsAcceptAVoiceNameFromTheCatalog()
+      throws JsonProcessingException, JSONException {
+    assertSameJson(
+        CommandsSequenceCreator.create()
+            .text("Hello", VoiceName.EMMA)
+            .ssml("<speak>Hi</speak>", VoiceName.EMMA)
+            .text("Bye", VoiceName.EMMA, m -> m.onFinish(Calls.hangup()))
+            .ssml("<speak>Bye</speak>", VoiceName.EMMA, m -> m.name("bye"))
+            .build(),
+        Arrays.asList(
+            Messages.text("Hello", "Emma"),
+            Messages.ssml("<speak>Hi</speak>", "Emma"),
+            Messages.text("Bye", "Emma", m -> m.onFinish(Calls.hangup())),
+            Messages.ssml("<speak>Bye</speak>", "Emma", m -> m.name("bye"))));
   }
 
   @Test

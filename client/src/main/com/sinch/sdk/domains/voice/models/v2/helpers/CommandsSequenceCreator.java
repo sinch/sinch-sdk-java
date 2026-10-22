@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.voice.models.v2.helpers;
 
+import com.sinch.sdk.domains.voice.models.v2.VoiceName;
 import com.sinch.sdk.domains.voice.models.v2.destination.CallDestination;
 import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.recording.RecordingDestinationType;
@@ -190,6 +191,19 @@ public final class CommandsSequenceCreator {
   }
 
   /**
+   * Add a <code>messages</code> command playing a text-to-speech message in plain text
+   *
+   * @param text Text to synthesize
+   * @param voiceName Voice used for speech synthesis, from the catalog
+   * @return This creator
+   * @see Messages#text(String, String)
+   * @since 2.4
+   */
+  public CommandsSequenceCreator text(String text, VoiceName voiceName) {
+    return text(text, VoiceName.valueOf(voiceName));
+  }
+
+  /**
    * Add a <code>messages</code> command playing a text-to-speech message in SSML
    *
    * @param ssml SSML document to synthesize
@@ -200,6 +214,19 @@ public final class CommandsSequenceCreator {
    */
   public CommandsSequenceCreator ssml(String ssml, String voiceName) {
     return command(Messages.ssml(ssml, voiceName));
+  }
+
+  /**
+   * Add a <code>messages</code> command playing a text-to-speech message in SSML
+   *
+   * @param ssml SSML document to synthesize
+   * @param voiceName Voice used for speech synthesis, from the catalog
+   * @return This creator
+   * @see Messages#ssml(String, String)
+   * @since 2.4
+   */
+  public CommandsSequenceCreator ssml(String ssml, VoiceName voiceName) {
+    return ssml(ssml, VoiceName.valueOf(voiceName));
   }
 
   /**
@@ -231,6 +258,22 @@ public final class CommandsSequenceCreator {
   }
 
   /**
+   * Add a <code>messages</code> command playing a text-to-speech message in plain text, with a name
+   * or commands run once it is played
+   *
+   * @param text Text to synthesize
+   * @param voiceName Voice used for speech synthesis, from the catalog
+   * @param messages Lambda setting the name, the commands run once played, or more messages
+   * @return This creator
+   * @see Messages#text(String, String, Consumer)
+   * @since 2.4
+   */
+  public CommandsSequenceCreator text(
+      String text, VoiceName voiceName, Consumer<MessagesCreator> messages) {
+    return text(text, VoiceName.valueOf(voiceName), messages);
+  }
+
+  /**
    * Add a <code>messages</code> command playing a text-to-speech message in SSML, with a name or
    * commands run once it is played
    *
@@ -244,6 +287,22 @@ public final class CommandsSequenceCreator {
   public CommandsSequenceCreator ssml(
       String ssml, String voiceName, Consumer<MessagesCreator> messages) {
     return command(Messages.ssml(ssml, voiceName, messages));
+  }
+
+  /**
+   * Add a <code>messages</code> command playing a text-to-speech message in SSML, with a name or
+   * commands run once it is played
+   *
+   * @param ssml SSML document to synthesize
+   * @param voiceName Voice used for speech synthesis, from the catalog
+   * @param messages Lambda setting the name, the commands run once played, or more messages
+   * @return This creator
+   * @see Messages#ssml(String, String, Consumer)
+   * @since 2.4
+   */
+  public CommandsSequenceCreator ssml(
+      String ssml, VoiceName voiceName, Consumer<MessagesCreator> messages) {
+    return ssml(ssml, VoiceName.valueOf(voiceName), messages);
   }
 
   /**

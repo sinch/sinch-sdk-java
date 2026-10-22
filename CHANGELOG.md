@@ -20,6 +20,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 ### Voice
 - **[feature]** V2 helpers: `Destination`, SVAML commands (`Calls`, `Amd`, `Messages`, `Recording`, `CustomEvents`, `Menu`) and `CommandsSequenceCreator`. Event handlers accept a sequence lambda
 - **[feature]** V2 helpers: `CallBehaviorHelper` for services and `SinchEventResponses` for Sinch Events
+- **[feature]** V2 helpers: `VoiceName` catalog of text-to-speech voices
 - **[doc]** V2 snippets, `sinch-events` example and README use the helpers
 
 ---

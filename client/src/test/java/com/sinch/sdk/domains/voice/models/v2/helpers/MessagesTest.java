@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.voice.models.v2.helpers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sinch.sdk.domains.voice.models.v2.VoiceName;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -103,10 +104,34 @@ class MessagesTest extends HelpersBaseTest {
   }
 
   @Test
+  void acceptsAVoiceNameFromTheCatalog() throws JsonProcessingException, JSONException {
+    assertJson(
+        Messages.text("Hello", VoiceName.EMMA),
+        objectMapper.writeValueAsString(Messages.text("Hello", "Emma")));
+    assertJson(
+        Messages.ssml("<speak>Hello</speak>", VoiceName.EMMA, m -> m.name("greeting")),
+        objectMapper.writeValueAsString(
+            Messages.ssml("<speak>Hello</speak>", "Emma", m -> m.name("greeting"))));
+    assertJson(
+        Messages.start()
+            .text("Hello", VoiceName.EMMA)
+            .ssml("<speak>Hi</speak>", VoiceName.EMMA_3)
+            .build(),
+        objectMapper.writeValueAsString(
+            Messages.start().text("Hello", "Emma").ssml("<speak>Hi</speak>", "Emma_3").build()));
+  }
+
+  @Test
+  void rejectsNullVoiceName() {
+    Assertions.assertThatThrownBy(() -> Messages.text("Hello", (VoiceName) null))
+        .isInstanceOf(NullPointerException.class);
+  }
+
+  @Test
   void rejectsNullValues() {
     Assertions.assertThatThrownBy(() -> Messages.text(null, "Emma"))
         .isInstanceOf(NullPointerException.class);
-    Assertions.assertThatThrownBy(() -> Messages.text("Hello", null))
+    Assertions.assertThatThrownBy(() -> Messages.text("Hello", (String) null))
         .isInstanceOf(NullPointerException.class);
     Assertions.assertThatThrownBy(() -> Messages.play(null))
         .isInstanceOf(NullPointerException.class);

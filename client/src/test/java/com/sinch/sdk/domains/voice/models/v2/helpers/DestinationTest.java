@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.voice.models.v2.helpers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sinch.sdk.BaseTest;
+import com.sinch.sdk.domains.voice.models.v2.VoiceName;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.destination.CallDestination;
 import com.sinch.sdk.domains.voice.models.v2.destination.CallHeader;
@@ -265,6 +266,25 @@ class DestinationTest extends BaseTest {
     Assertions.assertThatThrownBy(
             () -> Destination.voiceRelay("wss://example.com", "Emma", "en-US", null))
         .isInstanceOf(NullPointerException.class);
+  }
+
+  @Test
+  void voiceRelayAcceptsAVoiceNameFromTheCatalog() {
+    Assertions.assertThat(
+            Destination.voiceRelay("wss://example.com/agent", VoiceName.EMMA, "en-US"))
+        .isEqualTo(Destination.voiceRelay("wss://example.com/agent", "Emma", "en-US"));
+    Assertions.assertThat(
+            Destination.voiceRelay(
+                "wss://example.com/agent",
+                VoiceName.EMMA,
+                "en-US",
+                relay -> relay.setEnableInterruptions(false)))
+        .isEqualTo(
+            Destination.voiceRelay(
+                "wss://example.com/agent",
+                "Emma",
+                "en-US",
+                relay -> relay.setEnableInterruptions(false)));
   }
 
   @Test

@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.voice.models.v2.helpers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sinch.sdk.domains.voice.models.v2.VoiceName;
 import com.sinch.sdk.domains.voice.models.v2.svaml.menu.MenuCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.menu.MenuItem;
 import com.sinch.sdk.domains.voice.models.v2.svaml.menu.MenuPrompt;
@@ -301,6 +302,17 @@ class MenuTest extends HelpersBaseTest {
     Assertions.assertThatCode(
             () -> Menu.create("main").item("main", item -> item.match("9", nested)).build())
         .doesNotThrowAnyException();
+  }
+
+  @Test
+  void promptAcceptsAVoiceNameFromTheCatalog() throws JsonProcessingException, JSONException {
+    assertJson(
+        Menu.prompt(
+            prompt ->
+                prompt.text("Press 1", VoiceName.EMMA).ssml("<speak>1</speak>", VoiceName.EMMA)),
+        objectMapper.writeValueAsString(
+            Menu.prompt(
+                prompt -> prompt.text("Press 1", "Emma").ssml("<speak>1</speak>", "Emma"))));
   }
 
   @Test

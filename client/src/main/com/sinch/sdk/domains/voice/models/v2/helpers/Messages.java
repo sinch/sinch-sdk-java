@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.voice.models.v2.helpers;
 
+import com.sinch.sdk.domains.voice.models.v2.VoiceName;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessagesCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.PlayMessage;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.SayMessage;
@@ -33,6 +34,18 @@ public final class Messages {
   }
 
   /**
+   * Play a text-to-speech message in plain text
+   *
+   * @param text Text to synthesize
+   * @param voiceName Voice used for speech synthesis, from the catalog
+   * @return The <code>messages</code> command, with this single message
+   * @since 2.4
+   */
+  public static MessagesCommand text(String text, VoiceName voiceName) {
+    return text(text, VoiceName.valueOf(voiceName));
+  }
+
+  /**
    * Play a text-to-speech message in SSML
    *
    * @param ssml SSML document (<code>&lt;speak&gt;...&lt;/speak&gt;</code>) to synthesize
@@ -42,6 +55,18 @@ public final class Messages {
    */
   public static MessagesCommand ssml(String ssml, String voiceName) {
     return start().ssml(ssml, voiceName).build();
+  }
+
+  /**
+   * Play a text-to-speech message in SSML
+   *
+   * @param ssml SSML document (<code>&lt;speak&gt;...&lt;/speak&gt;</code>) to synthesize
+   * @param voiceName Voice used for speech synthesis, from the catalog
+   * @return The <code>messages</code> command, with this single message
+   * @since 2.4
+   */
+  public static MessagesCommand ssml(String ssml, VoiceName voiceName) {
+    return ssml(ssml, VoiceName.valueOf(voiceName));
   }
 
   /**
@@ -70,6 +95,20 @@ public final class Messages {
   }
 
   /**
+   * Play a text-to-speech message in plain text, with a name or commands run once it is played
+   *
+   * @param text Text to synthesize
+   * @param voiceName Voice used for speech synthesis, from the catalog
+   * @param messages Lambda setting the name, the commands run once played, or more messages
+   * @return The <code>messages</code> command
+   * @since 2.4
+   */
+  public static MessagesCommand text(
+      String text, VoiceName voiceName, Consumer<MessagesCreator> messages) {
+    return text(text, VoiceName.valueOf(voiceName), messages);
+  }
+
+  /**
    * Play a text-to-speech message in SSML, with a name or commands run once it is played
    *
    * @param ssml SSML document (<code>&lt;speak&gt;...&lt;/speak&gt;</code>) to synthesize
@@ -81,6 +120,20 @@ public final class Messages {
   public static MessagesCommand ssml(
       String ssml, String voiceName, Consumer<MessagesCreator> messages) {
     return fill(start().ssml(ssml, voiceName), messages);
+  }
+
+  /**
+   * Play a text-to-speech message in SSML, with a name or commands run once it is played
+   *
+   * @param ssml SSML document (<code>&lt;speak&gt;...&lt;/speak&gt;</code>) to synthesize
+   * @param voiceName Voice used for speech synthesis, from the catalog
+   * @param messages Lambda setting the name, the commands run once played, or more messages
+   * @return The <code>messages</code> command
+   * @since 2.4
+   */
+  public static MessagesCommand ssml(
+      String ssml, VoiceName voiceName, Consumer<MessagesCreator> messages) {
+    return ssml(ssml, VoiceName.valueOf(voiceName), messages);
   }
 
   /**

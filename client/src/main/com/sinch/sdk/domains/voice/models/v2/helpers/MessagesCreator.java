@@ -1,5 +1,6 @@
 package com.sinch.sdk.domains.voice.models.v2.helpers;
 
+import com.sinch.sdk.domains.voice.models.v2.VoiceName;
 import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlCommand;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.Message;
 import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessageEvents;
@@ -41,6 +42,18 @@ public final class MessagesCreator {
   }
 
   /**
+   * Add a text-to-speech message in plain text
+   *
+   * @param text Text to synthesize
+   * @param voiceName Voice used for speech synthesis, from the catalog
+   * @return This creator
+   * @since 2.4
+   */
+  public MessagesCreator text(String text, VoiceName voiceName) {
+    return text(text, VoiceName.valueOf(voiceName));
+  }
+
+  /**
    * Add a text-to-speech message in SSML
    *
    * @param ssml SSML document (<code>&lt;speak&gt;...&lt;/speak&gt;</code>) to synthesize
@@ -51,6 +64,18 @@ public final class MessagesCreator {
   public MessagesCreator ssml(String ssml, String voiceName) {
     messages.add(Messages.sayMessage(ssml, voiceName, SayMessage.FormatEnum.SSML));
     return this;
+  }
+
+  /**
+   * Add a text-to-speech message in SSML
+   *
+   * @param ssml SSML document (<code>&lt;speak&gt;...&lt;/speak&gt;</code>) to synthesize
+   * @param voiceName Voice used for speech synthesis, from the catalog
+   * @return This creator
+   * @since 2.4
+   */
+  public MessagesCreator ssml(String ssml, VoiceName voiceName) {
+    return ssml(ssml, VoiceName.valueOf(voiceName));
   }
 
   /**
