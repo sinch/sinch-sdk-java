@@ -14,7 +14,6 @@ import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlInput;
 import com.sinch.sdk.domains.voice.models.v2.svaml.request.ValidateSvamlRequest;
 import com.sinch.sdk.domains.voice.models.v2.svaml.response.ValidateSvamlResponse;
 import com.sinch.sdk.models.Configuration;
-import java.util.Collections;
 import java.util.logging.Logger;
 import utils.Settings;
 
@@ -43,9 +42,7 @@ public class Validate {
         ValidateSvamlRequest.builder()
             .setSvaml(
                 SvamlInput.builder()
-                    .setCommands(
-                        Collections.singletonList(
-                            Messages.text("Hello, your call is now connected.", "Emma")))
+                    .setCommands(Messages.text("Hello, your call is now connected.", "Emma"))
                     .build())
             .build();
 
