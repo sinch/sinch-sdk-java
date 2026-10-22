@@ -382,9 +382,10 @@ StartCallRequest request =
             CommandsSequenceCreator.create()
                 .dial("RECIPIENT_PHONE_NUMBER", dial -> dial
                     .from("SINCH_VIRTUAL_PHONE_NUMBER")
-                    .onAnswer(answered -> answered.messages(messages -> messages
-                        .text("Hello from the Sinch Java SDK!", "Emma")
-                        .onFinish(Calls.hangup()))))
+                    .onAnswer(answered -> answered.text(
+                        "Hello from the Sinch Java SDK!",
+                        "Emma",
+                        greeting -> greeting.onFinish(Calls.hangup()))))
                 .build())
         .build();
 
