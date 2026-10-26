@@ -2,6 +2,7 @@ package com.sinch.sdk.domains.voice.models.v2.batches.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlCommand;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -89,6 +90,17 @@ public interface StartBatchRequest {
      * @see #getCommands
      */
     Builder setCommands(List<SvamlCommand> commands);
+
+    /**
+     * Set the commands from one or more commands, e.g. a single one
+     *
+     * @param commands Commands, in the order they run
+     * @return Current builder
+     * @see #setCommands(List)
+     */
+    default Builder setCommands(SvamlCommand... commands) {
+      return setCommands(Arrays.asList(commands));
+    }
 
     /**
      * see getter

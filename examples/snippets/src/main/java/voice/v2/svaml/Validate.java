@@ -9,13 +9,11 @@ package voice.v2.svaml;
 
 import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.voice.api.v2.SvamlService;
+import com.sinch.sdk.domains.voice.models.v2.helpers.Messages;
 import com.sinch.sdk.domains.voice.models.v2.svaml.SvamlInput;
-import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessagesCommand;
-import com.sinch.sdk.domains.voice.models.v2.svaml.playback.SayMessage;
 import com.sinch.sdk.domains.voice.models.v2.svaml.request.ValidateSvamlRequest;
 import com.sinch.sdk.domains.voice.models.v2.svaml.response.ValidateSvamlResponse;
 import com.sinch.sdk.models.Configuration;
-import java.util.Collections;
 import java.util.logging.Logger;
 import utils.Settings;
 
@@ -44,16 +42,7 @@ public class Validate {
         ValidateSvamlRequest.builder()
             .setSvaml(
                 SvamlInput.builder()
-                    .setCommands(
-                        Collections.singletonList(
-                            MessagesCommand.builder()
-                                .setMessages(
-                                    Collections.singletonList(
-                                        SayMessage.builder()
-                                            .setText("Hello, your call is now connected.")
-                                            .setVoiceName("Emma")
-                                            .build()))
-                                .build()))
+                    .setCommands(Messages.text("Hello, your call is now connected.", "Emma"))
                     .build())
             .build();
 

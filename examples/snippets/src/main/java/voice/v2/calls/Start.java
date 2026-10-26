@@ -11,15 +11,9 @@ import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.domains.voice.api.v2.CallsService;
 import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
 import com.sinch.sdk.domains.voice.models.v2.calls.response.StartCallResponse;
-import com.sinch.sdk.domains.voice.models.v2.destination.Phone;
-import com.sinch.sdk.domains.voice.models.v2.svaml.calls.CallEvents;
-import com.sinch.sdk.domains.voice.models.v2.svaml.calls.DialCommand;
-import com.sinch.sdk.domains.voice.models.v2.svaml.calls.HangupCommand;
-import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessageEvents;
-import com.sinch.sdk.domains.voice.models.v2.svaml.playback.MessagesCommand;
-import com.sinch.sdk.domains.voice.models.v2.svaml.playback.SayMessage;
+import com.sinch.sdk.domains.voice.models.v2.helpers.Calls;
+import com.sinch.sdk.domains.voice.models.v2.helpers.CommandsSequenceCreator;
 import com.sinch.sdk.models.Configuration;
-import java.util.Collections;
 import java.util.logging.Logger;
 import utils.Settings;
 
@@ -49,32 +43,24 @@ public class Start {
 
     CallsService callsService = client.voice().v2().calls();
 
-    // Played to the recipient once the call is answered, then the call is hung up
-    MessagesCommand greeting =
-        MessagesCommand.builder()
-            .setMessages(
-                Collections.singletonList(
-                    SayMessage.builder()
-                        .setText("Hello, your call is now connected.")
-                        .setVoiceName("Emma")
-                        .build()))
-            .setEvents(
-                MessageEvents.builder()
-                    .setOnFinish(Collections.singletonList(HangupCommand.HANGUP_COMMAND))
+    // Dial the recipient: once the call is answered, play a greeting, then hang up
+    StartCallRequest request =
+        StartCallRequest.builder()
+            .setCommands(
+                CommandsSequenceCreator.create()
+                    .dial(
+                        recipientPhoneNumber,
+                        dial ->
+                            dial.name("Java_SDK_Snippet_Call")
+                                .from(sinchPhoneNumber)
+                                .onAnswer(
+                                    answered ->
+                                        answered.text(
+                                            "Hello, your call is now connected.",
+                                            "Emma",
+                                            greeting -> greeting.onFinish(Calls.hangup()))))
                     .build())
             .build();
-
-    DialCommand dial =
-        DialCommand.builder()
-            .setCallName("Java_SDK_Snippet_Call")
-            .setFrom(Phone.builder().setNumber(sinchPhoneNumber).build())
-            .setTo(Phone.builder().setNumber(recipientPhoneNumber).build())
-            .setEvents(
-                CallEvents.builder().setOnAnswer(Collections.singletonList(greeting)).build())
-            .build();
-
-    StartCallRequest request =
-        StartCallRequest.builder().setCommands(Collections.singletonList(dial)).build();
 
     LOGGER.info("Start a call to: " + recipientPhoneNumber);
 
