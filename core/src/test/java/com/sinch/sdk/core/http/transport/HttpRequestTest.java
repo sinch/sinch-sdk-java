@@ -90,4 +90,30 @@ class HttpRequestTest {
 
     assertThrows(IllegalArgumentException.class, builder::build);
   }
+
+  @Test
+  void headersAreReadOnly() {
+    HttpRequest request =
+        HttpRequest.builder()
+            .setMethod(HttpMethod.GET)
+            .setUrl("https://foo.com")
+            .setHeaders(new HttpHeaders().add("A", "1"))
+            .build();
+
+    assertThrows(UnsupportedOperationException.class, () -> request.getHeaders().add("A", "2"));
+    assertThrows(UnsupportedOperationException.class, () -> request.getHeaders().remove("A"));
+    assertEquals(1, request.getHeaders().getAll("A").size());
+  }
+
+  @Test
+  void toStringMasksCredentials() {
+    HttpRequest request =
+        HttpRequest.builder()
+            .setMethod(HttpMethod.GET)
+            .setUrl("https://foo.com")
+            .setHeaders(new HttpHeaders().add("Authorization", "Bearer secret"))
+            .build();
+
+    assertFalse(request.toString().contains("secret"), request.toString());
+  }
 }

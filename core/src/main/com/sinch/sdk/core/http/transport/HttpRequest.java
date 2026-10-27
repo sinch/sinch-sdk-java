@@ -7,9 +7,9 @@ import java.util.Optional;
 /**
  * HTTP request sent by an {@link HttpTransport}.
  *
- * <p>The request is sent as is: the URL and the query parameters are not encoded, and the headers
- * expected by the server (<code>accept</code>, <code>content-type</code>, ...) have to be set by
- * the caller.
+ * <p>The request is sent as provided by the caller: the SDK does not encode the URL nor the query
+ * parameters, they have to be already encoded. The headers expected by the server (<code>accept
+ * </code>, <code>content-type</code>, ...) have to be set by the caller.
  *
  * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
  * change without notice.
@@ -33,7 +33,7 @@ public final class HttpRequest {
     this.method = method;
     this.url = url;
     this.queryParameters = queryParameters;
-    this.headers = headers;
+    this.headers = headers.readOnlyView();
     this.content = content;
   }
 
@@ -70,7 +70,7 @@ public final class HttpRequest {
   /**
    * Headers of the request
    *
-   * @return Headers. Not to be modified: use {@link #builder(HttpRequest)} to change them
+   * @return Read-only headers: use {@link #builder(HttpRequest)} to change them
    * @since 2.4
    */
   public HttpHeaders getHeaders() {

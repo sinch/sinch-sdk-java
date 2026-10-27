@@ -33,7 +33,7 @@ public final class HttpResponse implements Closeable {
       int status, String reasonPhrase, HttpHeaders headers, HttpContentParser content) {
     this.status = status;
     this.reasonPhrase = reasonPhrase;
-    this.headers = Objects.requireNonNull(headers, "headers");
+    this.headers = new HttpHeaders(Objects.requireNonNull(headers, "headers")).readOnlyView();
     this.content = Objects.requireNonNull(content, "content");
   }
 
@@ -60,7 +60,7 @@ public final class HttpResponse implements Closeable {
   /**
    * Headers of the response
    *
-   * @return Headers received
+   * @return Read-only headers received
    * @since 2.4
    */
   public HttpHeaders getHeaders() {

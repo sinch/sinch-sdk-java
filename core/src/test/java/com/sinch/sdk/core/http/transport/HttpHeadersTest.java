@@ -118,4 +118,52 @@ class HttpHeadersTest {
     assertThrows(NullPointerException.class, () -> headers.add("A", null));
     assertThrows(NullPointerException.class, () -> headers.set("A", null));
   }
+
+  @Test
+  void toStringMasksCredentials() {
+    HttpHeaders headers =
+        new HttpHeaders()
+            .add("authorization", "Bearer secret")
+            .add("Proxy-Authorization", "Basic secret")
+            .add("Accept", "application/json");
+
+    String printed = headers.toString();
+
+    assertFalse(printed.contains("secret"), printed);
+    assertTrue(printed.contains("authorization=[***]"), printed);
+    assertTrue(printed.contains("Proxy-Authorization=[***]"), printed);
+    assertTrue(printed.contains("Accept=[application/json]"), printed);
+    assertEquals(Optional.of("Bearer secret"), headers.getFirst("Authorization"));
+  }
+
+  @Test
+  void readOnlyViewRejectsModifications() {
+    HttpHeaders view = new HttpHeaders().add("A", "1").readOnlyView();
+
+    assertThrows(UnsupportedOperationException.class, () -> view.add("A", "2"));
+    assertThrows(UnsupportedOperationException.class, () -> view.set("A", "2"));
+    assertThrows(UnsupportedOperationException.class, () -> view.remove("A"));
+    assertEquals(Collections.singletonList("1"), view.getAll("A"));
+  }
+
+  @Test
+  void readOnlyViewReflectsTheHeaders() {
+    HttpHeaders headers = new HttpHeaders().add("A", "1");
+    HttpHeaders view = headers.readOnlyView();
+
+    headers.add("B", "2");
+
+    assertEquals(Optional.of("2"), view.getFirst("B"));
+    assertEquals(headers, view);
+  }
+
+  @Test
+  void copyOfReadOnlyViewIsModifiable() {
+    HttpHeaders view = new HttpHeaders().add("A", "1").readOnlyView();
+
+    HttpHeaders copy = new HttpHeaders(view).add("A", "2");
+
+    assertEquals(Arrays.asList("1", "2"), copy.getAll("A"));
+    assertEquals(Collections.singletonList("1"), view.getAll("A"));
+  }
 }

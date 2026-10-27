@@ -1,6 +1,7 @@
 package com.sinch.sdk.core.http.transport;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -19,6 +20,13 @@ import java.util.function.BiConsumer;
  * A name can carry several values, kept in the order they were added; names are kept in the order
  * they were first added, with the case they were first added with.
  *
+ * <p>The headers of an {@link HttpRequest} or an {@link HttpResponse} are read-only: modifying them
+ * throws an {@link UnsupportedOperationException}. Use {@link #HttpHeaders(HttpHeaders)} to get a
+ * modifiable copy.
+ *
+ * <p>The values of the credential headers (<code>Authorization</code>, <code>
+ * Proxy-Authorization</code>) are masked by {@link #toString()}.
+ *
  * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
  * change without notice.
  *
@@ -26,14 +34,29 @@ import java.util.function.BiConsumer;
  */
 public final class HttpHeaders {
 
-  private final Map<String, Entry> entries = new LinkedHashMap<>();
+  private static final Set<String> MASKED_HEADERS =
+      Collections.unmodifiableSet(
+          new LinkedHashSet<>(Arrays.asList("authorization", "proxy-authorization")));
+
+  private static final String MASK = "***";
+
+  private final Map<String, Entry> entries;
+  private final boolean readOnly;
 
   /**
    * Empty headers
    *
    * @since 2.4
    */
-  public HttpHeaders() {}
+  public HttpHeaders() {
+    this.entries = new LinkedHashMap<>();
+    this.readOnly = false;
+  }
+
+  private HttpHeaders(Map<String, Entry> entries, boolean readOnly) {
+    this.entries = entries;
+    this.readOnly = readOnly;
+  }
 
   /**
    * Copy of existing headers
@@ -42,6 +65,7 @@ public final class HttpHeaders {
    * @since 2.4
    */
   public HttpHeaders(HttpHeaders headers) {
+    this();
     Objects.requireNonNull(headers, "headers");
     headers.entries.forEach(
         (key, entry) -> entries.put(key, new Entry(entry.name, new ArrayList<>(entry.values))));
@@ -56,6 +80,7 @@ public final class HttpHeaders {
    * @since 2.4
    */
   public HttpHeaders add(String name, String value) {
+    checkModifiable();
     Objects.requireNonNull(value, "value");
     entries.computeIfAbsent(key(name), k -> new Entry(name, new ArrayList<>())).values.add(value);
     return this;
@@ -70,6 +95,7 @@ public final class HttpHeaders {
    * @since 2.4
    */
   public HttpHeaders set(String name, String value) {
+    checkModifiable();
     Objects.requireNonNull(value, "value");
     Entry entry = entries.computeIfAbsent(key(name), k -> new Entry(name, new ArrayList<>()));
     entry.values.clear();
@@ -122,6 +148,7 @@ public final class HttpHeaders {
    * @since 2.4
    */
   public boolean remove(String name) {
+    checkModifiable();
     return null != entries.remove(key(name));
   }
 
@@ -172,6 +199,21 @@ public final class HttpHeaders {
     return map;
   }
 
+  /**
+   * Read-only view of these headers: it reflects their changes, but cannot change them
+   *
+   * @return View throwing an {@link UnsupportedOperationException} on modification
+   */
+  HttpHeaders readOnlyView() {
+    return readOnly ? this : new HttpHeaders(entries, true);
+  }
+
+  private void checkModifiable() {
+    if (readOnly) {
+      throw new UnsupportedOperationException("Read-only headers: copy them to modify them");
+    }
+  }
+
   private static String key(String name) {
     Objects.requireNonNull(name, "name");
     return name.toLowerCase(Locale.ROOT);
@@ -201,7 +243,11 @@ public final class HttpHeaders {
 
   @Override
   public String toString() {
-    return "HttpHeaders" + toMap();
+    Map<String, List<String>> map = toMap();
+    map.replaceAll(
+        (name, values) ->
+            MASKED_HEADERS.contains(key(name)) ? Collections.nCopies(values.size(), MASK) : values);
+    return "HttpHeaders" + map;
   }
 
   private static final class Entry {
