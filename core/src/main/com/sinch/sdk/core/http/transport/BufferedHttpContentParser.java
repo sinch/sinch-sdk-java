@@ -18,6 +18,9 @@ import java.util.logging.Logger;
 /**
  * Content of an HTTP response, fully loaded in memory.
  *
+ * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
+ * change without notice.
+ *
  * @since 2.4
  */
 public final class BufferedHttpContentParser implements HttpContentParser {

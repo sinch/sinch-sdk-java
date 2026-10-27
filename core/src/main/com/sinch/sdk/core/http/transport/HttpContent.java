@@ -14,6 +14,9 @@ import java.util.Objects;
  *
  * <p>Every kind of content can be sent more than once, so that a request can be retried.
  *
+ * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
+ * change without notice.
+ *
  * @since 2.4
  */
 public abstract class HttpContent {

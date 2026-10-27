@@ -2,7 +2,6 @@ package com.sinch.sdk.http;
 
 import static com.sinch.sdk.auth.adapters.OAuthManager.BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD;
 import static com.sinch.sdk.auth.adapters.OAuthManager.BEARER_EXPIRED_KEYWORD;
-import static com.sinch.sdk.core.http.HttpContentType.CONTENT_TYPE_HEADER;
 
 import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.exceptions.ApiException;
@@ -11,16 +10,15 @@ import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.IdempotencyKey;
-import com.sinch.sdk.core.http.transport.HttpHeaders;
 import com.sinch.sdk.core.http.transport.HttpTransport;
 import com.sinch.sdk.core.models.ServerConfiguration;
-import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.models.HttpProxyConfiguration;
 import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
@@ -86,23 +84,31 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
     }
 
     try {
-      com.sinch.sdk.core.http.transport.HttpRequest transportRequest =
-          TransportRequestMapper.toTransportRequest(
-              serverConfiguration, httpRequest, withIdempotencyKey(httpRequest), headersToBeAdded);
-      Collection<String> authNames = httpRequest.getAuthNames();
-      String body = httpRequest.getBody();
+      TransportCall call =
+          new TransportCall(
+              activeTransport,
+              TransportRequestMapper.toTransportRequest(
+                  serverConfiguration,
+                  httpRequest,
+                  withIdempotencyKey(httpRequest),
+                  headersToBeAdded),
+              authManagersByOasSecuritySchemes,
+              httpRequest.getAuthNames(),
+              httpRequest.getBody());
 
       LOGGER.fine(
-          "Invoke '" + transportRequest.getMethod() + "' onto '" + transportRequest.getUrl() + "'");
-      LOGGER.fine("queryParameters: " + transportRequest.getQueryParameters().orElse(null));
-      LOGGER.fine("body: " + body);
+          "Invoke '"
+              + call.getRequest().getMethod()
+              + "' onto '"
+              + call.getRequest().getUrl()
+              + "'");
+      LOGGER.fine("queryParameters: " + call.getRequest().getQueryParameters().orElse(null));
+      LOGGER.fine("body: " + httpRequest.getBody());
       LOGGER.fine("formParams: " + httpRequest.getFormParams());
-      LOGGER.fine("headers: " + transportRequest.getHeaders());
-      LOGGER.fine("authNames: " + authNames);
+      LOGGER.fine("headers: " + call.getRequest().getHeaders());
+      LOGGER.fine("authNames: " + httpRequest.getAuthNames());
 
-      HttpResponse response =
-          send(
-              activeTransport, transportRequest, authManagersByOasSecuritySchemes, authNames, body);
+      HttpResponse response = send(call);
       LOGGER.finest("connection response: " + response);
 
       // HTTP 407 (Proxy Authentication Required) is normally handled transparently by Apache
@@ -124,13 +130,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
         boolean couldRetryRequest =
             processUnauthorizedResponse(httpRequest, response, authManagersByOasSecuritySchemes);
         if (couldRetryRequest) {
-          response =
-              send(
-                  activeTransport,
-                  transportRequest,
-                  authManagersByOasSecuritySchemes,
-                  authNames,
-                  body);
+          response = send(call);
           LOGGER.finest("connection response on retry: " + response);
         }
       }
@@ -185,11 +185,16 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
     if (!requestSupportsBearer) {
       return false;
     }
-    Map<String, List<String>> responseHeaders = response.getHeaders();
-    Collection<String> header = responseHeaders.get(BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD);
-
+    // header names are case-insensitive: the server can send it as "WWW-Authenticate"
     boolean headerPresent =
-        header != null && header.stream().anyMatch(e -> e.contains(BEARER_EXPIRED_KEYWORD));
+        response.getHeaders().entrySet().stream()
+            .filter(
+                entry ->
+                    BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD.equalsIgnoreCase(entry.getKey()))
+            .map(Map.Entry::getValue)
+            .filter(Objects::nonNull)
+            .flatMap(List::stream)
+            .anyMatch(e -> null != e && e.contains(BEARER_EXPIRED_KEYWORD));
     if (headerPresent) {
       bearerAuthManager.resetToken();
     }
@@ -210,63 +215,22 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
     return withKey;
   }
 
-  private com.sinch.sdk.core.http.transport.HttpRequest withAuth(
-      com.sinch.sdk.core.http.transport.HttpRequest request,
-      Map<String, AuthManager> authManagersByOasSecuritySchemes,
-      Collection<String> values,
-      String body) {
-
-    if (null == values || values.isEmpty() || null == authManagersByOasSecuritySchemes) {
-      return request;
-    }
-
-    for (String entry : values) {
-      if (authManagersByOasSecuritySchemes.containsKey(entry)) {
-        AuthManager authManager = authManagersByOasSecuritySchemes.get(entry);
-        Collection<Pair<String, String>> authHeaders =
-            authManager.getAuthorizationHeaders(
-                request.getMethod().name(),
-                request.getHeaders().getFirst(CONTENT_TYPE_HEADER).orElse(null),
-                TransportRequestMapper.authorizationPath(request),
-                body);
-        HttpHeaders headers = new HttpHeaders(request.getHeaders());
-        authHeaders.forEach(f -> headers.set(f.getLeft(), f.getRight()));
-        return com.sinch.sdk.core.http.transport.HttpRequest.builder(request)
-            .setHeaders(headers)
-            .build();
-      } else {
-        LOGGER.finest("Ignore unknown authentication value: '" + entry + "'");
-      }
-    }
-    return request;
-  }
-
   /**
    * Performs one HTTP exchange under the retry policy, so that a rate-limited response is retried
    * for every endpoint that goes through this transport.
    */
-  private HttpResponse send(
-      HttpTransport transport,
-      com.sinch.sdk.core.http.transport.HttpRequest request,
-      Map<String, AuthManager> authManagersByOasSecuritySchemes,
-      Collection<String> authNames,
-      String body)
-      throws Exception {
+  private HttpResponse send(TransportCall call) throws Exception {
     // Authorization of the first attempt is computed outside the retry policy: fetching a token
     // then goes through its own retry policy rather than sharing the one of this request
-    com.sinch.sdk.core.http.transport.HttpRequest authorized =
-        withAuth(request, authManagersByOasSecuritySchemes, authNames, body);
+    call.authorize();
 
     AtomicBoolean firstAttempt = new AtomicBoolean(true);
     return retryManager.execute(
         () -> {
-          com.sinch.sdk.core.http.transport.HttpRequest attempt =
-              firstAttempt.getAndSet(false)
-                  ? authorized
-                  : withAuth(request, authManagersByOasSecuritySchemes, authNames, body);
-          try (com.sinch.sdk.core.http.transport.HttpResponse response = transport.send(attempt)) {
-            return TransportRequestMapper.toServiceResponse(response);
+          if (!firstAttempt.getAndSet(false)) {
+            call.authorize();
           }
+          return call.send();
         });
   }
 

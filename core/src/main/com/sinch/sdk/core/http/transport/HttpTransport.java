@@ -9,6 +9,9 @@ import java.io.IOException;
  * <p>A transport performs one exchange per request: authentication, retries and error handling are
  * performed by its caller.
  *
+ * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
+ * change without notice.
+ *
  * @since 2.4
  */
 public interface HttpTransport extends Closeable {

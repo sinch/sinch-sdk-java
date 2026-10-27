@@ -10,6 +10,9 @@ import java.util.Optional;
  * <p>A response can hold resources until its content is read: it has to be closed once it is no
  * longer used.
  *
+ * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
+ * change without notice.
+ *
  * @since 2.4
  */
 public final class HttpResponse implements Closeable {

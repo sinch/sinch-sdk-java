@@ -25,7 +25,8 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[doc]** V2 snippets, `sinch-events` example and README use the helpers
 
 ### SDK
-- **[tech]** `HttpClientApache`: requests are sent through an HTTP transport based on the new `HttpRequest`/`HttpResponse`. 
+- **[tech]** `HttpClientApache`: requests are sent through an HTTP transport based on the new `HttpRequest`/`HttpResponse`.
+- **[fix]** `HttpClientApache`: refresh an expired OAuth token whatever the case of the `WWW-Authenticate` header
 
 ---
 ## v2.3.0 - 2026-10-15

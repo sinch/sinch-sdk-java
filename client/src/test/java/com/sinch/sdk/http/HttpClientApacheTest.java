@@ -24,6 +24,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 
 class HttpClientApacheTest {
@@ -67,13 +69,12 @@ class HttpClientApacheTest {
     verify(transport, times(1)).send(any());
   }
 
-  @Test
-  void testInvokeApi401ExpiredResetsTokenAndSendsAgain() throws Exception {
+  @ParameterizedTest
+  @ValueSource(strings = {"www-authenticate", "WWW-Authenticate", "Www-Authenticate"})
+  void testInvokeApi401ExpiredResetsTokenAndSendsAgain(String headerName) throws Exception {
     HttpHeaders expired =
         new HttpHeaders()
-            .add(
-                OAuthManager.BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD,
-                "Bearer error=\"invalid_token\", error_description=\"expired\"");
+            .add(headerName, "Bearer error=\"invalid_token\", error_description=\"expired\"");
     when(transport.send(any()))
         .thenReturn(transportResponse(401, "Unauthorized", expired))
         .thenReturn(transportResponse(200, "OK", new HttpHeaders()));

@@ -11,6 +11,9 @@ import java.util.Optional;
  * expected by the server (<code>accept</code>, <code>content-type</code>, ...) have to be set by
  * the caller.
  *
+ * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
+ * change without notice.
+ *
  * @since 2.4
  */
 public final class HttpRequest {

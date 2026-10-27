@@ -19,6 +19,9 @@ import java.util.function.BiConsumer;
  * A name can carry several values, kept in the order they were added; names are kept in the order
  * they were first added, with the case they were first added with.
  *
+ * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
+ * change without notice.
+ *
  * @since 2.4
  */
 public final class HttpHeaders {
