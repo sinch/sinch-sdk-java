@@ -4,78 +4,59 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.sinch.sdk.auth.adapters.OAuthManager;
+import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
 import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
+import com.sinch.sdk.core.http.transport.BufferedHttpContentParser;
+import com.sinch.sdk.core.http.transport.HttpHeaders;
+import com.sinch.sdk.core.http.transport.HttpTransport;
 import com.sinch.sdk.core.models.ServerConfiguration;
+import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.models.RetryConfiguration;
 import com.sinch.sdk.models.RetryPolicy;
 import com.sinch.sdk.models.TransportSettings;
-import java.io.ByteArrayInputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.Scanner;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.core5.http.ClassicHttpResponse;
-import org.apache.hc.core5.http.Header;
-import org.apache.hc.core5.http.HttpEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
 class HttpClientApacheTest {
 
+  private static final ServerConfiguration SERVER =
+      new ServerConfiguration("https://api.example.com");
+
+  private HttpTransport transport;
   private HttpClientApache client;
   private AuthManager mockAuthManager;
+  private Map<String, AuthManager> authManagers;
 
   @BeforeEach
-  void setup() throws Exception {
-    CloseableHttpClient mockApacheClient = mock(CloseableHttpClient.class);
-    mockAuthManager = mock(AuthManager.class);
+  void setup() {
+    transport = mock(HttpTransport.class);
+    client = new HttpClientApache(transport, null);
 
-    // Create an instance of HttpClientApache and inject the mock HTTP client
-    client = spy(new HttpClientApache(null, null, TransportSettings.DEFAULT_TIMEOUT_SECONDS));
-    Field clientField = HttpClientApache.class.getDeclaredField("client");
-    clientField.setAccessible(true);
-    clientField.set(client, mockApacheClient);
+    mockAuthManager = mock(AuthManager.class);
+    when(mockAuthManager.getSchema()).thenReturn(OAuthManager.SCHEMA_KEYWORD_BEARER);
+    when(mockAuthManager.getAuthorizationHeaders(any(), any(), any(), any()))
+        .thenReturn(Collections.emptyList());
+    authManagers = new HashMap<>();
+    authManagers.put(OAuthManager.SCHEMA_KEYWORD_BEARER, mockAuthManager);
   }
 
   @Test
   void testInvokeApiHandles401WithEmptyHeaders() throws Exception {
     // GIVEN: a simulated 401 response with empty headers
-    HttpResponse unauthorizedResponse =
-        new HttpResponse(
-            401,
-            "Unauthorized",
-            Collections.emptyMap(), // Empty headers
-            null);
-
-    // Spy on processRequest() to return the mocked 401 response
-    doReturn(unauthorizedResponse).when(client).processRequest(any(), any());
-
-    // Mock ServerConfiguration and HttpRequest
-    ServerConfiguration serverConfig = new ServerConfiguration("https://api.example.com");
-
-    HttpRequest request =
-        new HttpRequest(
-            "https://api.example.com/v1/test",
-            HttpMethod.GET,
-            Collections.emptyList(),
-            Collections.emptyMap(),
-            Collections.emptyMap(),
-            Collections.emptyList(),
-            Collections.emptyList(),
-            Collections.singletonList("Bearer"));
-
-    // Mock AuthManagers map (bearer)
-    Map<String, AuthManager> authManagers = new HashMap<>();
-    authManagers.put(OAuthManager.SCHEMA_KEYWORD_BEARER, mockAuthManager);
-    when(mockAuthManager.getSchema()).thenReturn(OAuthManager.SCHEMA_KEYWORD_BEARER);
+    when(transport.send(any()))
+        .thenReturn(transportResponse(401, "Unauthorized", new HttpHeaders()));
 
     // WHEN: invokeAPI is called
-    HttpResponse response = client.invokeAPI(serverConfig, authManagers, request);
+    HttpResponse response = client.invokeAPI(SERVER, authManagers, bearerRequest());
 
     // THEN: response is returned (no crash)
     assertEquals(401, response.getCode());
@@ -83,72 +64,117 @@ class HttpClientApacheTest {
 
     // AND: resetToken() is not called (no headers to check)
     verify(mockAuthManager, never()).resetToken();
+    verify(transport, times(1)).send(any());
   }
 
   @Test
-  void processResponseDecodesBodyAsUtf8() throws Exception {
-    String nonAscii = "Ünïcödé resülts";
-    byte[] utf8Bytes = nonAscii.getBytes(StandardCharsets.UTF_8);
+  void testInvokeApi401ExpiredResetsTokenAndSendsAgain() throws Exception {
+    HttpHeaders expired =
+        new HttpHeaders()
+            .add(
+                OAuthManager.BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD,
+                "Bearer error=\"invalid_token\", error_description=\"expired\"");
+    when(transport.send(any()))
+        .thenReturn(transportResponse(401, "Unauthorized", expired))
+        .thenReturn(transportResponse(200, "OK", new HttpHeaders()));
+    when(mockAuthManager.getAuthorizationHeaders(any(), any(), any(), any()))
+        .thenReturn(Collections.singletonList(new Pair<>("Authorization", "Bearer old")))
+        .thenReturn(Collections.singletonList(new Pair<>("Authorization", "Bearer new")));
 
-    HttpEntity entity = mock(HttpEntity.class);
-    when(entity.getContent()).thenReturn(new ByteArrayInputStream(utf8Bytes));
+    HttpResponse response = client.invokeAPI(SERVER, authManagers, bearerRequest());
 
-    ClassicHttpResponse httpResponse = mock(ClassicHttpResponse.class);
-    when(httpResponse.getCode()).thenReturn(200);
-    when(httpResponse.getReasonPhrase()).thenReturn("OK");
-    when(httpResponse.getHeaders()).thenReturn(new Header[0]);
-    when(httpResponse.getEntity()).thenReturn(entity);
-
-    Method processResponse =
-        HttpClientApache.class.getDeclaredMethod("processResponse", ClassicHttpResponse.class);
-    processResponse.setAccessible(true);
-
-    HttpResponse result = (HttpResponse) processResponse.invoke(null, httpResponse);
-
-    assertNotNull(result.getContent());
-    try (Scanner s =
-        new Scanner(result.getContent(), StandardCharsets.UTF_8.name()).useDelimiter("\\A")) {
-      String decoded = s.hasNext() ? s.next() : "";
-      assertEquals(nonAscii, decoded, "Response body must round-trip through UTF-8 correctly");
-    }
+    assertEquals(200, response.getCode());
+    verify(mockAuthManager, times(1)).resetToken();
+    ArgumentCaptor<com.sinch.sdk.core.http.transport.HttpRequest> sent =
+        ArgumentCaptor.forClass(com.sinch.sdk.core.http.transport.HttpRequest.class);
+    verify(transport, times(2)).send(sent.capture());
+    assertEquals(
+        Arrays.asList("Bearer old", "Bearer new"),
+        Arrays.asList(
+            sent.getAllValues().get(0).getHeaders().getFirst("authorization").orElse(null),
+            sent.getAllValues().get(1).getHeaders().getFirst("authorization").orElse(null)));
   }
 
   @Test
   void testInvokeApi407DoesNotTriggerOAuthRefresh() throws Exception {
-    Map<String, List<String>> proxyHeaders = new HashMap<>();
-    proxyHeaders.put(
-        OAuthManager.BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD,
-        Collections.singletonList("Bearer realm=\"proxy\", error=\"expired\""));
+    HttpHeaders proxyHeaders =
+        new HttpHeaders()
+            .add(
+                OAuthManager.BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD,
+                "Bearer realm=\"proxy\", error=\"expired\"");
+    when(transport.send(any()))
+        .thenReturn(transportResponse(407, "Proxy Authentication Required", proxyHeaders));
 
-    HttpResponse proxyAuthResponse =
-        new HttpResponse(407, "Proxy Authentication Required", proxyHeaders, null);
-
-    doReturn(proxyAuthResponse).when(client).processRequest(any(), any());
-
-    ServerConfiguration serverConfig = new ServerConfiguration("https://api.example.com");
-
-    HttpRequest request =
-        new HttpRequest(
-            "https://api.example.com/v1/test",
-            HttpMethod.GET,
-            Collections.emptyList(),
-            Collections.emptyMap(),
-            Collections.emptyMap(),
-            Collections.emptyList(),
-            Collections.emptyList(),
-            Collections.singletonList("Bearer"));
-
-    Map<String, AuthManager> authManagers = new HashMap<>();
-    authManagers.put(OAuthManager.SCHEMA_KEYWORD_BEARER, mockAuthManager);
-    when(mockAuthManager.getSchema()).thenReturn(OAuthManager.SCHEMA_KEYWORD_BEARER);
-    when(mockAuthManager.getAuthorizationHeaders(any(), any(), any(), any()))
-        .thenReturn(Collections.emptyList());
-
-    HttpResponse response = client.invokeAPI(serverConfig, authManagers, request);
+    HttpResponse response = client.invokeAPI(SERVER, authManagers, bearerRequest());
 
     assertEquals(407, response.getCode());
     verify(mockAuthManager, never()).resetToken();
-    verify(client, times(1)).processRequest(any(), any());
+    verify(transport, times(1)).send(any());
+  }
+
+  @Test
+  void authorizationIsComputedOntoTheRequestSent() throws Exception {
+    when(transport.send(any())).thenReturn(transportResponse(200, "OK", new HttpHeaders()));
+    when(mockAuthManager.getAuthorizationHeaders(any(), any(), any(), any()))
+        .thenReturn(Collections.singletonList(new Pair<>("Authorization", "Bearer token")));
+
+    HttpRequest request =
+        new HttpRequest(
+            "/v1/a%20b",
+            HttpMethod.POST,
+            Collections.emptyList(),
+            "{\"foo\":\"bar\"}",
+            null,
+            Collections.singletonList("application/json"),
+            Collections.singletonList("application/json; charset=utf-8"),
+            Collections.singletonList(OAuthManager.SCHEMA_KEYWORD_BEARER));
+
+    client.invokeAPI(SERVER, authManagers, request);
+
+    verify(mockAuthManager)
+        .getAuthorizationHeaders(
+            "POST", "application/json; charset=utf-8", "/v1/a%20b", "{\"foo\":\"bar\"}");
+    ArgumentCaptor<com.sinch.sdk.core.http.transport.HttpRequest> sent =
+        ArgumentCaptor.forClass(com.sinch.sdk.core.http.transport.HttpRequest.class);
+    verify(transport).send(sent.capture());
+    assertEquals(
+        Optional.of("Bearer token"), sent.getValue().getHeaders().getFirst("Authorization"));
+  }
+
+  @Test
+  void responseIsMappedOntoTheServiceResponse() throws Exception {
+    HttpHeaders headers = new HttpHeaders().add("X-Multi", "a").add("x-multi", "b");
+    byte[] content = "Ünïcödé".getBytes(StandardCharsets.UTF_8);
+    when(transport.send(any()))
+        .thenReturn(
+            new com.sinch.sdk.core.http.transport.HttpResponse(
+                200, "OK", headers, new BufferedHttpContentParser(content, null)));
+
+    HttpResponse response = client.invokeAPI(SERVER, authManagers, bearerRequest());
+
+    assertEquals(200, response.getCode());
+    assertEquals("OK", response.getMessage());
+    assertEquals(Arrays.asList("a", "b"), response.getHeaders().get("X-Multi"));
+    assertArrayEquals(content, readAll(response));
+  }
+
+  @Test
+  void transportFailureIsReportedAsApiException() throws Exception {
+    when(transport.send(any())).thenThrow(new IOException("connection reset"));
+
+    ApiException e =
+        assertThrows(
+            ApiException.class, () -> client.invokeAPI(SERVER, authManagers, bearerRequest()));
+    assertTrue(e.getMessage().contains("connection reset"));
+  }
+
+  @Test
+  void closeClosesTheTransport() throws Exception {
+    client.close();
+
+    assertTrue(client.isClosed());
+    verify(transport).close();
+    assertThrows(ApiException.class, () -> client.invokeAPI(SERVER, authManagers, bearerRequest()));
   }
 
   @Test
@@ -171,5 +197,33 @@ class HttpClientApacheTest {
           RetryPolicy.BACKOFF,
           configuredClient.getRetryManager().get().getRetryConfiguration().getRetryPolicy());
     }
+  }
+
+  private static HttpRequest bearerRequest() {
+    return new HttpRequest(
+        "https://api.example.com/v1/test",
+        HttpMethod.GET,
+        null,
+        Collections.emptyMap(),
+        Collections.emptyList(),
+        Collections.emptyList(),
+        Collections.singletonList(OAuthManager.SCHEMA_KEYWORD_BEARER));
+  }
+
+  private static com.sinch.sdk.core.http.transport.HttpResponse transportResponse(
+      int status, String reasonPhrase, HttpHeaders headers) {
+    return new com.sinch.sdk.core.http.transport.HttpResponse(
+        status, reasonPhrase, headers, new BufferedHttpContentParser(null, null));
+  }
+
+  private static byte[] readAll(HttpResponse response) throws IOException {
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    InputStream in = response.getContent();
+    byte[] buffer = new byte[256];
+    int read;
+    while ((read = in.read(buffer)) != -1) {
+      out.write(buffer, 0, read);
+    }
+    return out.toByteArray();
   }
 }

@@ -24,6 +24,9 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[feature]** V2 `setCommands(...)` accepts one or more commands
 - **[doc]** V2 snippets, `sinch-events` example and README use the helpers
 
+### SDK
+- **[tech]** `HttpClientApache`: requests are sent through an HTTP transport based on the new `HttpRequest`/`HttpResponse`. 
+
 ---
 ## v2.3.0 - 2026-10-15
 

@@ -3,60 +3,30 @@ package com.sinch.sdk.http;
 import static com.sinch.sdk.auth.adapters.OAuthManager.BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD;
 import static com.sinch.sdk.auth.adapters.OAuthManager.BEARER_EXPIRED_KEYWORD;
 import static com.sinch.sdk.core.http.HttpContentType.CONTENT_TYPE_HEADER;
-import static com.sinch.sdk.core.http.URLParameterUtils.encodeParametersAsString;
 
 import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.AuthManager;
-import com.sinch.sdk.core.http.HttpContentType;
-import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.HttpRequest;
 import com.sinch.sdk.core.http.HttpResponse;
 import com.sinch.sdk.core.http.HttpStatus;
 import com.sinch.sdk.core.http.IdempotencyKey;
-import com.sinch.sdk.core.http.URLParameter;
+import com.sinch.sdk.core.http.transport.HttpHeaders;
+import com.sinch.sdk.core.http.transport.HttpTransport;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.Pair;
 import com.sinch.sdk.models.HttpProxyConfiguration;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.apache.hc.client5.http.ClientProtocolException;
 import org.apache.hc.client5.http.HttpResponseException;
-import org.apache.hc.client5.http.auth.AuthScope;
-import org.apache.hc.client5.http.auth.CredentialsProvider;
-import org.apache.hc.client5.http.config.ConnectionConfig;
-import org.apache.hc.client5.http.config.RequestConfig;
-import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
-import org.apache.hc.client5.http.impl.auth.CredentialsProviderBuilder;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
-import org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner;
-import org.apache.hc.core5.http.ClassicHttpRequest;
-import org.apache.hc.core5.http.ClassicHttpResponse;
-import org.apache.hc.core5.http.ContentType;
-import org.apache.hc.core5.http.Header;
-import org.apache.hc.core5.http.HttpEntity;
-import org.apache.hc.core5.http.HttpHost;
-import org.apache.hc.core5.http.io.entity.StringEntity;
-import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
-import org.apache.hc.core5.http.support.AbstractMessageBuilder;
-import org.apache.hc.core5.util.Timeout;
 
 public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, RetryCapable {
 
@@ -70,7 +40,7 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
 
   private volatile Map<String, String> headersToBeAdded;
 
-  private volatile CloseableHttpClient client;
+  private volatile HttpTransport transport;
 
   private final RetryManager retryManager;
 
@@ -82,7 +52,15 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
    */
   public HttpClientApache(
       HttpProxyConfiguration proxyConfiguration, RetryManager retryManager, int timeoutSeconds) {
-    this.client = buildHttpClient(proxyConfiguration, timeoutSeconds);
+    this(new ApacheHttpTransport(proxyConfiguration, timeoutSeconds), retryManager);
+  }
+
+  /**
+   * @param transport Transport the requests are sent with
+   * @param retryManager Manager applied to rate-limited responses, or {@code null} to retry nothing
+   */
+  HttpClientApache(HttpTransport transport, RetryManager retryManager) {
+    this.transport = transport;
     this.retryManager = null != retryManager ? retryManager : RetryManager.NO_RETRY;
   }
 
@@ -91,92 +69,8 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
     return Optional.ofNullable(retryManager);
   }
 
-  private static CloseableHttpClient buildHttpClient(
-      HttpProxyConfiguration proxyConfiguration, int timeoutSeconds) {
-
-    Timeout timeout = Timeout.ofSeconds(timeoutSeconds);
-
-    HttpClientBuilder builder =
-        HttpClients.custom()
-            .disableAutomaticRetries()
-            .setDefaultRequestConfig(
-                RequestConfig.custom()
-                    .setConnectionRequestTimeout(timeout)
-                    .setResponseTimeout(timeout)
-                    .build())
-            .setConnectionManager(
-                PoolingHttpClientConnectionManagerBuilder.create()
-                    .setDefaultConnectionConfig(
-                        ConnectionConfig.custom()
-                            .setConnectTimeout(timeout)
-                            .setSocketTimeout(timeout)
-                            .build())
-                    .build());
-
-    if (proxyConfiguration == null) {
-      return builder.build();
-    }
-
-    HttpHost proxyHost =
-        new HttpHost(proxyConfiguration.getHostname(), proxyConfiguration.getPort());
-    builder.setRoutePlanner(new DefaultProxyRoutePlanner(proxyHost));
-
-    if (proxyConfiguration.getUsername().isPresent()) {
-      // getPassword() returns a defensive copy of the internal array; HC5 receives that copy and
-      // owns it for the lifetime of the client. The caller does not need to keep the original
-      // alive.
-      CredentialsProvider credentialsProvider =
-          CredentialsProviderBuilder.create()
-              .add(
-                  new AuthScope(proxyHost),
-                  proxyConfiguration.getUsername().orElse(""),
-                  proxyConfiguration.getPassword().orElse(new char[0]))
-              .build();
-      builder.setDefaultCredentialsProvider(credentialsProvider);
-    }
-    return builder.build();
-  }
-
   public void setRequestHeaders(Map<String, String> headers) {
     this.headersToBeAdded = headers;
-  }
-
-  private static HttpResponse processResponse(ClassicHttpResponse response) throws IOException {
-
-    int statusCode = response.getCode();
-    Map<String, List<String>> headers = transformResponseHeaders(response.getHeaders());
-    String message = response.getReasonPhrase();
-    LOGGER.finest("response: " + statusCode + ", headers:" + headers);
-
-    if (statusCode == org.apache.hc.core5.http.HttpStatus.SC_NO_CONTENT) {
-      return new HttpResponse(statusCode, message, headers, null);
-    }
-
-    HttpEntity entity = response.getEntity();
-    if (null == entity) {
-      return new HttpResponse(statusCode, message, headers, null);
-    }
-    try (Scanner s =
-        new Scanner(entity.getContent(), StandardCharsets.UTF_8.name()).useDelimiter("\\A")) {
-      String content = (s.hasNext() ? s.next() : "");
-      return new HttpResponse(
-          statusCode, message, headers, content.getBytes(StandardCharsets.UTF_8));
-    }
-  }
-
-  private static Map<String, List<String>> transformResponseHeaders(Header[] headers) {
-    Map<String, List<String>> headersMap = new HashMap<>();
-    for (Header header : headers) {
-      List<String> valuesList = headersMap.get(header.getName());
-      if (valuesList != null) {
-        valuesList.add(header.getValue());
-      } else {
-        valuesList = new ArrayList<>();
-        valuesList.add(header.getValue());
-        headersMap.put(header.getName(), valuesList);
-      }
-    }
-    return headersMap;
   }
 
   @Override
@@ -186,58 +80,34 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
       HttpRequest httpRequest)
       throws ApiException {
 
-    CloseableHttpClient activeClient = this.client;
-    if (activeClient == null) {
+    HttpTransport activeTransport = this.transport;
+    if (activeTransport == null) {
       throw new ApiException("HTTP client has been closed");
     }
 
     try {
-      String path =
-          httpRequest
-              .getFullUrl()
-              .orElse(serverConfiguration.getUrl() + httpRequest.getPath().orElse(""));
-      HttpMethod method = httpRequest.getMethod();
-      Collection<URLParameter> queryParameters = httpRequest.getQueryParameters();
-
-      String body = httpRequest.getBody();
-      Map<String, Object> formParams = httpRequest.getFormParams();
-      Map<String, String> headerParams = withIdempotencyKey(httpRequest);
-      Collection<String> accept = httpRequest.getAccept();
-      Collection<String> contentType = httpRequest.getContentType();
+      com.sinch.sdk.core.http.transport.HttpRequest transportRequest =
+          TransportRequestMapper.toTransportRequest(
+              serverConfiguration, httpRequest, withIdempotencyKey(httpRequest), headersToBeAdded);
       Collection<String> authNames = httpRequest.getAuthNames();
+      String body = httpRequest.getBody();
 
-      LOGGER.fine("Invoke '" + method + "' onto '" + path + "'");
-      LOGGER.fine("queryParameters: " + queryParameters);
+      LOGGER.fine(
+          "Invoke '" + transportRequest.getMethod() + "' onto '" + transportRequest.getUrl() + "'");
+      LOGGER.fine("queryParameters: " + transportRequest.getQueryParameters().orElse(null));
       LOGGER.fine("body: " + body);
-      LOGGER.fine("formParams: " + formParams);
-      LOGGER.fine("headerParams: " + headerParams);
-      LOGGER.fine("accept: " + accept);
-      LOGGER.fine("contentType: " + contentType);
+      LOGGER.fine("formParams: " + httpRequest.getFormParams());
+      LOGGER.fine("headers: " + transportRequest.getHeaders());
       LOGGER.fine("authNames: " + authNames);
 
-      ClassicRequestBuilder requestBuilder = ClassicRequestBuilder.create(method.name());
-
-      setUri(requestBuilder, path, queryParameters);
-
-      addCollectionHeader(requestBuilder, "Accept", accept);
-
-      addHeaders(requestBuilder, headerParams);
-      addHeaders(requestBuilder, headersToBeAdded);
-
-      if (null != body) {
-        addCollectionHeader(requestBuilder, CONTENT_TYPE_HEADER, contentType);
-        addBody(requestBuilder, body);
-      }
-
-      addFormParams(requestBuilder, contentType, formParams);
-
       HttpResponse response =
-          send(activeClient, requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
+          send(
+              activeTransport, transportRequest, authManagersByOasSecuritySchemes, authNames, body);
       LOGGER.finest("connection response: " + response);
 
       // HTTP 407 (Proxy Authentication Required) is normally handled transparently by Apache
       // HttpClient via DefaultProxyRoutePlanner + CredentialsProvider (the 407→retry cycle
-      // happens inside processRequest and is invisible to this method).
+      // happens inside the transport and is invisible to this method).
       // If 407 surfaces here it means proxy credentials are absent, wrong, or the proxy uses an
       // unsupported auth scheme. Guard explicitly so that the OAuth-refresh block below does NOT
       // misfire: some enterprise proxies include a `www-authenticate: Bearer error="expired"`
@@ -255,7 +125,12 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
             processUnauthorizedResponse(httpRequest, response, authManagersByOasSecuritySchemes);
         if (couldRetryRequest) {
           response =
-              send(activeClient, requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
+              send(
+                  activeTransport,
+                  transportRequest,
+                  authManagersByOasSecuritySchemes,
+                  authNames,
+                  body);
           LOGGER.finest("connection response on retry: " + response);
         }
       }
@@ -321,90 +196,6 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
     return headerPresent;
   }
 
-  private void setUri(
-      ClassicRequestBuilder requestBuilder, String path, Collection<URLParameter> parameters) {
-
-    if (null == parameters || parameters.isEmpty()) {
-      requestBuilder.setUri(path);
-      return;
-    }
-    String requestParameters = "?" + encodeParametersAsString(parameters);
-    LOGGER.finest("Request parameters: " + requestParameters);
-    requestBuilder.setUri(path + requestParameters);
-  }
-
-  private void addBody(ClassicRequestBuilder requestBuilder, String body) {
-
-    if (null == body) {
-      return;
-    }
-    Charset charset = extractCharset(requestBuilder).orElse(StandardCharsets.UTF_8);
-    requestBuilder.setEntity(new StringEntity(body, charset));
-  }
-
-  private void addFormParams(
-      ClassicRequestBuilder requestBuilder,
-      Collection<String> contentType,
-      Map<String, Object> formParams) {
-
-    if (null == formParams) {
-      return;
-    }
-
-    MultipartEntityBuilder multiPartBuilder = MultipartEntityBuilder.create();
-    if (null == contentType
-        || contentType.stream().noneMatch(cType -> cType.toLowerCase().contains("charset="))) {
-      multiPartBuilder.setCharset(StandardCharsets.UTF_8);
-    }
-    formParams.forEach((key, value) -> addMultiPart(requestBuilder, multiPartBuilder, key, value));
-
-    requestBuilder.setEntity(multiPartBuilder.build());
-  }
-
-  private void addMultiPart(
-      AbstractMessageBuilder<?> messageBuilder,
-      MultipartEntityBuilder multiPartBuilder,
-      String name,
-      Object value) {
-
-    if (value instanceof File) {
-      addMultiPartFile(multiPartBuilder, name, (File) value);
-    } else if (value instanceof byte[]) {
-      addMultiPartByteArray(multiPartBuilder, name, (byte[]) value);
-    } else if (value instanceof Collection) {
-      addMultiPartCollection(messageBuilder, multiPartBuilder, name, (Collection<?>) value);
-    } else {
-      Charset charset = extractCharset(messageBuilder).orElse(StandardCharsets.UTF_8);
-      ContentType customContentType =
-          ContentType.create(ContentType.TEXT_PLAIN.getMimeType(), charset);
-      multiPartBuilder.addTextBody(name, (String) value, customContentType);
-    }
-  }
-
-  private void addMultiPartFile(MultipartEntityBuilder multiPartBuilder, String name, File file) {
-    multiPartBuilder.addBinaryBody(name, file);
-  }
-
-  private void addMultiPartByteArray(
-      MultipartEntityBuilder multiPartBuilder, String name, byte[] bytes) {
-    multiPartBuilder.addBinaryBody(name, bytes);
-  }
-
-  private void addMultiPartCollection(
-      AbstractMessageBuilder<?> messageBuilder,
-      MultipartEntityBuilder multiPartBuilder,
-      String name,
-      Collection<?> collection) {
-    collection.forEach(item -> addMultiPart(messageBuilder, multiPartBuilder, name, item));
-  }
-
-  private void addCollectionHeader(
-      ClassicRequestBuilder requestBuilder, String header, Collection<String> values) {
-    if (null != values && !values.isEmpty()) {
-      requestBuilder.setHeader(header, String.join(",", values));
-    }
-  }
-
   // The key is added once, before the request goes through the retry policy, so that every attempt
   // of the request sends the same key
   private static Map<String, String> withIdempotencyKey(HttpRequest httpRequest) {
@@ -419,46 +210,35 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
     return withKey;
   }
 
-  private void addHeaders(ClassicRequestBuilder requestBuilder, Map<String, String> headers) {
-
-    if (null == headers) {
-      return;
-    }
-    headers
-        .entrySet()
-        .iterator()
-        .forEachRemaining(f -> requestBuilder.setHeader(f.getKey(), f.getValue()));
-  }
-
-  private void addAuth(
-      ClassicRequestBuilder requestBuilder,
+  private com.sinch.sdk.core.http.transport.HttpRequest withAuth(
+      com.sinch.sdk.core.http.transport.HttpRequest request,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
       Collection<String> values,
       String body) {
 
     if (null == values || values.isEmpty() || null == authManagersByOasSecuritySchemes) {
-      return;
+      return request;
     }
 
     for (String entry : values) {
       if (authManagersByOasSecuritySchemes.containsKey(entry)) {
         AuthManager authManager = authManagersByOasSecuritySchemes.get(entry);
-        Collection<Pair<String, String>> headers =
+        Collection<Pair<String, String>> authHeaders =
             authManager.getAuthorizationHeaders(
-                requestBuilder.getMethod(),
-                null != requestBuilder.getFirstHeader(CONTENT_TYPE_HEADER)
-                    ? requestBuilder.getFirstHeader(CONTENT_TYPE_HEADER).getValue()
-                    : null,
-                requestBuilder.getPath(),
+                request.getMethod().name(),
+                request.getHeaders().getFirst(CONTENT_TYPE_HEADER).orElse(null),
+                TransportRequestMapper.authorizationPath(request),
                 body);
-        headers.stream()
-            .iterator()
-            .forEachRemaining(f -> requestBuilder.setHeader(f.getLeft(), f.getRight()));
-        return;
+        HttpHeaders headers = new HttpHeaders(request.getHeaders());
+        authHeaders.forEach(f -> headers.set(f.getLeft(), f.getRight()));
+        return com.sinch.sdk.core.http.transport.HttpRequest.builder(request)
+            .setHeaders(headers)
+            .build();
       } else {
         LOGGER.finest("Ignore unknown authentication value: '" + entry + "'");
       }
     }
+    return request;
   }
 
   /**
@@ -466,27 +246,28 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
    * for every endpoint that goes through this transport.
    */
   private HttpResponse send(
-      CloseableHttpClient client,
-      ClassicRequestBuilder requestBuilder,
+      HttpTransport transport,
+      com.sinch.sdk.core.http.transport.HttpRequest request,
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
       Collection<String> authNames,
       String body)
       throws Exception {
-    addAuth(requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
+    // Authorization of the first attempt is computed outside the retry policy: fetching a token
+    // then goes through its own retry policy rather than sharing the one of this request
+    com.sinch.sdk.core.http.transport.HttpRequest authorized =
+        withAuth(request, authManagersByOasSecuritySchemes, authNames, body);
 
     AtomicBoolean firstAttempt = new AtomicBoolean(true);
     return retryManager.execute(
         () -> {
-          if (!firstAttempt.getAndSet(false)) {
-            addAuth(requestBuilder, authManagersByOasSecuritySchemes, authNames, body);
+          com.sinch.sdk.core.http.transport.HttpRequest attempt =
+              firstAttempt.getAndSet(false)
+                  ? authorized
+                  : withAuth(request, authManagersByOasSecuritySchemes, authNames, body);
+          try (com.sinch.sdk.core.http.transport.HttpResponse response = transport.send(attempt)) {
+            return TransportRequestMapper.toServiceResponse(response);
           }
-          return processRequest(client, requestBuilder.build());
         });
-  }
-
-  HttpResponse processRequest(CloseableHttpClient client, ClassicHttpRequest request)
-      throws IOException {
-    return client.execute(request, HttpClientApache::processResponse);
   }
 
   /**
@@ -525,30 +306,17 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
     }
   }
 
-  private Optional<Charset> extractCharset(AbstractMessageBuilder<?> messageBuilder) {
-
-    Header[] headers = messageBuilder.getHeaders(CONTENT_TYPE_HEADER);
-    if (null == headers) {
-      return Optional.empty();
-    }
-    Optional<Header> charsetHeader =
-        Arrays.stream(headers).filter(f -> f.getValue().contains("charset=")).findFirst();
-
-    return charsetHeader.flatMap(
-        header -> HttpContentType.getCharsetValue(header.getValue()).map(Charset::forName));
-  }
-
   @Override
   public boolean isClosed() {
-    return null == client;
+    return null == transport;
   }
 
   @Override
   public void close() throws Exception {
     if (!isClosed()) {
       synchronized (this) {
-        CloseableHttpClient local = client;
-        client = null;
+        HttpTransport local = transport;
+        transport = null;
         if (local != null) {
           local.close();
         }
