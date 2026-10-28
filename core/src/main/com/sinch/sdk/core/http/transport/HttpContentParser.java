@@ -11,7 +11,7 @@ import java.util.Map;
  * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
  * change without notice.
  *
- * @since 2.4
+ * @since 2.5
  */
 public interface HttpContentParser extends Closeable {
 
@@ -20,7 +20,7 @@ public interface HttpContentParser extends Closeable {
    * when the header does not define one
    *
    * @return Text content, empty when the response has no content
-   * @since 2.4
+   * @since 2.5
    */
   String asString();
 
@@ -28,7 +28,7 @@ public interface HttpContentParser extends Closeable {
    * Content as bytes
    *
    * @return Bytes received, empty when the response has no content
-   * @since 2.4
+   * @since 2.5
    */
   byte[] asBytes();
 
@@ -37,8 +37,10 @@ public interface HttpContentParser extends Closeable {
    * <code>null</code> in the payload is present with a <code>null</code> value
    *
    * @return Fields of the object, in payload order. Empty when the response has no content
-   * @throws ApiException if the content is not a JSON object
-   * @since 2.4
+   * @throws ApiException if the content is not a JSON object. The exception does not carry the
+   *     response: the status is available from {@link HttpResponse#getStatus()} and the content
+   *     remains readable with {@link #asString()} or {@link #asBytes()}
+   * @since 2.5
    */
   Map<String, Object> asMap() throws ApiException;
 
@@ -46,14 +48,14 @@ public interface HttpContentParser extends Closeable {
    * Content as a stream
    *
    * @return Stream over the content
-   * @since 2.4
+   * @since 2.5
    */
   InputStream asStream();
 
   /**
    * Release the resources held for the content
    *
-   * @since 2.4
+   * @since 2.5
    */
   @Override
   default void close() {}

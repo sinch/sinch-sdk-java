@@ -15,6 +15,12 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 > - `[tech]` — technical improvement
 
 ---
+## v2.5.0 - Unreleased
+
+### SDK
+- **[tech]** `HttpClientApache`: requests are sent through an HTTP transport based on the new `HttpRequest`/`HttpResponse`.
+- **[fix]** `HttpClientApache`: refresh an expired OAuth token whatever the case of the `WWW-Authenticate` header
+
 ## v2.4.0 - Unreleased
 
 ### Voice
@@ -23,10 +29,6 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[feature]** V2 helpers: `VoiceName` catalog of text-to-speech voices
 - **[feature]** V2 `setCommands(...)` accepts one or more commands
 - **[doc]** V2 snippets, `sinch-events` example and README use the helpers
-
-### SDK
-- **[tech]** `HttpClientApache`: requests are sent through an HTTP transport based on the new `HttpRequest`/`HttpResponse`.
-- **[fix]** `HttpClientApache`: refresh an expired OAuth token whatever the case of the `WWW-Authenticate` header
 
 ---
 ## v2.3.0 - 2026-10-15

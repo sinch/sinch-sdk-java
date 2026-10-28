@@ -9,38 +9,27 @@ import java.util.Objects;
 /**
  * Content of an HTTP request.
  *
- * <p>Content is sent untouched: the <code>content-type</code> header describing it has to be set by
- * the caller, except for form data where the transport sets it with the boundary of the parts.
+ * <p>Content is sent untouched: text has to be encoded by the caller, and the <code>content-type
+ * </code> header describing the content has to be set by the caller, except for form data where the
+ * transport sets it with the boundary of the parts.
  *
  * <p>Every kind of content can be sent more than once, so that a request can be retried.
  *
  * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
  * change without notice.
  *
- * @since 2.4
+ * @since 2.5
  */
 public abstract class HttpContent {
 
   private HttpContent() {}
 
   /**
-   * Text content, encoded with the charset of the <code>content-type</code> header, or UTF-8 when
-   * the header does not define one
-   *
-   * @param content Text to send, e.g. a JSON payload
-   * @return Content instance
-   * @since 2.4
-   */
-  public static HttpContent ofString(String content) {
-    return new StringContent(content);
-  }
-
-  /**
    * Binary content
    *
    * @param content Bytes to send. The array is not copied
    * @return Content instance
-   * @since 2.4
+   * @since 2.5
    */
   public static HttpContent ofBytes(byte[] content) {
     return new BytesContent(content);
@@ -51,7 +40,7 @@ public abstract class HttpContent {
    *
    * @param file File to send
    * @return Content instance
-   * @since 2.4
+   * @since 2.5
    */
   public static HttpContent ofFile(File file) {
     return new FileContent(file);
@@ -64,38 +53,16 @@ public abstract class HttpContent {
    *     </code>, a {@link java.util.Collection} of values sent as several parts with the same name,
    *     or any other object sent as its text representation
    * @return Content instance
-   * @since 2.4
+   * @since 2.5
    */
   public static HttpContent ofFormData(Map<String, ?> parameters) {
     return new FormDataContent(parameters);
   }
 
   /**
-   * Text content
-   *
-   * @since 2.4
-   */
-  public static final class StringContent extends HttpContent {
-    private final String value;
-
-    private StringContent(String value) {
-      this.value = Objects.requireNonNull(value, "content");
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return "StringContent{" + "value='" + value + '\'' + '}';
-    }
-  }
-
-  /**
    * Binary content
    *
-   * @since 2.4
+   * @since 2.5
    */
   public static final class BytesContent extends HttpContent {
     private final byte[] value;
@@ -117,7 +84,7 @@ public abstract class HttpContent {
   /**
    * File content
    *
-   * @since 2.4
+   * @since 2.5
    */
   public static final class FileContent extends HttpContent {
     private final File file;
@@ -139,7 +106,7 @@ public abstract class HttpContent {
   /**
    * Form data content
    *
-   * @since 2.4
+   * @since 2.5
    */
   public static final class FormDataContent extends HttpContent {
     private final Map<String, Object> parameters;

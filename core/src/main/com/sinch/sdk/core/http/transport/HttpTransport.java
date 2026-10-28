@@ -12,7 +12,7 @@ import java.io.IOException;
  * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
  * change without notice.
  *
- * @since 2.4
+ * @since 2.5
  */
 public interface HttpTransport extends Closeable {
 
@@ -22,7 +22,7 @@ public interface HttpTransport extends Closeable {
    * @param request Request to send
    * @return Response received, whatever its status code
    * @throws IOException if the exchange failed or the transport is closed
-   * @since 2.4
+   * @since 2.5
    */
   HttpResponse send(HttpRequest request) throws IOException;
 }

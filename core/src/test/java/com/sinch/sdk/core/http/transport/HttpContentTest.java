@@ -10,14 +10,6 @@ import org.junit.jupiter.api.Test;
 class HttpContentTest {
 
   @Test
-  void ofString() {
-    HttpContent content = HttpContent.ofString("foo");
-
-    assertInstanceOf(HttpContent.StringContent.class, content);
-    assertEquals("foo", ((HttpContent.StringContent) content).getValue());
-  }
-
-  @Test
   void ofBytes() {
     byte[] bytes = {1, 2, 3};
     HttpContent content = HttpContent.ofBytes(bytes);
@@ -52,7 +44,6 @@ class HttpContentTest {
 
   @Test
   void nullIsRejected() {
-    assertThrows(NullPointerException.class, () -> HttpContent.ofString(null));
     assertThrows(NullPointerException.class, () -> HttpContent.ofBytes(null));
     assertThrows(NullPointerException.class, () -> HttpContent.ofFile(null));
     assertThrows(NullPointerException.class, () -> HttpContent.ofFormData(null));

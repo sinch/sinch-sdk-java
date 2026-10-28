@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
  * change without notice.
  *
- * @since 2.4
+ * @since 2.5
  */
 public final class BufferedHttpContentParser implements HttpContentParser {
 
@@ -33,7 +33,7 @@ public final class BufferedHttpContentParser implements HttpContentParser {
   /**
    * @param content Bytes received, <code>null</code> when the response has no content
    * @param contentType Value of the <code>content-type</code> header, <code>null</code> when absent
-   * @since 2.4
+   * @since 2.5
    */
   public BufferedHttpContentParser(byte[] content, String contentType) {
     this.content = null == content ? new byte[0] : content;

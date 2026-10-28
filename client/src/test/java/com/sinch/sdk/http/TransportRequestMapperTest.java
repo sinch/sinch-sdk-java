@@ -101,7 +101,31 @@ class TransportRequestMapperTest {
     assertEquals(Optional.of("key"), headers.getFirst("Idempotency-Key"));
     assertEquals(Optional.of("sdk"), headers.getFirst("User-Agent"));
     assertEquals(Optional.of("application/json; charset=utf-8"), headers.getFirst("Content-Type"));
-    assertEquals("{}", ((HttpContent.StringContent) request.getContent().get()).getValue());
+    assertArrayEquals(
+        "{}".getBytes(StandardCharsets.UTF_8),
+        ((HttpContent.BytesContent) request.getContent().get()).getValue());
+  }
+
+  @Test
+  void bodyIsEncodedWithTheContentTypeCharset() {
+    HttpRequest request =
+        TransportRequestMapper.toTransportRequest(
+            SERVER, bodyRequest("application/json; charset=ISO-8859-1"), null, null);
+
+    assertArrayEquals(
+        "{\"text\":\"café\"}".getBytes(StandardCharsets.ISO_8859_1),
+        ((HttpContent.BytesContent) request.getContent().get()).getValue());
+  }
+
+  @Test
+  void bodyIsEncodedAsUtf8ByDefault() {
+    HttpRequest request =
+        TransportRequestMapper.toTransportRequest(
+            SERVER, bodyRequest("application/json"), null, null);
+
+    assertArrayEquals(
+        "{\"text\":\"café\"}".getBytes(StandardCharsets.UTF_8),
+        ((HttpContent.BytesContent) request.getContent().get()).getValue());
   }
 
   @Test
@@ -200,6 +224,18 @@ class TransportRequestMapperTest {
                 200, null, new HttpHeaders(), new BufferedHttpContentParser(null, null)));
 
     assertEquals("", mapped.getMessage());
+  }
+
+  private static com.sinch.sdk.core.http.HttpRequest bodyRequest(String contentType) {
+    return new com.sinch.sdk.core.http.HttpRequest(
+        "/v1/foo",
+        HttpMethod.POST,
+        null,
+        "{\"text\":\"café\"}",
+        null,
+        null,
+        Collections.singletonList(contentType),
+        null);
   }
 
   private static com.sinch.sdk.core.http.HttpRequest serviceRequest(

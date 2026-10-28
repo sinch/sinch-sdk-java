@@ -30,7 +30,7 @@ import java.util.function.BiConsumer;
  * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
  * change without notice.
  *
- * @since 2.4
+ * @since 2.5
  */
 public final class HttpHeaders {
 
@@ -46,7 +46,7 @@ public final class HttpHeaders {
   /**
    * Empty headers
    *
-   * @since 2.4
+   * @since 2.5
    */
   public HttpHeaders() {
     this.entries = new LinkedHashMap<>();
@@ -62,7 +62,7 @@ public final class HttpHeaders {
    * Copy of existing headers
    *
    * @param headers Headers to copy
-   * @since 2.4
+   * @since 2.5
    */
   public HttpHeaders(HttpHeaders headers) {
     this();
@@ -77,7 +77,7 @@ public final class HttpHeaders {
    * @param name Header name
    * @param value Value to add
    * @return This instance
-   * @since 2.4
+   * @since 2.5
    */
   public HttpHeaders add(String name, String value) {
     checkModifiable();
@@ -92,7 +92,7 @@ public final class HttpHeaders {
    * @param name Header name
    * @param value Value to set
    * @return This instance
-   * @since 2.4
+   * @since 2.5
    */
   public HttpHeaders set(String name, String value) {
     checkModifiable();
@@ -108,7 +108,7 @@ public final class HttpHeaders {
    *
    * @param name Header name
    * @return Values in the order they were added, empty when the header is not present
-   * @since 2.4
+   * @since 2.5
    */
   public List<String> getAll(String name) {
     Entry entry = entries.get(key(name));
@@ -122,7 +122,7 @@ public final class HttpHeaders {
    *
    * @param name Header name
    * @return First value, empty when the header is not present
-   * @since 2.4
+   * @since 2.5
    */
   public Optional<String> getFirst(String name) {
     Entry entry = entries.get(key(name));
@@ -134,7 +134,7 @@ public final class HttpHeaders {
    *
    * @param name Header name
    * @return <code>true</code> when at least one value is present for this header
-   * @since 2.4
+   * @since 2.5
    */
   public boolean contains(String name) {
     return entries.containsKey(key(name));
@@ -145,7 +145,7 @@ public final class HttpHeaders {
    *
    * @param name Header name
    * @return <code>true</code> when the header was present
-   * @since 2.4
+   * @since 2.5
    */
   public boolean remove(String name) {
     checkModifiable();
@@ -156,7 +156,7 @@ public final class HttpHeaders {
    * Names of the headers present
    *
    * @return Names in the order they were first added, with the case they were first added with
-   * @since 2.4
+   * @since 2.5
    */
   public Set<String> getNames() {
     Set<String> names = new LinkedHashSet<>();
@@ -168,7 +168,7 @@ public final class HttpHeaders {
    * Whether no header is present
    *
    * @return <code>true</code> when empty
-   * @since 2.4
+   * @since 2.5
    */
   public boolean isEmpty() {
     return entries.isEmpty();
@@ -178,7 +178,7 @@ public final class HttpHeaders {
    * Perform an action for every value of every header, in order
    *
    * @param action Called once per value, with the header name and the value
-   * @since 2.4
+   * @since 2.5
    */
   public void forEach(BiConsumer<String, String> action) {
     Objects.requireNonNull(action, "action");
@@ -191,7 +191,7 @@ public final class HttpHeaders {
    * Headers as a map
    *
    * @return New map from header names to their values, in order
-   * @since 2.4
+   * @since 2.5
    */
   public Map<String, List<String>> toMap() {
     Map<String, List<String>> map = new LinkedHashMap<>();

@@ -10,7 +10,7 @@ class HttpRequestTest {
 
   @Test
   void build() {
-    HttpContent content = HttpContent.ofString("{}");
+    HttpContent content = HttpContent.ofBytes(new byte[] {1});
     HttpRequest request =
         HttpRequest.builder()
             .setMethod(HttpMethod.POST)

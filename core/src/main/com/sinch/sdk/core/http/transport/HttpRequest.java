@@ -14,7 +14,7 @@ import java.util.Optional;
  * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
  * change without notice.
  *
- * @since 2.4
+ * @since 2.5
  */
 public final class HttpRequest {
 
@@ -41,7 +41,7 @@ public final class HttpRequest {
    * HTTP method
    *
    * @return Method of the request
-   * @since 2.4
+   * @since 2.5
    */
   public HttpMethod getMethod() {
     return method;
@@ -51,7 +51,7 @@ public final class HttpRequest {
    * URL of the request, without query parameters
    *
    * @return Absolute URL
-   * @since 2.4
+   * @since 2.5
    */
   public String getUrl() {
     return url;
@@ -61,7 +61,7 @@ public final class HttpRequest {
    * Query parameters, already serialized and encoded, including the leading <code>?</code>
    *
    * @return Query parameters appended to the URL as is
-   * @since 2.4
+   * @since 2.5
    */
   public Optional<String> getQueryParameters() {
     return Optional.ofNullable(queryParameters);
@@ -71,7 +71,7 @@ public final class HttpRequest {
    * Headers of the request
    *
    * @return Read-only headers: use {@link #builder(HttpRequest)} to change them
-   * @since 2.4
+   * @since 2.5
    */
   public HttpHeaders getHeaders() {
     return headers;
@@ -81,7 +81,7 @@ public final class HttpRequest {
    * Content of the request
    *
    * @return Content, empty when the request has no body
-   * @since 2.4
+   * @since 2.5
    */
   public Optional<HttpContent> getContent() {
     return Optional.ofNullable(content);
@@ -109,7 +109,7 @@ public final class HttpRequest {
    * Getting Builder
    *
    * @return New Builder instance
-   * @since 2.4
+   * @since 2.5
    */
   public static Builder builder() {
     return new Builder();
@@ -120,7 +120,7 @@ public final class HttpRequest {
    *
    * @param request Source request to fill initial builder state
    * @return New Builder instance
-   * @since 2.4
+   * @since 2.5
    */
   public static Builder builder(HttpRequest request) {
     return new Builder(request);
@@ -129,7 +129,7 @@ public final class HttpRequest {
   /**
    * Dedicated Builder
    *
-   * @since 2.4
+   * @since 2.5
    */
   public static final class Builder {
 
@@ -155,7 +155,7 @@ public final class HttpRequest {
      *
      * @param method see getter
      * @return Current builder
-     * @since 2.4
+     * @since 2.5
      */
     public Builder setMethod(HttpMethod method) {
       this.method = method;
@@ -167,7 +167,7 @@ public final class HttpRequest {
      *
      * @param url see getter
      * @return Current builder
-     * @since 2.4
+     * @since 2.5
      */
     public Builder setUrl(String url) {
       this.url = url;
@@ -179,7 +179,7 @@ public final class HttpRequest {
      *
      * @param queryParameters see getter. When not empty, it must start with <code>?</code>
      * @return Current builder
-     * @since 2.4
+     * @since 2.5
      */
     public Builder setQueryParameters(String queryParameters) {
       this.queryParameters = queryParameters;
@@ -191,7 +191,7 @@ public final class HttpRequest {
      *
      * @param headers see getter. The headers are copied
      * @return Current builder
-     * @since 2.4
+     * @since 2.5
      */
     public Builder setHeaders(HttpHeaders headers) {
       this.headers = null == headers ? new HttpHeaders() : headers;
@@ -203,7 +203,7 @@ public final class HttpRequest {
      *
      * @param content see getter
      * @return Current builder
-     * @since 2.4
+     * @since 2.5
      */
     public Builder setContent(HttpContent content) {
       this.content = content;
@@ -214,7 +214,7 @@ public final class HttpRequest {
      * Create instance
      *
      * @return The instance build with current builder values
-     * @since 2.4
+     * @since 2.5
      */
     public HttpRequest build() {
       Objects.requireNonNull(method, "method");

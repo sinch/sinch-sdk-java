@@ -36,7 +36,6 @@ import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.FileEntity;
-import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
 import org.apache.hc.core5.util.Timeout;
 
@@ -137,11 +136,6 @@ class ApacheHttpTransport implements HttpTransport {
 
   private static HttpEntity toEntity(HttpContent content, HttpHeaders headers) {
 
-    if (content instanceof HttpContent.StringContent) {
-      return new StringEntity(
-          ((HttpContent.StringContent) content).getValue(),
-          charsetOf(headers).orElse(StandardCharsets.UTF_8));
-    }
     if (content instanceof HttpContent.BytesContent) {
       return new ByteArrayEntity(((HttpContent.BytesContent) content).getValue(), null);
     }

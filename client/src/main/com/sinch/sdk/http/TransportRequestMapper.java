@@ -3,6 +3,7 @@ package com.sinch.sdk.http;
 import static com.sinch.sdk.core.http.HttpContentType.CONTENT_TYPE_HEADER;
 import static com.sinch.sdk.core.http.URLParameterUtils.encodeParametersAsString;
 
+import com.sinch.sdk.core.http.HttpContentType;
 import com.sinch.sdk.core.http.URLParameter;
 import com.sinch.sdk.core.http.transport.HttpContent;
 import com.sinch.sdk.core.http.transport.HttpHeaders;
@@ -10,6 +11,8 @@ import com.sinch.sdk.core.http.transport.HttpRequest;
 import com.sinch.sdk.core.http.transport.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import java.net.URI;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Map;
 
@@ -59,7 +62,7 @@ final class TransportRequestMapper {
 
     if (null != request.getBody()) {
       setCollectionHeader(headers, CONTENT_TYPE_HEADER, request.getContentType());
-      builder.setContent(HttpContent.ofString(request.getBody()));
+      builder.setContent(HttpContent.ofBytes(encode(request.getBody(), headers)));
     } else if (null != request.getFormParams()) {
       builder.setContent(HttpContent.ofFormData(request.getFormParams()));
     }
@@ -89,6 +92,17 @@ final class TransportRequestMapper {
   static String authorizationPath(HttpRequest request) {
     String path = URI.create(request.getUrl()).getRawPath();
     return (null == path || path.isEmpty() ? "/" : path) + request.getQueryParameters().orElse("");
+  }
+
+  // text is encoded with the charset of the content type, or UTF-8 when it does not define one
+  private static byte[] encode(String body, HttpHeaders headers) {
+    Charset charset =
+        headers
+            .getFirst(CONTENT_TYPE_HEADER)
+            .flatMap(HttpContentType::getCharsetValue)
+            .map(Charset::forName)
+            .orElse(StandardCharsets.UTF_8);
+    return body.getBytes(charset);
   }
 
   private static void setCollectionHeader(

@@ -95,44 +95,6 @@ class ApacheHttpTransportTest {
   }
 
   @Test
-  void sendsStringContentWithTheContentTypeCharset() throws Exception {
-    server.enqueue(new MockResponse());
-    String body = "{\"text\":\"café\"}";
-
-    transport
-        .send(
-            request(HttpMethod.POST)
-                .setHeaders(
-                    new HttpHeaders().add("Content-Type", "application/json; charset=ISO-8859-1"))
-                .setContent(HttpContent.ofString(body))
-                .build())
-        .close();
-
-    RecordedRequest recorded = server.takeRequest();
-    assertEquals("application/json; charset=ISO-8859-1", recorded.getHeader("Content-Type"));
-    assertArrayEquals(
-        body.getBytes(StandardCharsets.ISO_8859_1), recorded.getBody().readByteArray());
-  }
-
-  @Test
-  void sendsStringContentAsUtf8ByDefault() throws Exception {
-    server.enqueue(new MockResponse());
-    String body = "{\"text\":\"café\"}";
-
-    transport
-        .send(
-            request(HttpMethod.PUT)
-                .setHeaders(new HttpHeaders().add("Content-Type", "application/json"))
-                .setContent(HttpContent.ofString(body))
-                .build())
-        .close();
-
-    RecordedRequest recorded = server.takeRequest();
-    assertEquals("application/json", recorded.getHeader("Content-Type"));
-    assertEquals(body, recorded.getBody().readUtf8());
-  }
-
-  @Test
   void sendsBytesContentUntouched() throws Exception {
     server.enqueue(new MockResponse());
     byte[] body = {(byte) 0xff, (byte) 0xd8, (byte) 0xff, (byte) 0xe0, 0, 0x10};

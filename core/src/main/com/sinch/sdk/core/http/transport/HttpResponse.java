@@ -13,7 +13,7 @@ import java.util.Optional;
  * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
  * change without notice.
  *
- * @since 2.4
+ * @since 2.5
  */
 public final class HttpResponse implements Closeable {
 
@@ -27,7 +27,7 @@ public final class HttpResponse implements Closeable {
    * @param reasonPhrase Reason phrase of the status line, <code>null</code> when none was received
    * @param headers Headers received
    * @param content Content received
-   * @since 2.4
+   * @since 2.5
    */
   public HttpResponse(
       int status, String reasonPhrase, HttpHeaders headers, HttpContentParser content) {
@@ -41,7 +41,7 @@ public final class HttpResponse implements Closeable {
    * Status code
    *
    * @return Status code of the response
-   * @since 2.4
+   * @since 2.5
    */
   public int getStatus() {
     return status;
@@ -51,7 +51,7 @@ public final class HttpResponse implements Closeable {
    * Reason phrase of the status line
    *
    * @return Reason phrase, empty when none was received (e.g. HTTP/2)
-   * @since 2.4
+   * @since 2.5
    */
   public Optional<String> getReasonPhrase() {
     return Optional.ofNullable(reasonPhrase);
@@ -61,7 +61,7 @@ public final class HttpResponse implements Closeable {
    * Headers of the response
    *
    * @return Read-only headers received
-   * @since 2.4
+   * @since 2.5
    */
   public HttpHeaders getHeaders() {
     return headers;
@@ -71,7 +71,7 @@ public final class HttpResponse implements Closeable {
    * Content of the response
    *
    * @return Content received
-   * @since 2.4
+   * @since 2.5
    */
   public HttpContentParser getContent() {
     return content;
