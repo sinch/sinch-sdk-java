@@ -15,7 +15,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 > - `[tech]` — technical improvement
 
 ---
-## v2.4.0 - Unreleased
+## v2.4.0 - 2026-10-28
 
 ### Voice
 - **[feature]** V2 helpers: `Destination`, SVAML commands (`Calls`, `Amd`, `Messages`, `Recording`, `CustomEvents`, `Menu`) and `CommandsSequenceCreator`. Event handlers accept a sequence lambda
