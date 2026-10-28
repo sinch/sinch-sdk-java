@@ -1,6 +1,7 @@
 package com.sinch.sdk.domains.voice.models.v2.svaml;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -66,6 +67,17 @@ public interface SvamlInput {
      * @see #getCommands
      */
     Builder setCommands(List<SvamlCommand> commands);
+
+    /**
+     * Set the commands from one or more commands, e.g. a single one
+     *
+     * @param commands Commands, in the order they run
+     * @return Current builder
+     * @see #setCommands(List)
+     */
+    default Builder setCommands(SvamlCommand... commands) {
+      return setCommands(Arrays.asList(commands));
+    }
 
     /**
      * see getter

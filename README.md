@@ -369,6 +369,31 @@ You can find a complete example in [examples/sinch-events](https://github.com/si
 
 The Voice API v2 needs no extra parameters, use the [common client](#client-initialization) shown above.
 
+The helpers in `com.sinch.sdk.domains.voice.models.v2.helpers` build the SVAML commands of a call, the call behavior of a service and the responses to Sinch Events. For example, to call a number, play a greeting once the call is answered, then hang up:
+
+```java
+import com.sinch.sdk.domains.voice.models.v2.calls.request.StartCallRequest;
+import com.sinch.sdk.domains.voice.models.v2.helpers.Calls;
+import com.sinch.sdk.domains.voice.models.v2.helpers.CommandsSequenceCreator;
+
+StartCallRequest request =
+    StartCallRequest.builder()
+        .setCommands(
+            CommandsSequenceCreator.create()
+                .dial("RECIPIENT_PHONE_NUMBER", dial -> dial
+                    .from("SINCH_VIRTUAL_PHONE_NUMBER")
+                    .onAnswer(answered -> answered.text(
+                        "Hello from the Sinch Java SDK!",
+                        "Emma",
+                        greeting -> greeting.onFinish(Calls.hangup()))))
+                .build())
+        .build();
+
+client.voice().v2().calls().start(request);
+```
+
+The same commands answer a Sinch Event, with `SinchEventResponses.response(...)` or, for a `call.incoming` event, `SinchEventResponses.incomingCallResponse(...)`.
+
 
 ### Your first request
 
