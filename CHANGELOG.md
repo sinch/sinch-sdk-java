@@ -21,7 +21,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 - **[tech]** `HttpClientApache`: requests are sent through an HTTP transport based on the new `HttpRequest`/`HttpResponse`.
 - **[fix]** `HttpClientApache`: refresh an expired OAuth token whatever the case of the `WWW-Authenticate` header
 
-## v2.4.0 - Unreleased
+## v2.4.0 - 2026-10-28
 
 ### Voice
 - **[feature]** V2 helpers: `Destination`, SVAML commands (`Calls`, `Amd`, `Messages`, `Recording`, `CustomEvents`, `Menu`) and `CommandsSequenceCreator`. Event handlers accept a sequence lambda
