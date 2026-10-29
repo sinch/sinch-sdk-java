@@ -1,0 +1,62 @@
+package com.sinch.sdk.core.http.transport;
+
+import com.sinch.sdk.core.exceptions.ApiException;
+import java.io.Closeable;
+import java.io.InputStream;
+import java.util.Map;
+
+/**
+ * Content of an HTTP response.
+ *
+ * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
+ * change without notice.
+ *
+ * @since 2.5
+ */
+public interface HttpContentParser extends Closeable {
+
+  /**
+   * Content as text, decoded with the charset of the <code>content-type</code> header, or UTF-8
+   * when the header does not define one
+   *
+   * @return Text content, empty when the response has no content
+   * @since 2.5
+   */
+  String asString();
+
+  /**
+   * Content as bytes
+   *
+   * @return Bytes received, empty when the response has no content
+   * @since 2.5
+   */
+  byte[] asBytes();
+
+  /**
+   * Fields of a JSON object content. Nested objects are maps, arrays are lists, and a field set to
+   * <code>null</code> in the payload is present with a <code>null</code> value
+   *
+   * @return Fields of the object, in payload order. Empty when the response has no content
+   * @throws ApiException if the content is not a JSON object. The exception does not carry the
+   *     response: the status is available from {@link HttpResponse#getStatus()} and the content
+   *     remains readable with {@link #asString()} or {@link #asBytes()}
+   * @since 2.5
+   */
+  Map<String, Object> asMap() throws ApiException;
+
+  /**
+   * Content as a stream
+   *
+   * @return Stream over the content
+   * @since 2.5
+   */
+  InputStream asStream();
+
+  /**
+   * Release the resources held for the content
+   *
+   * @since 2.5
+   */
+  @Override
+  default void close() {}
+}

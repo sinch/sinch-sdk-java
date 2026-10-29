@@ -418,9 +418,13 @@ class SinchClientTest {
     Object httpClientApache = getHttpClient.invoke(sinchClient);
     assertInstanceOf(HttpClientApache.class, httpClientApache);
 
-    Field clientField = HttpClientApache.class.getDeclaredField("client");
+    Field transportField = HttpClientApache.class.getDeclaredField("transport");
+    transportField.setAccessible(true);
+    Object transport = transportField.get(httpClientApache);
+
+    Field clientField = transport.getClass().getDeclaredField("client");
     clientField.setAccessible(true);
-    Object apacheClient = clientField.get(httpClientApache);
+    Object apacheClient = clientField.get(transport);
 
     Field routePlannerField = apacheClient.getClass().getDeclaredField("routePlanner");
     routePlannerField.setAccessible(true);
