@@ -51,7 +51,7 @@ public abstract class HttpContent {
    *
    * @param parameters Parts to send, by name. A value is either a {@link File}, a <code>byte[]
    *     </code>, a {@link java.util.Collection} of values sent as several parts with the same name,
-   *     or any other object sent as its text representation
+   *     any other object sent as its text representation, or <code>null</code> to omit the part
    * @return Content instance
    * @since 2.5
    */

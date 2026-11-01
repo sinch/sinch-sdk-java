@@ -25,6 +25,7 @@ To use Sinch services, you'll need a Sinch account and access keys. You can sign
 - [Proxy configuration](#proxy-configuration)
 - [Retry configuration](#retry-configuration)
 - [Transport settings](#transport-settings)
+- [Low-level HTTP client](#low-level-http-client)
 - [Third-party dependencies](#third-party-dependencies)
 - [Examples](#examples)
 - [Changelog and Migration](#changelog--migration)
@@ -487,6 +488,7 @@ try {
 
 - `ApiAuthException`: authentication/authorization failures.
 - `ApiMappingException`: the response payload could not be deserialized into the expected type.
+- `ApiHttpException`: a [low-level HTTP client](#low-level-http-client) call returned a status >= 400. `getResponse()` gives access to the raw response.
 
 ## Proxy configuration
 
@@ -624,6 +626,79 @@ Configuration configuration = Configuration.builder()
         .build();
 SinchClient client = new SinchClient(configuration);
 ```
+
+## Low-level HTTP client
+
+`sinchClient.http()` sends raw HTTP requests to any Sinch API, including the endpoints not covered by the SDK yet (e.g. sources generated from an OpenAPI specification). The SDK still takes care of:
+- the OAuth2 authentication and its token cache (`keyId` and `keySecret` are required, `projectId` is not: it is part of the URL)
+- the HTTP 429 retries (see [Retry configuration](#retry-configuration))
+- the timeout and the `User-Agent` header, whose auxiliary flag ends with `http` for these requests
+
+Everything else is up to the caller: the URL, the query parameters and the body are sent **untouched**.
+
+```java
+import com.sinch.sdk.SinchClient;
+import com.sinch.sdk.core.http.transport.HttpHeaders;
+import com.sinch.sdk.core.http.transport.HttpResponse;
+import com.sinch.sdk.http.HttpCallParameters;
+import com.sinch.sdk.http.HttpRequestOptions;
+import com.sinch.sdk.models.Configuration;
+import com.sinch.sdk.models.RetryConfiguration;
+import com.sinch.sdk.models.RetryPolicy;
+
+SinchClient sinchClient =
+    new SinchClient(Configuration.builder().setKeyId(keyId).setKeySecret(keySecret).build());
+
+HttpResponse response =
+    sinchClient
+        .http()
+        .get(
+            "https://numbers.api.sinch.com/v1/projects/" + projectId + "/activeNumbers",
+            HttpCallParameters.builder()
+                // pre-encoded; the leading "?" is added when missing
+                .setQueryParameters("?regionCode=US&type=LOCAL&pageSize=5")
+                .setHeaders(new HttpHeaders().set("accept", "application/json"))
+                .build());
+Map<String, Object> activeNumbers = response.getContent().asMap();
+
+sinchClient
+    .http()
+    .post(
+        "https://lookup.api.sinch.com/v2/projects/" + projectId + "/lookups",
+        "{\"number\":\"+14045001000\"}",
+        HttpCallParameters.builder()
+            .setHeaders(new HttpHeaders().set("content-type", "application/json"))
+            // request level overrides
+            .setOptions(
+                HttpRequestOptions.builder()
+                    .setTimeoutSeconds(10)
+                    .setRetryConfiguration(
+                        RetryConfiguration.builder().setRetryPolicy(RetryPolicy.NONE).build())
+                    .build())
+            .build());
+```
+
+| Method | Body |
+|--------|------|
+| `get(url[, parameters])` / `delete(url[, parameters])` | none |
+| `post(url, body, parameters)` / `put(...)` / `patch(...)` | `String` (encoded with the charset of the `content-type` header, UTF-8 by default), `byte[]` or `File`, sent untouched. The `content-type` header is required: an `IllegalArgumentException` is thrown without it |
+| `postFormData(url, formParameters, parameters)` | `Map<String, ?>` of `String`, `byte[]`, `File` or collections of them, sent as `multipart/form-data` (the SDK sets the `content-type` with its boundary). A `null` value is omitted |
+
+`parameters` (a `HttpCallParameters`, `null` when none) holds the `queryParameters`, the `headers` (an `HttpHeaders`, or a `Map<String, String>` for one value per header) and the `options`. The query parameters can also be part of the URL, but not both. The options override the client settings for this call only:
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `useSinchAuth` | `TransportSettings.getUseSinchAuth()` | `false` sends the request without fetching a token: set your own `Authorization` header. Since the client setting is only the default, a single call can enable the authentication as long as `keyId` and `keySecret` are set. |
+| `timeoutSeconds` | `TransportSettings.getTimeoutSeconds()` | Timeout waiting for the response, `0` to disable it. The connect timeout remains the client one. |
+| `retryConfiguration` | `Configuration.getRetryConfiguration()` | Replaces the whole retry configuration for this call. |
+
+The returned `HttpResponse` (from `com.sinch.sdk.core.http.transport`) exposes `getStatus()`, `getHeaders()` (case-insensitive names, multiple values) and `getContent()`, fully loaded in memory: `asString()`, `asBytes()`, `asMap()` or `asStream()`. A status >= 400 is thrown as an `ApiHttpException`, whose `getResponse()` can still be read.
+
+Known limitations:
+- no automatic pagination, and no path segment or query parameter encoding
+- field names are the raw ones from the API specification
+- only OAuth2 authentication is injected: the SMS API token and the signed requests (Voice, Verification) have to be handled by the caller with `useSinchAuth` set to `false`
+- the response content is loaded in memory, and stream bodies are not supported so that a request can be sent again on retry
 
 ## Third-party dependencies
 The SDK relies on the following third-party dependencies:

@@ -27,9 +27,6 @@ import java.util.function.BiConsumer;
  * <p>The values of the credential headers (<code>Authorization</code>, <code>
  * Proxy-Authorization</code>) are masked by {@link #toString()}.
  *
- * <p><b>Internal use:</b> used by the SDK HTTP clients, not part of the SDK public API yet. It may
- * change without notice.
- *
  * @since 2.5
  */
 public final class HttpHeaders {

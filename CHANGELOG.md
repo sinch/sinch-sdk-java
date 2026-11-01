@@ -18,6 +18,11 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 ## v2.5.0 - Unreleased
 
 ### SDK
+- **[feature]** `SinchClient.http()`: low-level HTTP client to call any Sinch API with raw requests
+- **[feature]** `HttpRequestOptions`: per-call `useSinchAuth`, `timeoutSeconds` and `retryConfiguration`
+- **[feature]** `ApiHttpException`: thrown by `http()` on a status >= 400, with the raw response
+- **[feature]** `HttpResponse`, `HttpHeaders` and `HttpContentParser` are now public
+- **[fix]** Form data: a `null` value is omitted instead of sent as `"null"`
 - **[tech]** `HttpClientApache`: requests are sent through an HTTP transport based on the new `HttpRequest`/`HttpResponse`.
 - **[fix]** `HttpClientApache`: refresh an expired OAuth token whatever the case of the `WWW-Authenticate` header
 

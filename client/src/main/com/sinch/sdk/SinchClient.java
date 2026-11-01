@@ -1,6 +1,5 @@
 package com.sinch.sdk;
 
-import com.sinch.sdk.core.http.HttpClient;
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.conversation.ConversationService;
 import com.sinch.sdk.domains.numberlookup.NumberLookupService;
@@ -9,7 +8,9 @@ import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
 import com.sinch.sdk.domains.voice.VoiceService;
 import com.sinch.sdk.http.DefaultRetryManager;
+import com.sinch.sdk.http.DefaultSinchHttpClient;
 import com.sinch.sdk.http.HttpClientApache;
+import com.sinch.sdk.http.SinchHttpClient;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationContext;
 import com.sinch.sdk.models.ConversationRegion;
@@ -62,6 +63,9 @@ public class SinchClient {
   // {auxiliary_flag})
   private static final String SDK_USER_AGENT_HEADER = "User-Agent";
   private static final String SDK_USER_AGENT_FORMAT = "sinch-sdk/%s (%s/%s; %s; %s)";
+  private static final String SDK_IMPLEMENTATION_TYPE = "Apache";
+  // appended to the auxiliary flag of the requests sent by the low-level HTTP client
+  private static final String HTTP_USAGE_FLAG = "http";
   private static final Logger LOGGER = Logger.getLogger(SinchClient.class.getName());
 
   private final Configuration configuration;
@@ -72,7 +76,8 @@ public class SinchClient {
   private volatile VoiceService voice;
   private volatile ConversationService conversation;
   private volatile NumberLookupService lookup;
-  private volatile HttpClient httpClient;
+  private volatile SinchHttpClient http;
+  private volatile HttpClientApache httpClient;
 
   /**
    * Create a Sinch Client instance based onto configuration
@@ -417,6 +422,29 @@ public class SinchClient {
     return lookup;
   }
 
+  /**
+   * Get the low-level HTTP client
+   *
+   * <p>Sends raw HTTP requests to any Sinch API, including the endpoints not covered by the domain
+   * services. The SDK still takes care of the OAuth2 authentication (<code>keyId</code> and <code>
+   * keySecret</code>, <code>projectId</code> is not required), the retries of the rate-limited
+   * responses, the timeout and the <code>User-Agent</code> header.
+   *
+   * @return Return instance onto the low-level HTTP client
+   * @see SinchHttpClient
+   * @since 2.5
+   */
+  public SinchHttpClient http() {
+    if (null == http) {
+      synchronized (this) {
+        if (null == http) {
+          http = httpInit();
+        }
+      }
+    }
+    return http;
+  }
+
   private void checkConfiguration(Configuration configuration) throws NullPointerException {
     Objects.requireNonNull(configuration.getOAuthUrl(), "'oauthUrl' cannot be null");
   }
@@ -491,6 +519,15 @@ public class SinchClient {
         useSinchAuth());
   }
 
+  private SinchHttpClient httpInit() {
+    return new DefaultSinchHttpClient(
+        getConfiguration().getUnifiedCredentials().orElse(null),
+        getConfiguration().getOAuthServer(),
+        transportSettings(),
+        formatSdkUserAgentHeader(HTTP_USAGE_FLAG),
+        this::getHttpClient);
+  }
+
   private Properties handlePropertiesFile(String fileName) {
 
     Properties prop = new Properties();
@@ -502,8 +539,8 @@ public class SinchClient {
     return prop;
   }
 
-  private HttpClient getHttpClient() {
-    HttpClient local = httpClient;
+  private HttpClientApache getHttpClient() {
+    HttpClientApache local = httpClient;
     if (null == local || local.isClosed()) {
       synchronized (this) {
         local = httpClient;
@@ -515,7 +552,7 @@ public class SinchClient {
                   transportSettings().getTimeoutSeconds());
 
           // set SDK User-Agent
-          String userAgent = formatSdkUserAgentHeader();
+          String userAgent = formatSdkUserAgentHeader(null);
           local.setRequestHeaders(
               Stream.of(new String[][] {{SDK_USER_AGENT_HEADER, userAgent}})
                   .collect(Collectors.toMap(data -> data[0], data -> data[1])));
@@ -529,14 +566,20 @@ public class SinchClient {
     return local;
   }
 
-  private String formatSdkUserAgentHeader() {
+  /**
+   * @param usageFlag Flag appended to the auxiliary flag to tell a kind of request apart, <code>
+   *     null
+   *     </code> when none
+   */
+  private String formatSdkUserAgentHeader(String usageFlag) {
+    String auxiliaryFlag = formatAuxiliaryFlag();
     return String.format(
         SDK_USER_AGENT_FORMAT,
         SDK.VERSION,
         "Java",
         System.getProperty("java.version"),
-        "Apache",
-        formatAuxiliaryFlag());
+        SDK_IMPLEMENTATION_TYPE,
+        StringUtil.isEmpty(usageFlag) ? auxiliaryFlag : auxiliaryFlag + "," + usageFlag);
   }
 
   private String formatAuxiliaryFlag() {
@@ -556,7 +599,7 @@ public class SinchClient {
 
   /**
    * Releases the underlying HTTP client and its connection pool, and resets all lazily-initialized
-   * domain services.
+   * domain services and the low-level HTTP client.
    *
    * <p>After this call, in-flight requests may be affected by shutdown of the underlying HTTP
    * client and are not guaranteed to complete normally. The next API call on any domain service
@@ -570,7 +613,7 @@ public class SinchClient {
    */
   public void close() {
     synchronized (this) {
-      HttpClient local = httpClient;
+      HttpClientApache local = httpClient;
       httpClient = null;
       numbers = null;
       sms = null;
@@ -578,6 +621,7 @@ public class SinchClient {
       voice = null;
       conversation = null;
       lookup = null;
+      http = null;
       if (local != null) {
         try {
           local.close();

@@ -165,6 +165,25 @@ class ApacheHttpTransportTest {
   }
 
   @Test
+  void omitsTheNullFormDataValues() throws Exception {
+    server.enqueue(new MockResponse());
+    Map<String, Object> parameters = new LinkedHashMap<>();
+    parameters.put("to", "someone@adomain.com");
+    parameters.put("cc", null);
+    parameters.put("tags", Arrays.asList("a", null, "b"));
+
+    transport
+        .send(request(HttpMethod.POST).setContent(HttpContent.ofFormData(parameters)).build())
+        .close();
+
+    String body = server.takeRequest().getBody().readUtf8();
+    assertTrue(body.contains("name=\"to\""), body);
+    assertFalse(body.contains("name=\"cc\""), body);
+    assertFalse(body.contains("null"), body);
+    assertEquals(2, body.split("name=\"tags\"", -1).length - 1, body);
+  }
+
+  @Test
   void receivesStatusReasonAndHeaders() throws Exception {
     server.enqueue(
         new MockResponse()
@@ -236,6 +255,28 @@ class ApacheHttpTransportTest {
     try (ApacheHttpTransport shortTimeout = new ApacheHttpTransport(null, 1)) {
       server.enqueue(new MockResponse().setHeadersDelay(3, TimeUnit.SECONDS));
 
+      assertThrows(
+          SocketTimeoutException.class, () -> shortTimeout.send(request(HttpMethod.GET).build()));
+    }
+  }
+
+  @Test
+  void requestTimeoutReplacesTheTransportOne() throws Exception {
+    server.enqueue(new MockResponse().setHeadersDelay(3, TimeUnit.SECONDS));
+
+    assertThrows(
+        SocketTimeoutException.class, () -> transport.send(request(HttpMethod.GET).build(), 1));
+  }
+
+  @Test
+  void requestTimeoutDoesNotChangeTheNextRequests() throws Exception {
+    try (ApacheHttpTransport shortTimeout = new ApacheHttpTransport(null, 1)) {
+      server.enqueue(new MockResponse().setHeadersDelay(2, TimeUnit.SECONDS));
+      server.enqueue(new MockResponse().setHeadersDelay(2, TimeUnit.SECONDS));
+
+      try (HttpResponse response = shortTimeout.send(request(HttpMethod.GET).build(), 5)) {
+        assertEquals(200, response.getStatus());
+      }
       assertThrows(
           SocketTimeoutException.class, () -> shortTimeout.send(request(HttpMethod.GET).build()));
     }

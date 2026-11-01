@@ -28,6 +28,7 @@ import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner;
+import org.apache.hc.client5.http.protocol.HttpClientContext;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.Header;
@@ -106,6 +107,26 @@ class ApacheHttpTransport implements HttpTransport {
 
   @Override
   public HttpResponse send(HttpRequest request) throws IOException {
+    return send(request, HttpClientContext.create());
+  }
+
+  /**
+   * The timeout replaces the one waiting for a pooled connection and the one waiting for the
+   * response. The connect timeout is a setting of the connections, and remains the transport one.
+   */
+  @Override
+  public HttpResponse send(HttpRequest request, int timeoutSeconds) throws IOException {
+    Timeout timeout = Timeout.ofSeconds(timeoutSeconds);
+    HttpClientContext context = HttpClientContext.create();
+    context.setRequestConfig(
+        RequestConfig.custom()
+            .setConnectionRequestTimeout(timeout)
+            .setResponseTimeout(timeout)
+            .build());
+    return send(request, context);
+  }
+
+  private HttpResponse send(HttpRequest request, HttpClientContext context) throws IOException {
 
     CloseableHttpClient activeClient = this.client;
     if (activeClient == null) {
@@ -131,7 +152,7 @@ class ApacheHttpTransport implements HttpTransport {
       requestBuilder.setEntity(toEntity(content, request.getHeaders()));
     }
 
-    return activeClient.execute(requestBuilder.build(), ApacheHttpTransport::toResponse);
+    return activeClient.execute(requestBuilder.build(), context, ApacheHttpTransport::toResponse);
   }
 
   private static HttpEntity toEntity(HttpContent content, HttpHeaders headers) {
@@ -162,6 +183,10 @@ class ApacheHttpTransport implements HttpTransport {
   private static void addMultiPart(
       MultipartEntityBuilder multiPartBuilder, String name, Object value, Charset charset) {
 
+    // a null value is not a part: it is omitted rather than sent as the "null" text
+    if (null == value) {
+      return;
+    }
     if (value instanceof File) {
       multiPartBuilder.addBinaryBody(name, (File) value);
     } else if (value instanceof byte[]) {
