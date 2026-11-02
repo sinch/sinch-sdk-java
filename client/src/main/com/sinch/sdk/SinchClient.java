@@ -8,7 +8,6 @@ import com.sinch.sdk.domains.sms.SMSService;
 import com.sinch.sdk.domains.verification.VerificationService;
 import com.sinch.sdk.domains.voice.VoiceService;
 import com.sinch.sdk.http.DefaultRetryManager;
-import com.sinch.sdk.http.DefaultSinchHttpClient;
 import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.http.SinchHttpClient;
 import com.sinch.sdk.models.Configuration;

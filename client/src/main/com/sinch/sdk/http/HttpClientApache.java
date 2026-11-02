@@ -148,6 +148,9 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
    * Send a request of the low-level HTTP client, under the retry policy. When authenticated, an
    * expired OAuth token is refreshed and the request sent again once.
    *
+   * <p><b>Internal use:</b> used by {@link com.sinch.sdk.SinchClient#http()}, not part of the SDK
+   * public API. It may change without notice.
+   *
    * @param request Request to send, without authorization header
    * @param oAuthManager Manager of the OAuth token injected onto the request, <code>null</code> to
    *     send it without authorization header
@@ -155,8 +158,9 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
    * @param timeoutSeconds Timeout of the request, <code>null</code> for the client one
    * @return Response of the last attempt, whatever its status code
    * @throws ApiException if the request could not be sent
+   * @since 2.5
    */
-  com.sinch.sdk.core.http.transport.HttpResponse send(
+  public com.sinch.sdk.core.http.transport.HttpResponse send(
       com.sinch.sdk.core.http.transport.HttpRequest request,
       AuthManager oAuthManager,
       RetryManager retryManager,

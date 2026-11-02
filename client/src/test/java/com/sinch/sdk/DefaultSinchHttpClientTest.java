@@ -1,12 +1,14 @@
-package com.sinch.sdk.http;
+package com.sinch.sdk;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.sinch.sdk.SinchClient;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiHttpException;
 import com.sinch.sdk.core.http.transport.HttpHeaders;
 import com.sinch.sdk.core.http.transport.HttpResponse;
+import com.sinch.sdk.http.HttpCallParameters;
+import com.sinch.sdk.http.HttpRequestOptions;
+import com.sinch.sdk.http.SinchHttpClient;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.RetryConfiguration;
 import com.sinch.sdk.models.RetryPolicy;

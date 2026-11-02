@@ -108,7 +108,7 @@ final class TransportRequestMapper {
   }
 
   // text is encoded with the charset of the content type, or UTF-8 when it does not define one
-  static byte[] encode(String body, HttpHeaders headers) {
+  private static byte[] encode(String body, HttpHeaders headers) {
     Charset charset =
         headers
             .getFirst(CONTENT_TYPE_HEADER)

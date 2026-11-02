@@ -1,4 +1,4 @@
-package com.sinch.sdk.http;
+package com.sinch.sdk;
 
 import static com.sinch.sdk.core.http.HttpContentType.CONTENT_TYPE_HEADER;
 
@@ -6,6 +6,7 @@ import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiHttpException;
 import com.sinch.sdk.core.http.AuthManager;
+import com.sinch.sdk.core.http.HttpContentType;
 import com.sinch.sdk.core.http.HttpMapper;
 import com.sinch.sdk.core.http.HttpMethod;
 import com.sinch.sdk.core.http.transport.HttpContent;
@@ -14,20 +15,26 @@ import com.sinch.sdk.core.http.transport.HttpRequest;
 import com.sinch.sdk.core.http.transport.HttpResponse;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.core.utils.StringUtil;
+import com.sinch.sdk.http.DefaultRetryManager;
+import com.sinch.sdk.http.HttpCallParameters;
+import com.sinch.sdk.http.HttpClientApache;
+import com.sinch.sdk.http.HttpRequestOptions;
+import com.sinch.sdk.http.RetryManager;
+import com.sinch.sdk.http.SinchHttpClient;
 import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.io.File;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
- * {@link SinchHttpClient} implementation the SDK ships with, sending the requests with the HTTP
- * client of the domain services.
- *
- * @since 2.5
+ * {@link SinchHttpClient} implementation, sending the requests with the HTTP client of the domain
+ * services. Created by {@link SinchClient#http()}.
  */
-public class DefaultSinchHttpClient implements SinchHttpClient {
+final class DefaultSinchHttpClient implements SinchHttpClient {
 
   static final String USER_AGENT_HEADER = "User-Agent";
 
@@ -48,9 +55,8 @@ public class DefaultSinchHttpClient implements SinchHttpClient {
    *     for {@link TransportSettings#DEFAULTS}
    * @param userAgent Value of the <code>User-Agent</code> header sent onto every request
    * @param httpClientSupplier HTTP client the requests are sent with
-   * @since 2.5
    */
-  public DefaultSinchHttpClient(
+  DefaultSinchHttpClient(
       UnifiedCredentials credentials,
       ServerConfiguration oAuthServer,
       TransportSettings transportSettings,
@@ -149,14 +155,24 @@ public class DefaultSinchHttpClient implements SinchHttpClient {
       HttpMethod method, String url, String body, HttpCallParameters parameters) {
     Objects.requireNonNull(body, "body");
     HttpHeaders headers = requireContentType(parameters);
-    return call(
-        method, url, HttpContent.ofBytes(TransportRequestMapper.encode(body, headers)), parameters);
+    return call(method, url, HttpContent.ofBytes(encode(body, headers)), parameters);
   }
 
   private HttpResponse callWithBody(
       HttpMethod method, String url, HttpContent content, HttpCallParameters parameters) {
     requireContentType(parameters);
     return call(method, url, content, parameters);
+  }
+
+  // text is encoded with the charset of the content type, or UTF-8 when it does not define one
+  private static byte[] encode(String body, HttpHeaders headers) {
+    Charset charset =
+        headers
+            .getFirst(CONTENT_TYPE_HEADER)
+            .flatMap(HttpContentType::getCharsetValue)
+            .map(Charset::forName)
+            .orElse(StandardCharsets.UTF_8);
+    return body.getBytes(charset);
   }
 
   // a body is sent untouched: the caller has to describe it, failing before the server does
