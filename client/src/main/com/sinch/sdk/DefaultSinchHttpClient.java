@@ -2,6 +2,8 @@ package com.sinch.sdk;
 
 import static com.sinch.sdk.core.http.HttpContentType.CONTENT_TYPE_HEADER;
 
+import com.sinch.sdk.auth.adapters.ApplicationAuthManager;
+import com.sinch.sdk.auth.adapters.BearerAuthManager;
 import com.sinch.sdk.auth.adapters.OAuthManager;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiHttpException;
@@ -21,6 +23,8 @@ import com.sinch.sdk.http.HttpClientApache;
 import com.sinch.sdk.http.HttpRequestOptions;
 import com.sinch.sdk.http.RetryManager;
 import com.sinch.sdk.http.SinchHttpClient;
+import com.sinch.sdk.models.ApplicationCredentials;
+import com.sinch.sdk.models.SmsServicePlanCredentials;
 import com.sinch.sdk.models.TransportSettings;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.io.File;
@@ -41,15 +45,19 @@ final class DefaultSinchHttpClient implements SinchHttpClient {
   private static final HttpRequestOptions NO_OPTIONS = HttpRequestOptions.builder().build();
 
   private final UnifiedCredentials credentials;
+  private final SmsServicePlanCredentials smsServicePlanCredentials;
+  private final ApplicationCredentials applicationCredentials;
   private final ServerConfiguration oAuthServer;
   private final TransportSettings transportSettings;
   private final String userAgent;
   private final Supplier<HttpClientApache> httpClientSupplier;
 
-  private volatile AuthManager oAuthManager;
+  private volatile AuthManager authManager;
 
   /**
    * @param credentials Credentials used to fetch the OAuth tokens, <code>null</code> when none
+   * @param smsServicePlanCredentials Credentials of the SMS API token, <code>null</code> when none
+   * @param applicationCredentials Credentials of the signed requests, <code>null</code> when none
    * @param oAuthServer Server delivering the OAuth tokens
    * @param transportSettings Settings applied to the calls not overriding them, <code>null</code>
    *     for {@link TransportSettings#DEFAULTS}
@@ -58,11 +66,15 @@ final class DefaultSinchHttpClient implements SinchHttpClient {
    */
   DefaultSinchHttpClient(
       UnifiedCredentials credentials,
+      SmsServicePlanCredentials smsServicePlanCredentials,
+      ApplicationCredentials applicationCredentials,
       ServerConfiguration oAuthServer,
       TransportSettings transportSettings,
       String userAgent,
       Supplier<HttpClientApache> httpClientSupplier) {
     this.credentials = credentials;
+    this.smsServicePlanCredentials = smsServicePlanCredentials;
+    this.applicationCredentials = applicationCredentials;
     this.oAuthServer = oAuthServer;
     this.transportSettings =
         null != transportSettings ? transportSettings : TransportSettings.DEFAULTS;
@@ -155,13 +167,18 @@ final class DefaultSinchHttpClient implements SinchHttpClient {
       HttpMethod method, String url, String body, HttpCallParameters parameters) {
     Objects.requireNonNull(body, "body");
     HttpHeaders headers = requireContentType(parameters);
-    return call(method, url, HttpContent.ofBytes(encode(body, headers)), parameters);
+    return call(method, url, HttpContent.ofBytes(encode(body, headers)), body, parameters);
   }
 
   private HttpResponse callWithBody(
       HttpMethod method, String url, HttpContent content, HttpCallParameters parameters) {
     requireContentType(parameters);
     return call(method, url, content, parameters);
+  }
+
+  private HttpResponse call(
+      HttpMethod method, String url, HttpContent content, HttpCallParameters parameters) {
+    return call(method, url, content, null, parameters);
   }
 
   // text is encoded with the charset of the content type, or UTF-8 when it does not define one
@@ -189,8 +206,16 @@ final class DefaultSinchHttpClient implements SinchHttpClient {
     return headers;
   }
 
+  /**
+   * @param textBody Body of the request when sent as a <code>String</code>, signed by the
+   *     application credentials; <code>null</code> otherwise
+   */
   private HttpResponse call(
-      HttpMethod method, String url, HttpContent content, HttpCallParameters parameters) {
+      HttpMethod method,
+      String url,
+      HttpContent content,
+      String textBody,
+      HttpCallParameters parameters) {
 
     HttpCallParameters guard =
         null != parameters ? parameters : HttpCallParameters.builder().build();
@@ -199,7 +224,12 @@ final class DefaultSinchHttpClient implements SinchHttpClient {
     HttpRequest request = toRequest(method, url, content, guard);
 
     boolean useSinchAuth = options.getUseSinchAuth().orElse(transportSettings.getUseSinchAuth());
-    AuthManager authManager = useSinchAuth ? oAuthManager() : null;
+    AuthManager authManager = useSinchAuth ? authManager() : null;
+    if (authManager instanceof ApplicationAuthManager && null != content && null == textBody) {
+      throw new IllegalArgumentException(
+          "A signed request (application credentials) requires a String body: the SDK signs the"
+              + " text of the body, it cannot sign a byte[], File or form data body");
+    }
 
     HttpClientApache httpClient = httpClientSupplier.get();
     RetryManager retryManager =
@@ -210,7 +240,7 @@ final class DefaultSinchHttpClient implements SinchHttpClient {
 
     HttpResponse response =
         httpClient.send(
-            request, authManager, retryManager, options.getTimeoutSeconds().orElse(null));
+            request, authManager, textBody, retryManager, options.getTimeoutSeconds().orElse(null));
 
     if (response.getStatus() >= 400) {
       throw new ApiHttpException(response);
@@ -222,22 +252,13 @@ final class DefaultSinchHttpClient implements SinchHttpClient {
       HttpMethod method, String url, HttpContent content, HttpCallParameters parameters) {
 
     Objects.requireNonNull(url, "url");
-    int queryIndex = url.indexOf('?');
-    String urlQuery = queryIndex < 0 ? null : url.substring(queryIndex);
-    String parametersQuery =
+    // the URL is sent as is: only the leading '?' of the query parameters is added when missing
+    String query =
         parameters
             .getQueryParameters()
-            .filter(query -> !query.isEmpty())
-            .map(query -> query.startsWith("?") ? query : "?" + query)
+            .filter(value -> !value.isEmpty())
+            .map(value -> value.startsWith("?") ? value : "?" + value)
             .orElse(null);
-    if (null != urlQuery && null != parametersQuery) {
-      throw new IllegalArgumentException(
-          "Query parameters are set both in the URL ('"
-              + urlQuery
-              + "') and in the call parameters ('"
-              + parametersQuery
-              + "'): set them only once");
-    }
 
     // the SDK User-Agent replaces any one set by the caller
     HttpHeaders headers = parameters.getHeaders().orElse(new HttpHeaders());
@@ -245,36 +266,64 @@ final class DefaultSinchHttpClient implements SinchHttpClient {
 
     return HttpRequest.builder()
         .setMethod(method)
-        .setUrl(queryIndex < 0 ? url : url.substring(0, queryIndex))
-        .setQueryParameters(null != urlQuery ? urlQuery : parametersQuery)
+        .setUrl(url)
+        .setQueryParameters(query)
         .setHeaders(headers)
         .setContent(content)
         .build();
   }
 
-  private AuthManager oAuthManager() {
-    if (null == oAuthManager) {
+  private AuthManager authManager() {
+    AuthManager current = authManager;
+    if (null == current) {
       synchronized (this) {
-        if (null == oAuthManager) {
-          Objects.requireNonNull(
-              credentials,
-              "HTTP client requires unified credentials to be defined to authenticate a call");
-          StringUtil.requireNonEmpty(
-              credentials.getKeyId(),
-              "HTTP client requires 'keyId' to be defined to authenticate a call");
-          StringUtil.requireNonEmpty(
-              credentials.getKeySecret(),
-              "HTTP client requires 'keySecret' to be defined to authenticate a call");
-          oAuthManager =
-              new OAuthManager(
-                  credentials.getKeyId(),
-                  credentials.getKeySecret(),
-                  oAuthServer,
-                  HttpMapper.getInstance(),
-                  httpClientSupplier::get);
+        if (null == authManager) {
+          authManager = createAuthManager();
         }
+        current = authManager;
       }
     }
-    return oAuthManager;
+    return current;
+  }
+
+  // OAuth is accepted by every Sinch API: it wins over the other credentials. Without it, the SDK
+  // cannot tell which API is called, so it requires the credentials of a single other scheme
+  private AuthManager createAuthManager() {
+    if (null != credentials
+        && !StringUtil.isEmpty(credentials.getKeyId())
+        && !StringUtil.isEmpty(credentials.getKeySecret())) {
+      return new OAuthManager(
+          credentials.getKeyId(),
+          credentials.getKeySecret(),
+          oAuthServer,
+          HttpMapper.getInstance(),
+          httpClientSupplier::get);
+    }
+    boolean smsToken =
+        null != smsServicePlanCredentials
+            && !StringUtil.isEmpty(smsServicePlanCredentials.getServicePlanId())
+            && !StringUtil.isEmpty(smsServicePlanCredentials.getApiToken());
+    boolean application =
+        null != applicationCredentials
+            && !StringUtil.isEmpty(applicationCredentials.getApplicationKey())
+            && !StringUtil.isEmpty(applicationCredentials.getApplicationSecret());
+    if (smsToken && application) {
+      throw new IllegalStateException(
+          "HTTP client cannot choose between the SMS service plan credentials and the application"
+              + " credentials to authenticate a call: define 'keyId' and 'keySecret' to use OAuth,"
+              + " or keep only one of them");
+    }
+    if (smsToken) {
+      return new BearerAuthManager(smsServicePlanCredentials.getApiToken());
+    }
+    if (application) {
+      return new ApplicationAuthManager(
+          applicationCredentials.getApplicationKey(),
+          applicationCredentials.getApplicationSecret());
+    }
+    throw new IllegalStateException(
+        "HTTP client requires credentials to authenticate a call: 'keyId' and 'keySecret' (OAuth),"
+            + " SMS service plan credentials or application credentials. Set 'useSinchAuth' to"
+            + " false to send it without authentication");
   }
 }

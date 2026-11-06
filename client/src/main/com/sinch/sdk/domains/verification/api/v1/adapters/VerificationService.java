@@ -15,6 +15,7 @@ import com.sinch.sdk.domains.verification.models.v1.start.response.VerificationS
 import com.sinch.sdk.domains.verification.models.v1.status.response.VerificationStatusResponseMapper;
 import com.sinch.sdk.models.ApplicationCredentials;
 import com.sinch.sdk.models.VerificationContext;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -35,6 +36,7 @@ public class VerificationService
 
   private final VerificationContext context;
   private final Supplier<HttpClient> httpClientSupplier;
+  private final boolean useSinchAuth;
   private volatile VerificationsStartService startService;
   private volatile VerificationsReportService reportService;
   private volatile VerificationsStatusService statusService;
@@ -51,40 +53,19 @@ public class VerificationService
       ApplicationCredentials credentials,
       VerificationContext context,
       Supplier<HttpClient> httpClientSupplier) {
+    this(credentials, context, httpClientSupplier, true);
+  }
+
+  public VerificationService(
+      ApplicationCredentials credentials,
+      VerificationContext context,
+      Supplier<HttpClient> httpClientSupplier,
+      boolean useSinchAuth) {
 
     this.credentials = credentials;
     this.context = context;
     this.httpClientSupplier = httpClientSupplier;
-  }
-
-  private void createAuthManagers(ApplicationCredentials credentials) {
-
-    AuthManager basicAuthManager =
-        new BasicAuthManager(credentials.getApplicationKey(), credentials.getApplicationSecret());
-    AuthManager applicationAuthManager =
-        new ApplicationAuthManager(
-            credentials.getApplicationKey(), credentials.getApplicationSecret());
-
-    boolean useApplicationAuth = true;
-    // To handle request from client we can only have "Basic" keyword behind the auth managers
-    // because of the OAS file only contains it; so we need to trick the application auth manager
-    // hidden behind the "Basic" keyword
-    // We need both auth manager to handle Sinch Events because of customer will choose from his
-    // dashboard which scheme to be used
-    Map<String, AuthManager> localClientAuthManagers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    localClientAuthManagers.put(
-        BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION,
-        useApplicationAuth ? applicationAuthManager : basicAuthManager);
-    clientAuthManagers = localClientAuthManagers;
-
-    // here we need both auth managers to handle Sinch Events because we are receiving an
-    // Authorization header with "Application" keyword
-    Map<String, AuthManager> localSinchEventsAuthManagers =
-        new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    localSinchEventsAuthManagers.put(BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION, basicAuthManager);
-    localSinchEventsAuthManagers.put(
-        APPLICATION_SECURITY_SCHEME_KEYWORD_VERIFICATION, applicationAuthManager);
-    sinchEventsAuthManagers = localSinchEventsAuthManagers;
+    this.useSinchAuth = useSinchAuth;
   }
 
   public VerificationsStartService verificationStart() {
@@ -142,7 +123,7 @@ public class VerificationService
     if (null == this.sinchEvents) {
       synchronized (this) {
         if (null == this.sinchEvents) {
-          instanceLazyInit();
+          sinchEventsLazyInit();
           this.sinchEvents = new SinchEventsService(sinchEventsAuthManagers);
         }
       }
@@ -151,34 +132,83 @@ public class VerificationService
   }
 
   private void instanceLazyInit() {
-    if (null != this.clientAuthManagers && null != this.sinchEventsAuthManagers) {
+    if (null != this.clientAuthManagers) {
       return;
     }
     synchronized (this) {
-      if (null == this.clientAuthManagers || null == this.sinchEventsAuthManagers) {
-
-        // Currently, we are not supporting unified credentials: ensure application credentials are
-        // defined
-        Objects.requireNonNull(
-            credentials, "Verification service requires application credentials to be defined");
-        Objects.requireNonNull(context, "Verification service requires context to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getApplicationKey(),
-            "Verification service requires 'applicationKey' to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getApplicationSecret(),
-            "Verification service requires 'applicationSecret' to be defined");
-        StringUtil.requireNonEmpty(
-            context.getVerificationUrl(),
-            "Verification service requires 'verificationUrl' to be defined");
+      if (null == this.clientAuthManagers) {
+        if (useSinchAuth) {
+          requireCredentials();
+        }
+        requireContext();
 
         LOGGER.fine(
             "Activate verification API with server='"
                 + context.getVerificationServer().getUrl()
                 + "'");
-        createAuthManagers(credentials);
+        if (useSinchAuth) {
+          // To handle request from client we can only have "Basic" keyword behind the auth
+          // managers because of the OAS file only contains it; so we need to trick the
+          // application auth manager hidden behind the "Basic" keyword
+          Map<String, AuthManager> localClientAuthManagers =
+              new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+          localClientAuthManagers.put(
+              BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION,
+              new ApplicationAuthManager(
+                  credentials.getApplicationKey(), credentials.getApplicationSecret()));
+          clientAuthManagers = localClientAuthManagers;
+        } else {
+          clientAuthManagers = Collections.emptyMap();
+        }
       }
     }
+  }
+
+  // Sinch Events are validated with the application credentials, whatever useSinchAuth
+  private void sinchEventsLazyInit() {
+    if (null != this.sinchEventsAuthManagers) {
+      return;
+    }
+    synchronized (this) {
+      if (null == this.sinchEventsAuthManagers) {
+        requireCredentials();
+        requireContext();
+
+        // here we need both auth managers to handle Sinch Events because of customer will choose
+        // from his dashboard which scheme to be used
+        Map<String, AuthManager> localSinchEventsAuthManagers =
+            new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        localSinchEventsAuthManagers.put(
+            BASIC_SECURITY_SCHEME_KEYWORD_VERIFICATION,
+            new BasicAuthManager(
+                credentials.getApplicationKey(), credentials.getApplicationSecret()));
+        localSinchEventsAuthManagers.put(
+            APPLICATION_SECURITY_SCHEME_KEYWORD_VERIFICATION,
+            new ApplicationAuthManager(
+                credentials.getApplicationKey(), credentials.getApplicationSecret()));
+        sinchEventsAuthManagers = localSinchEventsAuthManagers;
+      }
+    }
+  }
+
+  // Currently, we are not supporting unified credentials: ensure application credentials are
+  // defined
+  private void requireCredentials() {
+    Objects.requireNonNull(
+        credentials, "Verification service requires application credentials to be defined");
+    StringUtil.requireNonEmpty(
+        credentials.getApplicationKey(),
+        "Verification service requires 'applicationKey' to be defined");
+    StringUtil.requireNonEmpty(
+        credentials.getApplicationSecret(),
+        "Verification service requires 'applicationSecret' to be defined");
+  }
+
+  private void requireContext() {
+    Objects.requireNonNull(context, "Verification service requires context to be defined");
+    StringUtil.requireNonEmpty(
+        context.getVerificationUrl(),
+        "Verification service requires 'verificationUrl' to be defined");
   }
 
   static final class LocalLazyInit {

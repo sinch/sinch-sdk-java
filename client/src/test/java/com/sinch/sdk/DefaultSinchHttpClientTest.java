@@ -2,6 +2,7 @@ package com.sinch.sdk;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.sinch.sdk.auth.adapters.ApplicationAuthManager;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.exceptions.ApiHttpException;
 import com.sinch.sdk.core.http.transport.HttpHeaders;
@@ -31,6 +32,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 class DefaultSinchHttpClientTest {
+
+  private static final String APPLICATION_SECRET = "c2VjcmV0";
 
   private static final String TOKEN_RESPONSE =
       "{\"access_token\":\"%s\",\"expires_in\":3600,\"token_type\":\"bearer\"}";
@@ -136,12 +139,25 @@ class DefaultSinchHttpClientTest {
   }
 
   @Test
-  void queryParametersSetTwiceAreRejected() {
-    SinchHttpClient client = client(withoutAuth());
-    HttpCallParameters parameters = HttpCallParameters.builder().setQueryParameters("?b=2").build();
+  void queryParametersAreAppendedToTheUrlWithoutValidatingIt() throws Exception {
+    server.enqueue(json(200, "{}"));
 
-    assertThrows(IllegalArgumentException.class, () -> client.get(url("/v1/foo?a=1"), parameters));
-    assertEquals(0, server.getRequestCount());
+    client(withoutAuth())
+        .get(url("/v1/foo?a=1"), HttpCallParameters.builder().setQueryParameters("b=2").build());
+
+    assertEquals("/v1/foo?a=1?b=2", server.takeRequest().getPath());
+  }
+
+  @Test
+  void aQueryValueCanContainAQuestionMark() throws Exception {
+    server.enqueue(json(200, "{}"));
+
+    client(withoutAuth())
+        .get(
+            url("/v1/foo"),
+            HttpCallParameters.builder().setQueryParameters("pageToken=ab?cd").build());
+
+    assertEquals("/v1/foo?pageToken=ab?cd", server.takeRequest().getPath());
   }
 
   @Test
@@ -191,6 +207,107 @@ class DefaultSinchHttpClientTest {
 
     assertTrue(e.getMessage().startsWith("HTTP client requires"), e.getMessage());
     assertEquals(0, server.getRequestCount());
+  }
+
+  @Test
+  void oAuthWinsOverTheOtherCredentials() throws Exception {
+    enqueueToken("first");
+    server.enqueue(json(200, "{}"));
+
+    client(
+            Configuration.builder(configuration())
+                .setSmsServicePlanId("plan")
+                .setSmsApiToken("api-token")
+                .setApplicationKey("app-key")
+                .setApplicationSecret(APPLICATION_SECRET)
+                .build())
+        .get(url("/v1/foo"));
+
+    assertEquals("/oauth2/token", server.takeRequest().getPath());
+    assertEquals("Bearer first", server.takeRequest().getHeader("Authorization"));
+  }
+
+  @Test
+  void withoutOAuthTheSmsApiTokenIsSent() throws Exception {
+    server.enqueue(json(200, "{}"));
+
+    client(smsOnly()).get(url("/xms/v1/plan/groups"));
+
+    assertEquals(1, server.getRequestCount());
+    assertEquals("Bearer api-token", server.takeRequest().getHeader("Authorization"));
+  }
+
+  @Test
+  void withoutOAuthTheApplicationCredentialsSignTheRequest() throws Exception {
+    server.enqueue(json(200, "{}"));
+    String body = "{\"identity\":{\"type\":\"number\",\"endpoint\":\"+46700000000\"}}";
+
+    client(applicationOnly())
+        .post(
+            url("/verification/v1/verifications?a=b"),
+            body,
+            HttpCallParameters.builder()
+                .setHeaders(new HttpHeaders().set("Content-Type", "application/json"))
+                .build());
+
+    RecordedRequest recorded = server.takeRequest();
+    String authorization = recorded.getHeader("Authorization");
+    assertTrue(authorization.startsWith("Application app-key:"), authorization);
+    Map<String, String> headers = new LinkedHashMap<>();
+    headers.put("Authorization", authorization);
+    headers.put("x-timestamp", recorded.getHeader("x-timestamp"));
+    headers.put("Content-Type", recorded.getHeader("Content-Type"));
+    assertTrue(
+        new ApplicationAuthManager("app-key", APPLICATION_SECRET)
+            .validateAuthenticatedRequest("POST", "/verification/v1/verifications", headers, body),
+        "the signature must match the request sent");
+  }
+
+  @Test
+  void aSignedRequestRequiresATextBody() {
+    SinchHttpClient client = client(applicationOnly());
+    HttpCallParameters parameters =
+        HttpCallParameters.builder()
+            .setHeaders(new HttpHeaders().set("Content-Type", "application/json"))
+            .build();
+
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> client.post(url("/v1/foo"), "{}".getBytes(StandardCharsets.UTF_8), parameters));
+    assertEquals(0, server.getRequestCount());
+  }
+
+  @Test
+  void smsAndApplicationCredentialsWithoutOAuthAreRejected() {
+    SinchClient both =
+        new SinchClient(
+            Configuration.builder(smsOnly())
+                .setApplicationKey("app-key")
+                .setApplicationSecret(APPLICATION_SECRET)
+                .build());
+    sinchClient = both;
+    SinchHttpClient client = both.http();
+
+    IllegalStateException e =
+        assertThrows(IllegalStateException.class, () -> client.get(url("/v1/foo")));
+
+    assertTrue(e.getMessage().contains("cannot choose"), e.getMessage());
+    assertEquals(0, server.getRequestCount());
+  }
+
+  @Test
+  void noCredentialIsRequiredWhenTheAuthenticationIsDisabled() throws Exception {
+    server.enqueue(json(200, "{}"));
+
+    client(
+            Configuration.builder(smsOnly())
+                .setApplicationKey("app-key")
+                .setApplicationSecret(APPLICATION_SECRET)
+                .setTransportSettings(TransportSettings.builder().setUseSinchAuth(false).build())
+                .build())
+        .get(url("/v1/foo"));
+
+    assertNull(server.takeRequest().getHeader("Authorization"));
   }
 
   @Test
@@ -513,6 +630,22 @@ class DefaultSinchHttpClientTest {
     return Configuration.builder()
         .setKeyId("keyId")
         .setKeySecret("keySecret")
+        .setOAuthUrl(url("/oauth2/token"))
+        .build();
+  }
+
+  private Configuration smsOnly() {
+    return Configuration.builder()
+        .setSmsServicePlanId("plan")
+        .setSmsApiToken("api-token")
+        .setOAuthUrl(url("/oauth2/token"))
+        .build();
+  }
+
+  private Configuration applicationOnly() {
+    return Configuration.builder()
+        .setApplicationKey("app-key")
+        .setApplicationSecret(APPLICATION_SECRET)
         .setOAuthUrl(url("/oauth2/token"))
         .build();
   }

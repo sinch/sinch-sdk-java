@@ -13,9 +13,17 @@ import java.util.Map;
  * <p>The SDK still takes care of:
  *
  * <ul>
- *   <li>the OAuth2 authentication and its token cache: <code>keyId</code> and <code>keySecret
- *       </code> are required for an authenticated call, <code>projectId</code> is never required
- *       (it is part of the URL)
+ *   <li>the authentication, with a single scheme chosen from the configured credentials:
+ *       <ul>
+ *         <li>OAuth2 when <code>keyId</code> and <code>keySecret</code> are set, whatever the other
+ *             credentials: it is accepted by every Sinch API. <code>projectId</code> is never
+ *             required (it is part of the URL)
+ *         <li>otherwise the SMS API token (SMS service plan credentials), or the signed request
+ *             (application credentials, Voice and Verification APIs). The SDK cannot tell which API
+ *             is called: when both are set, an {@link IllegalStateException} is thrown
+ *       </ul>
+ *       With {@link HttpRequestOptions#getUseSinchAuth()} set to <code>false</code>, no <code>
+ *       Authorization</code> header is added and no credentials are required
  *   <li>the retries of the rate-limited (HTTP 429) responses
  *   <li>the timeout and the <code>User-Agent</code> header
  * </ul>
@@ -25,15 +33,12 @@ import java.util.Map;
  * <code>content-type</code>, ...) have to be set. There is no pagination, and the field names are
  * the raw ones of the API specification.
  *
- * <p>Only OAuth2 is injected: the SMS API token and the signed requests (Voice, Verification) have
- * to be handled by the caller, with {@link HttpRequestOptions#getUseSinchAuth()} set to <code>false
- * </code> and an <code>Authorization</code> header of its own.
- *
  * <p>Every method:
  *
  * <ul>
- *   <li>takes an absolute URL. Query parameters can be part of it, or be set with {@link
- *       HttpCallParameters#getQueryParameters()}, but not both
+ *   <li>takes an absolute URL, sent as is. The query parameters of {@link
+ *       HttpCallParameters#getQueryParameters()} are appended to it, with a leading <code>?</code>
+ *       added when missing
  *   <li>takes optional {@link HttpCallParameters}, <code>null</code> when none
  *   <li>returns a response with a status lower than 400, whose content is fully loaded in memory
  *   <li>throws an {@link ApiHttpException} when the status is 400 or greater, and an {@link
@@ -42,7 +47,8 @@ import java.util.Map;
  *
  * <p>A <code>String</code>, <code>byte[]</code> or {@link File} body requires the <code>
  * content-type</code> header: without it, an {@link IllegalArgumentException} is thrown before
- * sending the request.
+ * sending the request. A signed request only supports a <code>String</code> body, signed as UTF-8
+ * text: any other body throws an {@link IllegalArgumentException}.
  *
  * @since 2.5
  */

@@ -25,7 +25,8 @@ public class HttpCallParameters {
 
   /**
    * Query parameters, already serialized and URL encoded, e.g. <code>?pageSize=5&amp;regionCode=US
-   * </code>. They are appended to the URL as is: the SDK does not encode them
+   * </code>. They are appended to the URL as is, with a leading <code>?</code> added when missing:
+   * the SDK neither encodes them nor checks the URL
    *
    * @return Query parameters, with or without the leading <code>?</code>
    * @since 2.5

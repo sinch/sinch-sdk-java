@@ -14,6 +14,7 @@ import com.sinch.sdk.domains.voice.api.v2.SvamlService;
 import com.sinch.sdk.domains.voice.models.v2.VoiceContext;
 import com.sinch.sdk.models.UnifiedCredentials;
 import java.util.AbstractMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -30,6 +31,7 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
   private final VoiceContext context;
   private final ServerConfiguration oAuthServer;
   private final Supplier<HttpClient> httpClientSupplier;
+  private final boolean useSinchAuth;
 
   private volatile String uriUUID;
   private volatile Map<String, AuthManager> authManagers;
@@ -46,10 +48,20 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
       VoiceContext context,
       ServerConfiguration oAuthServer,
       Supplier<HttpClient> httpClientSupplier) {
+    this(credentials, context, oAuthServer, httpClientSupplier, true);
+  }
+
+  public VoiceService(
+      UnifiedCredentials credentials,
+      VoiceContext context,
+      ServerConfiguration oAuthServer,
+      Supplier<HttpClient> httpClientSupplier,
+      boolean useSinchAuth) {
     this.credentials = credentials;
     this.context = context;
     this.oAuthServer = oAuthServer;
     this.httpClientSupplier = httpClientSupplier;
+    this.useSinchAuth = useSinchAuth;
   }
 
   public CallsService calls() {
@@ -163,10 +175,12 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
         Objects.requireNonNull(
             credentials, "Voice V2 service requires unified credentials to be defined");
         Objects.requireNonNull(context, "Voice V2 service requires context to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getKeyId(), "Voice V2 service requires 'keyId' to be defined");
-        StringUtil.requireNonEmpty(
-            credentials.getKeySecret(), "Voice V2 service requires 'keySecret' to be defined");
+        if (useSinchAuth) {
+          StringUtil.requireNonEmpty(
+              credentials.getKeyId(), "Voice V2 service requires 'keyId' to be defined");
+          StringUtil.requireNonEmpty(
+              credentials.getKeySecret(), "Voice V2 service requires 'keySecret' to be defined");
+        }
         StringUtil.requireNonEmpty(
             credentials.getProjectId(), "Voice V2 service requires 'projectId' to be defined");
         StringUtil.requireNonEmpty(
@@ -175,14 +189,17 @@ public class VoiceService implements com.sinch.sdk.domains.voice.api.v2.VoiceSer
         LOGGER.fine(
             "Activate Voice V2 API with server='" + context.getVoiceServer().getUrl() + "'");
 
-        AuthManager authManager =
-            new OAuthManager(
-                credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
-
         uriUUID = credentials.getProjectId();
-        authManagers =
-            Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_VOICE, authManager))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        if (useSinchAuth) {
+          AuthManager authManager =
+              new OAuthManager(
+                  credentials, oAuthServer, HttpMapper.getInstance(), httpClientSupplier);
+          authManagers =
+              Stream.of(new AbstractMap.SimpleEntry<>(SECURITY_SCHEME_KEYWORD_VOICE, authManager))
+                  .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        } else {
+          authManagers = Collections.emptyMap();
+        }
       }
     }
   }

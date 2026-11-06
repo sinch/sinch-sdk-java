@@ -472,7 +472,10 @@ public class SinchClient {
         .map(
             f ->
                 new com.sinch.sdk.domains.sms.adapters.SMSService(
-                    f, getConfiguration().getSmsContext().orElse(null), this::getHttpClient))
+                    f,
+                    getConfiguration().getSmsContext().orElse(null),
+                    this::getHttpClient,
+                    useSinchAuth()))
         .orElseGet(
             () ->
                 new com.sinch.sdk.domains.sms.adapters.SMSService(
@@ -487,7 +490,8 @@ public class SinchClient {
     return new com.sinch.sdk.domains.verification.adapters.VerificationService(
         getConfiguration().getApplicationCredentials().orElse(null),
         getConfiguration().getVerificationContext().orElse(null),
-        this::getHttpClient);
+        this::getHttpClient,
+        useSinchAuth());
   }
 
   private VoiceService voiceInit() {
@@ -497,7 +501,8 @@ public class SinchClient {
         getConfiguration().getVoiceContext().orElse(null),
         getConfiguration().getVoiceV2Context().orElse(null),
         getConfiguration().getOAuthServer(),
-        this::getHttpClient);
+        this::getHttpClient,
+        useSinchAuth());
   }
 
   private ConversationService conversationInit() {
@@ -521,6 +526,8 @@ public class SinchClient {
   private SinchHttpClient httpInit() {
     return new DefaultSinchHttpClient(
         getConfiguration().getUnifiedCredentials().orElse(null),
+        getConfiguration().getSmsServicePlanCredentials().orElse(null),
+        getConfiguration().getApplicationCredentials().orElse(null),
         getConfiguration().getOAuthServer(),
         transportSettings(),
         formatSdkUserAgentHeader(HTTP_USAGE_FLAG),

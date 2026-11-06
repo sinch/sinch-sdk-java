@@ -145,15 +145,17 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
   }
 
   /**
-   * Send a request of the low-level HTTP client, under the retry policy. When authenticated, an
-   * expired OAuth token is refreshed and the request sent again once.
+   * Send a request of the low-level HTTP client, under the retry policy. When authenticated with
+   * OAuth, an expired token is refreshed and the request sent again once.
    *
    * <p><b>Internal use:</b> used by {@link com.sinch.sdk.SinchClient#http()}, not part of the SDK
    * public API. It may change without notice.
    *
    * @param request Request to send, without authorization header
-   * @param oAuthManager Manager of the OAuth token injected onto the request, <code>null</code> to
-   *     send it without authorization header
+   * @param authManager Manager of the authorization header injected onto the request, <code>null
+   *     </code> to send it without authorization header
+   * @param signedBody Body signed by the authentication scheme (signed requests), <code>null</code>
+   *     when none
    * @param retryManager Policy applied to rate-limited responses
    * @param timeoutSeconds Timeout of the request, <code>null</code> for the client one
    * @return Response of the last attempt, whatever its status code
@@ -162,7 +164,8 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
    */
   public com.sinch.sdk.core.http.transport.HttpResponse send(
       com.sinch.sdk.core.http.transport.HttpRequest request,
-      AuthManager oAuthManager,
+      AuthManager authManager,
+      String signedBody,
       RetryManager retryManager,
       Integer timeoutSeconds)
       throws ApiException {
@@ -173,34 +176,34 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
     }
 
     Map<String, AuthManager> authManagers =
-        null == oAuthManager
+        null == authManager
             ? Collections.emptyMap()
-            : Collections.singletonMap(oAuthManager.getSchema(), oAuthManager);
+            : Collections.singletonMap(authManager.getSchema(), authManager);
     TransportCall call =
         new TransportCall(
             activeTransport,
             request,
             authManagers,
             new ArrayList<>(authManagers.keySet()),
-            null,
+            signedBody,
             timeoutSeconds);
 
     LOGGER.fine("Invoke '" + request.getMethod() + "' onto '" + request.getUrl() + "'");
     LOGGER.fine("queryParameters: " + request.getQueryParameters().orElse(null));
     LOGGER.fine("content: " + request.getContent().orElse(null));
     LOGGER.fine("headers: " + request.getHeaders());
-    LOGGER.fine("authenticated: " + (null != oAuthManager));
+    LOGGER.fine("authenticated: " + (null != authManager));
 
     try {
       com.sinch.sdk.core.http.transport.HttpResponse response = exchange(call, retryManager);
       LOGGER.finest("connection response: " + response);
 
-      if (null != oAuthManager
+      if (authManager instanceof OAuthManager
           && response.getStatus() == HttpStatus.UNAUTHORIZED
           && isExpiredTokenChallenge(
               response.getHeaders().getAll(BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD).stream())) {
         response.close();
-        oAuthManager.resetToken();
+        authManager.resetToken();
         response = exchange(call, retryManager);
         LOGGER.finest("connection response on retry: " + response);
       }

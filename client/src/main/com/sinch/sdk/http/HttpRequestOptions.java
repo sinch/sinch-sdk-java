@@ -26,7 +26,7 @@ public class HttpRequestOptions {
   }
 
   /**
-   * Whether the call is authenticated with a Sinch OAuth2 access token
+   * Whether the call is authenticated by the SDK. See {@link SinchHttpClient} for the scheme used
    *
    * @return <code>true</code> to inject the <code>Authorization</code> header, <code>false</code>
    *     to send the request without it. Empty to use {@link TransportSettings#getUseSinchAuth()}
