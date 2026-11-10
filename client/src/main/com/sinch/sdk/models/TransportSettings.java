@@ -44,9 +44,11 @@ public class TransportSettings {
   }
 
   /**
-   * Whether the endpoints supporting it authenticate against the Sinch auth server.
+   * Whether the SDK authenticates the requests: OAuth2 access token, SMS API token or signed
+   * request, depending on the API and the credentials.
    *
-   * @return {@code true} when Sinch authentication is enabled, {@code false} when it is disabled
+   * @return {@code true} when Sinch authentication is enabled, {@code false} when it is disabled:
+   *     no <code>Authorization</code> header is then added, whatever the authentication scheme
    * @since 2.3
    */
   public boolean getUseSinchAuth() {

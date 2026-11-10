@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.http.HttpClientApache;
+import com.sinch.sdk.http.SinchHttpClient;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
 import com.sinch.sdk.models.HttpProxyConfiguration;
@@ -368,6 +369,20 @@ class SinchClientTest {
   void closeBeforeAnyCall() {
     SinchClient client = new SinchClient();
     assertDoesNotThrow(client::close);
+  }
+
+  @Test
+  void httpIsLazilyInitializedOnce() {
+    SinchClient client = new SinchClient();
+    assertSame(client.http(), client.http());
+  }
+
+  @Test
+  void closeResetsHttp() {
+    SinchClient client = new SinchClient();
+    SinchHttpClient before = client.http();
+    client.close();
+    assertNotSame(before, client.http());
   }
 
   @Test

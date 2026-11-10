@@ -14,15 +14,19 @@ import com.sinch.sdk.core.http.transport.HttpTransport;
 import com.sinch.sdk.core.models.ServerConfiguration;
 import com.sinch.sdk.models.HttpProxyConfiguration;
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.apache.hc.client5.http.ClientProtocolException;
 import org.apache.hc.client5.http.HttpResponseException;
 
@@ -135,22 +139,97 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
         }
       }
       return response;
-    } catch (ClientProtocolException cpe) {
+    } catch (Exception e) {
+      throw toApiException(e);
+    }
+  }
+
+  /**
+   * Send a request of the low-level HTTP client, under the retry policy. When authenticated with
+   * OAuth, an expired token is refreshed and the request sent again once.
+   *
+   * <p><b>Internal use:</b> used by {@link com.sinch.sdk.SinchClient#http()}, not part of the SDK
+   * public API. It may change without notice.
+   *
+   * @param request Request to send, without authorization header
+   * @param authManager Manager of the authorization header injected onto the request, <code>null
+   *     </code> to send it without authorization header
+   * @param signedBody Body signed by the authentication scheme (signed requests), <code>null</code>
+   *     when none
+   * @param retryManager Policy applied to rate-limited responses
+   * @param timeoutSeconds Timeout of the request, <code>null</code> for the client one
+   * @return Response of the last attempt, whatever its status code
+   * @throws ApiException if the request could not be sent
+   * @since 2.5
+   */
+  public com.sinch.sdk.core.http.transport.HttpResponse send(
+      com.sinch.sdk.core.http.transport.HttpRequest request,
+      AuthManager authManager,
+      String signedBody,
+      RetryManager retryManager,
+      Integer timeoutSeconds)
+      throws ApiException {
+
+    HttpTransport activeTransport = this.transport;
+    if (activeTransport == null) {
+      throw new ApiException("HTTP client has been closed");
+    }
+
+    Map<String, AuthManager> authManagers =
+        null == authManager
+            ? Collections.emptyMap()
+            : Collections.singletonMap(authManager.getSchema(), authManager);
+    TransportCall call =
+        new TransportCall(
+            activeTransport,
+            request,
+            authManagers,
+            new ArrayList<>(authManagers.keySet()),
+            signedBody,
+            timeoutSeconds);
+
+    LOGGER.fine("Invoke '" + request.getMethod() + "' onto '" + request.getUrl() + "'");
+    LOGGER.fine("queryParameters: " + request.getQueryParameters().orElse(null));
+    LOGGER.fine("content: " + request.getContent().orElse(null));
+    LOGGER.fine("headers: " + request.getHeaders());
+    LOGGER.fine("authenticated: " + (null != authManager));
+
+    try {
+      com.sinch.sdk.core.http.transport.HttpResponse response = exchange(call, retryManager);
+      LOGGER.finest("connection response: " + response);
+
+      if (authManager instanceof OAuthManager
+          && response.getStatus() == HttpStatus.UNAUTHORIZED
+          && isExpiredTokenChallenge(
+              response.getHeaders().getAll(BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD).stream())) {
+        response.close();
+        authManager.resetToken();
+        response = exchange(call, retryManager);
+        LOGGER.finest("connection response on retry: " + response);
+      }
+      return response;
+    } catch (Exception e) {
+      throw toApiException(e);
+    }
+  }
+
+  private static ApiException toApiException(Exception e) {
+    if (e instanceof ClientProtocolException) {
+      ClientProtocolException cpe = (ClientProtocolException) e;
       int code = extractHttpStatusCode(cpe);
       if (code > 0) {
         LOGGER.severe("HTTP protocol error with status code " + code + ": " + cpe.getMessage());
-        throw new ApiException(
+        return new ApiException(
             "HTTP protocol error (status code " + code + "): " + cpe.getMessage(), cpe, code);
       }
       LOGGER.severe("HTTP protocol error: " + cpe.getMessage());
-      throw new ApiException("HTTP protocol error: " + cpe.getMessage(), cpe);
-    } catch (ApiException e) {
-      LOGGER.severe("Error:" + e);
-      throw e;
-    } catch (Exception e) {
-      LOGGER.severe("Error:" + e);
-      throw new ApiException(e);
+      return new ApiException("HTTP protocol error: " + cpe.getMessage(), cpe);
     }
+    LOGGER.severe("Error:" + e);
+    if (e instanceof ApiException) {
+      return (ApiException) e;
+    }
+    return new ApiException(e);
   }
 
   private boolean processUnauthorizedResponse(
@@ -187,18 +266,23 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
     }
     // header names are case-insensitive: the server can send it as "WWW-Authenticate"
     boolean headerPresent =
-        response.getHeaders().entrySet().stream()
-            .filter(
-                entry ->
-                    BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD.equalsIgnoreCase(entry.getKey()))
-            .map(Map.Entry::getValue)
-            .filter(Objects::nonNull)
-            .flatMap(List::stream)
-            .anyMatch(e -> null != e && e.contains(BEARER_EXPIRED_KEYWORD));
+        isExpiredTokenChallenge(
+            response.getHeaders().entrySet().stream()
+                .filter(
+                    entry ->
+                        BEARER_AUTHENTICATE_RESPONSE_HEADER_KEYWORD.equalsIgnoreCase(
+                            entry.getKey()))
+                .map(Map.Entry::getValue)
+                .filter(Objects::nonNull)
+                .flatMap(List::stream));
     if (headerPresent) {
       bearerAuthManager.resetToken();
     }
     return headerPresent;
+  }
+
+  private static boolean isExpiredTokenChallenge(Stream<String> authenticateHeaderValues) {
+    return authenticateHeaderValues.anyMatch(e -> null != e && e.contains(BEARER_EXPIRED_KEYWORD));
   }
 
   // The key is added once, before the request goes through the retry policy, so that every attempt
@@ -220,18 +304,48 @@ public class HttpClientApache implements com.sinch.sdk.core.http.HttpClient, Ret
    * for every endpoint that goes through this transport.
    */
   private HttpResponse send(TransportCall call) throws Exception {
+    try (com.sinch.sdk.core.http.transport.HttpResponse response = exchange(call, retryManager)) {
+      return TransportRequestMapper.toServiceResponse(response);
+    }
+  }
+
+  /**
+   * Performs one HTTP exchange under a retry policy, and returns the response of the last attempt.
+   * The responses of the previous attempts are closed.
+   */
+  private static com.sinch.sdk.core.http.transport.HttpResponse exchange(
+      TransportCall call, RetryManager retryManager) throws Exception {
     // Authorization of the first attempt is computed outside the retry policy: fetching a token
     // then goes through its own retry policy rather than sharing the one of this request
     call.authorize();
 
     AtomicBoolean firstAttempt = new AtomicBoolean(true);
-    return retryManager.execute(
-        () -> {
-          if (!firstAttempt.getAndSet(false)) {
-            call.authorize();
-          }
-          return call.send();
-        });
+    AtomicReference<com.sinch.sdk.core.http.transport.HttpResponse> last = new AtomicReference<>();
+    try {
+      retryManager.execute(
+          () -> {
+            if (!firstAttempt.getAndSet(false)) {
+              call.authorize();
+            }
+            com.sinch.sdk.core.http.transport.HttpResponse previous = last.getAndSet(null);
+            if (null != previous) {
+              previous.close();
+            }
+            com.sinch.sdk.core.http.transport.HttpResponse response = call.exchange();
+            last.set(response);
+            return TransportRequestMapper.toRetryView(response);
+          });
+    } catch (Exception e) {
+      com.sinch.sdk.core.http.transport.HttpResponse response = last.get();
+      if (null != response) {
+        response.close();
+      }
+      throw e;
+    }
+    if (null == last.get()) {
+      throw new ApiException("No response received");
+    }
+    return last.get();
   }
 
   /**

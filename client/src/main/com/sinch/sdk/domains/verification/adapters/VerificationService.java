@@ -10,6 +10,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
   private final ApplicationCredentials credentials;
   private final VerificationContext context;
   private final Supplier<HttpClient> httpClientSupplier;
+  private final boolean useSinchAuth;
 
   private volatile com.sinch.sdk.domains.verification.api.v1.VerificationService v1;
 
@@ -17,9 +18,18 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
       ApplicationCredentials credentials,
       VerificationContext context,
       Supplier<HttpClient> httpClientSupplier) {
+    this(credentials, context, httpClientSupplier, true);
+  }
+
+  public VerificationService(
+      ApplicationCredentials credentials,
+      VerificationContext context,
+      Supplier<HttpClient> httpClientSupplier,
+      boolean useSinchAuth) {
     this.credentials = credentials;
     this.context = context;
     this.httpClientSupplier = httpClientSupplier;
+    this.useSinchAuth = useSinchAuth;
   }
 
   public com.sinch.sdk.domains.verification.api.v1.VerificationService v1() {
@@ -28,7 +38,7 @@ public class VerificationService implements com.sinch.sdk.domains.verification.V
         if (null == this.v1) {
           this.v1 =
               new com.sinch.sdk.domains.verification.api.v1.adapters.VerificationService(
-                  credentials, context, httpClientSupplier);
+                  credentials, context, httpClientSupplier, useSinchAuth);
         }
       }
     }

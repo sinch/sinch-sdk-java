@@ -1,12 +1,12 @@
 package com.sinch.sdk.core.http.transport;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.core.http.HttpContentType;
 import com.sinch.sdk.core.utils.databind.Mapper;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -58,7 +58,7 @@ public final class BufferedHttpContentParser implements HttpContentParser {
     JsonNode node;
     try {
       node = Mapper.getInstance().readTree(asString());
-    } catch (IOException e) {
+    } catch (JsonProcessingException e) {
       throw new ApiException("Response content is not valid JSON: " + e.getMessage(), e);
     }
     if (null == node || node.isMissingNode()) {

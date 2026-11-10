@@ -25,4 +25,16 @@ public interface HttpTransport extends Closeable {
    * @since 2.5
    */
   HttpResponse send(HttpRequest request) throws IOException;
+
+  /**
+   * Send a request with a timeout of its own
+   *
+   * @param request Request to send
+   * @param timeoutSeconds Timeout applied to the I/O operations of this request instead of the
+   *     transport one, zero to disable it
+   * @return Response received, whatever its status code
+   * @throws IOException if the exchange failed or the transport is closed
+   * @since 2.5
+   */
+  HttpResponse send(HttpRequest request, int timeoutSeconds) throws IOException;
 }

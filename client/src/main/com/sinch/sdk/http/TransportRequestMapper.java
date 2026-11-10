@@ -83,6 +83,19 @@ final class TransportRequestMapper {
   }
 
   /**
+   * @param response Response received by the transport
+   * @return Status and headers of the response, as considered by a retry policy: the content is not
+   *     copied
+   */
+  static com.sinch.sdk.core.http.HttpResponse toRetryView(HttpResponse response) {
+    return new com.sinch.sdk.core.http.HttpResponse(
+        response.getStatus(),
+        response.getReasonPhrase().orElse(null),
+        response.getHeaders().toMap(),
+        null);
+  }
+
+  /**
    * Path of the request as signed by the authentication schemes: the encoded path of the URL
    * followed by the query parameters
    *

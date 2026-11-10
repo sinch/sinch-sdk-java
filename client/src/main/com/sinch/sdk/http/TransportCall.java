@@ -29,6 +29,7 @@ final class TransportCall {
   private final Map<String, AuthManager> authManagersByOasSecuritySchemes;
   private final Collection<String> authNames;
   private final String body;
+  private final Integer timeoutSeconds;
 
   private HttpRequest authorized;
 
@@ -45,11 +46,30 @@ final class TransportCall {
       Map<String, AuthManager> authManagersByOasSecuritySchemes,
       Collection<String> authNames,
       String body) {
+    this(transport, request, authManagersByOasSecuritySchemes, authNames, body, null);
+  }
+
+  /**
+   * @param transport Transport the request is sent with
+   * @param request Request to send, without authorization headers
+   * @param authManagersByOasSecuritySchemes Authentication managers available
+   * @param authNames Authentication schemes supported by the request, in order of preference
+   * @param body Body signed by the authentication schemes, <code>null</code> when none
+   * @param timeoutSeconds Timeout of the request, <code>null</code> for the transport one
+   */
+  TransportCall(
+      HttpTransport transport,
+      HttpRequest request,
+      Map<String, AuthManager> authManagersByOasSecuritySchemes,
+      Collection<String> authNames,
+      String body,
+      Integer timeoutSeconds) {
     this.transport = transport;
     this.request = request;
     this.authManagersByOasSecuritySchemes = authManagersByOasSecuritySchemes;
     this.authNames = authNames;
     this.body = body;
+    this.timeoutSeconds = timeoutSeconds;
     this.authorized = request;
   }
 
@@ -75,9 +95,21 @@ final class TransportCall {
    * @throws IOException if the exchange failed
    */
   com.sinch.sdk.core.http.HttpResponse send() throws IOException {
-    try (HttpResponse response = transport.send(authorized)) {
+    try (HttpResponse response = exchange()) {
       return TransportRequestMapper.toServiceResponse(response);
     }
+  }
+
+  /**
+   * Send the request with the latest authorization headers
+   *
+   * @return Response received by the transport, to be closed by the caller
+   * @throws IOException if the exchange failed
+   */
+  HttpResponse exchange() throws IOException {
+    return null == timeoutSeconds
+        ? transport.send(authorized)
+        : transport.send(authorized, timeoutSeconds);
   }
 
   private HttpRequest withAuth() {
