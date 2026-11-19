@@ -51,7 +51,7 @@ public class Controller {
     SinchEventsService sinchEvents = sinchClient.voice().v2().sinchEvents();
 
     // Requests from Sinch are signed with the secret of the service the event belongs to.
-    // Set SINCH_SERVICE_ID and SINCH_SERVICE_SECRET to reject any request that is not
+    // Set SINCH_SERVICE_ID and SINCH_SERVICE_SECRET to reject any request not signed by Sinch
     if (StringUtil.isEmpty(serviceSecret)) {
       LOGGER.warning("SINCH_SERVICE_SECRET is not set: the request signature is not validated");
     } else if (!sinchEvents.validateAuthenticationHeader(

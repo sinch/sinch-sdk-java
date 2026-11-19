@@ -49,14 +49,23 @@ public class TrackSession {
     long delayMillis = 2_000;
     long maxDelayMillis = 15_000;
     int maxAttempts = 40;
+    boolean completed = false;
     for (int attempt = 0; attempt < maxAttempts; attempt++) {
       SessionState state = sinchClient.voice().v2().sessions().get(sessionId).getState();
       LOGGER.info("state=" + state);
       if (SessionState.COMPLETED.equals(state)) {
+        completed = true;
         break;
       }
       Thread.sleep(delayMillis);
       delayMillis = Math.min(delayMillis * 2, maxDelayMillis);
+    }
+
+    if (!completed) {
+      LOGGER.severe(
+          String.format(
+              "Session %s did not reach COMPLETED after %d attempts", sessionId, maxAttempts));
+      System.exit(1);
     }
 
     // 3. Print per-leg results (callName is NOT returned by the API).

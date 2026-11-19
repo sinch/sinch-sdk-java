@@ -8,7 +8,7 @@ It uses the Voice API v2 through the [Sinch Java SDK](https://github.com/sinch/s
   destination. The calls are started at the pace set by `maxCps` (calls per second) and any call not started within
   `ttlSeconds` expires. When a call is answered, it plays a text-to-speech reminder, then hangs up.
 - [PollBatch.java](src/main/java/PollBatch.java) polls the batch summary every 5 seconds until all call sessions reach
-  a final state.
+  a final state, and gives up after 5 minutes.
 
 ## Requirements
 

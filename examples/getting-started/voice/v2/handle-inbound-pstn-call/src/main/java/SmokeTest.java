@@ -44,6 +44,11 @@ public class SmokeTest {
     HttpResponse<String> response =
         HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
+    if (response.statusCode() / 100 != 2) {
+      throw new IllegalStateException(
+          "Server returned " + response.statusCode() + ": " + response.body());
+    }
+
     LOGGER.info(response.statusCode() + " " + response.body());
   }
 }

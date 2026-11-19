@@ -12,18 +12,25 @@ public class PollBatch {
 
     SinchClient sinchClient = Settings.sinchClient();
 
-    // Poll the batch summary every 5s until all call sessions reach a final state
-    while (true) {
+    // Poll the batch summary every 5s until all call sessions reach a final state,
+    // giving up after 60 checks (about 5 minutes)
+    int maxAttempts = 60;
+    for (int attempt = 1; attempt <= maxAttempts; attempt++) {
       BatchSummary response = sinchClient.voice().v2().batches().get(batchId);
 
       LOGGER.info(response.toString());
 
       if (response.getQueued() == 0 && response.getInProgress() == 0) {
         LOGGER.info("All call sessions finished.");
-        break;
+        return;
       }
 
       Thread.sleep(5_000);
     }
+
+    LOGGER.severe(
+        String.format(
+            "Batch %s still has call sessions running after %d attempts", batchId, maxAttempts));
+    System.exit(1);
   }
 }
