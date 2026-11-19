@@ -638,6 +638,7 @@ Everything else is up to the caller: the URL, the query parameters and the body 
 
 ```java
 import com.sinch.sdk.SinchClient;
+import com.sinch.sdk.core.exceptions.ApiHttpException;
 import com.sinch.sdk.core.http.transport.HttpHeaders;
 import com.sinch.sdk.core.http.transport.HttpResponse;
 import com.sinch.sdk.http.HttpCallParameters;
@@ -645,6 +646,7 @@ import com.sinch.sdk.http.HttpRequestOptions;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.RetryConfiguration;
 import com.sinch.sdk.models.RetryPolicy;
+import java.util.Map;
 
 SinchClient sinchClient =
     new SinchClient(Configuration.builder().setKeyId(keyId).setKeySecret(keySecret).build());
@@ -676,6 +678,18 @@ sinchClient
                         RetryConfiguration.builder().setRetryPolicy(RetryPolicy.NONE).build())
                     .build())
             .build());
+
+try {
+  sinchClient
+      .http()
+      .get(
+          "https://numbers.api.sinch.com/v1/projects/"
+              + projectId
+              + "/availableNumbers/+12015555555");
+} catch (ApiHttpException e) {
+  // status >= 400: getCode() is the status, and the response remains readable
+  String error = e.getResponse().getContent().asString();
+}
 ```
 
 | Method | Body |
@@ -697,7 +711,7 @@ The returned `HttpResponse` (from `com.sinch.sdk.core.http.transport`) exposes `
 Known limitations:
 - no automatic pagination, and no path segment or query parameter encoding
 - field names are the raw ones from the API specification
-- a single authentication scheme is used: OAuth2 when `keyId` and `keySecret` are set, otherwise the SMS API token or the application signature. Both of them without OAuth2 is rejected, as the SDK cannot tell which API is called
+- a single authentication scheme is used: OAuth2 when `keyId` and `keySecret` are set, otherwise the SMS API token or the application signature. Setting both of them without OAuth2 throws an `IllegalStateException`, as the SDK cannot tell which API is called; so does an authenticated call without any credentials
 - a signed request (application credentials) only supports a `String` body
 - the response content is loaded in memory, and stream bodies are not supported so that a request can be sent again on retry
 
