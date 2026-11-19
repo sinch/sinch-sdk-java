@@ -15,7 +15,7 @@ All notable changes to the **Sinch Java SDK** are documented in this file.
 > - `[tech]` — technical improvement
 
 ---
-## v2.5.0 - Unreleased
+## v2.5.0 - 2026-11-19
 
 ### SDK
 - **[feature]** `SinchClient.http()`: low-level HTTP client to call any Sinch API with raw requests
