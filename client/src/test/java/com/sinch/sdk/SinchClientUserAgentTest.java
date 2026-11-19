@@ -65,5 +65,6 @@ class SinchClientUserAgentTest extends BaseTest {
     assertThat(recordedRequest).isNotNull();
     String header = recordedRequest.getHeader("User-Agent");
     assertThat(header).matches("^sinch-sdk/.* \\(Java/.*; Apache; .*\\)$");
+    assertThat(header).doesNotEndWith(",http)");
   }
 }

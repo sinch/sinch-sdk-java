@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.http.HttpClientApache;
+import com.sinch.sdk.http.SinchHttpClient;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.ConversationRegion;
 import com.sinch.sdk.models.HttpProxyConfiguration;
@@ -371,6 +372,20 @@ class SinchClientTest {
   }
 
   @Test
+  void httpIsLazilyInitializedOnce() {
+    SinchClient client = new SinchClient();
+    assertSame(client.http(), client.http());
+  }
+
+  @Test
+  void closeResetsHttp() {
+    SinchClient client = new SinchClient();
+    SinchHttpClient before = client.http();
+    client.close();
+    assertNotSame(before, client.http());
+  }
+
+  @Test
   void doubleCloseBeforeAnyCall() {
     SinchClient client = new SinchClient();
     client.close();
@@ -418,9 +433,13 @@ class SinchClientTest {
     Object httpClientApache = getHttpClient.invoke(sinchClient);
     assertInstanceOf(HttpClientApache.class, httpClientApache);
 
-    Field clientField = HttpClientApache.class.getDeclaredField("client");
+    Field transportField = HttpClientApache.class.getDeclaredField("transport");
+    transportField.setAccessible(true);
+    Object transport = transportField.get(httpClientApache);
+
+    Field clientField = transport.getClass().getDeclaredField("client");
     clientField.setAccessible(true);
-    Object apacheClient = clientField.get(httpClientApache);
+    Object apacheClient = clientField.get(transport);
 
     Field routePlannerField = apacheClient.getClass().getDeclaredField("routePlanner");
     routePlannerField.setAccessible(true);

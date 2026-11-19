@@ -2,10 +2,15 @@ package com.sinch.sdk;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.sinch.sdk.core.exceptions.ApiException;
 import com.sinch.sdk.domains.numberlookup.models.v2.request.NumberLookupRequest;
 import com.sinch.sdk.models.Configuration;
 import com.sinch.sdk.models.NumberLookupContext;
+import com.sinch.sdk.models.SMSRegion;
+import com.sinch.sdk.models.SmsContext;
 import com.sinch.sdk.models.TransportSettings;
+import com.sinch.sdk.models.VerificationContext;
+import com.sinch.sdk.models.VoiceContext;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,12 +26,14 @@ class SinchClientUseSinchAuthTest extends BaseTest {
 
   private MockWebServer server;
   private final AtomicInteger authRequests = new AtomicInteger();
+  private final AtomicInteger apiRequests = new AtomicInteger();
   private volatile Optional<String> lastLookupAuthorization = Optional.empty();
 
   @BeforeEach
   void setUp() throws IOException {
     server = new MockWebServer();
     authRequests.set(0);
+    apiRequests.set(0);
     server.setDispatcher(
         new Dispatcher() {
           @Override
@@ -40,11 +47,17 @@ class SinchClientUseSinchAuthTest extends BaseTest {
                   .setBody(
                       "{\"access_token\":\"t\",\"expires_in\":3600,\"token_type\":\"Bearer\"}");
             }
+            apiRequests.incrementAndGet();
             lastLookupAuthorization = Optional.ofNullable(request.getHeader("Authorization"));
+            // the verification status is deserialized from its method
+            String body =
+                path.startsWith("/verification")
+                    ? "{\"id\":\"id\",\"method\":\"sms\",\"status\":\"PENDING\"}"
+                    : "{}";
             return new MockResponse()
                 .setResponseCode(200)
                 .addHeader("Content-Type", "application/json")
-                .setBody("{}");
+                .setBody(body);
           }
         });
     server.start();
@@ -124,5 +137,120 @@ class SinchClientUseSinchAuthTest extends BaseTest {
 
     assertThrows(RuntimeException.class, () -> lookup(client));
     client.close();
+  }
+
+  @Test
+  void disabledSmsServicePlanSendsNoTokenAndDoesNotRequireIt() {
+    SinchClient client = new SinchClient(sms().setTransportSettings(disabled()).build());
+
+    sendIgnoringTheResponse(() -> client.sms().v1().groups().get("groupId"));
+
+    assertNoAuthorizationSent();
+    client.close();
+  }
+
+  @Test
+  void enabledSmsServicePlanSendsTheToken() {
+    SinchClient client = new SinchClient(sms().setSmsApiToken("api-token").build());
+
+    sendIgnoringTheResponse(() -> client.sms().v1().groups().get("groupId"));
+
+    assertEquals(1, apiRequests.get());
+    assertEquals(Optional.of("Bearer api-token"), lastLookupAuthorization);
+    client.close();
+  }
+
+  @Test
+  void disabledVoiceV1SendsNoSignatureAndDoesNotRequireTheApplicationCredentials() {
+    SinchClient client = new SinchClient(voiceV1().setTransportSettings(disabled()).build());
+
+    sendIgnoringTheResponse(() -> client.voice().v1().calls().get("callId"));
+
+    assertNoAuthorizationSent();
+    client.close();
+  }
+
+  @Test
+  void enabledVoiceV1SignsTheRequest() {
+    SinchClient client =
+        new SinchClient(
+            voiceV1().setApplicationKey("app-key").setApplicationSecret("c2VjcmV0").build());
+
+    sendIgnoringTheResponse(() -> client.voice().v1().calls().get("callId"));
+
+    assertEquals(1, apiRequests.get());
+    assertTrue(lastLookupAuthorization.orElse("").startsWith("Application app-key:"));
+    client.close();
+  }
+
+  @Test
+  void disabledVerificationSendsNoSignatureAndDoesNotRequireTheApplicationCredentials() {
+    SinchClient client =
+        new SinchClient(
+            base()
+                .setVerificationContext(
+                    VerificationContext.builder()
+                        .setVerificationUrl(server.url("/verification").toString())
+                        .build())
+                .setTransportSettings(disabled())
+                .build());
+
+    sendIgnoringTheResponse(() -> client.verification().v1().verificationStatus().getById("id"));
+
+    assertNoAuthorizationSent();
+    client.close();
+  }
+
+  @Test
+  void disabledVoiceV2SendsNoTokenAndDoesNotRequireTheKeys() {
+    SinchClient client =
+        new SinchClient(
+            base()
+                .setVoiceV2Url(server.url("/voice-v2").toString())
+                .setTransportSettings(disabled())
+                .build());
+
+    sendIgnoringTheResponse(() -> client.voice().v2().calls().get("callId"));
+
+    assertEquals(0, authRequests.get());
+    assertNoAuthorizationSent();
+    client.close();
+  }
+
+  private Configuration.Builder sms() {
+    return base()
+        .setSmsServicePlanId("plan")
+        .setSmsContext(
+            SmsContext.builder()
+                .setSmsUrl(server.url("/sms").toString())
+                .setSmsRegion(SMSRegion.US)
+                .build());
+  }
+
+  private Configuration.Builder voiceV1() {
+    return base()
+        .setVoiceContext(
+            VoiceContext.builder()
+                .setVoiceUrl(server.url("/voice").toString())
+                .setVoiceApplicationMngmtUrl(server.url("/voice-mngmt").toString())
+                .build());
+  }
+
+  private static TransportSettings disabled() {
+    return TransportSettings.builder().setUseSinchAuth(false).build();
+  }
+
+  // the mock answers "{}" to every call: only the request sent matters, not its parsing
+  private static void sendIgnoringTheResponse(Runnable call) {
+    try {
+      call.run();
+    } catch (ApiException ignored) {
+      // response not matching the model
+    }
+  }
+
+  private void assertNoAuthorizationSent() {
+    assertEquals(1, apiRequests.get(), "the request must be sent");
+    assertFalse(lastLookupAuthorization.isPresent(), "no Authorization header must be sent");
   }
 }

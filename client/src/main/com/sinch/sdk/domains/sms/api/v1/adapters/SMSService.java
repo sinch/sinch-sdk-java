@@ -61,12 +61,20 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
       SmsServicePlanCredentials credentials,
       SmsContext context,
       Supplier<HttpClient> httpClientSupplier) {
+    this(credentials, context, httpClientSupplier, true);
+  }
+
+  public SMSService(
+      SmsServicePlanCredentials credentials,
+      SmsContext context,
+      Supplier<HttpClient> httpClientSupplier,
+      boolean useSinchAuth) {
     this.credentials = credentials;
     this.context = context;
     this.httpClientSupplier = httpClientSupplier;
     this.oAuthServer = null;
-    // Sinch OAuth does not apply to service plan credentials
-    this.useSinchAuth = false;
+    // with service plan credentials, the Sinch authentication is the API token
+    this.useSinchAuth = useSinchAuth;
   }
 
   @Override
@@ -193,14 +201,18 @@ public class SMSService implements com.sinch.sdk.domains.sms.api.v1.SMSService {
               (SmsServicePlanCredentials) credentials;
           StringUtil.requireNonEmpty(
               servicePlanCredentials.getServicePlanId(), "'servicePlanId' must be defined");
-          StringUtil.requireNonEmpty(
-              servicePlanCredentials.getApiToken(), "'apiToken' must be defined");
+          if (useSinchAuth) {
+            StringUtil.requireNonEmpty(
+                servicePlanCredentials.getApiToken(), "'apiToken' must be defined");
+          }
           LOGGER.fine(
               "Activate SMS API with service plan ID support and server='"
                   + context.getSmsServer().getUrl()
                   + "'");
           uriUUID = servicePlanCredentials.getServicePlanId();
-          oAuthManager = new BearerAuthManager(servicePlanCredentials.getApiToken());
+          if (useSinchAuth) {
+            oAuthManager = new BearerAuthManager(servicePlanCredentials.getApiToken());
+          }
         }
 
         this.authManagers =

@@ -1,6 +1,7 @@
 package com.sinch.sdk.core.adapters.apache;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
@@ -27,6 +28,7 @@ import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import okhttp3.HttpUrl;
@@ -36,6 +38,8 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @TestWithResources
 class HttpClientTest extends BaseTest {
@@ -130,8 +134,9 @@ class HttpClientTest extends BaseTest {
     mockBackEnd.takeRequest();
   }
 
-  @Test
-  void bearerAutoRefresh() throws InterruptedException {
+  @ParameterizedTest
+  @ValueSource(strings = {"www-authenticate", "WWW-Authenticate"})
+  void bearerAutoRefresh(String authenticateHeader) throws InterruptedException {
     // return valid token
     mockBackEnd.enqueue(
         new MockResponse().setBody(jsonResponse).addHeader("Content-Type", "application/json"));
@@ -140,7 +145,7 @@ class HttpClientTest extends BaseTest {
         new MockResponse()
             .setResponseCode(HttpURLConnection.HTTP_UNAUTHORIZED)
             .setBody("foo2")
-            .addHeader("www-authenticate", "token invalid: expired")
+            .addHeader(authenticateHeader, "token invalid: expired")
             .addHeader("Content-Type", "application/json"));
     // return valid token
     mockBackEnd.enqueue(
@@ -180,7 +185,8 @@ class HttpClientTest extends BaseTest {
     assertEquals(header, "Bearer token value");
 
     // should have requested another token because the second request triggered an "expired" one
-    recordedRequest = mockBackEnd.takeRequest();
+    recordedRequest = mockBackEnd.takeRequest(5, TimeUnit.SECONDS);
+    assertNotNull(recordedRequest, "the expired token must trigger a new token request");
     assertEquals("/auth", recordedRequest.getPath());
     header = recordedRequest.getHeader("Authorization");
     assertTrue(header.startsWith("Basic "));

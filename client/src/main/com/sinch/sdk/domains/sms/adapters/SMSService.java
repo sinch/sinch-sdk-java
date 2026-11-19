@@ -29,10 +29,18 @@ public class SMSService implements com.sinch.sdk.domains.sms.SMSService {
       SmsServicePlanCredentials credentials,
       SmsContext context,
       Supplier<HttpClient> httpClientSupplier) {
+    this(credentials, context, httpClientSupplier, true);
+  }
+
+  public SMSService(
+      SmsServicePlanCredentials credentials,
+      SmsContext context,
+      Supplier<HttpClient> httpClientSupplier,
+      boolean useSinchAuth) {
     this.v1Initializer =
         () ->
             new com.sinch.sdk.domains.sms.api.v1.adapters.SMSService(
-                credentials, context, httpClientSupplier);
+                credentials, context, httpClientSupplier, useSinchAuth);
   }
 
   @Override
