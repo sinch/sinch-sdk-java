@@ -40,6 +40,7 @@ getting-started/
     └── v2/
         ├── answering-machine-detection/
         ├── call-forwarding/
+        ├── call-hunting/
         ├── call-pacing/
         ├── handle-inbound-pstn-call/
         ├── number-masking/

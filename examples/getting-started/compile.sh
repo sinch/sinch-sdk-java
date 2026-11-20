@@ -13,6 +13,7 @@ voice/respond-to-incoming-call
 voice/make-a-call
 voice/v2/answering-machine-detection
 voice/v2/call-forwarding
+voice/v2/call-hunting
 voice/v2/call-pacing
 voice/v2/handle-inbound-pstn-call
 voice/v2/number-masking
