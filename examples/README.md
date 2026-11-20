@@ -36,10 +36,22 @@ getting-started/
 │   └── user-verification-using-sms-pin/
 └── voice/
     ├── make-a-call/
-    └── respond-to-incoming-call/
+    ├── respond-to-incoming-call/
+    └── v2/
+        ├── answering-machine-detection/
+        ├── call-forwarding/
+        ├── call-hunting/
+        ├── call-pacing/
+        ├── handle-inbound-pstn-call/
+        ├── number-masking/
+        ├── outbound-text-to-speech/
+        ├── recording-and-transcription/
+        ├── text-to-speech-voices/
+        └── track-call-status/
 ```
 
 Each subdirectory contains its own `README.md` with a link to the corresponding online tutorial and a pointer to the shared [client configuration](client/README.md).
+The Voice API v2 examples (`voice/v2/`) are configured from their own `config.properties` file instead; see each `README.md`.
 
 ---
 
