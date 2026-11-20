@@ -70,12 +70,14 @@ public class ServerBusinessLogic {
     }
 
     if (SinchEventType.CALL_ANSWERED.equals(type) && "customer".equals(callName)) {
-      // Outbound customer leg answered: play the hold message and dial the first agent
+      // Outbound customer leg answered: play the hold message, join the bridge and dial the first
+      // agent
       cursors.put(sessionId, 0);
       return SinchEventResponses.response(
           commands ->
               commands
                   .text("Please hold while we find an agent.", "Emma_3", hold -> hold.name("hold"))
+                  .bridgeCall("hunt-bridge")
                   .command(dialAgent(0)));
     }
 

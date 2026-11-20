@@ -30,8 +30,8 @@ public class SimRing {
 
     SinchClient sinchClient = Settings.sinchClient();
 
-    // SVAML commands: dial the customer -> on answer play a hold message and ring the three
-    // agents at once (dial is non-blocking) -> first to answer wins
+    // SVAML commands: dial the customer -> on answer play a hold message, join the bridge and ring
+    // the three agents at once (dial is non-blocking) -> first to answer wins
     StartCallRequest request =
         StartCallRequest.builder()
             .setCommands(
@@ -50,6 +50,9 @@ public class SimRing {
                                                 "Connecting you now.",
                                                 "Emma_3",
                                                 hold -> hold.name("hold"))
+                                            // Customer joins the bridge (created on first
+                                            // reference); the first agent to answer joins it too
+                                            .bridgeCall("hunt-bridge")
                                             .command(
                                                 ringAgent(
                                                     agent1,

@@ -37,8 +37,9 @@ public class SequentialHunt {
     DialCommand dialAgent2 = dialAgent(agent2, "agent-2", sinchNumber, dialAgent3);
     DialCommand dialAgent1 = dialAgent(agent1, "agent-1", sinchNumber, dialAgent2);
 
-    // SVAML commands: dial the customer -> on answer play a hold message and dial agent 1 -> on
-    // timeout dial agent 2 -> on timeout dial agent 3 -> on timeout hang up the customer
+    // SVAML commands: dial the customer -> on answer play a hold message, join the bridge and dial
+    // agent 1 -> on timeout dial agent 2 -> on timeout dial agent 3 -> on timeout hang up the
+    // customer
     StartCallRequest request =
         StartCallRequest.builder()
             .setCommands(
@@ -57,6 +58,9 @@ public class SequentialHunt {
                                                 "Please hold while we connect you to an agent.",
                                                 "Emma_3",
                                                 hold -> hold.name("hold"))
+                                            // Customer joins the bridge (created on first
+                                            // reference); the answering agent joins it too
+                                            .bridgeCall("hunt-bridge")
                                             .command(dialAgent1))
                                 .onHangup(Calls.hangup()))
                     .build())
