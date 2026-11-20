@@ -37,8 +37,6 @@ environment variables, which win over the file):
 - `STORAGE_DESTINATION_URL`: the bucket path where recordings are uploaded (e.g. `s3://my-voice-recordings/recordings/`)
 - `STORAGE_CREDENTIALS`: the storage credentials. For AWS, exactly `ACCESS_KEY:SECRET_KEY:REGION`
 - `PORT` (optional, default `8081`): the local server port
-- `SINCH_SERVICE_ID` / `SINCH_SERVICE_SECRET` (optional): the service that owns your Sinch number and its secret.
-  When set, the server rejects (`401`) any request not signed with that secret
 
 ## Usage
 

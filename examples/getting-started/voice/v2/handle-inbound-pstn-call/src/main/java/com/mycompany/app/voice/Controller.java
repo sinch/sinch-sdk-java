@@ -1,23 +1,17 @@
 package com.mycompany.app.voice;
 
 import com.sinch.sdk.SinchClient;
-import com.sinch.sdk.core.utils.StringUtil;
 import com.sinch.sdk.domains.voice.api.v2.SinchEventsService;
 import com.sinch.sdk.domains.voice.models.v2.sinchevents.SinchEventType;
 import com.sinch.sdk.domains.voice.models.v2.sinchevents.VoiceSinchEvent;
 import com.sinch.sdk.domains.voice.models.v2.sinchevents.VoiceSinchEventResponse;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController("Voice")
 public class Controller {
@@ -29,12 +23,6 @@ public class Controller {
   private final SinchClient sinchClient;
   private final ServerBusinessLogic serverBusinessLogic;
 
-  @Value("${SINCH_SERVICE_ID:}")
-  private String serviceId;
-
-  @Value("${SINCH_SERVICE_SECRET:}")
-  private String serviceSecret;
-
   @Autowired
   public Controller(SinchClient sinchClient, ServerBusinessLogic serverBusinessLogic) {
     this.sinchClient = sinchClient;
@@ -45,19 +33,12 @@ public class Controller {
       value = PATH,
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<String> voiceEvent(
-      @RequestHeader HttpHeaders headers, @RequestBody String body) {
+  public ResponseEntity<String> voiceEvent(@RequestBody String body) {
 
     SinchEventsService sinchEvents = sinchClient.voice().v2().sinchEvents();
 
-    // Requests from Sinch are signed with the secret of the service the event belongs to.
-    // Set SINCH_SERVICE_ID and SINCH_SERVICE_SECRET to reject any request not signed by Sinch
-    if (StringUtil.isEmpty(serviceSecret)) {
-      LOGGER.warning("SINCH_SERVICE_SECRET is not set: the request signature is not validated");
-    } else if (!sinchEvents.validateAuthenticationHeader(
-        serviceId, serviceSecret, "POST", PATH, headers.toSingleValueMap(), body)) {
-      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-    }
+    // This sample does not validate the request signature. In production, check it with
+    // sinchEvents.validateAuthenticationHeader() (see the examples/sinch-events Controllers)
 
     // decode the payload request
     VoiceSinchEvent event = sinchEvents.parseEvent(body);

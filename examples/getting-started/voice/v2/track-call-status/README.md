@@ -34,8 +34,6 @@ environment variables, which win over the file):
 - `SINCH_NUMBER`: your Sinch number, in E.164 format (e.g. `+14045001000`)
 - `DESTINATION_NUMBER`: the number to call with `TrackSession`, in E.164 format (e.g. `+14155551234`)
 - `PORT` (optional, default `3000`): the local server port
-- `SINCH_SERVICE_ID` / `SINCH_SERVICE_SECRET` (optional): the service that owns your Sinch number and its secret.
-  When set, the server rejects (`401`) any request not signed with that secret
 
 ## Usage
 

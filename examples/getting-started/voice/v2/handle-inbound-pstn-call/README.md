@@ -28,13 +28,15 @@ environment variables, which win over the file). The server and the scripts read
 - `SINCH_KEY_ID`: your Sinch Access Key ID
 - `SINCH_KEY_SECRET`: your Sinch Key Secret associated to your Sinch Access Key
 - `SINCH_SERVICE_ID`: the ID of the Voice service that owns your Sinch number (Dashboard → Voice → Services),
-  used by `ConfigureService` and to validate the request signature
-- `SINCH_SERVICE_SECRET` (optional): the secret of that service. When set, the server rejects (`401`) any request not
-  signed with it. Leave it empty to run the smoke test, which sends unsigned requests
+  used by `ConfigureService`
 - `SINCH_NUMBER`: your Sinch number, in E.164 format (e.g. `+14045001000`)
 - `DESTINATION_NUMBER`: the agent number the call bridges to, in E.164 format (e.g. `+14155559876`)
 - `PORT` (optional, default `3000`): the local server port
 - `WEBHOOK_URL`: the public URL of the server, set in step 5 below
+
+Optional for production webhook signature checks (not used by these samples): `SINCH_SERVICE_ID` and
+`SINCH_SERVICE_SECRET` with `SinchEventsService.validateAuthenticationHeader`, as shown in the
+[Sinch Events example](../../../../sinch-events).
 
 ## Usage
 
